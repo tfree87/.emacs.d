@@ -29,6 +29,26 @@
   ;; To disable collection of benchmark data after init is done.
   (after-init . benchmark-init/deactivate))
 
+(add-hook 'before-save-hook 'time-stamp)
+
+(prefer-coding-system 'utf-8)
+(when (display-graphic-p)
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+
+;; Send deleted files to the system's trash
+(setq delete-by-moving-to-trash t)
+
+;; Version Control
+(setq version-control t)
+(setq delete-old-versions t)
+(setq vc-make-backup-files t)
+
+;; Only y or n instead of yes or no
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Sentences end with a single space
+(setq sentence-end-double-space nil)
+
 (use-package all-the-icons
     :if window-system
     :ensure t)
@@ -91,30 +111,6 @@
   :config
   (setq nyan-wavy-trail t))
 
-;; Only y or n instead of yes or no
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Sentences end with a single space
-(setq sentence-end-double-space nil)
-
-;; Send deleted files to the system's trash
-(setq delete-by-moving-to-trash t)
-
-;; Version Control
-(setq version-control t)
-(setq delete-old-versions t)
-(setq vc-make-backup-files t)
-
-(prefer-coding-system 'utf-8)
-(when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-
-(add-hook 'before-save-hook 'time-stamp)
-
-(use-package flycheck
-  :ensure t
-  :defer t)
-
 (use-package elpy
   :ensure t
   :defer t
@@ -134,6 +130,10 @@
 (add-hook 'elpy-mode-hook (lambda ()
                             (add-hook 'before-save-hook
                                       'elpy-black-fix-code nil t)))
+
+(use-package flycheck
+  :ensure t
+  :defer t)
 
 (use-package magit
   :ensure t
@@ -174,7 +174,9 @@
   :hook
   (gnus-summary-mode . (lambda ()
                          (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
-
+  :custom
+  (bbdb-file "~/Dropbox/bbdb")
+  (bbdb-use-pop-up 'horiz)
   :config
   (bbdb-mua-auto-update-init 'gnus 'message)
   (setq bbdb-mua-update-interactive-p '(query . create))
@@ -251,6 +253,9 @@
          (propertize "└─>" 'face `(:foreground "green"))
          (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
          )))
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (setq gnus-init-file "~/.emacs.d/gnus.el")
 
@@ -560,9 +565,6 @@
   :ensure t
   :defer t
   :after org)
-
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (use-package which-key
   :ensure t

@@ -1,9 +1,10 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-10-23 14:25:11 thomas>
+#+date: Time-stamp: <2021-10-31 19:12:04 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
+#+options: tex:t
 
 
 * Performance Optimization Start
@@ -49,8 +50,48 @@ Keep all customized variables in a separate file.
       ;; To disable collection of benchmark data after init is done.
       (after-init . benchmark-init/deactivate))
   #+end_src
-* Basic Configuration
-This section contains modifications for Emacs that affect the behavior in nearly all buffer.
+* General Configuration
+This section contains modifications for Emacs that affect the behavior in nearly all buffers.
+** Automatic Time Stamps When Saving
+Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'before-save-hook 'time-stamp)
+#+end_src
+** Default to UTF-8
+This will cause Emacs to defer to encoding text files as UTF-8 by default.
+#+begin_src emacs-lisp :tangle yes
+  (prefer-coding-system 'utf-8)
+  (when (display-graphic-p)
+    (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+#+end_src
+** File Deletion and Backup
+Changing how Emacs deletes files and how it creates backups.
+*** Send Deleted Files to System Trash
+ Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
+ #+begin_src emacs-lisp :tangle yes
+   ;; Send deleted files to the system's trash
+   (setq delete-by-moving-to-trash t)
+ #+end_src
+*** Backup Files with Version Control
+ Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
+ #+begin_src emacs-lisp :tangle yes
+   ;; Version Control
+   (setq version-control t)
+   (setq delete-old-versions t)
+   (setq vc-make-backup-files t)
+ #+end_src
+** Shorten "Yes or No" to "Y or N"
+To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
+#+begin_src emacs-lisp :tangle yes
+  ;; Only y or n instead of yes or no
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+** Single Space at the End of Sentences
+Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
+#+begin_src emacs-lisp :tangle yes
+  ;; Sentences end with a single space
+  (setq sentence-end-double-space nil)
+#+end_src
 ** User Interface
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
 *** All the icons
@@ -129,54 +170,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     :config
     (setq nyan-wavy-trail t))
 #+end_src
-** Shorten "Yes or No" to "Y or N"
-To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
-#+begin_src emacs-lisp :tangle yes
-  ;; Only y or n instead of yes or no
-  (fset 'yes-or-no-p 'y-or-n-p)
-#+end_src
-** Single Space at the End of Sentences
-Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
-#+begin_src emacs-lisp :tangle yes
-  ;; Sentences end with a single space
-  (setq sentence-end-double-space nil)
-#+end_src
-** File Deletion and Backup
-Changing how Emacs deletes files and how it creates backups.
-*** Send Deleted Files to System Trash
- Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
- #+begin_src emacs-lisp :tangle yes
-   ;; Send deleted files to the system's trash
-   (setq delete-by-moving-to-trash t)
- #+end_src
-*** Backup Files with Version Control
- Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
- #+begin_src emacs-lisp :tangle yes
-   ;; Version Control
-   (setq version-control t)
-   (setq delete-old-versions t)
-   (setq vc-make-backup-files t)
- #+end_src
-** Default to UTF-8
-This will cause Emacs to defer to encoding text files as UTF-8 by default.
-#+begin_src emacs-lisp :tangle yes
-  (prefer-coding-system 'utf-8)
-  (when (display-graphic-p)
-    (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-#+end_src
-** Automatic Time Stamps When Saving
-Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'before-save-hook 'time-stamp)
-#+end_src
 * Coding
-** Flycheck
-Install flycheck mode so that python syntax can be checed while typing.
-#+begin_src emacs-lisp :tangle yes
-      (use-package flycheck
-        :ensure t
-        :defer t)
-#+end_src
 ** Elpy
 #+begin_src emacs-lisp :tangle yes
   (use-package elpy
@@ -198,6 +192,13 @@ Install flycheck mode so that python syntax can be checed while typing.
   (add-hook 'elpy-mode-hook (lambda ()
                               (add-hook 'before-save-hook
                                         'elpy-black-fix-code nil t)))
+#+end_src
+** Flycheck
+Install flycheck mode so that python syntax can be checed while typing.
+#+begin_src emacs-lisp :tangle yes
+      (use-package flycheck
+        :ensure t
+        :defer t)
 #+end_src
 ** Magit
 Magit provides an interface to Git through Emacs.
@@ -249,7 +250,9 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :hook
     (gnus-summary-mode . (lambda ()
                            (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
-  
+    :custom
+    (bbdb-file "~/Dropbox/bbdb")
+    (bbdb-use-pop-up 'horiz)
     :config
     (bbdb-mua-auto-update-init 'gnus 'message)
     (setq bbdb-mua-update-interactive-p '(query . create))
@@ -350,12 +353,18 @@ Dired+ allows for better functionality when using Emacs in Windows.
            (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
            )))  
   #+end_src
+* Flyspell-mode
+Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled. 
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
 #+begin_src emacs-lisp :tangle yes
   (setq gnus-init-file "~/.emacs.d/gnus.el")
 #+end_src
-* Gnuplot
+* Gnuplot-mode
 Gnuplot mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 #+begin_src emacs-lisp :tangle yes
       (use-package gnuplot
@@ -365,7 +374,7 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
         :ensure t
         :defer t)
 #+end_src
-* ~ibuffer~
+* ibuffer
 #+begin_src emacs-lisp :tangle yes
   (use-package ibuffer
     :defer t
@@ -467,7 +476,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     ("C-c C-<" . 'mc/mark-all-like-this))
 #+end_src
 
-* ~org-mode~
+* Org-mode
 ~org-mode~ is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use ~org-mode~ for the following:
 - Organizing my tasks and projects similar to David Allen's "Getting Things Done" method
 - Publishing LaTeX documents in a simpler and faster way
@@ -575,7 +584,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     :hook
     (org-mode . (lambda () (org-bullets-mode 1))))
 #+end_src
-** ~calfw-org~
+** Calfw-org
 ~org-calfw~ provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw
@@ -599,7 +608,8 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 
-** ~org-agenda~
+** Org-agenda
+Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loading time. I also prefer to have the current day at the beginning of the week so all current items are at the top of the agenda and I can look 6 days into the future.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-agenda
       :ensure nil
@@ -607,7 +617,8 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
       :custom
       (org-agenda-start-on-weekday nil))
   #+end_src
-** ~org-capture~
+** Org-capture
+Set up templates for making capturing tasks with ~org-capture~ easier.
 #+begin_src emacs-lisp :tangle yes
     (use-package org-capture
     :ensure nil
@@ -624,7 +635,8 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
        ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
         "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
 #+end_src
-** ~org-download~
+** Org-download
+I have not yet tried this feature yet...
 #+begin_src emacs-lisp :tangle yes
 (use-package org-download
   :after org
@@ -633,8 +645,8 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
         (("s-Y" . org-download-screenshot)
          ("s-y" . org-download-yank))))
 #+end_src
-** ~org-mind-map~
-Turn any ~org-mode~ buffer into a mind map.
+** Org-mind-map
+Turn any ~org-mode~ buffer into a mind map in various output formats.
 #+begin_src emacs-lisp :tangle yes
   ;; This is an Emacs package that creates graphviz directed graphs from
   ;; the headings of an org file
@@ -656,15 +668,15 @@ Turn any ~org-mode~ buffer into a mind map.
     ;; (org-mind-map-engine "circo")  ; Circular Layout
     )
 #+end_src
-** ~org-ref~
-*** Install and Initialize Org-ref
+** Org-ref
+A reference manager in org-mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-ref
     :ensure t
     :defer t
     :after org)
 #+end_src
-** ~org-roam~
+** Org-roam
 ~org-roam~ adds features to make linking org notes easier and provided a database file to connect all the notes together.
 #+begin_src emacs-lisp :tangle yes
   ;; Org-Roam basic configuration
@@ -725,13 +737,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :defer t
     :after org)
 #+end_src
-* Spell Checking
-Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled. 
-#+begin_src emacs-lisp :tangle yes
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-#+end_src
-* ~which-key~
+* Which-key
 ~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package which-key
