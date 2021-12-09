@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-10-31 19:12:04 thomas>
+#+date: Time-stamp: <2021-12-08 21:25:19 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -13,7 +13,7 @@
 #+end_src
 * Customized variables
 Keep all customized variables in a separate file.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 #+end_src
@@ -294,10 +294,16 @@ Dired+ allows for better functionality when using Emacs in Windows.
     :load-path "~/.emacs.d/elisp")
 #+end_src
 * Docker
-#+begin_src emacs-lisp
+** Manage Docker Containers
+#+begin_src emacs-lisp :tangle yes
   (use-package docker
     :ensure t
     :bind ("C-c d" . docker))
+#+end_src
+** Docker Compose
+#+begin_src emacs-lisp :tangle yes
+  (use-package docker-compose-mode
+    :ensure t)
 #+end_src
 * Eshell
 ** Set up Eshell
@@ -388,14 +394,17 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     ;; Create default groupings for ibuffer
     (setq ibuffer-saved-filter-groups
           (quote (("default"
-                   ("dired" (mode . dired-mode))
-                   ("emacs" (or
+                   ("Dired" (mode . dired-mode))
+                   ("Emacs" (or
                              (name . "^\\*scratch\\*$")            
                              (name . "^\\*Messages\\*$")
                              (name . "^\\*GNU Emacs\\*$")
                              (name . "^\\*Help\\*$")
+                             (name . "^\\*Calendar\\*$")
+                             (name . "^\\*Calculator\\*$")
+                             (name . "^\\*Calc Trail\\*$")
                              (name . "^\\*Completions\\*$")))
-                   ("gnus" (or
+                   ("Gnus" (or
                             (mode . message-mode)
                             (mode . bbdb-mode)
                             (mode . mail-mode)
@@ -404,9 +413,13 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
                             (mode . gnus-article-mode)
                             (name . "^\\.bbdb$")
                             (name . "^\\.newsrc-dribble")))
-                   ("org"   (or
+                   ("Org"   (or
                              (mode . org-mode)
-                             (name . "^\\*Org Agenda\\*$"))))))))
+                             (name . "^\\*Org Agenda\\*$")))
+                   ("Shell"   (or
+                               (mode . eshell)
+                               (mode . term)
+                               (mode . shell))))))))
 #+end_src 
 * Ivy
 Ivy is a system to make entering commands in Emacs easier by narrowing down the possible choices when keybindings such as M-x are issued.

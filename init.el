@@ -1,5 +1,8 @@
 (let ((file-name-handler-alist nil))
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 ;; Fix TLS issue in old Emacs versions
 (if (>= 26.3 (string-to-number emacs-version))
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
@@ -206,6 +209,13 @@
   :defer t
   :load-path "~/.emacs.d/elisp")
 
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker))
+
+(use-package docker-compose-mode
+  :ensure t)
+
 (use-package eshell
   :defer t
   :hook
@@ -278,14 +288,17 @@
   ;; Create default groupings for ibuffer
   (setq ibuffer-saved-filter-groups
         (quote (("default"
-                 ("dired" (mode . dired-mode))
-                 ("emacs" (or
+                 ("Dired" (mode . dired-mode))
+                 ("Emacs" (or
                            (name . "^\\*scratch\\*$")            
                            (name . "^\\*Messages\\*$")
                            (name . "^\\*GNU Emacs\\*$")
                            (name . "^\\*Help\\*$")
+                           (name . "^\\*Calendar\\*$")
+                           (name . "^\\*Calculator\\*$")
+                           (name . "^\\*Calc Trail\\*$")
                            (name . "^\\*Completions\\*$")))
-                 ("gnus" (or
+                 ("Gnus" (or
                           (mode . message-mode)
                           (mode . bbdb-mode)
                           (mode . mail-mode)
@@ -294,9 +307,13 @@
                           (mode . gnus-article-mode)
                           (name . "^\\.bbdb$")
                           (name . "^\\.newsrc-dribble")))
-                 ("org"   (or
+                 ("Org"   (or
                            (mode . org-mode)
-                           (name . "^\\*Org Agenda\\*$"))))))))
+                           (name . "^\\*Org Agenda\\*$")))
+                 ("Shell"   (or
+                             (mode . eshell)
+                             (mode . term)
+                             (mode . shell))))))))
 
 (use-package ivy
   :ensure t
