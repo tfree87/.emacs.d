@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-08 21:25:19 thomas>
+#+date: Time-stamp: <2021-12-14 19:31:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -97,22 +97,22 @@ All the changes contained here affect how Emacs looks when run such as faces, co
 *** All the icons
 #+begin_src emacs-lisp :tangle yes
     (use-package all-the-icons
-      :if window-system
+      :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
       :ensure t)
   
   (use-package all-the-icons-dired
-      :if window-system
+      :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
       :ensure t
       :hook
       (dired-mode . all-the-icons-dired-mode))
   
   (use-package all-the-icons-ibuffer
-    :if window-system
+    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
     :ensure t
     :init (all-the-icons-ibuffer-mode 1))
   
     (use-package all-the-icons-ivy-rich
-    :if window-system
+    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
     :ensure t
     :config
     (all-the-icons-ivy-rich-mode 1))
@@ -171,6 +171,13 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (setq nyan-wavy-trail t))
 #+end_src
 * Coding
+** Numpydoc
+#+begin_src emacs-lisp :tangle yes
+  (use-package numpydoc
+    :ensure t
+    :bind (:map python-mode-map
+                ("C-c C-n" . numpydoc-generate)))
+#+end_src
 ** Elpy
 #+begin_src emacs-lisp :tangle yes
   (use-package elpy
@@ -285,11 +292,11 @@ This will cause emacs to default to moving/copying/renaming files from the direc
    (setq dired-dwim-target t)
  #+end_src
 ** Use Dired+ for Windows
-Dired+ allows for better functionality when using Emacs in Windows.
+Dired+ allows for better functionality when using Emacs as a portable applicatoin. =:if (memq window-system '(w32 pc ns))= will cause dired+ to only load on non-Linux systems.
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
     ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
-    :if (memq window-system '(w32 pc))
+    :if (memq window-system '(w32 pc ns))
     :defer t
     :load-path "~/.emacs.d/elisp")
 #+end_src
@@ -322,7 +329,7 @@ Dired+ allows for better functionality when using Emacs in Windows.
                      ;; Set aliases for commands in eshell
                      (eshell/alias "ff" "find-file $1")
                      (eshell/alias "emacs" "find-file $1")
-                     (eshell/alias "ll" (concat ls " -AlohG --color=always"))))
+                     (eshell/alias "ll" "ls -AlohG --color=auto")))
     :config
     (setq eshell-error-if-no-glob t
           ;; Ignore duplicate history entries
@@ -769,6 +776,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
   (setq gc-cons-threshold (* 2 1000 1000))
   )
 #+end_src
+
 * Local Variables
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)

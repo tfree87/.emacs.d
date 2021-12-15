@@ -53,22 +53,22 @@
 (setq sentence-end-double-space nil)
 
 (use-package all-the-icons
-    :if window-system
+    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
     :ensure t)
 
 (use-package all-the-icons-dired
-    :if window-system
+    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
     :ensure t
     :hook
     (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if window-system
+  :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
   :ensure t
   :init (all-the-icons-ibuffer-mode 1))
 
   (use-package all-the-icons-ivy-rich
-  :if window-system
+  :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
   :ensure t
   :config
   (all-the-icons-ivy-rich-mode 1))
@@ -113,6 +113,11 @@
   :commands nyan-mode
   :config
   (setq nyan-wavy-trail t))
+
+(use-package numpydoc
+  :ensure t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
 
 (use-package elpy
   :ensure t
@@ -205,7 +210,7 @@
 
 (use-package dired+
   ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
-  :if (memq window-system '(w32 pc))
+  :if (memq window-system '(w32 pc ns))
   :defer t
   :load-path "~/.emacs.d/elisp")
 
@@ -230,7 +235,7 @@
                    ;; Set aliases for commands in eshell
                    (eshell/alias "ff" "find-file $1")
                    (eshell/alias "emacs" "find-file $1")
-                   (eshell/alias "ll" (concat ls " -AlohG --color=always"))))
+                   (eshell/alias "ll" "ls -AlohG --color=auto")))
   :config
   (setq eshell-error-if-no-glob t
         ;; Ignore duplicate history entries
