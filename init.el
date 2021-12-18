@@ -17,7 +17,8 @@
   (package-refresh-contents))
 
 ;; Check to see if use-package is installed
-(unless (package-installed-p 'use-package)
+(unless (package-installed-p
+         'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
@@ -53,22 +54,22 @@
 (setq sentence-end-double-space nil)
 
 (use-package all-the-icons
-    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t)
 
 (use-package all-the-icons-dired
-    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :hook
     (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :init (all-the-icons-ibuffer-mode 1))
 
   (use-package all-the-icons-ivy-rich
-  :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :config
   (all-the-icons-ivy-rich-mode 1))
@@ -235,7 +236,9 @@
                    ;; Set aliases for commands in eshell
                    (eshell/alias "ff" "find-file $1")
                    (eshell/alias "emacs" "find-file $1")
-                   (eshell/alias "ll" "ls -AlohG --color=auto")))
+                   (eshell/alias "untar" "tar -zxvf")
+                   (eshell/alias "cpv" "rsync -ah --info=progress2")
+                   (eshell/alias "ll" "ls -AlohG")))
   :config
   (setq eshell-error-if-no-glob t
         ;; Ignore duplicate history entries
@@ -601,3 +604,5 @@
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
+
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))

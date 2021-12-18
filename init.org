@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-14 19:31:37 thomas>
+#+date: Time-stamp: <2021-12-18 10:17:54 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -11,7 +11,7 @@
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
-* Customized variables
+* Customized Variables
 Keep all customized variables in a separate file.
 #+begin_src emacs-lisp :tangle yes
 (setq custom-file "~/.emacs.d/custom.el")
@@ -33,7 +33,8 @@ Keep all customized variables in a separate file.
     (package-refresh-contents))
   
   ;; Check to see if use-package is installed
-  (unless (package-installed-p 'use-package)
+  (unless (package-installed-p
+           'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   
@@ -97,22 +98,22 @@ All the changes contained here affect how Emacs looks when run such as faces, co
 *** All the icons
 #+begin_src emacs-lisp :tangle yes
     (use-package all-the-icons
-      :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+      :if (and window-system (not (file-exists-p "~/runemacs.bat")))
       :ensure t)
   
   (use-package all-the-icons-dired
-      :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+      :if (and window-system (not (file-exists-p "~/runemacs.bat")))
       :ensure t
       :hook
       (dired-mode . all-the-icons-dired-mode))
   
   (use-package all-the-icons-ibuffer
-    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :init (all-the-icons-ibuffer-mode 1))
   
     (use-package all-the-icons-ivy-rich
-    :if (and window-system (not (file-exists-p "~/rumemacs.bat")))
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :config
     (all-the-icons-ivy-rich-mode 1))
@@ -329,7 +330,9 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
                      ;; Set aliases for commands in eshell
                      (eshell/alias "ff" "find-file $1")
                      (eshell/alias "emacs" "find-file $1")
-                     (eshell/alias "ll" "ls -AlohG --color=auto")))
+                     (eshell/alias "untar" "tar -zxvf")
+                     (eshell/alias "cpv" "rsync -ah --info=progress2")
+                     (eshell/alias "ll" "ls -AlohG")))
     :config
     (setq eshell-error-if-no-glob t
           ;; Ignore duplicate history entries
@@ -776,7 +779,10 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
   (setq gc-cons-threshold (* 2 1000 1000))
   )
 #+end_src
-
+* Tramp
+#+begin_src elisp :tangle yes
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+#+end_src
 * Local Variables
 # Local Variables:
 # eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
