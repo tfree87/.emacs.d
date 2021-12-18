@@ -503,14 +503,14 @@
 :config
 ;; Set the default org-capture-templates to make creating an org-headline quick and easy
 (setq org-capture-templates
- '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-    "* %? :project:")
-   ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-    "* %?\n%x")
-   ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-    "* %?\n%^{Scheduled}t\n%x")
-   ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-    "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
+      '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+         "* %? :project:")
+        ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+         "* %?\n%x")
+        ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+         "* %?\n%^{Scheduled}t\n%x")
+        ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+         "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
 
 (use-package org-download
   :after org
