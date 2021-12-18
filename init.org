@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-18 10:17:54 thomas>
+#+date: Time-stamp: <2021-12-18 12:38:24 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -315,24 +315,15 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
 #+end_src
 * Eshell
 ** Set up Eshell
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb tangle
   (use-package eshell
     :defer t
     :hook
     (eshell-mode . (lambda ()
                      ;; Run interactive shell commands in the Emacs ansi-term
-                     (add-to-list 'eshell-visual-commands "htop")
-                     (add-to-list 'eshell-visual-commands "ipython")
-                     (add-to-list 'eshell-visual-commands "rclone")
-                     (add-to-list 'eshell-visual-commands "ssh")
-                     (add-to-list 'eshell-visual-commands "tail")
-                     (add-to-list 'eshell-visual-commands "top")
+                     <<eshell_visual_commands>>
                      ;; Set aliases for commands in eshell
-                     (eshell/alias "ff" "find-file $1")
-                     (eshell/alias "emacs" "find-file $1")
-                     (eshell/alias "untar" "tar -zxvf")
-                     (eshell/alias "cpv" "rsync -ah --info=progress2")
-                     (eshell/alias "ll" "ls -AlohG")))
+                     <<eshell_aliases>>))
     :config
     (setq eshell-error-if-no-glob t
           ;; Ignore duplicate history entries
@@ -351,6 +342,27 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
   ;; Do not use a pager in Eshell because Emacs can do the paging
   
   #+end_src
+** Eshell Visual Commands
+Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
+#+name: eshell_visual_commands
+#+begin_src elisp :noweb yes
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ipython")
+  (add-to-list 'eshell-visual-commands "rclone")
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "tail")
+  (add-to-list 'eshell-visual-commands "top")
+#+end_src
+** Eshell Aliases
+Below are a list of command-line aliases for use in eshell.
+#+name: eshell_aliases
+#+begin_src elisp :noweb yes
+  (eshell/alias "ff" "find-file $1")
+  (eshell/alias "emacs" "find-file $1")
+  (eshell/alias "untar" "tar -zxvf")
+  (eshell/alias "cpv" "rsync -ah --info=progress2")
+  (eshell/alias "ll" "ls -AlohG")
+#+end_src
 ** Change Eshell Prompt to be More Informative
 #+begin_src emacs-lisp :tangle yes
   (setq eshell-prompt-function
@@ -505,7 +517,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 - Publishing LaTeX documents in a simpler and faster way
 - Saving reusable code snippets with documentation that can be executed from within Emacs as how this file was created.
 ** Initial Setup
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb tangle
   (custom-set-variables '(org-agenda-files
                           `("~/Dropbox/gtd")))
   
@@ -576,25 +588,31 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     (add-hook 'org-mode-hook #'toggle-truncate-lines)
   
     ;; Load languages to use in org-babel
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-    (org-babel-do-load-languages 'org-babel-load-languages
-                                 '((awk . t)
-                                   (calc . t)
-                                   (css . t)
-                                   (emacs-lisp . t)
-                                   (eshell . t)
-                                   (gnuplot . t)
-                                   (dot . t)
-                                   (latex . t)
-                                   (ledger . t)
-                                   (octave . t)
-                                   (plantuml . t)
-                                   (R . t)
-                                   (sed . t)
-                                   (shell . t)))
+    <<babel_languages>>
     ;; This package will allow for the use of the :ignore: tag that can be used to remove headers from exported content.
     (require 'ox-extra)
     (ox-extras-activate '(ignore-headlines)))
+#+end_src
+** Org-babel Languages
+In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
+#+name: babel_languages
+#+begin_src elisp :noweb yes
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((awk . t)
+                                 (calc . t)
+                                 (css . t)
+                                 (emacs-lisp . t)
+                                 (eshell . t)
+                                 (gnuplot . t)
+                                 (dot . t)
+                                 (latex . t)
+                                 (ledger . t)
+                                 (octave . t)
+                                 (plantuml . t)
+                                 (R . t)
+                                 (sed . t)
+                                 (shell . t)))
 #+end_src
 ** Appearance
 *** Change Bullets to Look Like Spacemacs
@@ -642,21 +660,27 @@ Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loadi
   #+end_src
 ** Org-capture
 Set up templates for making capturing tasks with ~org-capture~ easier.
-#+begin_src emacs-lisp :tangle yes
-    (use-package org-capture
-    :ensure nil
-    :after org
-    :config
-    ;; Set the default org-capture-templates to make creating an org-headline quick and easy
-    (setq org-capture-templates
-     '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-        "* %? :project:")
-       ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-        "* %?\n%x")
-       ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-        "* %?\n%^{Scheduled}t\n%x")
-       ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
+#+begin_src emacs-lisp :tangle yes :noweb tangle
+  (use-package org-capture
+  :ensure nil
+  :after org
+  :config
+  ;; Set the default org-capture-templates to make creating an org-headline quick and easy
+  <<org_capture_templates>>)
+#+end_src
+*** Org-capture Templates
+Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
+#+name: org_capture_templates
+#+begin_src elisp :noweb yes
+  (setq org-capture-templates
+        '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+           "* %? :project:")
+          ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+           "* %?\n%x")
+          ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+           "* %?\n%^{Scheduled}t\n%x")
+          ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+           "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 ** Org-download
 I have not yet tried this feature yet...
@@ -774,14 +798,14 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     ;; Set up which-key to use the side window preferrably
     (which-key-setup-side-window-right-bottom))
 #+end_src
+* Tramp
+#+begin_src elisp :tangle yes
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+#+end_src
 * Performance Optimization End
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
   )
-#+end_src
-* Tramp
-#+begin_src elisp :tangle yes
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 #+end_src
 * Local Variables
 # Local Variables:
