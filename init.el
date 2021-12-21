@@ -54,8 +54,8 @@
 (setq sentence-end-double-space nil)
 
 (use-package all-the-icons
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-    :ensure t)
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :ensure t)
 
 (use-package all-the-icons-dired
     :if (and window-system (not (file-exists-p "~/runemacs.bat")))

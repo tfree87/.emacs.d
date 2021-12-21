@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-18 12:38:24 thomas>
+#+date: Time-stamp: <2021-12-21 11:32:30 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -97,9 +97,9 @@ Emacs when navigating expects sentences to end with a double space after a perio
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
 *** All the icons
 #+begin_src emacs-lisp :tangle yes
-    (use-package all-the-icons
-      :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-      :ensure t)
+  (use-package all-the-icons
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+    :ensure t)
   
   (use-package all-the-icons-dired
       :if (and window-system (not (file-exists-p "~/runemacs.bat")))
