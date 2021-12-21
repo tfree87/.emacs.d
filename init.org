@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-21 11:32:30 Thomas>
+#+date: Time-stamp: <2021-12-21 11:34:04 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -112,7 +112,7 @@ All the changes contained here affect how Emacs looks when run such as faces, co
     :ensure t
     :init (all-the-icons-ibuffer-mode 1))
   
-    (use-package all-the-icons-ivy-rich
+  (use-package all-the-icons-ivy-rich
     :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :config

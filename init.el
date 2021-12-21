@@ -68,7 +68,7 @@
   :ensure t
   :init (all-the-icons-ibuffer-mode 1))
 
-  (use-package all-the-icons-ivy-rich
+(use-package all-the-icons-ivy-rich
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :config
