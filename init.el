@@ -605,4 +605,8 @@
 (setq gc-cons-threshold (* 2 1000 1000))
 )
 
+(use-package c-mode
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.ino\\'" . c-mode)))
+
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))

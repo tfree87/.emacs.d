@@ -1,6 +1,6 @@
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2021-12-18 12:38:24 thomas>
+#+date: Time-stamp: <2021-12-23 21:40:34 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -8,6 +8,7 @@
 
 
 * Performance Optimization Start
+In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
@@ -172,6 +173,12 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (setq nyan-wavy-trail t))
 #+end_src
 * Coding
+** C
+#+begin_src elisp :tangle yes
+  (use-package c-mode
+    :mode (("\\.c\\'" . c-mode)
+           ("\\.ino\\'" . c-mode)))
+#+end_src
 ** Numpydoc
 #+begin_src emacs-lisp :tangle yes
   (use-package numpydoc
