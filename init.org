@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 15:13:53 thomas>
+#+date: Time-stamp: <2022-01-09 15:34:14 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -20,11 +20,14 @@ Keep all customized variables in a separate file.
   (load custom-file)
 #+end_src
 * Package Management
+** Fix TLS Issue in Old Emacs Versions
+Sometimes I am running Emacs on a system that does not have the latest version of Emacs available on the distribution. The following code fixes the issues with older versions of Emacs having broken versions of TLS that prevents them from accessing the package repositories.
 #+begin_src emacs-lisp :tangle yes
-  ;; Fix TLS issue in old Emacs versions
   (if (>= 26.3 (string-to-number emacs-version))
       (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-  
+#+end_src
+** Set Package Repositories
+#+begin_src elisp :tangle yes
   (require 'package)
   (custom-set-variables '(package-archives
                           '(("melpa" . "https://melpa.org/packages/")
@@ -33,18 +36,20 @@ Keep all customized variables in a separate file.
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
-  
-  ;; Check to see if use-package is installed
+#+end_src
+** Use-package
+The following code will refresh the package listings and install ~use-package~ if it has not been installed. It will then require the use of ~use-package~ when compiling the ~init.el~ file.
+#+begin_src elisp :tangle yes
   (unless (package-installed-p
            'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   
-  ;; use-package for managing emacs packages
   (eval-when-compile
     (require 'use-package))
 #+end_src
 * Track Load Time
+It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
   #+begin_src emacs-lisp :tangle yes
     (use-package benchmark-init
       :disabled t
@@ -72,13 +77,11 @@ Changing how Emacs deletes files and how it creates backups.
 *** Send Deleted Files to System Trash
  Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
  #+begin_src emacs-lisp :tangle yes
-   ;; Send deleted files to the system's trash
    (setq delete-by-moving-to-trash t)
  #+end_src
 *** Backup Files with Version Control
  Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
  #+begin_src emacs-lisp :tangle yes
-   ;; Version Control
    (setq version-control t)
    (setq delete-old-versions t)
    (setq vc-make-backup-files t)
@@ -86,13 +89,11 @@ Changing how Emacs deletes files and how it creates backups.
 ** Shorten "Yes or No" to "Y or N"
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
 #+begin_src emacs-lisp :tangle yes
-  ;; Only y or n instead of yes or no
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 ** Single Space at the End of Sentences
 Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
 #+begin_src emacs-lisp :tangle yes
-  ;; Sentences end with a single space
   (setq sentence-end-double-space nil)
 #+end_src
 ** User Interface
@@ -153,7 +154,6 @@ All the changes contained here affect how Emacs looks when run such as faces, co
 *** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
 #+begin_src emacs-lisp :tangle yes
-  ;;Display Time
   (display-time-mode 1)
 #+end_src
 *** Menu Bar, Scroll Bar, and Tool Bar
@@ -200,14 +200,20 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (python-shell-interpreter-args "-i --simple-prompt")
     (elpy-formatter 'black)
     :config
-    ;; Check python syntax while writing with flycheck
-    (when (load "flycheck" t t)
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (add-hook 'elpy-mode-hook 'flycheck-mode)))
-  
+    <<elpy_config>>) 
+#+end_src
+*** Use Flycheck for Python Syntax
+Check python syntax while writing with flycheck
+#+begin_src elisp :noweb-ref elpy_config
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+#+end_src
+*** Use Black to Format Code On Save
+#+begin_src elisp :noweb-ref elpy_config
   (add-hook 'elpy-mode-hook (lambda ()
-                              (add-hook 'before-save-hook
-                                        'elpy-black-fix-code nil t)))
+                                (add-hook 'before-save-hook
+                                          'elpy-black-fix-code nil t)))
 #+end_src
 ** Flycheck
 Install flycheck mode so that python syntax can be checed while typing.
@@ -543,9 +549,6 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 - Saving reusable code snippets with documentation that can be executed from within Emacs as how this file was created.
 ** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb tangle
-  (custom-set-variables '(org-agenda-files
-                          `("~/Dropbox/gtd")))
-  
   (use-package org
     :mode (("\\.org$" . org-mode))
     :bind
@@ -568,10 +571,17 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     (require 'ox-extra)
     (ox-extras-activate '(ignore-headlines)))
 #+end_src
-** Org-mode Directory
+** Org-mode Directories
+*** Default Directory
 Tell org-mode which directory is the default directory for all org-mode files.
 #+begin_src elisp :noweb-ref org_customize
   (org-directory "~/Dropbox/gtd")
+#+end_src
+*** Location of Agenda Files
+Tell org-mode in which directory all the agenda files can be found.
+#+begin_src elisp :noweb-ref org_customize
+  (org-agenda-files
+   `("~/Dropbox/gtd"))
 #+end_src
 ** Filing Notes
 *** Default Notes File

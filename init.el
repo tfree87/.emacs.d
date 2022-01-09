@@ -3,7 +3,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; Fix TLS issue in old Emacs versions
 (if (>= 26.3 (string-to-number emacs-version))
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
@@ -16,13 +15,11 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Check to see if use-package is installed
 (unless (package-installed-p
          'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; use-package for managing emacs packages
 (eval-when-compile
   (require 'use-package))
 
@@ -39,18 +36,14 @@
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-;; Send deleted files to the system's trash
 (setq delete-by-moving-to-trash t)
 
-;; Version Control
 (setq version-control t)
 (setq delete-old-versions t)
 (setq vc-make-backup-files t)
 
-;; Only y or n instead of yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Sentences end with a single space
 (setq sentence-end-double-space nil)
 
 (use-package all-the-icons
@@ -101,7 +94,6 @@
   (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
   (spaceline-all-the-icons--setup-neotree))         ;; Enable Neotree mode line
 
-;;Display Time
 (display-time-mode 1)
 
 (menu-bar-mode -1)
@@ -135,14 +127,7 @@
   (python-shell-interpreter-args "-i --simple-prompt")
   (elpy-formatter 'black)
   :config
-  ;; Check python syntax while writing with flycheck
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
-(add-hook 'elpy-mode-hook (lambda ()
-                            (add-hook 'before-save-hook
-                                      'elpy-black-fix-code nil t)))
+  <<elpy_config>>)
 
 (use-package flycheck
   :ensure t
@@ -392,9 +377,6 @@
   ("C-<" . 'mc/mark-previous-like-this)
   ("C-c C-<" . 'mc/mark-all-like-this))
 
-(custom-set-variables '(org-agenda-files
-                        `("~/Dropbox/gtd")))
-
 (use-package org
   :mode (("\\.org$" . org-mode))
   :bind
@@ -406,6 +388,8 @@
   :hook (org-mode . turn-on-flyspell)
   :custom
   (org-directory "~/Dropbox/gtd")
+  (org-agenda-files
+   `("~/Dropbox/gtd"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
