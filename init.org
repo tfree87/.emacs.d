@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 14:23:30 thomas>
+#+date: Time-stamp: <2022-01-09 15:13:53 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -556,51 +556,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     :ensure org-plus-contrib
     :hook (org-mode . turn-on-flyspell)
     :custom
-    <<org_customize>>
-    ;; Show org-mode the default directory in which to keep org-mode files
-    (org-directory "~/Dropbox/gtd")
-  
-    ;; Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-    (org-todo-keyword-faces
-          '(("TODO" . org-warning)
-            ("WAITING" . "yellow")
-            ("CANCELED" . (:foreground "blue" :weight bold))
-            ("DONE" . org-done)))
-  
-    ;; Keep only a single space between the headline and the tag
-    (org-tags-column 0)
-  
-    ;; Don't inherit project tags
-    (org-tags-exclude-from-inheritance '("project"))
-  
-    ;; Place all notes captured that are not filed into the default inbox file
-    (org-default-notes-file (concat org-directory "/inbox.org"))
-  
-    ;; In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
-    (org-refile-targets '((org-agenda-files :maxlevel . 3)))
-  
-    ;; The following will allow for refiling org-mode tasks at the top of a file.
-    ;; Setting this will also require turning off completing the path in steps if ivy-mode autocompletiion is used.
-    (org-refile-use-outline-path 'file)
-    (org-outline-path-complete-in-steps nil)
-  
-    ;; Setting this variable allows for refiling tasks under a new heading on the fly
-    (org-refile-allow-creating-parent-nodes (quote confirm))
-  
-    ;; Define a stuck project as any headline with the project keyword which has no TODO item below it.
-    (org-stuck-projects
-     '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
-  
-    ;; Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
-    (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  
-    ;; Use biblatex instead of bibtex
-    (org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
-        "biber %b"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"))
-  
+    <<org_customize>> 
     :config
   
     ;; Wrap lines at window edge in org-mode
@@ -612,6 +568,61 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     (require 'ox-extra)
     (ox-extras-activate '(ignore-headlines)))
 #+end_src
+** Org-mode Directory
+Tell org-mode which directory is the default directory for all org-mode files.
+#+begin_src elisp :noweb-ref org_customize
+  (org-directory "~/Dropbox/gtd")
+#+end_src
+** Filing Notes
+*** Default Notes File
+I prefer to have all of my captured notes automatically filed into a file called ~inbox.org~. Changing ~org-default-notes-file~ can create this functionality.
+#+begin_src elisp :noweb-ref org_customize
+  (org-default-notes-file (concat org-directory "/inbox.org"))
+#+end_src
+*** Refile Targets
+**** Set Org Files for Refiling
+In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
+#+begin_src elisp :noweb-ref org_customize
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+#+end_src
+**** Allow Refile as Top-level Heading
+I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
+#+begin_src elisp :noweb-ref org_customize
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+#+end_src
+
+Setting this variable allows for refiling tasks under a new heading on the fly.
+#+begin_src :noweb-ref org_customize
+  (org-refile-allow-creating-parent-nodes (quote confirm))
+#+end_src
+** Task Management Customization
+*** Custom TODO Keywords
+Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
+#+begin_src elisp :noweb-ref org_customize
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+#+end_src
+*** Project Tags
+I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
+#+begin_src elisp :noweb-ref org_customize
+  (org-tags-exclude-from-inheritance '("project"))
+#+end_src
+*** Stuck Projects
+Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
+#+begin_src elisp :noweb-ref org_customize
+  (org-stuck-projects
+   '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
+#+end_src
+** BibLaTeX in Org-mode
+I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the ~org-latex-pdf-process~ variable needs to be changed to reflect this.
+#+begin_src elisp :noweb-ref org_customize
+  (org-latex-pdf-process
+   '("pdflatex -interaction nonstopmode -output-directory %o %f"
+     "biber %b"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"))
+#+end_src
+
 ** Org-babel Languages
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
 #+name: babel_languages
@@ -634,6 +645,11 @@ In order to use active code in org-mode, you must define which programming langu
                                  (shell . t)))
 #+end_src
 ** Appearance
+*** Single Space Between Headline and Tags
+I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
+#+begin_src elisp :noweb-ref org_customize
+  (org-tags-column 0)
+#+end_src
 *** Use "Clean View"
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
 #+begin_src elisp :noweb-ref org_customize
@@ -644,6 +660,15 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 #+begin_src elisp :noweb-ref org_customize
   (org-src-tab-acts-natively t)
  #+end_src
+*** Change TODO Keyword Colors
+Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
+#+begin_src elisp :noweb-ref org_customize
+  (org-todo-keyword-faces
+   '(("TODO" . org-warning)
+     ("WAITING" . "yellow")
+     ("CANCELED" . (:foreground "blue" :weight bold))
+     ("DONE" . org-done)))
+#+end_src
 *** Change Bullets to Look Like Spacemacs
 I was envious of the org-mode look in Spacemacs and discovered that the bullets that are used in Spacemacs can be achieved by using the ~org-bullets~ package and leaving it on the default settings.
 #+begin_src emacs-lisp :tangle yes

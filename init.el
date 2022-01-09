@@ -115,6 +115,10 @@
   :config
   (setq nyan-wavy-trail t))
 
+(use-package c-mode
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
+
 (use-package numpydoc
   :ensure t
   :bind (:map python-mode-map
@@ -221,6 +225,10 @@
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
+  :ensure t)
+
+(use-package use-package-ensure-system-package
+  :if (not (file-exists-p "~/runemacs.bat")) 
   :ensure t)
 
 (use-package eshell
@@ -363,6 +371,17 @@
   :ensure t
   :defer t)
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+  :config
+  (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
+  (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
+  (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
+  (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
+  (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
+  (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+
 ;; Turn on multiple cursors for editing multiple points at the same time.
 (use-package multiple-cursors
   :ensure t
@@ -386,52 +405,28 @@
   :ensure org-plus-contrib
   :hook (org-mode . turn-on-flyspell)
   :custom
-  (org-startup-indented t)
-  (org-src-tab-acts-natively t)
-  ;; Show org-mode the default directory in which to keep org-mode files
   (org-directory "~/Dropbox/gtd")
-
-  ;; Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-  (org-todo-keyword-faces
-        '(("TODO" . org-warning)
-          ("WAITING" . "yellow")
-          ("CANCELED" . (:foreground "blue" :weight bold))
-          ("DONE" . org-done)))
-
-  ;; Keep only a single space between the headline and the tag
-  (org-tags-column 0)
-
-  ;; Don't inherit project tags
-  (org-tags-exclude-from-inheritance '("project"))
-
-  ;; Place all notes captured that are not filed into the default inbox file
   (org-default-notes-file (concat org-directory "/inbox.org"))
-
-  ;; In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
-
-  ;; The following will allow for refiling org-mode tasks at the top of a file.
-  ;; Setting this will also require turning off completing the path in steps if ivy-mode autocompletiion is used.
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
-
-  ;; Setting this variable allows for refiling tasks under a new heading on the fly
-  (org-refile-allow-creating-parent-nodes (quote confirm))
-
-  ;; Define a stuck project as any headline with the project keyword which has no TODO item below it.
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-tags-exclude-from-inheritance '("project"))
   (org-stuck-projects
    '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
-
-  ;; Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
-  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-
-  ;; Use biblatex instead of bibtex
   (org-latex-pdf-process
-    '("pdflatex -interaction nonstopmode -output-directory %o %f"
-      "biber %b"
-      "pdflatex -interaction nonstopmode -output-directory %o %f"
-      "pdflatex -interaction nonstopmode -output-directory %o %f"))
-
+   '("pdflatex -interaction nonstopmode -output-directory %o %f"
+     "biber %b"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"))
+  (org-tags-column 0)
+  (org-startup-indented t)
+  (org-src-tab-acts-natively t)
+  (org-todo-keyword-faces
+   '(("TODO" . org-warning)
+     ("WAITING" . "yellow")
+     ("CANCELED" . (:foreground "blue" :weight bold))
+     ("DONE" . org-done))) 
   :config
 
   ;; Wrap lines at window edge in org-mode
@@ -575,6 +570,8 @@
   :defer t
   :after org)
 
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+
 (use-package which-key
   :ensure t
   :config
@@ -588,24 +585,3 @@
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
-
-(use-package c-mode
-  :mode ("\\.c\\'"
-         "\\.ino\\'"))
-
-(use-package use-package-ensure-system-package
-  :if (not (file-exists-p "~/runemacs.bat")) 
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t
-  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
-  :config
-  (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
-  (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
-  (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
-  (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
-
-(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
