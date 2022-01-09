@@ -528,17 +528,9 @@
   :commands org-mind-map-write
   :init
   (require 'ox-org)
-  ;; Uncomment the below if 'ensure-system-packages` is installed
-  ;;:ensure-system-package (gvgen . graphviz)
+  :ensure-system-package (gvgen . graphviz)
   :custom
-  (org-mind-map-engine "dot")       ; Default. Directed Graph
-  ;; (org-mind-map-engine "neato")  ; Undirected Spring Graph
-  ;; (org-mind-map-engine "twopi")  ; Radial Layout
-  ;; (org-mind-map-engine "fdp")    ; Undirected Spring Force-Directed
-  ;; (org-mind-map-engine "sfdp")   ; Multiscale version of fdp for the layout of large graphs
-  ;; (org-mind-map-engine "twopi")  ; Radial layouts
-  ;; (org-mind-map-engine "circo")  ; Circular Layout
-  )
+  (org-mind-map-engine "dot"))
 
 (use-package org-ref
   :ensure t

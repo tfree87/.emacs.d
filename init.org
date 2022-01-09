@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 10:36:11 thomas>
+#+date: Time-stamp: <2022-01-09 10:39:52 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -719,17 +719,9 @@ Turn any ~org-mode~ buffer into a mind map in various output formats.
     :commands org-mind-map-write
     :init
     (require 'ox-org)
-    ;; Uncomment the below if 'ensure-system-packages` is installed
-    ;;:ensure-system-package (gvgen . graphviz)
+    :ensure-system-package (gvgen . graphviz)
     :custom
-    (org-mind-map-engine "dot")       ; Default. Directed Graph
-    ;; (org-mind-map-engine "neato")  ; Undirected Spring Graph
-    ;; (org-mind-map-engine "twopi")  ; Radial Layout
-    ;; (org-mind-map-engine "fdp")    ; Undirected Spring Force-Directed
-    ;; (org-mind-map-engine "sfdp")   ; Multiscale version of fdp for the layout of large graphs
-    ;; (org-mind-map-engine "twopi")  ; Radial layouts
-    ;; (org-mind-map-engine "circo")  ; Circular Layout
-    )
+    (org-mind-map-engine "dot"))
 #+end_src
 ** Org-ref
 A reference manager in org-mode.
@@ -800,6 +792,10 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :defer t
     :after org)
 #+end_src
+* Tramp
+#+begin_src elisp :tangle yes
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+#+end_src
 * Which-key
 ~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes
@@ -813,10 +809,6 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     (which-key-mode)
     ;; Set up which-key to use the side window preferrably
     (which-key-setup-side-window-right-bottom))
-#+end_src
-* Tramp
-#+begin_src elisp :tangle yes
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 #+end_src
 * Performance Optimization End
 #+begin_src emacs-lisp :tangle yes
