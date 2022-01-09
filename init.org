@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-05 18:37:57 thomas>
+#+date: Time-stamp: <2022-01-09 10:22:01 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -313,6 +313,7 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
 ** Manage Docker Containers
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
+    :if (executable-find "docker")
     :ensure t
     :bind ("C-c d" . docker))
 #+end_src

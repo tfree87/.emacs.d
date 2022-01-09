@@ -216,6 +216,7 @@
   :load-path "~/.emacs.d/elisp")
 
 (use-package docker
+  :if (executable-find "docker")
   :ensure t
   :bind ("C-c d" . docker))
 
