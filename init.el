@@ -54,21 +54,21 @@
 (setq sentence-end-double-space nil)
 
 (use-package all-the-icons
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-    :ensure t)
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :ensure t)
 
 (use-package all-the-icons-dired
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-    :ensure t
-    :hook
-    (dired-mode . all-the-icons-dired-mode))
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :ensure t
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :init (all-the-icons-ibuffer-mode 1))
 
-  (use-package all-the-icons-ivy-rich
+(use-package all-the-icons-ivy-rich
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :config
@@ -255,8 +255,6 @@
   (eshell-where-to-jump 'begin)
   (eshell-review-quick-commands nil))
 
-;; Do not use a pager in Eshell because Emacs can do the paging
-
 (setq eshell-prompt-function
       (lambda ()
         (concat
@@ -388,12 +386,10 @@
   :ensure org-plus-contrib
   :hook (org-mode . turn-on-flyspell)
   :custom
-
+  (org-startup-indented t)
+  (org-src-tab-acts-natively t)
   ;; Show org-mode the default directory in which to keep org-mode files
   (org-directory "~/Dropbox/gtd")
-
-  ;; Start all emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files.
-  (org-startup-indented t)
 
   ;; Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
   (org-todo-keyword-faces
@@ -407,9 +403,6 @@
 
   ;; Don't inherit project tags
   (org-tags-exclude-from-inheritance '("project"))
-
-  ;; This will allow for source code blocks in emacs org-mode to be internally indented to clean up the code.
-  (org-src-tab-acts-natively t)
 
   ;; Place all notes captured that are not filed into the default inbox file
   (org-default-notes-file (concat org-directory "/inbox.org"))
@@ -537,9 +530,6 @@
   :defer t
   :after org)
 
-;; Org-Roam basic configuration
-;;(setq org-directory (concat (getenv "HOME") "/Dropbox/org-roam/"))
-
 (use-package org-roam
   :ensure t
   :defer t
@@ -552,24 +542,25 @@
   (org-roam-setup)
   (setq org-roam-dailies-directory "daily/")
   (setq org-roam-capture-templates
-    '(("d" "default" plain "%?"
-       :target (file+head "${slug}.org"
-       "#+title: ${title}\n")
-       :unnarrowed t)))
+        '(("d" "default" plain "%?"
+           :target (file+head "${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
-    '(("d" "default" entry
-       "* %?"
-       :target (file+head "%<%Y-%m-%d>.org"
-                          "#+title: %<%Y-%m-%d>\n"))))
-  :bind (("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n r" . org-roam-node-random)		    
-         (:map org-mode-map
-               (("C-c n i" . org-roam-node-insert)
-                ("C-c n o" . org-id-get-create)
-                ("C-c n t" . org-roam-tag-add)
-                ("C-c n a" . org-roam-alias-add)
-                ("C-c n l" . org-roam-buffer-toggle)))))
+        '(("d" "default" entry
+           "* %?"
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n"))))
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n g" . org-roam-graph)
+   ("C-c n r" . org-roam-node-random)		    
+   (:map org-mode-map
+         (("C-c n i" . org-roam-node-insert)
+          ("C-c n o" . org-id-get-create)
+          ("C-c n t" . org-roam-tag-add)
+          ("C-c n a" . org-roam-alias-add)
+          ("C-c n l" . org-roam-buffer-toggle)))))
 
 (use-package pdf-tools
   :ensure t
@@ -599,11 +590,22 @@
 )
 
 (use-package c-mode
-  :mode (("\\.c\\'" . c-mode)
-         ("\\.ino\\'" . c-mode)))
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
 
 (use-package use-package-ensure-system-package
   :if (not (file-exists-p "~/runemacs.bat")) 
   :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+  :config
+  (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
+  (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
+  (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
+  (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
+  (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
+  (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))

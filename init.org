@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 10:39:52 thomas>
+#+date: Time-stamp: <2022-01-09 14:23:30 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -16,8 +16,8 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 * Customized Variables
 Keep all customized variables in a separate file.
 #+begin_src emacs-lisp :tangle yes
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
 #+end_src
 * Package Management
 #+begin_src emacs-lisp :tangle yes
@@ -99,22 +99,22 @@ Emacs when navigating expects sentences to end with a double space after a perio
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
 *** All the icons
 #+begin_src emacs-lisp :tangle yes
-    (use-package all-the-icons
-      :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-      :ensure t)
+  (use-package all-the-icons
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+    :ensure t)
   
   (use-package all-the-icons-dired
-      :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-      :ensure t
-      :hook
-      (dired-mode . all-the-icons-dired-mode))
+    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+    :ensure t
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
   
   (use-package all-the-icons-ibuffer
     :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :init (all-the-icons-ibuffer-mode 1))
   
-    (use-package all-the-icons-ivy-rich
+  (use-package all-the-icons-ivy-rich
     :if (and window-system (not (file-exists-p "~/runemacs.bat")))
     :ensure t
     :config
@@ -177,8 +177,8 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 ** C
 #+begin_src elisp :tangle yes
   (use-package c-mode
-    :mode (("\\.c\\'" . c-mode)
-           ("\\.ino\\'" . c-mode)))
+    :mode ("\\.c\\'"
+           "\\.ino\\'"))
 #+end_src
 ** Numpydoc
 #+begin_src emacs-lisp :tangle yes
@@ -354,14 +354,11 @@ ensure-system-package will install packages on the computer system so that Emacs
     (eshell-smart-space-goes-to-end t)
     (eshell-where-to-jump 'begin)
     (eshell-review-quick-commands nil))
-  
-  ;; Do not use a pager in Eshell because Emacs can do the paging
-  
   #+end_src
 ** Eshell Visual Commands
 Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
 #+name: eshell_visual_commands
-#+begin_src elisp :noweb yes
+#+begin_src elisp
   (add-to-list 'eshell-visual-commands "htop")
   (add-to-list 'eshell-visual-commands "ipython")
   (add-to-list 'eshell-visual-commands "rclone")
@@ -372,7 +369,7 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 ** Eshell Aliases
 Below are a list of command-line aliases for use in eshell.
 #+name: eshell_aliases
-#+begin_src elisp :noweb yes
+#+begin_src elisp
   (eshell/alias "ff" "find-file $1")
   (eshell/alias "emacs" "find-file $1")
   (eshell/alias "untar" "tar -zxvf")
@@ -411,12 +408,12 @@ See the =~/gnus.el= file for configuration information.
 * Gnuplot-mode
 Gnuplot mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 #+begin_src emacs-lisp :tangle yes
-      (use-package gnuplot
-        :ensure t
-        :defer t)
-      (use-package gnuplot-mode
-        :ensure t
-        :defer t)
+  (use-package gnuplot
+    :ensure t
+    :defer t)
+  (use-package gnuplot-mode
+    :ensure t
+    :defer t)
 #+end_src
 * ibuffer
 #+begin_src emacs-lisp :tangle yes
@@ -513,6 +510,19 @@ To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed f
     :ensure t
     :defer t)
 #+end_src
+* Markdown Mode
+#+begin_src elisp :tangle yes
+  (use-package markdown-mode
+    :ensure t
+    :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+    :config
+    (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
+    (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
+    (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
+    (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
+    (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
+    (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+#+end_src
 * Multiple Cursors
 Multiple cursors allows for editing emacs buffers at multiple locations simultaneously at the same time. This is great for things where multiple lines need the same text edited or added.
 #+begin_src emacs-lisp :tangle yes
@@ -526,7 +536,6 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     ("C-<" . 'mc/mark-previous-like-this)
     ("C-c C-<" . 'mc/mark-all-like-this))
 #+end_src
-
 * Org-mode
 ~org-mode~ is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use ~org-mode~ for the following:
 - Organizing my tasks and projects similar to David Allen's "Getting Things Done" method
@@ -547,12 +556,9 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     :ensure org-plus-contrib
     :hook (org-mode . turn-on-flyspell)
     :custom
-  
+    <<org_customize>>
     ;; Show org-mode the default directory in which to keep org-mode files
     (org-directory "~/Dropbox/gtd")
-  
-    ;; Start all emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files.
-    (org-startup-indented t)
   
     ;; Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
     (org-todo-keyword-faces
@@ -566,9 +572,6 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
   
     ;; Don't inherit project tags
     (org-tags-exclude-from-inheritance '("project"))
-  
-    ;; This will allow for source code blocks in emacs org-mode to be internally indented to clean up the code.
-    (org-src-tab-acts-natively t)
   
     ;; Place all notes captured that are not filed into the default inbox file
     (org-default-notes-file (concat org-directory "/inbox.org"))
@@ -612,7 +615,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 ** Org-babel Languages
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
 #+name: babel_languages
-#+begin_src elisp :noweb yes
+#+begin_src elisp
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
@@ -631,6 +634,16 @@ In order to use active code in org-mode, you must define which programming langu
                                  (shell . t)))
 #+end_src
 ** Appearance
+*** Use "Clean View"
+Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
+#+begin_src elisp :noweb-ref org_customize
+  (org-startup-indented t)
+#+end_src
+*** Native Tabs
+This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
+#+begin_src elisp :noweb-ref org_customize
+  (org-src-tab-acts-natively t)
+ #+end_src
 *** Change Bullets to Look Like Spacemacs
 I was envious of the org-mode look in Spacemacs and discovered that the bullets that are used in Spacemacs can be achieved by using the ~org-bullets~ package and leaving it on the default settings.
 #+begin_src emacs-lisp :tangle yes
@@ -664,7 +677,6 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     :config
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
-
 ** Org-agenda
 Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loading time. I also prefer to have the current day at the beginning of the week so all current items are at the top of the agenda and I can look 6 days into the future.
 #+begin_src emacs-lisp :tangle yes
@@ -687,7 +699,7 @@ Set up templates for making capturing tasks with ~org-capture~ easier.
 *** Org-capture Templates
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
-#+begin_src elisp :noweb yes
+#+begin_src elisp
   (setq org-capture-templates
         '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
            "* %? :project:")
@@ -734,9 +746,6 @@ A reference manager in org-mode.
 ** Org-roam
 ~org-roam~ adds features to make linking org notes easier and provided a database file to connect all the notes together.
 #+begin_src emacs-lisp :tangle yes
-  ;; Org-Roam basic configuration
-  ;;(setq org-directory (concat (getenv "HOME") "/Dropbox/org-roam/"))
-  
   (use-package org-roam
     :ensure t
     :defer t
@@ -749,24 +758,25 @@ A reference manager in org-mode.
     (org-roam-setup)
     (setq org-roam-dailies-directory "daily/")
     (setq org-roam-capture-templates
-      '(("d" "default" plain "%?"
-         :target (file+head "${slug}.org"
-         "#+title: ${title}\n")
-         :unnarrowed t)))
+          '(("d" "default" plain "%?"
+             :target (file+head "${slug}.org"
+                                "#+title: ${title}\n")
+             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
-      '(("d" "default" entry
-         "* %?"
-         :target (file+head "%<%Y-%m-%d>.org"
-                            "#+title: %<%Y-%m-%d>\n"))))
-    :bind (("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n r" . org-roam-node-random)		    
-           (:map org-mode-map
-                 (("C-c n i" . org-roam-node-insert)
-                  ("C-c n o" . org-id-get-create)
-                  ("C-c n t" . org-roam-tag-add)
-                  ("C-c n a" . org-roam-alias-add)
-                  ("C-c n l" . org-roam-buffer-toggle)))))
+          '(("d" "default" entry
+             "* %?"
+             :target (file+head "%<%Y-%m-%d>.org"
+                                "#+title: %<%Y-%m-%d>\n"))))
+    :bind
+    (("C-c n f" . org-roam-node-find)
+     ("C-c n g" . org-roam-graph)
+     ("C-c n r" . org-roam-node-random)		    
+     (:map org-mode-map
+           (("C-c n i" . org-roam-node-insert)
+            ("C-c n o" . org-id-get-create)
+            ("C-c n t" . org-roam-tag-add)
+            ("C-c n a" . org-roam-alias-add)
+            ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
 * PDF Tools
 PDF Tools is a faster and more feature-rich than the built in DocView.
