@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 16:19:05 thomas>
+#+date: Time-stamp: <2022-01-09 16:22:13 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -355,7 +355,7 @@ ensure-system-package will install packages on the computer system so that Emacs
 #+end_src
 * Eshell
 ** Set up Eshell
-#+begin_src emacs-lisp :tangle yes :noweb tangle
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package eshell
     :defer t
     :hook
@@ -566,7 +566,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 - Publishing LaTeX documents in a simpler and faster way
 - Saving reusable code snippets with documentation that can be executed from within Emacs as how this file was created.
 ** Initial Setup
-#+begin_src emacs-lisp :tangle yes :noweb tangle
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
     :mode (("\\.org$" . org-mode))
     :bind
@@ -741,7 +741,7 @@ Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loadi
   #+end_src
 ** Org-capture
 Set up templates for making capturing tasks with ~org-capture~ easier.
-#+begin_src emacs-lisp :tangle yes :noweb tangle
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org-capture
   :ensure nil
   :after org
