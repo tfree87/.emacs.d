@@ -610,4 +610,8 @@
   :mode (("\\.c\\'" . c-mode)
          ("\\.ino\\'" . c-mode)))
 
+(use-package use-package-ensure-system-package
+  :if (not (file-exists-p "~/runemacs.bat")) 
+  :ensure t)
+
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
