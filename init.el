@@ -125,11 +125,6 @@
   :mode ("\\.c\\'"
          "\\.ino\\'"))
 
-(use-package numpydoc
-  :ensure t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
-
 (use-package elpy
   :ensure t
   :defer t
@@ -156,6 +151,11 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+(use-package numpydoc
+  :ensure t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
@@ -164,24 +164,24 @@
   :defer t
   :init (global-company-mode))
 
+(use-package company-auctex
+  :ensure t
+  :defer t)
+
 (use-package company-quickhelp
   :ensure t
   :defer t
   :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
-
-(use-package company-anaconda
-  :ensure t
-  :defer t)
-
-(use-package company-auctex
-  :ensure t
-  :defer t)
 
 (use-package company-ledger
   :ensure t
   :defer t)
 
 (use-package company-org-block
+  :ensure t
+  :defer t)
+
+(use-package company-anaconda
   :ensure t
   :defer t)
 
@@ -424,7 +424,7 @@
      ("WAITING" . "yellow")
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
-  (setq org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
   :config
   (add-hook 'org-mode-hook #'toggle-truncate-lines)
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
@@ -565,7 +565,7 @@
   :ensure t
   :custom
   (which-key-show-early-on-C-h t)
-  (global-set-key (kbd "<f4>") 'which-key-show-major-mode
+  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
   :config
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
