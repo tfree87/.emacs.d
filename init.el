@@ -24,8 +24,7 @@
 (require 'package)
 (custom-set-variables '(package-archives
                         '(("melpa" . "https://melpa.org/packages/")
-                          ("elpa" . "https://elpa.gnu.org/packages/")
-                          ("org" . "http://orgmode.org/elpa/"))))
+                          ("elpa" . "https://elpa.gnu.org/packages/"))))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -42,7 +41,6 @@
   :disabled t
   :ensure t
   :hook
-  ;; To disable collection of benchmark data after init is done.
   (after-init . benchmark-init/deactivate))
 
 (add-hook 'before-save-hook 'time-stamp)
@@ -100,8 +98,9 @@
   :if window-system
   :ensure t
   :after spaceline
+  :custom
+  (spaceline-all-the-icons-separator-type 'arrow)
   :config
-  (setq spaceline-all-the-icons-separator-type 'arrow)
   (spaceline-all-the-icons-theme)
   (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
   (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
@@ -119,17 +118,12 @@
   :if window-system
   :ensure t
   :commands nyan-mode
-  :config
+  :custom
   (setq nyan-wavy-trail t))
 
 (use-package c-mode
   :mode ("\\.c\\'"
          "\\.ino\\'"))
-
-(use-package numpydoc
-  :ensure t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
 
 (use-package elpy
   :ensure t
@@ -142,7 +136,12 @@
   (python-shell-interpreter-args "-i --simple-prompt")
   (elpy-formatter 'black)
   :config
-  <<elpy_config>>)
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  (add-hook 'elpy-mode-hook (lambda ()
+                                (add-hook 'before-save-hook
+                                          'elpy-black-fix-code nil t))))
 
 (use-package flycheck
   :ensure t
@@ -152,6 +151,11 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+(use-package numpydoc
+  :ensure t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
@@ -159,27 +163,27 @@
   :ensure t
   :defer t
   :init (global-company-mode))
-;; Documentation popups for Company
+
+(use-package company-auctex
+  :ensure t
+  :defer t)
+
 (use-package company-quickhelp
   :ensure t
   :defer t
   :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
-;; Add autocompletion for python
+
+(use-package company-ledger
+  :ensure t
+  :defer t)
+
+(use-package company-org-block
+  :ensure t
+  :defer t)
+
 (use-package company-anaconda
   :ensure t
   :defer t)
-;; Add autocompletion for AUCTeX
-(use-package company-auctex
- :ensure t
- :defer t)
-;; Add autocompletion for Ledger
-(use-package company-ledger
- :ensure t
- :defer t)
-;; Add autocompletion for org-mode blocks
-(use-package company-org-block
- :ensure t
- :defer t)
 
 (use-package bbdb
   :ensure t
@@ -190,11 +194,10 @@
   :custom
   (bbdb-file "~/Dropbox/bbdb")
   (bbdb-use-pop-up 'horiz)
+  (bbdb-mua-update-interactive-p '(query . create))
+  (bbdb-message-all-addresses t)
   :config
-  (bbdb-mua-auto-update-init 'gnus 'message)
-  (setq bbdb-mua-update-interactive-p '(query . create))
-  ;; Look at every address in a message, not just the first
-  (setq bbdb-message-all-addresses t))
+  (bbdb-mua-auto-update-init 'gnus 'message))
 
 (use-package deft
   :after org
@@ -210,7 +213,6 @@
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
 
-;; Copy files from one pane to another
 (setq dired-dwim-target t)
 
 (use-package dired+
@@ -235,25 +237,37 @@
   :defer t
   :hook
   (eshell-mode . (lambda ()
-                   ;; Run interactive shell commands in the Emacs ansi-term
                    (add-to-list 'eshell-visual-commands "htop")
                    (add-to-list 'eshell-visual-commands "ipython")
                    (add-to-list 'eshell-visual-commands "rclone")
                    (add-to-list 'eshell-visual-commands "ssh")
                    (add-to-list 'eshell-visual-commands "tail")
                    (add-to-list 'eshell-visual-commands "top")
-                   ;; Set aliases for commands in eshell
                    (eshell/alias "ff" "find-file $1")
                    (eshell/alias "emacs" "find-file $1")
                    (eshell/alias "untar" "tar -zxvf")
                    (eshell/alias "cpv" "rsync -ah --info=progress2")
                    (eshell/alias "ll" "ls -AlohG")))
+  :custom
+  (eshell-error-if-no-glob t)
+  (eshell-hist-ignoredups t)
+  (eshell-save-history-on-exit t)
+  (eshell-destroy-buffer-when-process-dies t)
+  (eshell-prompt-function
+   (lambda ()
+     (concat
+      (propertize "┌─[" 'face `(:foreground "green"))
+      (propertize (user-login-name) 'face `(:foreground "red"))
+      (propertize "@" 'face `(:foreground "green"))
+      (propertize (system-name) 'face `(:foreground "blue"))
+      (propertize "]──[" 'face `(:foreground "green"))
+      (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
+      (propertize "]──[" 'face `(:foreground "green"))
+      (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+      (propertize "]\n" 'face `(:foreground "green"))
+      (propertize "└─>" 'face `(:foreground "green"))
+      (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green")))))  
   :config
-  (setq eshell-error-if-no-glob t
-        ;; Ignore duplicate history entries
-        eshell-hist-ignoredups t
-        eshell-save-history-on-exit t
-        eshell-destroy-buffer-when-process-dies t)
   (setenv "PAGER" "cat"))
 
 (use-package em-smart
@@ -262,22 +276,6 @@
   (eshell-smart-space-goes-to-end t)
   (eshell-where-to-jump 'begin)
   (eshell-review-quick-commands nil))
-
-(setq eshell-prompt-function
-      (lambda ()
-        (concat
-         (propertize "┌─[" 'face `(:foreground "green"))
-         (propertize (user-login-name) 'face `(:foreground "red"))
-         (propertize "@" 'face `(:foreground "green"))
-         (propertize (system-name) 'face `(:foreground "blue"))
-         (propertize "]──[" 'face `(:foreground "green"))
-         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-         (propertize "]──[" 'face `(:foreground "green"))
-         (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-         (propertize "]\n" 'face `(:foreground "green"))
-         (propertize "└─>" 'face `(:foreground "green"))
-         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
-         )))
 
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -299,9 +297,9 @@
   ;; Start ibuffer with default groupings
   (ibuffer-mode .  (lambda ()
                           (ibuffer-switch-to-saved-filter-groups "default")))
-  :config
+  :custom
   ;; Create default groupings for ibuffer
-  (setq ibuffer-saved-filter-groups
+  (ibuffer-saved-filter-groups
         (quote (("default"
                  ("Dired" (mode . dired-mode))
                  ("Emacs" (or
@@ -332,10 +330,11 @@
 
 (use-package ivy
   :ensure t
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-count-format "(%d/%d) ")
   :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) "))
+  (ivy-mode 1))
 
 (use-package counsel
   :bind
@@ -382,7 +381,6 @@
   (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
   (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 
-;; Turn on multiple cursors for editing multiple points at the same time.
 (use-package multiple-cursors
   :ensure t
   :defer t
@@ -425,13 +423,10 @@
    '(("TODO" . org-warning)
      ("WAITING" . "yellow")
      ("CANCELED" . (:foreground "blue" :weight bold))
-     ("DONE" . org-done))) 
+     ("DONE" . org-done)))
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
   :config
-
-  ;; Wrap lines at window edge in org-mode
   (add-hook 'org-mode-hook #'toggle-truncate-lines)
-
-  ;; Load languages to use in org-babel
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
@@ -447,10 +442,7 @@
                                  (plantuml . t)
                                  (R . t)
                                  (sed . t)
-                                 (shell . t)))
-  ;; This package will allow for the use of the :ignore: tag that can be used to remove headers from exported content.
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines)))
+                                 (shell . t))))
 
 (use-package org-bullets
   :if window-system
@@ -462,15 +454,15 @@
 (use-package calfw
   :disabled t
   :ensure t
-  :config
-  (setq cfw:fchar-junction ?╋
-        cfw:fchar-vertical-line ?┃
-        cfw:fchar-horizontal-line ?━
-        cfw:fchar-left-junction ?┣
-        cfw:fchar-right-junction ?┫
-        cfw:fchar-top-junction ?┯
-        cfw:fchar-top-left-corner ?┏
-        cfw:fchar-top-right-corner ?┓))
+  :custom
+  (cfw:fchar-junction ?╋)
+  (cfw:fchar-vertical-line ?┃)
+  (cfw:fchar-horizontal-line ?━)
+  (cfw:fchar-left-junction ?┣)
+  (cfw:fchar-right-junction ?┫)
+  (cfw:fchar-top-junction ?┯)
+  (cfw:fchar-top-left-corner ?┏)
+  (cfw:fchar-top-right-corner ?┓))
 
 (use-package calfw-org
   :disabled t
@@ -486,19 +478,18 @@
     (org-agenda-start-on-weekday nil))
 
 (use-package org-capture
-:ensure nil
-:after org
-:config
-;; Set the default org-capture-templates to make creating an org-headline quick and easy
-(setq org-capture-templates
-      '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-         "* %? :project:")
-        ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-         "* %?\n%x")
-        ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-         "* %?\n%^{Scheduled}t\n%x")
-        ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-         "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
+  :ensure nil
+  :after org
+  :custom
+  (org-capture-templates
+   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+      "* %? :project:")
+     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+      "* %?\n%x")
+     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+      "* %?\n%^{Scheduled}t\n%x")
+     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
 
 (use-package org-download
   :after org
@@ -507,8 +498,6 @@
         (("s-Y" . org-download-screenshot)
          ("s-y" . org-download-yank))))
 
-;; This is an Emacs package that creates graphviz directed graphs from
-;; the headings of an org file
 (use-package org-mind-map
   :ensure t
   :after org
@@ -534,17 +523,18 @@
   (org-roam-directory (file-truename "~/Dropbox/org-roam"))
   :config
   (org-roam-setup)
-  (setq org-roam-dailies-directory "daily/")
-  (setq org-roam-capture-templates
-        '(("d" "default" plain "%?"
-           :target (file+head "${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)))
-  (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry
-           "* %?"
-           :target (file+head "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d>\n"))))
+  :custom
+  (org-roam-dailies-directory "daily/")
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "${slug}.org"
+                         "#+title: ${title}\n")
+      :unnarrowed t)))
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n"))))
   :bind
   (("C-c n f" . org-roam-node-find)
    ("C-c n g" . org-roam-graph)
@@ -562,25 +552,23 @@
   :config
   (pdf-loader-install :no-query))
 
-(setq org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
-
 (use-package plantuml-mode
   :ensure t
   :defer t
   :after org)
 
-(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+(use-package tramp
+  :config
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 
 (use-package which-key
   :ensure t
-  :config
-  ;; Type C-h during any key combination to pop-up which key
-  (setq which-key-show-early-on-C-h t)
-  ;; Use the <f4> key in any major mode to see the key bindings
+  :custom
+  (which-key-show-early-on-C-h t)
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
-  (which-key-mode)
-  ;; Set up which-key to use the side window preferrably
-  (which-key-setup-side-window-right-bottom))
+  :config
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )

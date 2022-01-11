@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-09 16:22:13 thomas>
+#+date: Time-stamp: <2022-01-10 22:47:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -49,8 +49,7 @@ Sometimes I am running Emacs on a system that does not have the latest version o
   (require 'package)
   (custom-set-variables '(package-archives
                           '(("melpa" . "https://melpa.org/packages/")
-                            ("elpa" . "https://elpa.gnu.org/packages/")
-                            ("org" . "http://orgmode.org/elpa/"))))
+                            ("elpa" . "https://elpa.gnu.org/packages/"))))
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -73,7 +72,6 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
       :disabled t
       :ensure t
       :hook
-      ;; To disable collection of benchmark data after init is done.
       (after-init . benchmark-init/deactivate))
   #+end_src
 * General Configuration
@@ -169,8 +167,9 @@ Adds icons to the mode line using ~all-the-icons~. This is currently disabled be
     :if window-system
     :ensure t
     :after spaceline
+    :custom
+    (spaceline-all-the-icons-separator-type 'arrow)
     :config
-    (setq spaceline-all-the-icons-separator-type 'arrow)
     (spaceline-all-the-icons-theme)
     (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
     (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
@@ -197,7 +196,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     :if window-system
     :ensure t
     :commands nyan-mode
-    :config
+    :custom
     (setq nyan-wavy-trail t))
 #+end_src
 * Coding
@@ -258,6 +257,13 @@ Magit provides an interface to Git through Emacs.
     :ensure t
     :bind ("C-x g" . magit-status))
 #+end_src
+** Numpydoc
+#+begin_src emacs-lisp :tangle yes
+  (use-package numpydoc
+    :ensure t
+    :bind (:map python-mode-map
+                ("C-c C-n" . numpydoc-generate)))
+#+end_src
 ** Paren Mode
 Paren Mode shows matching parenthesis making it easy to see which set of parentheses are closed.
 #+begin_src emacs-lisp :tangle yes
@@ -271,28 +277,38 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :ensure t
     :defer t
     :init (global-company-mode))
-  ;; Documentation popups for Company
+ #+end_src
+** AUCTeX Autocompletion
+#+begin_src elisp :tangle yes
+  (use-package company-auctex
+    :ensure t
+    :defer t)
+#+end_src
+** Documentation Popups for Company
+#+begin_src elisp :tangle yes
   (use-package company-quickhelp
     :ensure t
     :defer t
     :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
-  ;; Add autocompletion for python
+#+end_src
+** Ledger Autocompletion
+#+begin_src elisp :tangle yes
+  (use-package company-ledger
+    :ensure t
+    :defer t)
+#+end_src
+** Org-mode Blocks Autocompletion
+#+begin_src elisp :tangle yes
+  (use-package company-org-block
+    :ensure t
+    :defer t)  
+#+end_src
+** Python Autocompletion
+#+begin_src elisp :tangle yes
   (use-package company-anaconda
     :ensure t
     :defer t)
-  ;; Add autocompletion for AUCTeX
-  (use-package company-auctex
-   :ensure t
-   :defer t)
-  ;; Add autocompletion for Ledger
-  (use-package company-ledger
-   :ensure t
-   :defer t)
-  ;; Add autocompletion for org-mode blocks
-  (use-package company-org-block
-   :ensure t
-   :defer t)  
-#+end_src
+  #+end_src
 * BBDB
 Tbe Big Brother DataBase (BBDB) stores contact information in a text file and works well with Emacs mail readers and org-mode. 
 #+begin_src emacs-lisp :tangle yes
@@ -305,11 +321,10 @@ Tbe Big Brother DataBase (BBDB) stores contact information in a text file and wo
     :custom
     (bbdb-file "~/Dropbox/bbdb")
     (bbdb-use-pop-up 'horiz)
+    (bbdb-mua-update-interactive-p '(query . create))
+    (bbdb-message-all-addresses t)
     :config
-    (bbdb-mua-auto-update-init 'gnus 'message)
-    (setq bbdb-mua-update-interactive-p '(query . create))
-    ;; Look at every address in a message, not just the first
-    (setq bbdb-message-all-addresses t))
+    (bbdb-mua-auto-update-init 'gnus 'message))
 #+end_src
 * Deft
 Deft is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
@@ -333,7 +348,6 @@ The following customizations make emacs dired mode behave in a similar fashion t
 ** Move/Rename/Copy Files to Another Pane
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
  #+begin_src emacs-lisp :tangle yes
-   ;; Copy files from one pane to another
    (setq dired-dwim-target t)
  #+end_src
 ** Use Dired+ for Windows
@@ -374,18 +388,17 @@ Eshell is an operating system independent command line shell that uses elisp to 
     :defer t
     :hook
     (eshell-mode . (lambda ()
-                     ;; Run interactive shell commands in the Emacs ansi-term
                      <<eshell_visual_commands>>
-                     ;; Set aliases for commands in eshell
                      <<eshell_aliases>>))
+    :custom
+    (eshell-error-if-no-glob t)
+    (eshell-hist-ignoredups t)
+    (eshell-save-history-on-exit t)
+    (eshell-destroy-buffer-when-process-dies t)
+    <<eshell_custom>>
     :config
-    (setq eshell-error-if-no-glob t
-          ;; Ignore duplicate history entries
-          eshell-hist-ignoredups t
-          eshell-save-history-on-exit t
-          eshell-destroy-buffer-when-process-dies t)
     (setenv "PAGER" "cat"))
-  
+
   (use-package em-smart
     :defer t
     :custom
@@ -407,7 +420,7 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 ** Eshell Aliases
 Below are a list of command-line aliases for use in eshell.
 #+name: eshell_aliases
-#+begin_src elisp
+#+begin_src elisp :noweb-ref eshell_aliases
   (eshell/alias "ff" "find-file $1")
   (eshell/alias "emacs" "find-file $1")
   (eshell/alias "untar" "tar -zxvf")
@@ -415,22 +428,21 @@ Below are a list of command-line aliases for use in eshell.
   (eshell/alias "ll" "ls -AlohG")
 #+end_src
 ** Change Eshell Prompt to be More Informative
-#+begin_src emacs-lisp :tangle yes
-  (setq eshell-prompt-function
-        (lambda ()
-          (concat
-           (propertize "┌─[" 'face `(:foreground "green"))
-           (propertize (user-login-name) 'face `(:foreground "red"))
-           (propertize "@" 'face `(:foreground "green"))
-           (propertize (system-name) 'face `(:foreground "blue"))
-           (propertize "]──[" 'face `(:foreground "green"))
-           (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-           (propertize "]──[" 'face `(:foreground "green"))
-           (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-           (propertize "]\n" 'face `(:foreground "green"))
-           (propertize "└─>" 'face `(:foreground "green"))
-           (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
-           )))  
+#+begin_src emacs-lisp :noweb-ref eshell_custom
+  (eshell-prompt-function
+   (lambda ()
+     (concat
+      (propertize "┌─[" 'face `(:foreground "green"))
+      (propertize (user-login-name) 'face `(:foreground "red"))
+      (propertize "@" 'face `(:foreground "green"))
+      (propertize (system-name) 'face `(:foreground "blue"))
+      (propertize "]──[" 'face `(:foreground "green"))
+      (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
+      (propertize "]──[" 'face `(:foreground "green"))
+      (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+      (propertize "]\n" 'face `(:foreground "green"))
+      (propertize "└─>" 'face `(:foreground "green"))
+      (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green")))))  
   #+end_src
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled. 
@@ -464,9 +476,9 @@ ibuffer greatly improves the buffer-list in Emacs.
     ;; Start ibuffer with default groupings
     (ibuffer-mode .  (lambda ()
                             (ibuffer-switch-to-saved-filter-groups "default")))
-    :config
+    :custom
     ;; Create default groupings for ibuffer
-    (setq ibuffer-saved-filter-groups
+    (ibuffer-saved-filter-groups
           (quote (("default"
                    ("Dired" (mode . dired-mode))
                    ("Emacs" (or
@@ -500,11 +512,12 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
     :ensure t
+    :custom
+    (ivy-use-virtual-buffers t)
+    (ivy-count-format "(%d/%d) ")
     :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) "))
-  
+    (ivy-mode 1))
+
   (use-package counsel
     :bind
     ("M-x" . counsel-M-x)
@@ -512,12 +525,12 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
     :ensure t
     :config
     (counsel-mode))
-  
+
   (use-package swiper
     :bind
     ("C-s" . swiper)
     :ensure t)
-  
+
   (use-package ivy-rich
     :ensure t
     :after counsel
@@ -565,7 +578,6 @@ To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed f
 * Multiple Cursors
 Multiple cursors allows for editing emacs buffers at multiple locations simultaneously at the same time. This is great for things where multiple lines need the same text edited or added.
 #+begin_src emacs-lisp :tangle yes
-  ;; Turn on multiple cursors for editing multiple points at the same time.
   (use-package multiple-cursors
     :ensure t
     :defer t
@@ -594,15 +606,8 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     :custom
     <<org_customize>> 
     :config
-  
-    ;; Wrap lines at window edge in org-mode
-    (add-hook 'org-mode-hook #'toggle-truncate-lines)
-  
-    ;; Load languages to use in org-babel
-    <<babel_languages>>
-    ;; This package will allow for the use of the :ignore: tag that can be used to remove headers from exported content.
-    (require 'ox-extra)
-    (ox-extras-activate '(ignore-headlines)))
+    <<org_config>>
+    <<babel_languages>>)
 #+end_src
 ** Org-mode Directories
 *** Default Directory
@@ -638,6 +643,12 @@ I want to allow for refiling org-mode tasks at the top of a file. Setting this w
 Setting this variable allows for refiling tasks under a new heading on the fly.
 #+begin_src :noweb-ref org_customize
   (org-refile-allow-creating-parent-nodes (quote confirm))
+#+end_src
+** Exporting
+To remove headers labeled with the ~:ignore:~ tag, the following code needs to be implemented:
+#+begin_src elisp :nowweb-ref org_config
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines)))
 #+end_src
 ** Task Management Customization
 *** Custom TODO Keywords
@@ -688,6 +699,11 @@ In order to use active code in org-mode, you must define which programming langu
                                  (shell . t)))
 #+end_src
 ** Appearance
+*** Word Wrapping
+I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
+#+begin_src elisp :noweb-ref org_config
+  (add-hook 'org-mode-hook #'toggle-truncate-lines)
+#+end_src
 *** Single Space Between Headline and Tags
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
 #+begin_src elisp :noweb-ref org_customize
@@ -728,16 +744,16 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
   (use-package calfw
     :disabled t
     :ensure t
-    :config
-    (setq cfw:fchar-junction ?╋
-          cfw:fchar-vertical-line ?┃
-          cfw:fchar-horizontal-line ?━
-          cfw:fchar-left-junction ?┣
-          cfw:fchar-right-junction ?┫
-          cfw:fchar-top-junction ?┯
-          cfw:fchar-top-left-corner ?┏
-          cfw:fchar-top-right-corner ?┓))
-  
+    :custom
+    (cfw:fchar-junction ?╋)
+    (cfw:fchar-vertical-line ?┃)
+    (cfw:fchar-horizontal-line ?━)
+    (cfw:fchar-left-junction ?┣)
+    (cfw:fchar-right-junction ?┫)
+    (cfw:fchar-top-junction ?┯)
+    (cfw:fchar-top-left-corner ?┏)
+    (cfw:fchar-top-right-corner ?┓))
+
   (use-package calfw-org
     :disabled t
     :ensure t
@@ -758,25 +774,24 @@ Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loadi
 Set up templates for making capturing tasks with ~org-capture~ easier.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org-capture
-  :ensure nil
-  :after org
-  :config
-  ;; Set the default org-capture-templates to make creating an org-headline quick and easy
-  <<org_capture_templates>>)
+    :ensure nil
+    :after org
+    :custom
+    <<org_capture_templates>>)
 #+end_src
 *** Org-capture Templates
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
-#+begin_src elisp
-  (setq org-capture-templates
-        '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-           "* %? :project:")
-          ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-           "* %?\n%x")
-          ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-           "* %?\n%^{Scheduled}t\n%x")
-          ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-           "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+#+begin_src elisp 
+  (org-capture-templates
+   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+      "* %? :project:")
+     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+      "* %?\n%x")
+     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+      "* %?\n%^{Scheduled}t\n%x")
+     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 ** Org-download
 I have not yet tried this feature yet...
@@ -791,8 +806,6 @@ I have not yet tried this feature yet...
 ** Org-mind-map
 Turn any ~org-mode~ buffer into a mind map in various output formats.
 #+begin_src emacs-lisp :tangle yes
-  ;; This is an Emacs package that creates graphviz directed graphs from
-  ;; the headings of an org file
   (use-package org-mind-map
     :ensure t
     :after org
@@ -824,17 +837,18 @@ A reference manager in org-mode.
     (org-roam-directory (file-truename "~/Dropbox/org-roam"))
     :config
     (org-roam-setup)
-    (setq org-roam-dailies-directory "daily/")
-    (setq org-roam-capture-templates
-          '(("d" "default" plain "%?"
-             :target (file+head "${slug}.org"
-                                "#+title: ${title}\n")
-             :unnarrowed t)))
-    (setq org-roam-dailies-capture-templates
-          '(("d" "default" entry
-             "* %?"
-             :target (file+head "%<%Y-%m-%d>.org"
-                                "#+title: %<%Y-%m-%d>\n"))))
+    :custom
+    (org-roam-dailies-directory "daily/")
+    (org-roam-capture-templates
+     '(("d" "default" plain "%?"
+        :target (file+head "${slug}.org"
+                           "#+title: ${title}\n")
+        :unnarrowed t)))
+    (org-roam-dailies-capture-templates
+     '(("d" "default" entry
+        "* %?"
+        :target (file+head "%<%Y-%m-%d>.org"
+                           "#+title: %<%Y-%m-%d>\n"))))
     :bind
     (("C-c n f" . org-roam-node-find)
      ("C-c n g" . org-roam-graph)
@@ -859,8 +873,8 @@ PDF Tools is a faster and more feature-rich than the built in DocView.
 PlantUML is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
 ** Set Location of PlantUML Binary
 When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
-#+begin_src emacs-lisp :tangle yes
-  (setq org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
+#+begin_src emacs-lisp :noweb-ref org_customize
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
 #+end_src
 ** Install PlantUML Mode
 PlantUML mode is not installed by default, so we need ~use-package~ to download and install it.
@@ -872,27 +886,37 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 #+end_src
 * Tramp
 #+begin_src elisp :tangle yes
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+  (use-package tramp
+    :config
+    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 #+end_src
 * Which-key
 ~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :ensure t
+    :custom
+    <<wk_custom>>
     :config
-    ;; Type C-h during any key combination to pop-up which key
-    (setq which-key-show-early-on-C-h t)
-    ;; Use the <f4> key in any major mode to see the key bindings
-    (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
-    (which-key-mode)
-    ;; Set up which-key to use the side window preferrably
-    (which-key-setup-side-window-right-bottom))
+    <<wk_config>>
+    (which-key-mode))
 #+end_src
-* TRAMP
-Set TRAMP to use a bash shell by default instead of the remote shell as zsh seems to cause issues in TRAMP.
-#+begin_src elisp :tangle yes
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+** Activating Which-key
+*** C-h During Key Combination Entry
+Type C-h during any key combination to pop-up which key
+#+begin_src elisp :noweb-ref wk_custom
+  (which-key-show-early-on-C-h t)
 #+end_src
+*** Press <f4> in Any Mode
+Use the <f4> key in any major mode to see the key bindings
+#+begin_src elisp :noweb-ref wk_custom
+  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
+#+end_src
+** Which-key Window Location
+    Set up which-key to use the side window preferably
+    #+begin_src elisp :noweb-ref wk_config
+    (which-key-setup-side-window-right-bottom)
+    #+end_src
 * Performance Optimization End
 This last block of code closed the performance optimization from the top of the file.
 #+begin_src emacs-lisp :tangle yes
