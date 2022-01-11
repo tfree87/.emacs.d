@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-10 22:47:37 thomas>
+#+date: Time-stamp: <2022-01-10 22:58:42 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -115,7 +115,6 @@ Emacs when navigating expects sentences to end with a double space after a perio
 ** User Interface
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
 *** All the icons
-~all-the-icons~ adds lots of useful icons to ~ivy-mode~, ~ibuffer~, and ~dired~ that quickly identifies each item in lists.
 #+begin_src emacs-lisp :tangle yes
   (use-package all-the-icons
     :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -139,29 +138,21 @@ All the changes contained here affect how Emacs looks when run such as faces, co
     (all-the-icons-ivy-rich-mode 1))
 #+end_src
 *** Emacs Theme
-Change the default color and mode line themes in Emacs.
-**** Spacemacs Theme
-I like the colors used in Spacemacs so here is a way to get that color-scheme installed in vanilla Emacs.
+**** Spacemacs Theme with Spaceline Modeline Theme
 #+begin_src emacs-lisp :tangle yes
   (use-package spacemacs-theme
     :if window-system
     :ensure t
     :defer t
     :init (load-theme 'spacemacs-dark t))
- #+end_src
-**** Use Spaceline them for Mode Line
-Change the basic mode line to one that looks a bit more like the mode line in Spacemacs.
-#+begin_src emacs-lisp :tangle yes
+
   (use-package spaceline
     :if window-system
     :ensure t
     :config  
     (require 'spaceline-config)
     (spaceline-emacs-theme))
-#+end_src
-**** Add all-the-icons Support for Spaceline
-Adds icons to the mode line using ~all-the-icons~. This is currently disabled because I have not been able to make it look right. 
-  #+begin_src emacs-lisp :tangle yes
+
   (use-package spaceline-all-the-icons
     :disabled t
     :if window-system
@@ -206,17 +197,8 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     :mode ("\\.c\\'"
            "\\.ino\\'"))
 #+end_src
-** Numpydoc
-I prefer python docstrings to be written in Numpy format and the Numpydoc package provides an interactive way to create these docstrings.
-#+begin_src emacs-lisp :tangle yes
-  (use-package numpydoc
-    :ensure t
-    :bind (:map python-mode-map
-                ("C-c C-n" . numpydoc-generate)))
-#+end_src
 ** Elpy
-Elpy adds some improvements for editing python code in Emacs.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
     :ensure t
     :defer t
@@ -265,7 +247,7 @@ Magit provides an interface to Git through Emacs.
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 ** Paren Mode
-Paren Mode shows matching parenthesis making it easy to see which set of parentheses are closed.
+Paren Mode 
 #+begin_src emacs-lisp :tangle yes
   (setq show-paren-delay 0)
   (show-paren-mode 1)
@@ -310,7 +292,6 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :defer t)
   #+end_src
 * BBDB
-Tbe Big Brother DataBase (BBDB) stores contact information in a text file and works well with Emacs mail readers and org-mode. 
 #+begin_src emacs-lisp :tangle yes
   (use-package bbdb
     :ensure t
@@ -360,7 +341,6 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
     :load-path "~/.emacs.d/elisp")
 #+end_src
 * Docker
-Docker can be managed from within Emacs 
 ** Manage Docker Containers
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
@@ -381,7 +361,6 @@ ensure-system-package will install packages on the computer system so that Emacs
     :ensure t)
 #+end_src
 * Eshell
-Eshell is an operating system independent command line shell that uses elisp to implemewnt many shell functions natively within Emacs. This makes it highly customizable and is highly useful if you spend a lot of time in Emacs as output can be redirected to Emacs buffers.
 ** Set up Eshell
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package eshell
@@ -466,7 +445,6 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     :defer t)
 #+end_src
 * ibuffer
-ibuffer greatly improves the buffer-list in Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package ibuffer
     :defer t
@@ -917,8 +895,8 @@ Use the <f4> key in any major mode to see the key bindings
     #+begin_src elisp :noweb-ref wk_config
     (which-key-setup-side-window-right-bottom)
     #+end_src
+
 * Performance Optimization End
-This last block of code closed the performance optimization from the top of the file.
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
   )
