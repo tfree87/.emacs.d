@@ -557,7 +557,9 @@
   :defer t
   :after org)
 
-(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+(use-package tramp
+  :config
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 
 (use-package which-key
   :ensure t

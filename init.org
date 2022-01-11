@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-10 21:44:03 thomas>
+#+date: Time-stamp: <2022-01-10 21:50:25 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -864,7 +864,9 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 #+end_src
 * Tramp
 #+begin_src elisp :tangle yes
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+  (use-package tramp
+    :config
+    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 #+end_src
 * Which-key
 ~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
