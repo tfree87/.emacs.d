@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-10 22:58:42 thomas>
+#+date: Time-stamp: <2022-01-11 19:25:40 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -629,7 +629,13 @@ To remove headers labeled with the ~:ignore:~ tag, the following code needs to b
   (ox-extras-activate '(ignore-headlines)))
 #+end_src
 ** Task Management Customization
+*** Drawer for State Changes
+Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
+#+begin_src elisp :noweb-ref org_customize
+  (org-log-into-drawer t)
+#+end_src
 *** Custom TODO Keywords
+*** 
 Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
 #+begin_src elisp :noweb-ref org_customize
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
