@@ -893,7 +893,7 @@ Type C-h during any key combination to pop-up which key
 #+end_src
 *** Press <f4> in Any Mode
 Use the <f4> key in any major mode to see the key bindings
-#+begin_src elisp :noweb-ref wk_custom
+#+begin_src elisp :noweb-ref wk_config
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
 #+end_src
 ** Which-key Window Location
