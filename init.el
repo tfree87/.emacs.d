@@ -117,9 +117,11 @@
 (use-package nyan-mode
   :if window-system
   :ensure t
-  :commands nyan-mode
+  ;; :commands nyan-mode
   :custom
-  (setq nyan-wavy-trail t))
+  (nyan-wavy-trail t)
+  :config
+  (nyan-mode))
 
 (use-package c-mode
   :mode ("\\.c\\'"
