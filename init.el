@@ -566,8 +566,8 @@
   :ensure t
   :custom
   (which-key-show-early-on-C-h t)
-  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
   :config
+  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
 
