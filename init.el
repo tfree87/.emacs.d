@@ -619,5 +619,7 @@
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
 
+(load-file "~/.emacs.d/elisp/oh-my-zsh.el")
+
 (setq gc-cons-threshold (* 2 1000 1000))
 )

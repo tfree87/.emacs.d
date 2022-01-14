@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-14 18:45:21 thomas>
+#+date: Time-stamp: <2022-01-14 18:47:29 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -956,6 +956,10 @@ Use the <f4> key in any major mode to see the key bindings
     #+begin_src elisp :noweb-ref wk_config
     (which-key-setup-side-window-right-bottom)
     #+end_src
+* Oh My Eshell
+#+begin_src elisp :tangle yes
+  (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
+#+end_src
 * Performance Optimization End
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
