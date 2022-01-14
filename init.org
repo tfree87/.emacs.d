@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-13 22:29:31 thomas>
+#+date: Time-stamp: <2022-01-14 18:45:21 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -256,14 +256,19 @@ Magit provides an interface to Git through Emacs.
 ** Paren Mode
 Paren Mode 
 #+begin_src emacs-lisp :tangle yes
-  (setq show-paren-delay 0)
-  (show-paren-mode 1)
+  (use-package paren
+    :delight
+    :custom
+    (show-paren-delay 0)
+    :config
+    (show-paren-mode 1))
 #+end_src
 * Company Auto-completion
 Use Company (COMPlete ANY) package to enable autocompletion in buffers.
 #+begin_src emacs-lisp :tangle yes
   (use-package company               
     :ensure t
+    :delight company-mode
     :defer t
     :init (global-company-mode))
  #+end_src
@@ -313,6 +318,11 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     (bbdb-message-all-addresses t)
     :config
     (bbdb-mua-auto-update-init 'gnus 'message))
+#+end_src
+* Delight
+#+begin_src elisp :tangle yes
+  (use-package delight
+    :ensure t)
 #+end_src
 * Deft
 Deft is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
@@ -433,8 +443,11 @@ Below are a list of command-line aliases for use in eshell.
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled. 
 #+begin_src emacs-lisp :tangle yes
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (use-package flyspell
+    :delight
+    :config
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -497,6 +510,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
     :ensure t
+    :delight
     :custom
     (ivy-use-virtual-buffers t)
     (ivy-count-format "(%d/%d) ")
@@ -508,6 +522,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
     ("M-x" . counsel-M-x)
     ("C-x C-f" . counsel-find-file)
     :ensure t
+    :delight
     :config
     (counsel-mode))
 
@@ -518,6 +533,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 
   (use-package ivy-rich
     :ensure t
+    :delight
     :after counsel
     :config
     (ivy-rich-mode 1)
@@ -917,6 +933,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :ensure t
+    :delight
     :custom
     <<wk_custom>>
     :config

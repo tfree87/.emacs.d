@@ -161,11 +161,16 @@
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
 
-(setq show-paren-delay 0)
-(show-paren-mode 1)
+(use-package paren
+  :delight
+  :custom
+  (show-paren-delay 0)
+  :config
+  (show-paren-mode 1))
 
 (use-package company               
   :ensure t
+  :delight company-mode
   :defer t
   :init (global-company-mode))
 
@@ -203,6 +208,9 @@
   (bbdb-message-all-addresses t)
   :config
   (bbdb-mua-auto-update-init 'gnus 'message))
+
+(use-package delight
+  :ensure t)
 
 (use-package deft
   :after org
@@ -282,8 +290,11 @@
   (eshell-where-to-jump 'begin)
   (eshell-review-quick-commands nil))
 
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(use-package flyspell
+  :delight
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (setq gnus-init-file "~/.emacs.d/gnus.el")
 
@@ -335,6 +346,7 @@
 
 (use-package ivy
   :ensure t
+  :delight
   :custom
   (ivy-use-virtual-buffers t)
   (ivy-count-format "(%d/%d) ")
@@ -346,6 +358,7 @@
   ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   :ensure t
+  :delight
   :config
   (counsel-mode))
 
@@ -356,6 +369,7 @@
 
 (use-package ivy-rich
   :ensure t
+  :delight
   :after counsel
   :config
   (ivy-rich-mode 1)
@@ -597,6 +611,7 @@
 
 (use-package which-key
   :ensure t
+  :delight
   :custom
   (which-key-show-early-on-C-h t)
   :config
