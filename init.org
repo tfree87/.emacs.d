@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-13 18:43:37 thomas>
+#+date: Time-stamp: <2022-01-13 22:29:31 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -76,6 +76,11 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
   #+end_src
 * General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
+** Number Line Mode
+#+begin_src elisp :tangle yes
+  (when (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode))
+#+end_src
 ** Automatic Time Stamps When Saving
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :tangle yes
@@ -870,6 +875,37 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :defer t
     :after org)
 #+end_src
+* Tab Line
+I like having tabs for all of my open buffers. The following code turns on tab
+#+begin_src elisp :tangle yes
+  (global-tab-line-mode t)
+
+  (setq tab-line-new-button-show nil)  ;; do not show add-new button
+  (setq tab-line-close-button-show nil)  ;; do not show close button
+
+  (setq tab-line-separator "")  ;; set it to empty
+
+  (defvar my/tab-height 22)
+  (defvar my/tab-left (powerline-wave-right 'tab-line nil my/tab-height))
+  (defvar my/tab-right (powerline-wave-left nil 'tab-line my/tab-height))
+
+  (defun my/tab-line-tab-name-buffer (buffer &optional _buffers)
+    (powerline-render (list my/tab-left
+                            (format "%s" (buffer-name buffer))
+                            my/tab-right)))
+  (setq tab-line-tab-name-function #'my/tab-line-tab-name-buffer)
+
+  ;; tab color settings
+  (set-face-attribute 'tab-line-tab nil ;; active tab in another window
+        :inherit 'tab-line
+        :foreground "gray70" :background "gray90" :box nil)
+  (set-face-attribute 'tab-line-tab-current nil ;; active tab in current window
+        :background "#b34cb3" :foreground "white" :box nil)
+  (set-face-attribute 'tab-line-tab-inactive nil ;; inactive tab
+        :background "gray60" :foreground "black" :box nil)
+  (set-face-attribute 'tab-line-highlight nil ;; mouseover
+        :background "white" :foreground 'unspecified)
+#+end_src
 * Tramp
 #+begin_src elisp :tangle yes
   (use-package tramp
@@ -903,7 +939,6 @@ Use the <f4> key in any major mode to see the key bindings
     #+begin_src elisp :noweb-ref wk_config
     (which-key-setup-side-window-right-bottom)
     #+end_src
-
 * Performance Optimization End
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
