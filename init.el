@@ -15,9 +15,6 @@
 
 (let ((file-name-handler-alist nil))
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-
 (if (>= 26.3 (string-to-number emacs-version))
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
@@ -37,34 +34,36 @@
 (eval-when-compile
   (require 'use-package))
 
+(use-package emacs
+  :custom
+  (custom-file "~/.emacs.d/custom.el")
+  (delete-by-moving-to-trash t)
+  (version-control t)
+  (delete-old-versions t)
+  (vc-make-backup-files t)
+  (sentence-end-double-space nil)
+  (dired-dwim-target t)
+  :config
+  (when (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode))
+  (add-hook 'before-save-hook 'time-stamp)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (display-time-mode 1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1))
+
+(load custom-file)
+
 (use-package benchmark-init
   :disabled t
   :ensure t
   :hook
   (after-init . benchmark-init/deactivate))
 
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
-
-(add-hook 'before-save-hook 'time-stamp)
-
-(prefer-coding-system 'utf-8)
-(when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-
-(setq delete-by-moving-to-trash t)
-
-(setq version-control t)
-(setq delete-old-versions t)
-(setq vc-make-backup-files t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(setq sentence-end-double-space nil)
-
 (use-package all-the-icons
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t)
+:ensure t)
 
 (use-package all-the-icons-dired
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -77,9 +76,16 @@
   :ensure t
   :init (all-the-icons-ibuffer-mode 1))
 
-(use-package all-the-icons-ivy-rich
+(use-package all-the-icons-completion
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
+  :config
+  (all-the-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+
+(use-package all-the-icons-ivy-rich
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :disabled t
   :config
   (all-the-icons-ivy-rich-mode 1))
 
@@ -95,27 +101,6 @@
   :config  
   (require 'spaceline-config)
   (spaceline-emacs-theme))
-
-(use-package spaceline-all-the-icons
-  :disabled t
-  :if window-system
-  :ensure t
-  :after spaceline
-  :custom
-  (spaceline-all-the-icons-separator-type 'arrow)
-  :config
-  (spaceline-all-the-icons-theme)
-  (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
-  (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-  (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-  (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-  (spaceline-all-the-icons--setup-neotree))         ;; Enable Neotree mode line
-
-(display-time-mode 1)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
 
 (use-package nyan-mode
   :if window-system
@@ -161,11 +146,16 @@
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
 
-(setq show-paren-delay 0)
-(show-paren-mode 1)
+(use-package paren
+  :delight
+  :custom
+  (show-paren-delay 0)
+  :config
+  (show-paren-mode 1))
 
 (use-package company               
   :ensure t
+  :delight company-mode
   :defer t
   :init (global-company-mode))
 
@@ -190,6 +180,214 @@
   :ensure t
   :defer t)
 
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package vertico
+  :ensure t
+  :demand t
+  :custom
+  (vertico-cycle t)
+  (vertico-resize t)
+  :init
+  (vertico-mode))
+
+;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
+;; dispatcher. Additionally enable `partial-completion' for file path
+;; expansion. `partial-completion' is important for wildcard support.
+;; Multiple files can be opened at once with `find-file' if you enter a
+;; wildcard. You may also give the `initials' completion style a try.
+(use-package orderless
+  :ensure t
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;	   orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :ensure t
+  :init
+  (savehist-mode))
+
+(use-package marginalia
+  :ensure t
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package ivy
+  :disabled t
+  :delight
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-count-format "(%d/%d) ")
+  :config
+  (ivy-mode 1))
+
+(use-package counsel
+  :disabled t
+  :bind
+  ("M-x" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file)
+  :delight
+  :config
+  (counsel-mode))
+
+(use-package swiper
+  :disabled t
+  :bind
+  ("C-s" . swiper))
+
+(use-package ivy-rich
+  :disabled t
+  :delight
+  :after counsel
+  :config
+  (ivy-rich-mode 1)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
+
+(use-package consult
+  :ensure t
+  :bind (;; C-c bindings (mode-specific-map)
+         ("C-c h" . consult-history)
+         ("C-c m" . consult-mode-command)
+         ("C-c k" . consult-kmacro)
+         ;; C-x bindings (ctl-x-map)
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ;; M-g bindings (goto-map)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings (search-map)
+         ("M-s d" . consult-find)
+         ("M-s D" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s m" . consult-multi-occur)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI. You may want to also
+  ;; enable `consult-preview-at-point-mode` in Embark Collect buffers.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  ;; The :init configuration is always executed (Not lazy)
+  :init
+
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
+  (setq register-preview-delay 0
+        register-preview-function #'consult-register-format)
+
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  ;; Optionally replace `completing-read-multiple' with an enhanced version.
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Configure other variables and modes in the :config section,
+  ;; after lazily loading the package.
+  :config
+
+  ;; Optionally configure preview. The default value
+  ;; is 'any, such that any key triggers the preview.
+  ;; (setq consult-preview-key 'any)
+  ;; (setq consult-preview-key (kbd "M-."))
+  ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
+  ;; For some commands and buffer sources it is useful to configure the
+  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  (consult-customize
+   consult-theme
+   :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
+   :preview-key (kbd "M-."))
+
+  ;; Optionally configure the narrowing key.
+  ;; Both < and C-+ work reasonably well.
+  (setq consult-narrow-key "<") ;; (kbd "C-+")
+
+  ;; Optionally make narrowing help available in the minibuffer.
+  ;; You may want to use `embark-prefix-help-command' or which-key instead.
+  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+  ;; Optionally configure a function which returns the project root directory.
+  ;; There are multiple reasonable alternatives to chose from.
+  ;;;; 1. project.el (project-roots)
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project)))))
+  ;;;; 2. projectile.el (projectile-project-root)
+  ;; (autoload 'projectile-project-root "projectile")
+  ;; (setq consult-project-root-function #'projectile-project-root)
+  ;;;; 3. vc.el (vc-root-dir)
+  ;; (setq consult-project-root-function #'vc-root-dir)
+  ;;;; 4. locate-dominating-file
+  ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
+)
+
 (use-package bbdb
   :ensure t
   :defer t
@@ -204,6 +402,9 @@
   :config
   (bbdb-mua-auto-update-init 'gnus 'message))
 
+(use-package delight
+  :ensure t)
+
 (use-package deft
   :after org
   :defer t
@@ -217,8 +418,6 @@
   (deft-directory "~/Dropbox/org-roam/")
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
-
-(setq dired-dwim-target t)
 
 (use-package dired+
   ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
@@ -235,11 +434,10 @@
   :ensure t)
 
 (use-package use-package-ensure-system-package
-  :if (not (file-exists-p "~/runemacs.bat")) 
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t)
 
 (use-package eshell
-  :defer t
   :hook
   (eshell-mode . (lambda ()
                    (add-to-list 'eshell-visual-commands "htop")
@@ -282,8 +480,12 @@
   (eshell-where-to-jump 'begin)
   (eshell-review-quick-commands nil))
 
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(use-package flyspell
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :delight
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (setq gnus-init-file "~/.emacs.d/gnus.el")
 
@@ -332,34 +534,6 @@
                              (mode . eshell)
                              (mode . term)
                              (mode . shell))))))))
-
-(use-package ivy
-  :ensure t
-  :custom
-  (ivy-use-virtual-buffers t)
-  (ivy-count-format "(%d/%d) ")
-  :config
-  (ivy-mode 1))
-
-(use-package counsel
-  :bind
-  ("M-x" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  :ensure t
-  :config
-  (counsel-mode))
-
-(use-package swiper
-  :bind
-  ("C-s" . swiper)
-  :ensure t)
-
-(use-package ivy-rich
-  :ensure t
-  :after counsel
-  :config
-  (ivy-rich-mode 1)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
 (use-package tex
   :defer t
@@ -583,13 +757,13 @@
 ;; tab color settings
 (set-face-attribute 'tab-line-tab nil ;; active tab in another window
       :inherit 'tab-line
-      :foreground "gray70" :background "gray90" :box nil)
+      :foreground "gray" :background "#5d4d7a" :box nil)
 (set-face-attribute 'tab-line-tab-current nil ;; active tab in current window
-      :background "#b34cb3" :foreground "white" :box nil)
+      :background "#EEAD0E" :foreground "white" :box nil)
 (set-face-attribute 'tab-line-tab-inactive nil ;; inactive tab
-      :background "gray60" :foreground "black" :box nil)
+      :background "#373040" :foreground "gray" :box nil)
 (set-face-attribute 'tab-line-highlight nil ;; mouseover
-      :background "white" :foreground 'unspecified)
+      :background "white" :foreground "black")
 
 (use-package tramp
   :config
@@ -597,12 +771,15 @@
 
 (use-package which-key
   :ensure t
+  :delight
   :custom
   (which-key-show-early-on-C-h t)
   :config
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
+
+(load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
