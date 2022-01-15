@@ -1,12 +1,16 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-15 13:11:37 thomas>
+#+date: Time-stamp: <2022-01-15 15:37:31 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
 
+
+Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
+
+This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the ~init.el~ file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to ~init.el~.
 
 * Header for init.el
 The following code block will add a header to the ~init.el~ file when it is generated on saving.
@@ -26,19 +30,29 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
+* Running Emacs as a Portable App
+I love running Emacs but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer.
+
+Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
+#+name: portable_check
+#+begin_src emacs-lisp
+  (and window-system (not (file-exists-p "~/runemacs.bat")))
+ #+end_src
 * Performance Optimization Start
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
 * Package Management
+This section contains configuration elements to make package management perform in Emacs the way in which I prefer.
 ** Fix TLS Issue in Old Emacs Versions
 Sometimes I am running Emacs on a system that does not have the latest version of Emacs available on the distribution. The following code fixes the issues with older versions of Emacs having broken versions of TLS that prevents them from accessing the package repositories.
 #+begin_src emacs-lisp :tangle yes
   (if (>= 26.3 (string-to-number emacs-version))
       (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 #+end_src
-** Set Package Repositories
+** Set Package Archives
+I often use Emacs packages from MELPA in addition to the standard ELPA. I ahave added the MELPA archive to the list of Emacs package archives.
 #+begin_src emacs-lisp :tangle yes
   (require 'package)
   (custom-set-variables '(package-archives
@@ -60,6 +74,7 @@ The following code will refresh the package listings and install ~use-package~ i
     (require 'use-package))
 #+end_src
 * Emacs General Options
+The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
     :custom
@@ -72,6 +87,7 @@ Keep all customized variables in a separate file.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (custom-file "~/.emacs.d/custom.el")
 #+end_src
+Tell Emacs to load the custom file.
 #+begin_src emacs-lisp :tangle yes
   (load custom-file)
 #+end_src
@@ -87,6 +103,7 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
 * General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 ** Number Line Mode
+I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
@@ -129,60 +146,71 @@ Emacs when navigating expects sentences to end with a double space after a perio
 #+end_src
 ** User Interface
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
-*** All the icons
-#+begin_src emacs-lisp :tangle yes
+*** All the Icons
+I like to use All the Icons to add some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-    :ensure t)
-  
+    :if <<portable_check>>
+  :ensure t)
+#+end_src
+**** Dired
+Add file-type icons to Dired when browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons-dired
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+    :if <<portable_check>>
     :ensure t
     :hook
     (dired-mode . all-the-icons-dired-mode))
-  
-  (use-package all-the-icons-ibuffer
-    :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-    :ensure t
-    :init (all-the-icons-ibuffer-mode 1))
-
-  (use-package all-the-icons-completion
-    :ensure t
-    :config
-    (all-the-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-
+ #+end_src
+**** Ibuffer
+Add icons representing different buffer types to Ibuffer mode.
+ #+begin_src emacs-lisp :tangle yes :noweb no-export
+   (use-package all-the-icons-ibuffer
+     :if <<portable_check>>
+     :ensure t
+     :init (all-the-icons-ibuffer-mode 1))
+#+end_src
+**** Completion
+This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+   #+begin_src emacs-lisp :tangle yes :noweb no-export
+     (use-package all-the-icons-completion
+       :if <<portable_check>>
+       :ensure t
+       :config
+       (all-the-icons-completion-mode)
+       (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+end_src
+**** Ivy-rich :disabled:
+Adds icons to Ivy rich mode. I currently have this disabled as I am currently not using Ivy in favor of Vertico at the moment.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+     (use-package all-the-icons-ivy-rich
+       :if <<portable_check>>
+       :disabled t
+       :config
+       (all-the-icons-ivy-rich-mode 1))
 #+end_src
 *** Emacs Theme
-**** Spacemacs Theme with Spaceline Modeline Theme
+This section contains modifications to the default Emacs theme.
+**** Spacemacs Theme with 
+I love how Spacemacs looks but I have been using vanilla Emacs for a long time and I am not yet ready to drop all my memorized key bindings for the other features that come with it yet so I am attempting to replicate the look some here.
+***** Color Theme
+Get the Spacemacs colors
 #+begin_src emacs-lisp :tangle yes
   (use-package spacemacs-theme
     :if window-system
     :ensure t
     :defer t
     :init (load-theme 'spacemacs-dark t))
-
+#+end_src
+**** Spaceline
+Get a modeline that has colors similar to Spacemacs with a Powerline look.
+#+begin_src emacs-lisp :tangle yes
   (use-package spaceline
     :if window-system
     :ensure t
     :config  
     (require 'spaceline-config)
     (spaceline-emacs-theme))
-
-  (use-package spaceline-all-the-icons
-    :disabled t
-    :if window-system
-    :ensure t
-    :after spaceline
-    :custom
-    (spaceline-all-the-icons-separator-type 'arrow)
-    :config
-    (spaceline-all-the-icons-theme)
-    (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
-    (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-    (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-    (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-    (spaceline-all-the-icons--setup-neotree))         ;; Enable Neotree mode line
 #+end_src
 *** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
@@ -209,13 +237,16 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (nyan-mode))
 #+end_src
 * Coding
+This section contains customizations for writing programming code in Emacs.
 ** C
+I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
 #+begin_src emacs-lisp :tangle yes
   (use-package c-mode
     :mode ("\\.c\\'"
            "\\.ino\\'"))
 #+end_src
 ** Elpy
+Add powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
     :ensure t
@@ -238,6 +269,7 @@ Check python syntax while writing with flycheck
     (add-hook 'elpy-mode-hook 'flycheck-mode))
 #+end_src
 *** Use Black to Format Code On Save
+Black will auto format any Pyhton code on save to be compliant with PEP8.
 #+begin_src emacs-lisp :noweb-ref elpy_config
   (add-hook 'elpy-mode-hook (lambda ()
                                 (add-hook 'before-save-hook
@@ -258,6 +290,7 @@ Magit provides an interface to Git through Emacs.
     :bind ("C-x g" . magit-status))
 #+end_src
 ** Numpydoc
+Using Numpydoc provides an interactive tool to automatically generate Numpy style docstrings.
 #+begin_src emacs-lisp :tangle yes
   (use-package numpydoc
     :ensure t
@@ -265,7 +298,7 @@ Magit provides an interface to Git through Emacs.
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 ** Paren Mode
-Paren Mode 
+Always highlight matching parenthesis when coding /immediately/ without delay.
 #+begin_src emacs-lisp :tangle yes
   (use-package paren
     :delight
@@ -283,7 +316,8 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :defer t
     :init (global-company-mode))
  #+end_src
-** AUCTeX Autocompletion
+** AUCTeX
+Support for completion in AUCTeX. Something I use much more rarely now that I can create LaTeX documents in Org Mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package company-auctex
     :ensure t
@@ -297,6 +331,7 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 #+end_src
 ** Ledger Autocompletion
+Autocomplete entries in Ledger files.
 #+begin_src emacs-lisp :tangle yes
   (use-package company-ledger
     :ensure t
@@ -315,6 +350,7 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :defer t)
   #+end_src
 * Minibuffer Completion
+This section contains customization to improve command completion in the minibuffer in Emacs.
 ** Embark
 Embark provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes
@@ -561,6 +597,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
     (bbdb-mua-auto-update-init 'gnus 'message))
 #+end_src
 * Delight
+Delight provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
 #+begin_src emacs-lisp :tangle yes
   (use-package delight
     :ensure t)
@@ -599,7 +636,9 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
     :load-path "~/.emacs.d/elisp")
 #+end_src
 * Docker
+This section contains customization for managing the Docker containers on my home server.
 ** Manage Docker Containers
+An interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
     :if (executable-find "docker")
@@ -607,22 +646,24 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
     :bind ("C-c d" . docker))
 #+end_src
 ** Docker Compose
+Major mode for editing Docker Compose files.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
     :ensure t)
 #+end_src
 * Ensure System Package
 ensure-system-package will install packages on the computer system so that Emacs components are functional and not broken. In order to prevent ~ensure-system-package~ from installing when it is run as a portableapp from a flash drive onto the work computer, ~use-package~ will check to see if =~/runemacs.bat= can be found on the flash drive.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package use-package-ensure-system-package
-    :if (not (file-exists-p "~/runemacs.bat")) 
+    :if <<portable_check>>
     :ensure t)
 #+end_src
 * Eshell
+Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
 ** Set up Eshell
+Get Eshell configuration set up.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package eshell
-    :defer t
     :hook
     (eshell-mode . (lambda ()
                      <<eshell_visual_commands>>
@@ -665,6 +706,7 @@ Below are a list of command-line aliases for use in eshell.
   (eshell/alias "ll" "ls -AlohG")
 #+end_src
 ** Change Eshell Prompt to be More Informative
+Create a custom prompt for eshell that shows some more information.
 #+begin_src emacs-lisp :noweb-ref eshell_custom
   (eshell-prompt-function
    (lambda ()
@@ -682,9 +724,12 @@ Below are a list of command-line aliases for use in eshell.
       (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green")))))  
   #+end_src
 * Flyspell-mode
-Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled. 
-#+begin_src emacs-lisp :tangle yes
+Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
+
+I have this mode disabled if Emacs is run as a portable app as this will not work on another Windows system without the spell check libraries installed.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package flyspell
+    :if <<portable_check>>
     :delight
     :config
     (add-hook 'text-mode-hook 'flyspell-mode)
@@ -705,7 +750,8 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     :ensure t
     :defer t)
 #+end_src
-* ibuffer
+* Ibuffer
+A better buffer list.
 #+begin_src emacs-lisp :tangle yes
   (use-package ibuffer
     :defer t
@@ -760,6 +806,7 @@ Use AUCTEX for writing documents using LaTeX.
     (TeX-master nil))
 #+end_src
 ** Use BibLaTeX
+BibLaTeX has much more powerful features than standard BibTeX.
 #+begin_src emacs-lisp :tangle yes
 (setq bibtex-dialect 'biblatex)
 #+end_src
@@ -771,6 +818,7 @@ To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed f
     :defer t)
 #+end_src
 * Markdown Mode
+Add a mode to edit and view markdown files.
 #+begin_src emacs-lisp :tangle yes
   (use-package markdown-mode
     :ensure t
@@ -818,6 +866,7 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     <<babel_languages>>)
 #+end_src
 ** Org-mode Directories
+Set up the default directories for Org Mode.
 *** Default Directory
 Tell org-mode which directory is the default directory for all org-mode files.
 #+begin_src emacs-lisp :noweb-ref org_customize
@@ -1130,6 +1179,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
         :background "white" :foreground "black")
 #+end_src
 * Tramp
+I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes
   (use-package tramp
     :config
@@ -1159,11 +1209,12 @@ Use the <f4> key in any major mode to see the key bindings
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
 #+end_src
 ** Which-key Window Location
-    Set up which-key to use the side window preferably
-    #+begin_src emacs-lisp :noweb-ref wk_config
-    (which-key-setup-side-window-right-bottom)
-    #+end_src
+Set up which-key to use the side window preferably
+#+begin_src emacs-lisp :noweb-ref wk_config
+  (which-key-setup-side-window-right-bottom)
+#+end_src
 * Oh My Eshell
+Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
   (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 #+end_src

@@ -63,7 +63,7 @@
 
 (use-package all-the-icons
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t)
+:ensure t)
 
 (use-package all-the-icons-dired
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -77,10 +77,17 @@
   :init (all-the-icons-ibuffer-mode 1))
 
 (use-package all-the-icons-completion
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t
   :config
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+
+(use-package all-the-icons-ivy-rich
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :disabled t
+  :config
+  (all-the-icons-ivy-rich-mode 1))
 
 (use-package spacemacs-theme
   :if window-system
@@ -94,21 +101,6 @@
   :config  
   (require 'spaceline-config)
   (spaceline-emacs-theme))
-
-(use-package spaceline-all-the-icons
-  :disabled t
-  :if window-system
-  :ensure t
-  :after spaceline
-  :custom
-  (spaceline-all-the-icons-separator-type 'arrow)
-  :config
-  (spaceline-all-the-icons-theme)
-  (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
-  (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-  (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-  (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-  (spaceline-all-the-icons--setup-neotree))         ;; Enable Neotree mode line
 
 (use-package nyan-mode
   :if window-system
@@ -442,11 +434,10 @@
   :ensure t)
 
 (use-package use-package-ensure-system-package
-  :if (not (file-exists-p "~/runemacs.bat")) 
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :ensure t)
 
 (use-package eshell
-  :defer t
   :hook
   (eshell-mode . (lambda ()
                    (add-to-list 'eshell-visual-commands "htop")
@@ -490,6 +481,7 @@
   (eshell-review-quick-commands nil))
 
 (use-package flyspell
+  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :delight
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
