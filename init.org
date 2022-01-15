@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-14 18:47:29 thomas>
+#+date: Time-stamp: <2022-01-15 09:30:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -31,12 +31,6 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
-* Customized Variables
-Keep all customized variables in a separate file.
-#+begin_src emacs-lisp :tangle yes
-  (setq custom-file "~/.emacs.d/custom.el")
-  (load custom-file)
-#+end_src
 * Package Management
 ** Fix TLS Issue in Old Emacs Versions
 Sometimes I am running Emacs on a system that does not have the latest version of Emacs available on the distribution. The following code fixes the issues with older versions of Emacs having broken versions of TLS that prevents them from accessing the package repositories.
@@ -47,6 +41,7 @@ Sometimes I am running Emacs on a system that does not have the latest version o
 ** Set Package Repositories
 #+begin_src elisp :tangle yes
   (require 'package)
+  (package-initialize)
   (custom-set-variables '(package-archives
                           '(("melpa" . "https://melpa.org/packages/")
                             ("elpa" . "https://elpa.gnu.org/packages/"))))
@@ -65,6 +60,22 @@ The following code will refresh the package listings and install ~use-package~ i
   (eval-when-compile
     (require 'use-package))
 #+end_src
+* Emacs General Options
+#+begin_src elisp :tangle yes :noweb no-export
+  (use-package emacs
+    :custom
+    <<emacs_custom>>
+    :config
+    <<emacs_config>>)
+#+end_src
+* Customized Variables
+Keep all customized variables in a separate file.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (custom-file "~/.emacs.d/custom.el")
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+  (load custom-file)
+#+end_src
 * Track Load Time
 It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
   #+begin_src emacs-lisp :tangle yes
@@ -77,18 +88,18 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
 * General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 ** Number Line Mode
-#+begin_src elisp :tangle yes
+#+begin_src elisp :noweb-ref emacs_config
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
 #+end_src
 ** Automatic Time Stamps When Saving
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (add-hook 'before-save-hook 'time-stamp)
 #+end_src
 ** Default to UTF-8
 This will cause Emacs to defer to encoding text files as UTF-8 by default.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb emacs_config
   (prefer-coding-system 'utf-8)
   (when (display-graphic-p)
     (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
@@ -97,25 +108,25 @@ This will cause Emacs to defer to encoding text files as UTF-8 by default.
 Changing how Emacs deletes files and how it creates backups.
 *** Send Deleted Files to System Trash
  Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
- #+begin_src emacs-lisp :tangle yes
-   (setq delete-by-moving-to-trash t)
+ #+begin_src emacs-lisp :noweb-ref emacs_custom
+   (delete-by-moving-to-trash t)
  #+end_src
 *** Backup Files with Version Control
  Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
- #+begin_src emacs-lisp :tangle yes
-   (setq version-control t)
-   (setq delete-old-versions t)
-   (setq vc-make-backup-files t)
+ #+begin_src emacs-lisp :noweb-ref emacs_custom
+   (version-control t)
+   (delete-old-versions t)
+   (vc-make-backup-files t)
  #+end_src
 ** Shorten "Yes or No" to "Y or N"
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 ** Single Space at the End of Sentences
 Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
-#+begin_src emacs-lisp :tangle yes
-  (setq sentence-end-double-space nil)
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (sentence-end-double-space nil)
 #+end_src
 ** User Interface
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
@@ -175,12 +186,12 @@ All the changes contained here affect how Emacs looks when run such as faces, co
 #+end_src
 *** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (display-time-mode 1)
 #+end_src
 *** Menu Bar, Scroll Bar, and Tool Bar
 Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
@@ -188,14 +199,14 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
 *** ~nyan-mode~
 Display a nyan cat on the mode line that shows progress through a buffer.
 #+begin_src emacs-lisp :tangle yes
-      (use-package nyan-mode
-        :if window-system
-        :ensure t
-        ;; :commands nyan-mode
-        :custom
-        (nyan-wavy-trail t)
-        :config
-        (nyan-mode))
+  (use-package nyan-mode
+    :if window-system
+    :ensure t
+    ;; :commands nyan-mode
+    :custom
+    (nyan-wavy-trail t)
+    :config
+    (nyan-mode))
 #+end_src
 * Coding
 ** C
@@ -345,8 +356,8 @@ Deft is an Emacs package that makes it easier to make quick notes that can be ea
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
 ** Move/Rename/Copy Files to Another Pane
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
- #+begin_src emacs-lisp :tangle yes
-   (setq dired-dwim-target t)
+ #+begin_src emacs-lisp :noweb-ref emacs_custom
+   (dired-dwim-target t)
  #+end_src
 ** Use Dired+ for Windows
 Dired+ allows for better functionality when using Emacs as a portable applicatoin. =:if (memq window-system '(w32 pc ns))= will cause dired+ to only load on non-Linux systems.

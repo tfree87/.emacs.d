@@ -15,13 +15,11 @@
 
 (let ((file-name-handler-alist nil))
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-
 (if (>= 26.3 (string-to-number emacs-version))
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 (require 'package)
+(package-initialize)
 (custom-set-variables '(package-archives
                         '(("melpa" . "https://melpa.org/packages/")
                           ("elpa" . "https://elpa.gnu.org/packages/"))))
@@ -37,30 +35,32 @@
 (eval-when-compile
   (require 'use-package))
 
+(use-package emacs
+  :custom
+  (custom-file "~/.emacs.d/custom.el")
+  (delete-by-moving-to-trash t)
+  (version-control t)
+  (delete-old-versions t)
+  (vc-make-backup-files t)
+  (sentence-end-double-space nil)
+  (dired-dwim-target t)
+  :config
+  (when (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode))
+  (add-hook 'before-save-hook 'time-stamp)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (display-time-mode 1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1))
+
+(load custom-file)
+
 (use-package benchmark-init
   :disabled t
   :ensure t
   :hook
   (after-init . benchmark-init/deactivate))
-
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
-
-(add-hook 'before-save-hook 'time-stamp)
-
-(prefer-coding-system 'utf-8)
-(when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-
-(setq delete-by-moving-to-trash t)
-
-(setq version-control t)
-(setq delete-old-versions t)
-(setq vc-make-backup-files t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(setq sentence-end-double-space nil)
 
 (use-package all-the-icons
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -110,12 +110,6 @@
   (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
   (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
   (spaceline-all-the-icons--setup-neotree))         ;; Enable Neotree mode line
-
-(display-time-mode 1)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(toggle-scroll-bar -1)
 
 (use-package nyan-mode
   :if window-system
@@ -225,8 +219,6 @@
   (deft-directory "~/Dropbox/org-roam/")
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
-
-(setq dired-dwim-target t)
 
 (use-package dired+
   ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
