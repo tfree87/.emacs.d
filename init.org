@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-15 09:30:33 thomas>
+#+date: Time-stamp: <2022-01-15 09:32:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -10,7 +10,7 @@
 
 * Header for init.el
 The following code block will add a header to the ~init.el~ file when it is generated on saving.
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   ;;; init.el --- Emacs initialzation file
 
   ;; Author: Thomas Freeman
@@ -39,7 +39,7 @@ Sometimes I am running Emacs on a system that does not have the latest version o
       (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 #+end_src
 ** Set Package Repositories
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (require 'package)
   (package-initialize)
   (custom-set-variables '(package-archives
@@ -51,7 +51,7 @@ Sometimes I am running Emacs on a system that does not have the latest version o
 #+end_src
 ** Use-package
 The following code will refresh the package listings and install ~use-package~ if it has not been installed. It will then require the use of ~use-package~ when compiling the ~init.el~ file.
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (unless (package-installed-p
            'use-package)
     (package-refresh-contents)
@@ -61,7 +61,7 @@ The following code will refresh the package listings and install ~use-package~ i
     (require 'use-package))
 #+end_src
 * Emacs General Options
-#+begin_src elisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
     :custom
     <<emacs_custom>>
@@ -88,7 +88,7 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
 * General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 ** Number Line Mode
-#+begin_src elisp :noweb-ref emacs_config
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
 #+end_src
@@ -210,7 +210,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 #+end_src
 * Coding
 ** C
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package c-mode
     :mode ("\\.c\\'"
            "\\.ino\\'"))
@@ -232,13 +232,13 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 #+end_src
 *** Use Flycheck for Python Syntax
 Check python syntax while writing with flycheck
-#+begin_src elisp :noweb-ref elpy_config
+#+begin_src emacs-lisp :noweb-ref elpy_config
   (when (load "flycheck" t t)
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     (add-hook 'elpy-mode-hook 'flycheck-mode))
 #+end_src
 *** Use Black to Format Code On Save
-#+begin_src elisp :noweb-ref elpy_config
+#+begin_src emacs-lisp :noweb-ref elpy_config
   (add-hook 'elpy-mode-hook (lambda ()
                                 (add-hook 'before-save-hook
                                           'elpy-black-fix-code nil t)))
@@ -284,32 +284,32 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     :init (global-company-mode))
  #+end_src
 ** AUCTeX Autocompletion
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package company-auctex
     :ensure t
     :defer t)
 #+end_src
 ** Documentation Popups for Company
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package company-quickhelp
     :ensure t
     :defer t
     :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 #+end_src
 ** Ledger Autocompletion
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package company-ledger
     :ensure t
     :defer t)
 #+end_src
 ** Org-mode Blocks Autocompletion
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package company-org-block
     :ensure t
     :defer t)  
 #+end_src
 ** Python Autocompletion
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package company-anaconda
     :ensure t
     :defer t)
@@ -331,7 +331,7 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
     (bbdb-mua-auto-update-init 'gnus 'message))
 #+end_src
 * Delight
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package delight
     :ensure t)
 #+end_src
@@ -383,7 +383,7 @@ Dired+ allows for better functionality when using Emacs as a portable applicatoi
 #+end_src
 * Ensure System Package
 ensure-system-package will install packages on the computer system so that Emacs components are functional and not broken. In order to prevent ~ensure-system-package~ from installing when it is run as a portableapp from a flash drive onto the work computer, ~use-package~ will check to see if =~/runemacs.bat= can be found on the flash drive.
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package use-package-ensure-system-package
     :if (not (file-exists-p "~/runemacs.bat")) 
     :ensure t)
@@ -416,7 +416,7 @@ ensure-system-package will install packages on the computer system so that Emacs
 ** Eshell Visual Commands
 Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
 #+name: eshell_visual_commands
-#+begin_src elisp
+#+begin_src emacs-lisp
   (add-to-list 'eshell-visual-commands "htop")
   (add-to-list 'eshell-visual-commands "ipython")
   (add-to-list 'eshell-visual-commands "rclone")
@@ -427,7 +427,7 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 ** Eshell Aliases
 Below are a list of command-line aliases for use in eshell.
 #+name: eshell_aliases
-#+begin_src elisp :noweb-ref eshell_aliases
+#+begin_src emacs-lisp :noweb-ref eshell_aliases
   (eshell/alias "ff" "find-file $1")
   (eshell/alias "emacs" "find-file $1")
   (eshell/alias "untar" "tar -zxvf")
@@ -575,7 +575,7 @@ To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed f
     :defer t)
 #+end_src
 * Markdown Mode
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package markdown-mode
     :ensure t
     :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
@@ -624,30 +624,30 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 ** Org-mode Directories
 *** Default Directory
 Tell org-mode which directory is the default directory for all org-mode files.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-directory "~/Dropbox/gtd")
 #+end_src
 *** Location of Agenda Files
 Tell org-mode in which directory all the agenda files can be found.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-agenda-files
    `("~/Dropbox/gtd"))
 #+end_src
 ** Filing Notes
 *** Default Notes File
 I prefer to have all of my captured notes automatically filed into a file called ~inbox.org~. Changing ~org-default-notes-file~ can create this functionality.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-default-notes-file (concat org-directory "/inbox.org"))
 #+end_src
 *** Refile Targets
 **** Set Org Files for Refiling
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
 #+end_src
 **** Allow Refile as Top-level Heading
 I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
 #+end_src
@@ -658,36 +658,36 @@ Setting this variable allows for refiling tasks under a new heading on the fly.
 #+end_src
 ** Exporting
 To remove headers labeled with the ~:ignore:~ tag, the following code needs to be implemented:
-#+begin_src elisp :nowweb-ref org_config
+#+begin_src emacs-lisp :nowweb-ref org_config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
 #+end_src
 ** Task Management Customization
 *** Drawer for State Changes
 Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-log-into-drawer t)
 #+end_src
 *** Custom TODO Keywords
 *** 
 Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 #+end_src
 *** Project Tags
 I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-tags-exclude-from-inheritance '("project"))
 #+end_src
 *** Stuck Projects
 Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-stuck-projects
    '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
 #+end_src
 ** BibLaTeX in Org-mode
 I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the ~org-latex-pdf-process~ variable needs to be changed to reflect this.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-latex-pdf-process
    '("pdflatex -interaction nonstopmode -output-directory %o %f"
      "biber %b"
@@ -698,7 +698,7 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
 ** Org-babel Languages
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
 #+name: babel_languages
-#+begin_src elisp
+#+begin_src emacs-lisp
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
@@ -719,27 +719,27 @@ In order to use active code in org-mode, you must define which programming langu
 ** Appearance
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
-#+begin_src elisp :noweb-ref org_config
+#+begin_src emacs-lisp :noweb-ref org_config
   (add-hook 'org-mode-hook #'toggle-truncate-lines)
 #+end_src
 *** Single Space Between Headline and Tags
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-tags-column 0)
 #+end_src
 *** Use "Clean View"
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-startup-indented t)
 #+end_src
 *** Native Tabs
 This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-src-tab-acts-natively t)
  #+end_src
 *** Change TODO Keyword Colors
 Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-#+begin_src elisp :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-todo-keyword-faces
    '(("TODO" . org-warning)
      ("WAITING" . "yellow")
@@ -800,7 +800,7 @@ Set up templates for making capturing tasks with ~org-capture~ easier.
 *** Org-capture Templates
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
-#+begin_src elisp 
+#+begin_src emacs-lisp 
   (org-capture-templates
    '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
       "* %? :project:")
@@ -904,7 +904,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 #+end_src
 * Tab Line
 I like having tabs for all of my open buffers. The following code turns on tab
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (global-tab-line-mode t)
 
   (setq tab-line-new-button-show nil)  ;; do not show add-new button
@@ -934,7 +934,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
         :background "white" :foreground 'unspecified)
 #+end_src
 * Tramp
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (use-package tramp
     :config
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
@@ -954,21 +954,21 @@ I like having tabs for all of my open buffers. The following code turns on tab
 ** Activating Which-key
 *** C-h During Key Combination Entry
 Type C-h during any key combination to pop-up which key
-#+begin_src elisp :noweb-ref wk_custom
+#+begin_src emacs-lisp :noweb-ref wk_custom
   (which-key-show-early-on-C-h t)
 #+end_src
 *** Press <f4> in Any Mode
 Use the <f4> key in any major mode to see the key bindings
-#+begin_src elisp :noweb-ref wk_config
+#+begin_src emacs-lisp :noweb-ref wk_config
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
 #+end_src
 ** Which-key Window Location
     Set up which-key to use the side window preferably
-    #+begin_src elisp :noweb-ref wk_config
+    #+begin_src emacs-lisp :noweb-ref wk_config
     (which-key-setup-side-window-right-bottom)
     #+end_src
 * Oh My Eshell
-#+begin_src elisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
   (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 #+end_src
 * Performance Optimization End
