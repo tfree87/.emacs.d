@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-15 15:37:31 thomas>
+#+date: Time-stamp: <2022-01-15 21:04:40 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -30,14 +30,6 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
-* Running Emacs as a Portable App
-I love running Emacs but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer.
-
-Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
-#+name: portable_check
-#+begin_src emacs-lisp
-  (and window-system (not (file-exists-p "~/runemacs.bat")))
- #+end_src
 * Performance Optimization Start
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
 #+begin_src emacs-lisp :tangle yes
@@ -65,14 +57,26 @@ I often use Emacs packages from MELPA in addition to the standard ELPA. I ahave 
 ** Use-package
 The following code will refresh the package listings and install ~use-package~ if it has not been installed. It will then require the use of ~use-package~ when compiling the ~init.el~ file.
 #+begin_src emacs-lisp :tangle yes
-  (unless (package-installed-p
-           'use-package)
+  (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  
-  (eval-when-compile
-    (require 'use-package))
 #+end_src
+* Track Load Time
+It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
+  #+begin_src emacs-lisp :tangle yes
+    (use-package benchmark-init
+      :ensure t
+      :hook
+      (after-init . benchmark-init/deactivate))
+  #+end_src
+* Running Emacs as a Portable App
+I love running Emacs but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer.
+
+Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
+#+name: portable_check
+#+begin_src emacs-lisp
+  (and window-system (not (file-exists-p "~/runemacs.bat")))
+ #+end_src
 * Emacs General Options
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -91,15 +95,6 @@ Tell Emacs to load the custom file.
 #+begin_src emacs-lisp :tangle yes
   (load custom-file)
 #+end_src
-* Track Load Time
-It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
-  #+begin_src emacs-lisp :tangle yes
-    (use-package benchmark-init
-      :disabled t
-      :ensure t
-      :hook
-      (after-init . benchmark-init/deactivate))
-  #+end_src
 * General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 ** Number Line Mode
@@ -191,22 +186,41 @@ Adds icons to Ivy rich mode. I currently have this disabled as I am currently no
 #+end_src
 *** Emacs Theme
 This section contains modifications to the default Emacs theme.
-**** Spacemacs Theme with 
+**** Doom Theme
+I have switched to the Doom theme ~doom-vibrant~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
+***** Color Theme
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-themes
+    :if window-system
+    :ensure t
+    :init (load-theme 'doom-vibrant))
+#+end_src
+***** Doom Modeline
+I like the Doom modeline because it has icons and bright colors.
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-modeline
+    :if window-system
+    :ensure t
+    :init (doom-modeline-mode))
+#+end_src
+**** Spacemacs Theme 
 I love how Spacemacs looks but I have been using vanilla Emacs for a long time and I am not yet ready to drop all my memorized key bindings for the other features that come with it yet so I am attempting to replicate the look some here.
 ***** Color Theme
 Get the Spacemacs colors
 #+begin_src emacs-lisp :tangle yes
   (use-package spacemacs-theme
+    :disabled t
     :if window-system
     :ensure t
     :defer t
     :init (load-theme 'spacemacs-dark t))
 #+end_src
-**** Spaceline
+***** Spaceline
 Get a modeline that has colors similar to Spacemacs with a Powerline look.
 #+begin_src emacs-lisp :tangle yes
   (use-package spaceline
     :if window-system
+    :disabled t
     :ensure t
     :config  
     (require 'spaceline-config)
@@ -224,17 +238,18 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
 #+end_src
-*** ~nyan-mode~
+*** Nyan Mode
 Display a nyan cat on the mode line that shows progress through a buffer.
 #+begin_src emacs-lisp :tangle yes
-  (use-package nyan-mode
-    :if window-system
-    :ensure t
-    ;; :commands nyan-mode
-    :custom
-    (nyan-wavy-trail t)
-    :config
-    (nyan-mode))
+    (use-package nyan-mode
+      :if window-system
+      :ensure t
+      ;; :commands nyan-mode
+      :custom
+      (nyan-wavy-trail t)
+      :config
+      (nyan-mode)
+      (nyan-start-animation))
 #+end_src
 * Coding
 This section contains customizations for writing programming code in Emacs.
@@ -1147,9 +1162,112 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :defer t
     :after org)
 #+end_src
-* Tab Line
-I like having tabs for all of my open buffers. The following code turns on tab
+* Tab Bar
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (tab-bar-mode)
+#+end_src
+* Treemacs
 #+begin_src emacs-lisp :tangle yes
+  (use-package treemacs
+    :after treemacs-all-the-icons
+    :ensure t
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :config
+    (treemacs-load-theme "all-the-icons")
+    (progn
+      (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+            treemacs-deferred-git-apply-delay        0.5
+            treemacs-directory-name-transformer      #'identity
+            treemacs-display-in-side-window          t
+            treemacs-eldoc-display                   'simple
+            treemacs-file-event-delay                5000
+            treemacs-file-extension-regex            treemacs-last-period-regex-value
+            treemacs-file-follow-delay               0.2
+            treemacs-file-name-transformer           #'identity
+            treemacs-follow-after-init               t
+            treemacs-expand-after-init               t
+            treemacs-find-workspace-method           'find-for-file-or-pick-first
+            treemacs-git-command-pipe                ""
+            treemacs-goto-tag-strategy               'refetch-index
+            treemacs-indentation                     2
+            treemacs-indentation-string              " "
+            treemacs-is-never-other-window           nil
+            treemacs-max-git-entries                 5000
+            treemacs-missing-project-action          'ask
+            treemacs-move-forward-on-expand          nil
+            treemacs-no-png-images                   nil
+            treemacs-no-delete-other-windows         t
+            treemacs-project-follow-cleanup          nil
+            treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+            treemacs-position                        'left
+            treemacs-read-string-input               'from-child-frame
+            treemacs-recenter-distance               0.1
+            treemacs-recenter-after-file-follow      nil
+            treemacs-recenter-after-tag-follow       nil
+            treemacs-recenter-after-project-jump     'always
+            treemacs-recenter-after-project-expand   'on-distance
+            treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
+            treemacs-show-cursor                     nil
+            treemacs-show-hidden-files               t
+            treemacs-silent-filewatch                nil
+            treemacs-silent-refresh                  nil
+            treemacs-sorting                         'alphabetic-asc
+            treemacs-select-when-already-in-treemacs 'move-back
+            treemacs-space-between-root-nodes        t
+            treemacs-tag-follow-cleanup              t
+            treemacs-tag-follow-delay                1.5
+            treemacs-text-scale                      nil
+            treemacs-user-mode-line-format           nil
+            treemacs-user-header-line-format         nil
+            treemacs-wide-toggle-width               70
+            treemacs-width                           35
+            treemacs-width-increment                 1
+            treemacs-width-is-initially-locked       t
+            treemacs-workspace-switch-cleanup        nil)
+
+      ;; The default width and height of the icons is 22 pixels. If you are
+      ;; using a Hi-DPI display, uncomment this to double the icon size.
+      ;;(treemacs-resize-icons 44)
+
+      (treemacs-follow-mode t)
+      (treemacs-filewatch-mode t)
+      (treemacs-fringe-indicator-mode 'always)
+
+      (pcase (cons (not (null (executable-find "git")))
+                   (not (null treemacs-python-executable)))
+        (`(t . t)
+         (treemacs-git-mode 'deferred))
+        (`(t . _)
+         (treemacs-git-mode 'simple)))
+
+      (treemacs-hide-gitignored-files-mode nil))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t d"   . treemacs-select-directory)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t)
+
+  (use-package treemacs-all-the-icons
+    :ensure t)
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t)
+#+end_src
+* Tab Line :disabled:
+I like having tabs for all of my open buffers. The following code turns on tab
+#+begin_src emacs-lisp :tangle no
   (global-tab-line-mode t)
 
   (setq tab-line-new-button-show nil)  ;; do not show add-new button
