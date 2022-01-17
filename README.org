@@ -15,7 +15,7 @@
 This repository contains the configuration for my personal Emacs setup.
 
 #+ATTR_HTML: title="Screenshot of Emacs"
-[[screenshot.png]]
+[[./screenshot.png]]
 
 * Contents of Repository
 - [[file:README.org][README.org]] : This file which you are currently viewing.
