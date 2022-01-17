@@ -52,8 +52,7 @@
   (display-time-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (toggle-scroll-bar -1)
-  (tab-bar-mode))
+  (toggle-scroll-bar -1))
 
 (load custom-file)
 
@@ -121,6 +120,7 @@
   (nyan-start-animation))
 
 (use-package c-mode
+  :defer t
   :mode ("\\.c\\'"
          "\\.ino\\'"))
 
@@ -147,6 +147,7 @@
   :defer t)
 
 (use-package magit
+  :if (executable-find "git")
   :ensure t
   :bind ("C-x g" . magit-status))
 
@@ -156,6 +157,7 @@
               ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
+  :defer t
   :delight
   :custom
   (show-paren-delay 0)
@@ -440,6 +442,7 @@
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
+  :defer t
   :ensure t)
 
 (use-package use-package-ensure-system-package
@@ -447,6 +450,7 @@
   :ensure t)
 
 (use-package eshell
+  :defer t
   :hook
   (eshell-mode . (lambda ()
                    (add-to-list 'eshell-visual-commands "htop")
@@ -499,6 +503,7 @@
 (setq gnus-init-file "~/.emacs.d/gnus.el")
 
 (use-package gnuplot
+  :if (executable-find "gnuplot")
   :ensure t
   :defer t)
 (use-package gnuplot-mode
@@ -842,6 +847,18 @@
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
+
+(use-package centaur-tabs
+  :ensure t
+  :demand
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward)
+  :custom
+  (centaur-tabs-set-bar 'over)
+  (centaur-tabs-style "chamfer")
+  :config
+  (centaur-tabs-mode t))
 
 (use-package tramp
   :config
