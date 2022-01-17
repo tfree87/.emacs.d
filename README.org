@@ -1,4 +1,3 @@
-
 #+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
 #+options: author:t broken-links:nil c:nil creator:nil
 #+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
@@ -14,6 +13,9 @@
 
 
 This repository contains the configuration for my personal Emacs setup.
+
+#+ATTR_HTML: title="Screenshot of Emacs"
+[[file:screenshot.png][Screenshot of my Emacs setup]]
 
 * Contents of Repository
 - [[file:README.org][README.org]] : This file which you are currently viewing.
