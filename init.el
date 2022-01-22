@@ -15,29 +15,44 @@
 
 (let ((file-name-handler-alist nil))
 
-(if (>= 26.3 (string-to-number emacs-version))
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+;; Install Straight.el to manage packages by downloading directly from repositories
 
-(require 'package)
-(custom-set-variables '(package-archives
-                        '(("melpa" . "https://melpa.org/packages/")
-                          ("elpa" . "https://elpa.gnu.org/packages/"))))
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(setq package-enable-at-startup nil)
+
+;; Install use-package to manage package loading
+
+(straight-use-package 'use-package)
+
+;; Set the location of variables set using Emacs cusmtomize interface
+
+(setq custom-file "~/.emacs.d/custom.el")
+
+;; Load the file custom.el file containing variables from Emacs customize
+
+(load custom-file)
+
+;; use-package statements
 
 (use-package benchmark-init
-  :ensure t
+  :straight t
   :hook
   (after-init . benchmark-init/deactivate))
 
 (use-package emacs
   :custom
-  (custom-file "~/.emacs.d/custom.el")
   (delete-by-moving-to-trash t)
   (version-control t)
   (delete-old-versions t)
@@ -54,26 +69,24 @@
   (tool-bar-mode -1)
   (toggle-scroll-bar -1))
 
-(load custom-file)
-
 (use-package all-the-icons
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-:ensure t)
+:straight t)
 
 (use-package all-the-icons-dired
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t
+  :straight t
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t
+  :straight t
   :init (all-the-icons-ibuffer-mode 1))
 
 (use-package all-the-icons-completion
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t
+  :straight t
   :config
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
@@ -86,32 +99,32 @@
 
 (use-package doom-themes
   :if window-system
-  :ensure t
+  :straight t
   :init (load-theme 'doom-vibrant))
 
 (use-package doom-modeline
   :if window-system
-  :ensure t
+  :straight t
   :init (doom-modeline-mode))
 
 (use-package spacemacs-theme
   :disabled t
   :if window-system
-  :ensure t
+  :straight t
   :defer t
   :init (load-theme 'spacemacs-dark t))
 
 (use-package spaceline
   :if window-system
   :disabled t
-  :ensure t
+  :straight t
   :config  
   (require 'spaceline-config)
   (spaceline-emacs-theme))
 
 (use-package nyan-mode
   :if window-system
-  :ensure t
+  :straight t
   ;; :commands nyan-mode
   :custom
   (nyan-wavy-trail t)
@@ -125,7 +138,7 @@
          "\\.ino\\'"))
 
 (use-package elpy
-  :ensure t
+  :straight t
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
@@ -143,16 +156,16 @@
                                           'elpy-black-fix-code nil t))))
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package magit
   :if (executable-find "git")
-  :ensure t
+  :straight t
   :bind ("C-x g" . magit-status))
 
 (use-package numpydoc
-  :ensure t
+  :straight t
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
 
@@ -165,34 +178,34 @@
   (show-paren-mode 1))
 
 (use-package company               
-  :ensure t
+  :straight t
   :delight company-mode
   :defer t
   :init (global-company-mode))
 
 (use-package company-auctex
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package company-quickhelp
-  :ensure t
+  :straight t
   :defer t
   :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 
 (use-package company-ledger
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package company-org-block
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package company-anaconda
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package embark
-  :ensure t
+  :straight t
   :bind
   (("C-." . embark-act)
    ("C-;" . embark-dwim)
@@ -208,14 +221,14 @@
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :ensure t
+  :straight t
   :after (embark consult)
   :demand t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package vertico
-  :ensure t
+  :straight t
   :demand t
   :custom
   (vertico-cycle t)
@@ -229,7 +242,7 @@
 ;; Multiple files can be opened at once with `find-file' if you enter a
 ;; wildcard. You may also give the `initials' completion style a try.
 (use-package orderless
-  :ensure t
+  :straight t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -240,12 +253,12 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :ensure t
+  :straight t
   :init
   (savehist-mode))
 
 (use-package marginalia
-  :ensure t
+  :straight t
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
          ("M-A" . marginalia-cycle))
@@ -284,7 +297,7 @@
   (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
 (use-package consult
-  :ensure t
+  :straight t
   :bind (;; C-c bindings (mode-specific-map)
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
@@ -400,7 +413,7 @@
 )
 
 (use-package bbdb
-  :ensure t
+  :straight t
   :defer t
   :hook
   (gnus-summary-mode . (lambda ()
@@ -414,7 +427,7 @@
   (bbdb-mua-auto-update-init 'gnus 'message))
 
 (use-package delight
-  :ensure t)
+  :straight t)
 
 (use-package deft
   :after org
@@ -438,16 +451,16 @@
 
 (use-package docker
   :if (executable-find "docker")
-  :ensure t
+  :straight t
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
   :defer t
-  :ensure t)
+  :straight t)
 
 (use-package use-package-ensure-system-package
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :ensure t)
+  :straight t)
 
 (use-package eshell
   :defer t
@@ -504,10 +517,10 @@
 
 (use-package gnuplot
   :if (executable-find "gnuplot")
-  :ensure t
+  :straight t
   :defer t)
 (use-package gnuplot-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package ibuffer
@@ -560,11 +573,11 @@
 (setq bibtex-dialect 'biblatex)
 
 (use-package ledger-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package markdown-mode
-  :ensure t
+  :straight t
   :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
   :config
   (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
@@ -575,7 +588,7 @@
   (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 
 (use-package multiple-cursors
-  :ensure t
+  :straight t
   :defer t
   :bind
   ("C-S-c C-S-c" . 'mc/edit-lines)
@@ -584,13 +597,13 @@
   ("C-c C-<" . 'mc/mark-all-like-this))
 
 (use-package org
+  :straight t
   :mode (("\\.org$" . org-mode))
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
   (:map org-mode-map
         ("C-c l" . org-store-link))
-  :ensure org-plus-contrib
   :hook (org-mode . turn-on-flyspell)
   :custom
   (org-directory "~/Dropbox/gtd")
@@ -638,16 +651,19 @@
                                  (sed . t)
                                  (shell . t))))
 
+(use-package org-contrib
+  :straight t)
+
 (use-package org-bullets
   :if window-system
-  :ensure t
+  :straight t
   :after org
   :hook
   (org-mode . (lambda () (org-bullets-mode 1))))
 
 (use-package calfw
   :disabled t
-  :ensure t
+  :straight t
   :custom
   (cfw:fchar-junction ?╋)
   (cfw:fchar-vertical-line ?┃)
@@ -660,7 +676,7 @@
 
 (use-package calfw-org
   :disabled t
-  :ensure t
+  :straight t
   :requires calfw
   :config
   (defalias 'calfworg 'cfw:open-org-calendar))
@@ -693,7 +709,7 @@
          ("s-y" . org-download-yank))))
 
 (use-package org-mind-map
-  :ensure t
+  :straight t
   :after org
   :commands org-mind-map-write
   :init
@@ -703,12 +719,12 @@
   (org-mind-map-engine "dot"))
 
 (use-package org-ref
-  :ensure t
+  :straight t
   :defer t
   :after org)
 
 (use-package org-roam
-  :ensure t
+  :straight t
   :defer t
   :after org
   :init
@@ -741,19 +757,19 @@
           ("C-c n l" . org-roam-buffer-toggle)))))
 
 (use-package pdf-tools
-  :ensure t
+  :straight t
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-loader-install :no-query))
 
 (use-package plantuml-mode
-  :ensure t
+  :straight t
   :defer t
   :after org)
 
 (use-package treemacs
   :after treemacs-all-the-icons
-  :ensure t
+  :straight t
   :defer t
   :init
   (with-eval-after-load 'winum
@@ -839,17 +855,17 @@
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
-  :ensure t)
+  :straight t)
 
 (use-package treemacs-all-the-icons
-  :ensure t)
+  :straight t)
 
 (use-package treemacs-magit
   :after (treemacs magit)
-  :ensure t)
+  :straight t)
 
 (use-package centaur-tabs
-  :ensure t
+  :straight t
   :demand
   :bind
   ("C-<prior>" . centaur-tabs-backward)
@@ -865,7 +881,7 @@
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 
 (use-package which-key
-  :ensure t
+  :straight t
   :delight
   :custom
   (which-key-show-early-on-C-h t)

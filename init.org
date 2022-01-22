@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-17 16:10:58 thomas>
+#+date: Time-stamp: <2022-01-22 17:26:13 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -43,37 +43,55 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
-* Package Management
-This section contains configuration elements to make package management perform in Emacs the way in which I prefer.
-** Fix TLS Issue in Old Emacs Versions
-Sometimes I am running Emacs on a system that does not have the latest version of Emacs available on the distribution. The following code fixes the issues with older versions of Emacs having broken versions of TLS that prevents them from accessing the package repositories.
+* Straight.el
+Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
 #+begin_src emacs-lisp :tangle yes
-  (if (>= 26.3 (string-to-number emacs-version))
-      (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+
+  ;; Install Straight.el to manage packages by downloading directly from repositories
+
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  (setq package-enable-at-startup nil)
+
+  ;; Install use-package to manage package loading
+
+  (straight-use-package 'use-package)
 #+end_src
-** Set Package Archives
-I often use Emacs packages from MELPA in addition to the standard ELPA. I ahave added the MELPA archive to the list of Emacs package archives.
+* Custom Set Variables
+In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
+#+name: custom-file
 #+begin_src emacs-lisp :tangle yes
-  (require 'package)
-  (custom-set-variables '(package-archives
-                          '(("melpa" . "https://melpa.org/packages/")
-                            ("elpa" . "https://elpa.gnu.org/packages/"))))
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
+
+  ;; Set the location of variables set using Emacs cusmtomize interface
+
+  (setq custom-file "~/.emacs.d/custom.el")
 #+end_src
-** Use-package
-The following code will refresh the package listings and install ~use-package~ if it has not been installed. It will then require the use of ~use-package~ when compiling the ~init.el~ file.
+Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refeshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
+#+name: load-custom
 #+begin_src emacs-lisp :tangle yes
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+
+  ;; Load the file custom.el file containing variables from Emacs customize
+
+  (load custom-file)
+
+  ;; use-package statements
 #+end_src
 * Track Load Time
 It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
   #+begin_src emacs-lisp :tangle yes
     (use-package benchmark-init
-      :ensure t
+      :straight t
       :hook
       (after-init . benchmark-init/deactivate))
   #+end_src
@@ -86,96 +104,87 @@ The code below collects customizations for Emacs built-in components.
     :config
     <<emacs_config>>)
 #+end_src
-* Customized Variables
-Keep all customized variables in a separate file.
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (custom-file "~/.emacs.d/custom.el")
-#+end_src
-Tell Emacs to load the custom file.
-#+begin_src emacs-lisp :tangle yes
-  (load custom-file)
-#+end_src
-* General Configuration
+** General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
-** Number Line Mode
+*** Number Line Mode
 I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
 #+end_src
-** Automatic Time Stamps When Saving
+*** Automatic Time Stamps When Saving
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (add-hook 'before-save-hook 'time-stamp)
 #+end_src
-** Default to UTF-8
+*** Default to UTF-8
 This will cause Emacs to defer to encoding text files as UTF-8 by default.
 #+begin_src emacs-lisp :noweb emacs_config
   (prefer-coding-system 'utf-8)
   (when (display-graphic-p)
     (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 #+end_src
-** File Deletion and Backup
+*** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
-*** Send Deleted Files to System Trash
+**** Send Deleted Files to System Trash
  Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (delete-by-moving-to-trash t)
  #+end_src
-*** Backup Files with Version Control
+**** Backup Files with Version Control
  Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (version-control t)
    (delete-old-versions t)
    (vc-make-backup-files t)
  #+end_src
-** Shorten "Yes or No" to "Y or N"
+*** Shorten "Yes or No" to "Y or N"
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
-** Single Space at the End of Sentences
+*** Single Space at the End of Sentences
 Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (sentence-end-double-space nil)
 #+end_src
-** User Interface
+*** User Interface
 All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
-*** All the Icons
+**** All the Icons
 I like to use All the Icons to add some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons
     :if <<portable_check>>
-  :ensure t)
+  :straight t)
 #+end_src
-**** Dired
+***** Dired
 Add file-type icons to Dired when browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons-dired
     :if <<portable_check>>
-    :ensure t
+    :straight t
     :hook
     (dired-mode . all-the-icons-dired-mode))
  #+end_src
-**** Ibuffer
+***** Ibuffer
 Add icons representing different buffer types to Ibuffer mode.
  #+begin_src emacs-lisp :tangle yes :noweb no-export
    (use-package all-the-icons-ibuffer
      :if <<portable_check>>
-     :ensure t
+     :straight t
      :init (all-the-icons-ibuffer-mode 1))
 #+end_src
-**** Completion
+***** Completion
 This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
    #+begin_src emacs-lisp :tangle yes :noweb no-export
      (use-package all-the-icons-completion
        :if <<portable_check>>
-       :ensure t
+       :straight t
        :config
        (all-the-icons-completion-mode)
        (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
-**** Ivy-rich :disabled:
+***** Ivy-rich :disabled:
 Adds icons to Ivy rich mode. I currently have this disabled as I am currently not using Ivy in favor of Vertico at the moment.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
      (use-package all-the-icons-ivy-rich
@@ -184,66 +193,66 @@ Adds icons to Ivy rich mode. I currently have this disabled as I am currently no
        :config
        (all-the-icons-ivy-rich-mode 1))
 #+end_src
-*** Emacs Theme
+**** Emacs Theme
 This section contains modifications to the default Emacs theme.
-**** Doom Theme
+***** Doom Theme
 I have switched to the Doom theme ~doom-vibrant~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
-***** Color Theme
+****** Color Theme
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
     :if window-system
-    :ensure t
+    :straight t
     :init (load-theme 'doom-vibrant))
 #+end_src
-***** Doom Modeline
+****** Doom Modeline
 I like the Doom modeline because it has icons and bright colors.
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
     :if window-system
-    :ensure t
+    :straight t
     :init (doom-modeline-mode))
 #+end_src
-**** Spacemacs Theme 
+***** Spacemacs Theme 
 I love how Spacemacs looks but I have been using vanilla Emacs for a long time and I am not yet ready to drop all my memorized key bindings for the other features that come with it yet so I am attempting to replicate the look some here.
-***** Color Theme
+****** Color Theme
 Get the Spacemacs colors
 #+begin_src emacs-lisp :tangle yes
   (use-package spacemacs-theme
     :disabled t
     :if window-system
-    :ensure t
+    :straight t
     :defer t
     :init (load-theme 'spacemacs-dark t))
 #+end_src
-***** Spaceline
+****** Spaceline
 Get a modeline that has colors similar to Spacemacs with a Powerline look.
 #+begin_src emacs-lisp :tangle yes
   (use-package spaceline
     :if window-system
     :disabled t
-    :ensure t
+    :straight t
     :config  
     (require 'spaceline-config)
     (spaceline-emacs-theme))
 #+end_src
-*** Display Time
+**** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (display-time-mode 1)
 #+end_src
-*** Menu Bar, Scroll Bar, and Tool Bar
+**** Menu Bar, Scroll Bar, and Tool Bar
 Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
 #+end_src
-*** Nyan Mode
+**** Nyan Mode
 Display a nyan cat on the mode line that shows progress through a buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package nyan-mode
     :if window-system
-    :ensure t
+    :straight t
     ;; :commands nyan-mode
     :custom
     (nyan-wavy-trail t)
@@ -265,7 +274,7 @@ I have added .ino files to C mode so that I can have syntax highlighting when I 
 Add powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
-    :ensure t
+    :straight t
     :defer t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
@@ -295,7 +304,7 @@ Black will auto format any Pyhton code on save to be compliant with PEP8.
 Install flycheck mode so that python syntax can be checed while typing.
 #+begin_src emacs-lisp :tangle yes
   (use-package flycheck
-    :ensure t
+    :straight t
     :defer t)
 #+end_src
 ** Magit
@@ -303,14 +312,14 @@ Magit provides an interface to Git through Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package magit
     :if (executable-find "git")
-    :ensure t
+    :straight t
     :bind ("C-x g" . magit-status))
 #+end_src
 ** Numpydoc
 Using Numpydoc provides an interactive tool to automatically generate Numpy style docstrings.
 #+begin_src emacs-lisp :tangle yes
   (use-package numpydoc
-    :ensure t
+    :straight t
     :bind (:map python-mode-map
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
@@ -329,7 +338,7 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
 Use Company (COMPlete ANY) package to enable autocompletion in buffers.
 #+begin_src emacs-lisp :tangle yes
   (use-package company               
-    :ensure t
+    :straight t
     :delight company-mode
     :defer t
     :init (global-company-mode))
@@ -338,13 +347,13 @@ Use Company (COMPlete ANY) package to enable autocompletion in buffers.
 Support for completion in AUCTeX. Something I use much more rarely now that I can create LaTeX documents in Org Mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package company-auctex
-    :ensure t
+    :straight t
     :defer t)
 #+end_src
 ** Documentation Popups for Company
 #+begin_src emacs-lisp :tangle yes
   (use-package company-quickhelp
-    :ensure t
+    :straight t
     :defer t
     :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
 #+end_src
@@ -352,19 +361,19 @@ Support for completion in AUCTeX. Something I use much more rarely now that I ca
 Autocomplete entries in Ledger files.
 #+begin_src emacs-lisp :tangle yes
   (use-package company-ledger
-    :ensure t
+    :straight t
     :defer t)
 #+end_src
 ** Org-mode Blocks Autocompletion
 #+begin_src emacs-lisp :tangle yes
   (use-package company-org-block
-    :ensure t
+    :straight t
     :defer t)  
 #+end_src
 ** Python Autocompletion
 #+begin_src emacs-lisp :tangle yes
   (use-package company-anaconda
-    :ensure t
+    :straight t
     :defer t)
   #+end_src
 * Minibuffer Completion
@@ -373,7 +382,7 @@ This section contains customization to improve command completion in the minibuf
 Embark provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package embark
-    :ensure t
+    :straight t
     :bind
     (("C-." . embark-act)
      ("C-;" . embark-dwim)
@@ -391,7 +400,7 @@ Embark provides the ability to execute commands on completion options found in t
 ** Embark Integration with Consult
 #+begin_src emacs-lisp :tangle yes
   (use-package embark-consult
-    :ensure t
+    :straight t
     :after (embark consult)
     :demand t
     :hook
@@ -401,7 +410,7 @@ Embark provides the ability to execute commands on completion options found in t
 Vertico removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 #+begin_src emacs-lisp :tangle yes
     (use-package vertico
-      :ensure t
+      :straight t
       :demand t
       :custom
       (vertico-cycle t)
@@ -417,7 +426,7 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
   ;; Multiple files can be opened at once with `find-file' if you enter a
   ;; wildcard. You may also give the `initials' completion style a try.
   (use-package orderless
-    :ensure t
+    :straight t
     :init
     ;; Configure a custom style dispatcher (see the Consult wiki)
     ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -431,7 +440,7 @@ Savehist will save the selections from completion history between Emacs sessions
 #+begin_src emacs-lisp :tangle yes
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
-    :ensure t
+    :straight t
     :init
     (savehist-mode))
   #+end_src
@@ -439,7 +448,7 @@ Savehist will save the selections from completion history between Emacs sessions
 Marginalia provides annotations to items in the minibuffer similar to what is accomplished in [[Ivy]].
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
-    :ensure t
+    :straight t
     :bind (("M-A" . marginalia-cycle)
            :map minibuffer-local-map
            ("M-A" . marginalia-cycle))
@@ -483,7 +492,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 * Consult
 #+begin_src emacs-lisp :tangle yes
   (use-package consult
-    :ensure t
+    :straight t
     :bind (;; C-c bindings (mode-specific-map)
            ("C-c h" . consult-history)
            ("C-c m" . consult-mode-command)
@@ -601,7 +610,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 * BBDB
 #+begin_src emacs-lisp :tangle yes
   (use-package bbdb
-    :ensure t
+    :straight t
     :defer t
     :hook
     (gnus-summary-mode . (lambda ()
@@ -618,7 +627,7 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
 Delight provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
 #+begin_src emacs-lisp :tangle yes
   (use-package delight
-    :ensure t)
+    :straight t)
 #+end_src
 * Deft
 Deft is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
@@ -660,7 +669,7 @@ An interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
     :if (executable-find "docker")
-    :ensure t
+    :straight t
     :bind ("C-c d" . docker))
 #+end_src
 ** Docker Compose
@@ -668,14 +677,14 @@ Major mode for editing Docker Compose files.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
     :defer t
-    :ensure t)
+    :straight t)
 #+end_src
 * Ensure System Package
 ensure-system-package will install packages on the computer system so that Emacs components are functional and not broken. In order to prevent ~ensure-system-package~ from installing when it is run as a portableapp from a flash drive onto the work computer, ~use-package~ will check to see if =~/runemacs.bat= can be found on the flash drive.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package use-package-ensure-system-package
     :if <<portable_check>>
-    :ensure t)
+    :straight t)
 #+end_src
 * Eshell
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
@@ -765,10 +774,10 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
 #+begin_src emacs-lisp :tangle yes
   (use-package gnuplot
     :if (executable-find "gnuplot")
-    :ensure t
+    :straight t
     :defer t)
   (use-package gnuplot-mode
-    :ensure t
+    :straight t
     :defer t)
 #+end_src
 * Ibuffer
@@ -835,14 +844,14 @@ BibLaTeX has much more powerful features than standard BibTeX.
 To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 #+begin_src emacs-lisp :tangle yes
   (use-package ledger-mode
-    :ensure t
+    :straight t
     :defer t)
 #+end_src
 * Markdown Mode
 Add a mode to edit and view markdown files.
 #+begin_src emacs-lisp :tangle yes
   (use-package markdown-mode
-    :ensure t
+    :straight t
     :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
     :config
     (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
@@ -856,7 +865,7 @@ Add a mode to edit and view markdown files.
 Multiple cursors allows for editing emacs buffers at multiple locations simultaneously at the same time. This is great for things where multiple lines need the same text edited or added.
 #+begin_src emacs-lisp :tangle yes
   (use-package multiple-cursors
-    :ensure t
+    :straight t
     :defer t
     :bind
     ("C-S-c C-S-c" . 'mc/edit-lines)
@@ -872,19 +881,22 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
 ** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
+    :straight t
     :mode (("\\.org$" . org-mode))
     :bind
     ("C-c c" . org-capture)
     ("C-c a" . org-agenda)
     (:map org-mode-map
           ("C-c l" . org-store-link))
-    :ensure org-plus-contrib
     :hook (org-mode . turn-on-flyspell)
     :custom
     <<org_customize>> 
     :config
     <<org_config>>
     <<babel_languages>>)
+
+  (use-package org-contrib
+    :straight t)
 #+end_src
 ** Org-mode Directories
 Set up the default directories for Org Mode.
@@ -1017,7 +1029,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
 #+begin_src emacs-lisp :tangle yes
   (use-package org-bullets
     :if window-system
-    :ensure t
+    :straight t
     :after org
     :hook
     (org-mode . (lambda () (org-bullets-mode 1))))
@@ -1027,7 +1039,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw
     :disabled t
-    :ensure t
+    :straight t
     :custom
     (cfw:fchar-junction ?╋)
     (cfw:fchar-vertical-line ?┃)
@@ -1040,7 +1052,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
 
   (use-package calfw-org
     :disabled t
-    :ensure t
+    :straight t
     :requires calfw
     :config
     (defalias 'calfworg 'cfw:open-org-calendar))
@@ -1091,7 +1103,7 @@ I have not yet tried this feature yet...
 Turn any ~org-mode~ buffer into a mind map in various output formats.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-mind-map
-    :ensure t
+    :straight t
     :after org
     :commands org-mind-map-write
     :init
@@ -1104,7 +1116,7 @@ Turn any ~org-mode~ buffer into a mind map in various output formats.
 A reference manager in org-mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-ref
-    :ensure t
+    :straight t
     :defer t
     :after org)
 #+end_src
@@ -1112,7 +1124,7 @@ A reference manager in org-mode.
 ~org-roam~ adds features to make linking org notes easier and provided a database file to connect all the notes together.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-roam
-    :ensure t
+    :straight t
     :defer t
     :after org
     :init
@@ -1148,7 +1160,7 @@ A reference manager in org-mode.
 PDF Tools is a faster and more feature-rich than the built in DocView.
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
-    :ensure t
+    :straight t
     :magic ("%PDF" . pdf-view-mode)
     :config
     (pdf-loader-install :no-query))
@@ -1164,7 +1176,7 @@ When Emacs is run as a portable app on a USB drive, Emacs needs to know the loca
 PlantUML mode is not installed by default, so we need ~use-package~ to download and install it.
 #+begin_src emacs-lisp :tangle yes
   (use-package plantuml-mode
-    :ensure t
+    :straight t
     :defer t
     :after org)
 #+end_src
@@ -1172,7 +1184,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs
     :after treemacs-all-the-icons
-    :ensure t
+    :straight t
     :defer t
     :init
     (with-eval-after-load 'winum
@@ -1258,20 +1270,20 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 
   (use-package treemacs-projectile
     :after (treemacs projectile)
-    :ensure t)
+    :straight t)
 
   (use-package treemacs-all-the-icons
-    :ensure t)
+    :straight t)
 
   (use-package treemacs-magit
     :after (treemacs magit)
-    :ensure t)
+    :straight t)
 #+end_src
 * Centaur Tabs
 I like having tabs for all of my open buffers. The following code turns on tab
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
-    :ensure t
+    :straight t
     :demand
     :bind
     ("C-<prior>" . centaur-tabs-backward)
@@ -1293,7 +1305,7 @@ I occasinally use Tramp to access remote files but it seems to have problems whe
 ~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
-    :ensure t
+    :straight t
     :delight
     :custom
     <<wk_custom>>
