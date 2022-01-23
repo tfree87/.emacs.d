@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+;; 
 ;;; init.el --- Emacs initialzation file
 
 ;; Author: Thomas Freeman
@@ -32,8 +34,6 @@
 
 (setq package-enable-at-startup nil)
 
-;; Install use-package to manage package loading
-
 (straight-use-package 'use-package)
 
 ;; Set the location of variables set using Emacs cusmtomize interface
@@ -44,7 +44,11 @@
 
 (load custom-file)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; use-package statements
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package benchmark-init
   :straight t
@@ -170,7 +174,6 @@
               ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
-  :defer t
   :delight
   :custom
   (show-paren-delay 0)
@@ -198,7 +201,12 @@
 
 (use-package company-org-block
   :straight t
-  :defer t)
+  :defer t
+  :custom
+  (company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
+  :hook ((org-mode . (lambda ()
+                       (setq-local company-backends '(company-org-block))
+                       (company-mode +1)))))
 
 (use-package company-anaconda
   :straight t
@@ -251,7 +259,6 @@
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :straight t
   :init
@@ -396,21 +403,10 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
-  ;; Optionally configure a function which returns the project root directory.
-  ;; There are multiple reasonable alternatives to chose from.
-  ;;;; 1. project.el (project-roots)
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))
-            (car (project-roots project)))))
-  ;;;; 2. projectile.el (projectile-project-root)
-  ;; (autoload 'projectile-project-root "projectile")
-  ;; (setq consult-project-root-function #'projectile-project-root)
-  ;;;; 3. vc.el (vc-root-dir)
-  ;; (setq consult-project-root-function #'vc-root-dir)
-  ;;;; 4. locate-dominating-file
-  ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
-)
+            (car (project-roots project))))))
 
 (use-package bbdb
   :straight t
@@ -444,7 +440,6 @@
   (deft-use-filename-as-title t))
 
 (use-package dired+
-  ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
   :if (memq window-system '(w32 pc ns))
   :defer t
   :load-path "~/.emacs.d/elisp")
@@ -513,7 +508,9 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
-(setq gnus-init-file "~/.emacs.d/gnus.el")
+(use-package gnus
+  :custom
+  (gnus-init-file "~/.emacs.d/gnus.el"))
 
 (use-package gnuplot
   :if (executable-find "gnuplot")

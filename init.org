@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-22 17:26:13 thomas>
+#+date: Time-stamp: <2022-01-23 13:59:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -15,6 +15,8 @@ This file was written using Emacs Org Mode. This makes navigating and modifying 
 * Header for init.el
 The following code block will add a header to the ~init.el~ file when it is generated on saving.
 #+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t -*-
+  ;; 
   ;;; init.el --- Emacs initialzation file
 
   ;; Author: Thomas Freeman
@@ -43,7 +45,8 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
-* Straight.el
+* Package Management
+** Straight.el
 Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
 #+begin_src emacs-lisp :tangle yes
 
@@ -61,11 +64,15 @@ Instead of using the built-in package manager, use ~straight.el~ to pull all the
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
-
+ #+end_src
+** Disable Emacs Package Manager
+In order to prevent conflicts between ~straight.el~ and the Emacs package manager, ~package-enable-at-startup~ should be set to ~nil~.
+#+begin_src emacs-lisp :tangle yes
   (setq package-enable-at-startup nil)
-
-  ;; Install use-package to manage package loading
-
+#+end_src
+** Install use-package
+Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
+#+begin_src emacs-lisp :tangle yes
   (straight-use-package 'use-package)
 #+end_src
 * Custom Set Variables
@@ -84,17 +91,23 @@ Once the file location has been set, Emacs needs to load the custom file. This n
   ;; Load the file custom.el file containing variables from Emacs customize
 
   (load custom-file)
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;
   ;; use-package statements
+  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
 * Track Load Time
 It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
-  #+begin_src emacs-lisp :tangle yes
-    (use-package benchmark-init
-      :straight t
-      :hook
-      (after-init . benchmark-init/deactivate))
-  #+end_src
+#+begin_src emacs-lisp :tangle yes
+  (use-package benchmark-init
+    :straight t
+    :hook
+    (after-init . benchmark-init/deactivate))
+#+end_src
 * Emacs General Options
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -168,30 +181,30 @@ Add file-type icons to Dired when browsing files and directories. I find this ve
  #+end_src
 ***** Ibuffer
 Add icons representing different buffer types to Ibuffer mode.
- #+begin_src emacs-lisp :tangle yes :noweb no-export
-   (use-package all-the-icons-ibuffer
-     :if <<portable_check>>
-     :straight t
-     :init (all-the-icons-ibuffer-mode 1))
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-ibuffer
+    :if <<portable_check>>
+    :straight t
+    :init (all-the-icons-ibuffer-mode 1))
 #+end_src
 ***** Completion
 This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
-   #+begin_src emacs-lisp :tangle yes :noweb no-export
-     (use-package all-the-icons-completion
-       :if <<portable_check>>
-       :straight t
-       :config
-       (all-the-icons-completion-mode)
-       (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-completion
+    :if <<portable_check>>
+    :straight t
+    :config
+    (all-the-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 ***** Ivy-rich :disabled:
 Adds icons to Ivy rich mode. I currently have this disabled as I am currently not using Ivy in favor of Vertico at the moment.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-     (use-package all-the-icons-ivy-rich
-       :if <<portable_check>>
-       :disabled t
-       :config
-       (all-the-icons-ivy-rich-mode 1))
+  (use-package all-the-icons-ivy-rich
+    :if <<portable_check>>
+    :disabled t
+    :config
+    (all-the-icons-ivy-rich-mode 1))
 #+end_src
 **** Emacs Theme
 This section contains modifications to the default Emacs theme.
@@ -327,7 +340,6 @@ Using Numpydoc provides an interactive tool to automatically generate Numpy styl
 Always highlight matching parenthesis when coding /immediately/ without delay.
 #+begin_src emacs-lisp :tangle yes
   (use-package paren
-    :defer t
     :delight
     :custom
     (show-paren-delay 0)
@@ -368,7 +380,12 @@ Autocomplete entries in Ledger files.
 #+begin_src emacs-lisp :tangle yes
   (use-package company-org-block
     :straight t
-    :defer t)  
+    :defer t
+    :custom
+    (company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
+    :hook ((org-mode . (lambda ()
+                         (setq-local company-backends '(company-org-block))
+                         (company-mode +1)))))
 #+end_src
 ** Python Autocompletion
 #+begin_src emacs-lisp :tangle yes
@@ -409,14 +426,14 @@ Embark provides the ability to execute commands on completion options found in t
 ** Vertico
 Vertico removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 #+begin_src emacs-lisp :tangle yes
-    (use-package vertico
-      :straight t
-      :demand t
-      :custom
-      (vertico-cycle t)
-      (vertico-resize t)
-      :init
-      (vertico-mode))
+  (use-package vertico
+    :straight t
+    :demand t
+    :custom
+    (vertico-cycle t)
+    (vertico-resize t)
+    :init
+    (vertico-mode))
 #+end_src
 ** Orderless
 #+begin_src emacs-lisp :tangle yes
@@ -438,7 +455,6 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
 ** Savehist
 Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in [[Vertico]].
 #+begin_src emacs-lisp :tangle yes
-  ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
     :straight t
     :init
@@ -591,21 +607,10 @@ Ivy is a system to make entering commands in Emacs easier by narrowing down the 
     ;; You may want to use `embark-prefix-help-command' or which-key instead.
     ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
-    ;; Optionally configure a function which returns the project root directory.
-    ;; There are multiple reasonable alternatives to chose from.
-    ;;;; 1. project.el (project-roots)
     (setq consult-project-root-function
           (lambda ()
             (when-let (project (project-current))
-              (car (project-roots project)))))
-    ;;;; 2. projectile.el (projectile-project-root)
-    ;; (autoload 'projectile-project-root "projectile")
-    ;; (setq consult-project-root-function #'projectile-project-root)
-    ;;;; 3. vc.el (vc-root-dir)
-    ;; (setq consult-project-root-function #'vc-root-dir)
-    ;;;; 4. locate-dominating-file
-    ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
-  )
+              (car (project-roots project))))))
 #+end_src 
 * BBDB
 #+begin_src emacs-lisp :tangle yes
@@ -657,7 +662,6 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 Dired+ allows for better functionality when using Emacs as a portable applicatoin. =:if (memq window-system '(w32 pc ns))= will cause dired+ to only load on non-Linux systems.
 #+begin_src emacs-lisp :tangle yes
   (use-package dired+
-    ;; Only use dired+ if used on a Windows device as vanilla dired works just find on any other OS
     :if (memq window-system '(w32 pc ns))
     :defer t
     :load-path "~/.emacs.d/elisp")
@@ -767,7 +771,9 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
 * Gnus
 See the =~/gnus.el= file for configuration information.
 #+begin_src emacs-lisp :tangle yes
-  (setq gnus-init-file "~/.emacs.d/gnus.el")
+  (use-package gnus
+    :custom
+    (gnus-init-file "~/.emacs.d/gnus.el"))
 #+end_src
 * Gnuplot-mode
 Gnuplot mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
