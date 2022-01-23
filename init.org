@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-23 13:59:28 thomas>
+#+date: Time-stamp: <2022-01-23 14:50:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1320,6 +1320,7 @@ I occasinally use Tramp to access remote files but it seems to have problems whe
     (which-key-mode))
 #+end_src
 ** Activating Which-key
+How to start which-key
 *** C-h During Key Combination Entry
 Type C-h during any key combination to pop-up which key
 #+begin_src emacs-lisp :noweb-ref wk_custom
@@ -1341,6 +1342,7 @@ Something I am fiddling around with...
   (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 #+end_src
 * Performance Optimization End
+Close off the statement to increase Emacs initialization speed up.
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
   )
