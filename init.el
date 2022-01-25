@@ -925,6 +925,15 @@
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
 
+(use-package yasnippet
+  :straight t
+  :delight t
+  :config
+  (yas-global-mode t))
+
+(use-package yasnippet-snippets
+  :straight t)
+
 (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 
 (setq gc-cons-threshold (* 2 1000 1000))

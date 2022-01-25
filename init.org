@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-24 21:27:55 thomas>
+#+date: Time-stamp: <2022-01-24 21:40:47 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -349,7 +349,8 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
     :config
     (show-paren-mode 1))
 #+end_src
-* Completion with Corfu
+* Autocompletion
+** Corfu
 Use Corfu for in-buffer completion.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package corfu
@@ -363,7 +364,7 @@ Use Corfu for in-buffer completion.
     :config
     <<corfu-config>>)
 #+end_src
-** Use TAB for Selecting Candidates
+*** Use TAB for Selecting Candidates
 Instead of using M-tab which will switch windows in XFCE---my default desktop---use TAB to cycle between the different possible options.
 #+name: tab-selection
 #+begin_src emacs-lisp
@@ -374,7 +375,7 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop---
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
 #+end_src
-** Enable Corfu for Command Evaluation in Minibuffer
+*** Enable Corfu for Command Evaluation in Minibuffer
 When running lisp code or shell commands in the minibuffer, use Corfu to offer completion suggestions.
 #+name: corfu-minibuffer
 #+begin_src emacs-lisp :noweb-ref corfu-config
@@ -385,7 +386,7 @@ When running lisp code or shell commands in the minibuffer, use Corfu to offer c
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 #+end_src
-** Use Corfu in Eshell
+*** Use Corfu in Eshell
 Use Corfu to complete commands in Eshell
 #+begin_src emacs-lisp :noweb-ref corfu-config
   (add-hook 'eshell-mode-hook
@@ -402,7 +403,7 @@ Use Corfu to complete commands in Eshell
   ;; and behaves as a pure `completion-at-point-function'.
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 #+end_src
-** Cape
+*** Cape
 Cape provides some extensions for corfu.
 #+name: cape
 #+begin_src emacs-lisp :tangle yes
@@ -439,9 +440,9 @@ Cape provides some extensions for corfu.
     (add-to-list 'completion-at-point-functions #'cape-line)
   )
 #+end_src
-* Minibuffer Completion
+** Minibuffer Completion
 This section contains customization to improve command completion in the minibuffer in Emacs.
-** Embark
+*** Embark
 Embark provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package embark
@@ -460,7 +461,7 @@ Embark provides the ability to execute commands on completion options found in t
                    nil
                    (window-parameters (mode-line-format . none)))))
 #+end_src
-** Embark Integration with Consult
+*** Embark Integration with Consult
 #+begin_src emacs-lisp :tangle yes
   (use-package embark-consult
     :straight t
@@ -469,7 +470,7 @@ Embark provides the ability to execute commands on completion options found in t
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src 
-** Vertico
+*** Vertico
 Vertico removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 #+begin_src emacs-lisp :tangle yes
   (use-package vertico
@@ -481,7 +482,7 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
     :init
     (vertico-mode))
 #+end_src
-** Orderless
+*** Orderless
 #+begin_src emacs-lisp :tangle yes
   ;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
   ;; dispatcher. Additionally enable `partial-completion' for file path
@@ -498,7 +499,7 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
           completion-category-defaults nil
           completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
-** Savehist
+*** Savehist
 Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in [[Vertico]].
 #+begin_src emacs-lisp :tangle yes
   (use-package savehist
@@ -506,7 +507,7 @@ Savehist will save the selections from completion history between Emacs sessions
     :init
     (savehist-mode))
   #+end_src
-** Marginalia
+*** Marginalia
 Marginalia provides annotations to items in the minibuffer similar to what is accomplished in [[Ivy]].
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
@@ -517,7 +518,7 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
     :init
     (marginalia-mode))
 #+end_src
-** Ivy :disabled:
+*** Ivy :disabled:
 Ivy is a system to make entering commands in Emacs easier by narrowing down the possible choices when keybindings such as M-x are issued. Ivy has been a very useful completion system but I have currently /disabled/ it as I find [[Vertico]] to be a bit faster which is beneficial when running Emacs as a portable app.
 #+begin_src emacs-lisp :tangle yes
   (use-package ivy
@@ -1381,6 +1382,23 @@ Use the <f4> key in any major mode to see the key bindings
 Set up which-key to use the side window preferably
 #+begin_src emacs-lisp :noweb-ref wk_config
   (which-key-setup-side-window-right-bottom)
+#+end_src
+* YASnippet
+YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
+** Install YASnippet
+Install YASnippet and have it enabled globally
+#+begin_src emacs-lisp :tangle yes
+  (use-package yasnippet
+    :straight t
+    :delight t
+    :config
+    (yas-global-mode t))
+#+end_src
+** Install Snippets
+Get a library of snippets from YASnippet-snippets
+#+begin_src emacs-lisp :tangle yes
+  (use-package yasnippet-snippets
+    :straight t)
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...
