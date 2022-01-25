@@ -46,7 +46,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; use-package statements
+;; Packages
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -111,12 +111,23 @@
 (use-package nyan-mode
   :if window-system
   :straight t
-  ;; :commands nyan-mode
   :custom
   (nyan-wavy-trail t)
   :config
   (nyan-mode)
   (nyan-start-animation))
+
+(use-package aggressive-indent
+  :straight t
+  :delight t
+  :config
+  (global-aggressive-indent-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+
+(use-package apheleia
+  :straight t
+  :config
+  (apheleia-global-mode +1))
 
 (use-package c-mode
   :defer t
@@ -162,6 +173,14 @@
   :config
   (show-paren-mode 1))
 
+(use-package projectile
+  :straight t
+  :delight t
+  :config
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
+
 (use-package corfu
   :straight t
   :custom
@@ -179,7 +198,6 @@
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      ;; (setq-local corfu-auto nil) Enable/disable auto completion
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
   (add-hook 'eshell-mode-hook
@@ -195,6 +213,15 @@
   ;; Ensure that pcomplete does not write to the buffer
   ;; and behaves as a pure `completion-at-point-function'.
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+
+(use-package corfu-doc
+  :straight (corfu-doc :host github
+                       :repo "galeo/corfu-doc"
+                       :branch "main")
+  :config
+  (add-hook 'corfu-mode-hook #'corfu-doc-mode)
+  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
+  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 
 (use-package cape
   :straight t
@@ -226,7 +253,7 @@
   (add-to-list 'completion-at-point-functions #'cape-ispell)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
   (add-to-list 'completion-at-point-functions #'cape-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-line)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
 )
 
 (use-package embark
@@ -261,17 +288,9 @@
   :init
   (vertico-mode))
 
-;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
-;; dispatcher. Additionally enable `partial-completion' for file path
-;; expansion. `partial-completion' is important for wildcard support.
-;; Multiple files can be opened at once with `find-file' if you enter a
-;; wildcard. You may also give the `initials' completion style a try.
 (use-package orderless
   :straight t
   :init
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-  ;;	   orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
@@ -291,34 +310,28 @@
 
 (use-package consult
   :straight t
-  :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
+  :bind (("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
-         ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ;; Custom M-# bindings for fast register access
+         ("C-x M-:" . consult-complex-command)
+         ("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
+         ("C-x r b" . consult-bookmark)
          ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("M-'" . consult-register-store)
          ("C-M-#" . consult-register)
-         ;; Other custom bindings
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ("<help> a" . consult-apropos)            ;; orig. apropos-command
-         ;; M-g bindings (goto-map)
+         ("M-y" . consult-yank-pop)
+         ("<help> a" . consult-apropos)
          ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g f" . consult-flymake)
+         ("M-g g" . consult-goto-line)
+         ("M-g M-g" . consult-goto-line)
+         ("M-g o" . consult-outline)
          ("M-g m" . consult-mark)
          ("M-g k" . consult-global-mark)
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
-         ;; M-s bindings (search-map)
          ("M-s d" . consult-find)
          ("M-s D" . consult-locate)
          ("M-s g" . consult-grep)
@@ -329,13 +342,12 @@
          ("M-s m" . consult-multi-occur)
          ("M-s k" . consult-keep-lines)
          ("M-s u" . consult-focus-lines)
-         ;; Isearch integration
          ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
-         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+         ("M-e" . consult-isearch-history)
+         ("M-s e" . consult-isearch-history)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi))
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI. You may want to also
@@ -812,7 +824,7 @@
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+    (treemacs-resize-icons 22)
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
@@ -881,6 +893,14 @@
 
 (use-package yasnippet-snippets
   :straight t)
+
+(use-package minimap
+  :straight t)
+
+(use-package rainbow-delimiters
+  :straight t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 

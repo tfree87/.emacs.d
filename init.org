@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-24 21:56:24 thomas>
+#+date: Time-stamp: <2022-01-24 23:49:26 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -96,7 +96,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 #+begin_src emacs-lisp :tangle yes
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;
-  ;; use-package statements
+  ;; Packages
   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
@@ -237,7 +237,6 @@ Display a nyan cat on the mode line that shows progress through a buffer.
   (use-package nyan-mode
     :if window-system
     :straight t
-    ;; :commands nyan-mode
     :custom
     (nyan-wavy-trail t)
     :config
@@ -246,6 +245,22 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 #+end_src
 * Coding
 This section contains customizations for writing programming code in Emacs.
+** Aggressive Indent Mode
+#+begin_src emacs-lisp :tangle yes
+  (use-package aggressive-indent
+    :straight t
+    :delight t
+    :config
+    (global-aggressive-indent-mode 1)
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+#+end_src
+** Apheleia
+#+begin_src emacs-lisp :tangle yes
+  (use-package apheleia
+    :straight t
+    :config
+    (apheleia-global-mode +1))
+#+end_src
 ** C
 I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
 #+begin_src emacs-lisp :tangle yes
@@ -317,6 +332,16 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
     :config
     (show-paren-mode 1))
 #+end_src
+** Projectile
+#+begin_src emacs-lisp :tangle yes
+  (use-package projectile
+    :straight t
+    :delight t
+    :config
+    (projectile-mode +1)
+    :bind (:map projectile-mode-map
+                ("C-c p" . projectile-command-map)))
+#+end_src
 * Autocompletion
 ** Corfu
 Use Corfu for in-buffer completion.
@@ -350,7 +375,6 @@ When running lisp code or shell commands in the minibuffer, use Corfu to offer c
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      ;; (setq-local corfu-auto nil) Enable/disable auto completion
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 #+end_src
@@ -370,6 +394,17 @@ Use Corfu to complete commands in Eshell
   ;; Ensure that pcomplete does not write to the buffer
   ;; and behaves as a pure `completion-at-point-function'.
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
+#+end_src
+*** Corfu-doc
+#+begin_src emacs-lisp :tangle yes
+  (use-package corfu-doc
+    :straight (corfu-doc :host github
+                         :repo "galeo/corfu-doc"
+                         :branch "main")
+    :config
+    (add-hook 'corfu-mode-hook #'corfu-doc-mode)
+    (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
+    (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
 *** Cape
 Cape provides some extensions for corfu.
@@ -405,7 +440,7 @@ Cape provides some extensions for corfu.
     (add-to-list 'completion-at-point-functions #'cape-ispell)
     ;;(add-to-list 'completion-at-point-functions #'cape-dict)
     (add-to-list 'completion-at-point-functions #'cape-symbol)
-    (add-to-list 'completion-at-point-functions #'cape-line)
+    ;;(add-to-list 'completion-at-point-functions #'cape-line)
   )
 #+end_src
 ** Minibuffer Completion
@@ -452,17 +487,9 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
 #+end_src
 *** Orderless
 #+begin_src emacs-lisp :tangle yes
-  ;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
-  ;; dispatcher. Additionally enable `partial-completion' for file path
-  ;; expansion. `partial-completion' is important for wildcard support.
-  ;; Multiple files can be opened at once with `find-file' if you enter a
-  ;; wildcard. You may also give the `initials' completion style a try.
   (use-package orderless
     :straight t
     :init
-    ;; Configure a custom style dispatcher (see the Consult wiki)
-    ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-    ;;	   orderless-component-separator #'orderless-escapable-split-on-space)
     (setq completion-styles '(orderless)
           completion-category-defaults nil
           completion-category-overrides '((file (styles partial-completion)))))
@@ -490,34 +517,28 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
 #+begin_src emacs-lisp :tangle yes
   (use-package consult
     :straight t
-    :bind (;; C-c bindings (mode-specific-map)
-           ("C-c h" . consult-history)
+    :bind (("C-c h" . consult-history)
            ("C-c m" . consult-mode-command)
            ("C-c k" . consult-kmacro)
-           ;; C-x bindings (ctl-x-map)
-           ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-           ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-           ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-           ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-           ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-           ;; Custom M-# bindings for fast register access
+           ("C-x M-:" . consult-complex-command)
+           ("C-x b" . consult-buffer)
+           ("C-x 4 b" . consult-buffer-other-window)
+           ("C-x 5 b" . consult-buffer-other-frame)
+           ("C-x r b" . consult-bookmark)
            ("M-#" . consult-register-load)
-           ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+           ("M-'" . consult-register-store)
            ("C-M-#" . consult-register)
-           ;; Other custom bindings
-           ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-           ("<help> a" . consult-apropos)            ;; orig. apropos-command
-           ;; M-g bindings (goto-map)
+           ("M-y" . consult-yank-pop)
+           ("<help> a" . consult-apropos)
            ("M-g e" . consult-compile-error)
-           ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-           ("M-g g" . consult-goto-line)             ;; orig. goto-line
-           ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-           ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+           ("M-g f" . consult-flymake)
+           ("M-g g" . consult-goto-line)
+           ("M-g M-g" . consult-goto-line)
+           ("M-g o" . consult-outline)
            ("M-g m" . consult-mark)
            ("M-g k" . consult-global-mark)
            ("M-g i" . consult-imenu)
            ("M-g I" . consult-imenu-multi)
-           ;; M-s bindings (search-map)
            ("M-s d" . consult-find)
            ("M-s D" . consult-locate)
            ("M-s g" . consult-grep)
@@ -528,13 +549,12 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
            ("M-s m" . consult-multi-occur)
            ("M-s k" . consult-keep-lines)
            ("M-s u" . consult-focus-lines)
-           ;; Isearch integration
            ("M-s e" . consult-isearch-history)
            :map isearch-mode-map
-           ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-           ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-           ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-           ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+           ("M-e" . consult-isearch-history)
+           ("M-s e" . consult-isearch-history)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi))
 
     ;; Enable automatic preview at point in the *Completions* buffer. This is
     ;; relevant when you use the default completion UI. You may want to also
@@ -1231,7 +1251,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
 
       ;; The default width and height of the icons is 22 pixels. If you are
       ;; using a Hi-DPI display, uncomment this to double the icon size.
-      ;;(treemacs-resize-icons 44)
+      (treemacs-resize-icons 22)
 
       (treemacs-follow-mode t)
       (treemacs-filewatch-mode t)
@@ -1333,6 +1353,18 @@ Get a library of snippets from YASnippet-snippets
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet-snippets
     :straight t)
+#+end_src
+* Minimap
+#+begin_src emacs-lisp :tangle yes
+  (use-package minimap
+    :straight t)
+#+end_src
+* Rainbow Delimiters
+#+begin_src emacs-lisp :tangle yes
+  (use-package rainbow-delimiters
+    :straight t
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...
