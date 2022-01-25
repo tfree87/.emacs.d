@@ -98,12 +98,6 @@
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
-(use-package all-the-icons-ivy-rich
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :disabled t
-  :config
-  (all-the-icons-ivy-rich-mode 1))
-
 (use-package doom-themes
   :if window-system
   :straight t
@@ -309,37 +303,6 @@
          ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
-
-(use-package ivy
-  :disabled t
-  :delight
-  :custom
-  (ivy-use-virtual-buffers t)
-  (ivy-count-format "(%d/%d) ")
-  :config
-  (ivy-mode 1))
-
-(use-package counsel
-  :disabled t
-  :bind
-  ("M-x" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  :delight
-  :config
-  (counsel-mode))
-
-(use-package swiper
-  :disabled t
-  :bind
-  ("C-s" . swiper))
-
-(use-package ivy-rich
-  :disabled t
-  :delight
-  :after counsel
-  :config
-  (ivy-rich-mode 1)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
 (use-package consult
   :straight t

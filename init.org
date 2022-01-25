@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-24 21:40:47 thomas>
+#+date: Time-stamp: <2022-01-24 21:50:13 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -199,15 +199,6 @@ This will add icons for many Emacs minibuffer completion systems so that files a
     :config
     (all-the-icons-completion-mode)
     (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-#+end_src
-***** Ivy-rich :disabled:
-Adds icons to Ivy rich mode. I currently have this disabled as I am currently not using Ivy in favor of Vertico at the moment.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-ivy-rich
-    :if <<portable_check>>
-    :disabled t
-    :config
-    (all-the-icons-ivy-rich-mode 1))
 #+end_src
 **** Emacs Theme
 This section contains modifications to the default Emacs theme.
@@ -517,40 +508,6 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
            ("M-A" . marginalia-cycle))
     :init
     (marginalia-mode))
-#+end_src
-*** Ivy :disabled:
-Ivy is a system to make entering commands in Emacs easier by narrowing down the possible choices when keybindings such as M-x are issued. Ivy has been a very useful completion system but I have currently /disabled/ it as I find [[Vertico]] to be a bit faster which is beneficial when running Emacs as a portable app.
-#+begin_src emacs-lisp :tangle yes
-  (use-package ivy
-    :disabled t
-    :delight
-    :custom
-    (ivy-use-virtual-buffers t)
-    (ivy-count-format "(%d/%d) ")
-    :config
-    (ivy-mode 1))
-
-  (use-package counsel
-    :disabled t
-    :bind
-    ("M-x" . counsel-M-x)
-    ("C-x C-f" . counsel-find-file)
-    :delight
-    :config
-    (counsel-mode))
-
-  (use-package swiper
-    :disabled t
-    :bind
-    ("C-s" . swiper))
-
-  (use-package ivy-rich
-    :disabled t
-    :delight
-    :after counsel
-    :config
-    (ivy-rich-mode 1)
-    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 #+end_src
 * Consult
 #+begin_src emacs-lisp :tangle yes
