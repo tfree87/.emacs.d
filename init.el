@@ -108,21 +108,6 @@
   :straight t
   :init (doom-modeline-mode))
 
-(use-package spacemacs-theme
-  :disabled t
-  :if window-system
-  :straight t
-  :defer t
-  :init (load-theme 'spacemacs-dark t))
-
-(use-package spaceline
-  :if window-system
-  :disabled t
-  :straight t
-  :config  
-  (require 'spaceline-config)
-  (spaceline-emacs-theme))
-
 (use-package nyan-mode
   :if window-system
   :straight t

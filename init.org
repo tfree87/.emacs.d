@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-24 21:50:13 thomas>
+#+date: Time-stamp: <2022-01-24 21:56:24 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -218,29 +218,6 @@ I like the Doom modeline because it has icons and bright colors.
     :if window-system
     :straight t
     :init (doom-modeline-mode))
-#+end_src
-***** Spacemacs Theme 
-I love how Spacemacs looks but I have been using vanilla Emacs for a long time and I am not yet ready to drop all my memorized key bindings for the other features that come with it yet so I am attempting to replicate the look some here.
-****** Color Theme
-Get the Spacemacs colors
-#+begin_src emacs-lisp :tangle yes
-  (use-package spacemacs-theme
-    :disabled t
-    :if window-system
-    :straight t
-    :defer t
-    :init (load-theme 'spacemacs-dark t))
-#+end_src
-****** Spaceline
-Get a modeline that has colors similar to Spacemacs with a Powerline look.
-#+begin_src emacs-lisp :tangle yes
-  (use-package spaceline
-    :if window-system
-    :disabled t
-    :straight t
-    :config  
-    (require 'spaceline-config)
-    (spaceline-emacs-theme))
 #+end_src
 **** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
