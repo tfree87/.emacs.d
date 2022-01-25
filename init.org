@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-23 14:50:33 thomas>
+#+date: Time-stamp: <2022-01-24 21:27:55 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -112,6 +112,9 @@ It can be beneficial to use the package ~benchmark-init~ to track the load time 
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
+    :init
+    (setq tab-always-indent 'complete)
+    (setq completion-cycle-threshold 6)
     :custom
     <<emacs_custom>>
     :config
@@ -338,7 +341,7 @@ Using Numpydoc provides an interactive tool to automatically generate Numpy styl
 #+end_src
 ** Paren Mode
 Always highlight matching parenthesis when coding /immediately/ without delay.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes  
   (use-package paren
     :delight
     :custom
@@ -346,53 +349,96 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
     :config
     (show-paren-mode 1))
 #+end_src
-* Company Auto-completion
-Use Company (COMPlete ANY) package to enable autocompletion in buffers.
-#+begin_src emacs-lisp :tangle yes
-  (use-package company               
+* Completion with Corfu
+Use Corfu for in-buffer completion.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package corfu
     :straight t
-    :delight company-mode
-    :defer t
-    :init (global-company-mode))
- #+end_src
-** AUCTeX
-Support for completion in AUCTeX. Something I use much more rarely now that I can create LaTeX documents in Org Mode.
-#+begin_src emacs-lisp :tangle yes
-  (use-package company-auctex
-    :straight t
-    :defer t)
-#+end_src
-** Documentation Popups for Company
-#+begin_src emacs-lisp :tangle yes
-  (use-package company-quickhelp
-    :straight t
-    :defer t
-    :init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
-#+end_src
-** Ledger Autocompletion
-Autocomplete entries in Ledger files.
-#+begin_src emacs-lisp :tangle yes
-  (use-package company-ledger
-    :straight t
-    :defer t)
-#+end_src
-** Org-mode Blocks Autocompletion
-#+begin_src emacs-lisp :tangle yes
-  (use-package company-org-block
-    :straight t
-    :defer t
     :custom
-    (company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
-    :hook ((org-mode . (lambda ()
-                         (setq-local company-backends '(company-org-block))
-                         (company-mode +1)))))
+    (corfu-cycle t)
+    (corfu-preselect-first nil)
+    <<tab-selection>>
+    :init
+    (corfu-global-mode)
+    :config
+    <<corfu-config>>)
 #+end_src
-** Python Autocompletion
+** Use TAB for Selecting Candidates
+Instead of using M-tab which will switch windows in XFCE---my default desktop---use TAB to cycle between the different possible options.
+#+name: tab-selection
+#+begin_src emacs-lisp
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+#+end_src
+** Enable Corfu for Command Evaluation in Minibuffer
+When running lisp code or shell commands in the minibuffer, use Corfu to offer completion suggestions.
+#+name: corfu-minibuffer
+#+begin_src emacs-lisp :noweb-ref corfu-config
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) Enable/disable auto completion
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+#+end_src
+** Use Corfu in Eshell
+Use Corfu to complete commands in Eshell
+#+begin_src emacs-lisp :noweb-ref corfu-config
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (setq-local corfu-quit-at-boundary t
+                          corfu-quit-no-match t
+                          corfu-auto nil)
+              (corfu-mode)))
+
+  ;; Silence the pcomplete capf, no errors or messages!
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+
+  ;; Ensure that pcomplete does not write to the buffer
+  ;; and behaves as a pure `completion-at-point-function'.
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
+#+end_src
+** Cape
+Cape provides some extensions for corfu.
+#+name: cape
 #+begin_src emacs-lisp :tangle yes
-  (use-package company-anaconda
+  (use-package cape
     :straight t
-    :defer t)
-  #+end_src
+    ;; Bind dedicated completion commands
+    :bind (("C-c p p" . completion-at-point) ;; capf
+           ("C-c p t" . complete-tag)        ;; etags
+           ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+           ("C-c p f" . cape-file)
+           ("C-c p k" . cape-keyword)
+           ("C-c p s" . cape-symbol)
+           ("C-c p a" . cape-abbrev)
+           ("C-c p i" . cape-ispell)
+           ("C-c p l" . cape-line)
+           ("C-c p w" . cape-dict)
+           ("C-c p \\" . cape-tex)
+           ("C-c p _" . cape-tex)
+           ("C-c p ^" . cape-tex)
+           ("C-c p &" . cape-sgml)
+           ("C-c p r" . cape-rfc1345))
+    :init
+    ;; Add `completion-at-point-functions', used by `completion-at-point'.
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-tex)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-keyword)
+    (add-to-list 'completion-at-point-functions #'cape-sgml)
+    ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+    ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+    (add-to-list 'completion-at-point-functions #'cape-ispell)
+    ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+    (add-to-list 'completion-at-point-functions #'cape-symbol)
+    (add-to-list 'completion-at-point-functions #'cape-line)
+  )
+#+end_src
 * Minibuffer Completion
 This section contains customization to improve command completion in the minibuffer in Emacs.
 ** Embark
