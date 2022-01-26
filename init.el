@@ -17,6 +17,14 @@
 
 (let ((file-name-handler-alist nil))
 
+;; Set the location of variables set using Emacs cusmtomize interface
+
+(setq custom-file "~/.emacs.d/custom.el")
+
+;; Load the file custom.el file containing variables from Emacs customize
+
+(load custom-file)
+
 ;; Install Straight.el to manage packages by downloading directly from repositories
 
 (defvar bootstrap-version)
@@ -34,26 +42,9 @@
 
 (setq package-enable-at-startup nil)
 
-(straight-use-package 'use-package)
-
-;; Set the location of variables set using Emacs cusmtomize interface
-
-(setq custom-file "~/.emacs.d/custom.el")
-
-;; Load the file custom.el file containing variables from Emacs customize
-
-(load custom-file)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;; Packages
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package benchmark-init
-  :straight t
-  :hook
-  (after-init . benchmark-init/deactivate))
+(straight-use-package 'use-package)
 
 (use-package emacs
   :init
@@ -89,7 +80,7 @@
 (use-package all-the-icons-ibuffer
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
   :straight t
-  :init (all-the-icons-ibuffer-mode 1))
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -120,14 +111,18 @@
 (use-package aggressive-indent
   :straight t
   :delight t
+  :defer t
   :config
   (global-aggressive-indent-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
 (use-package apheleia
   :straight t
+  :defer t
   :config
-  (apheleia-global-mode +1))
+  (apheleia-global-mode +1)
+  (setf (alist-get 'black apheleia-formatters)
+  '("black" "--experimental-string-processing" "-")))
 
 (use-package c-mode
   :defer t
@@ -143,14 +138,10 @@
   (elpy-rpc-python-command "python3")
   (python-shell-interpreter "ipython")
   (python-shell-interpreter-args "-i --simple-prompt")
-  (elpy-formatter 'black)
   :config
   (when (load "flycheck" t t)
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-  (add-hook 'elpy-mode-hook (lambda ()
-                                (add-hook 'before-save-hook
-                                          'elpy-black-fix-code nil t))))
+    (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
 (use-package flycheck
   :straight t
@@ -168,10 +159,10 @@
 
 (use-package paren
   :delight
+  :defer t
   :custom
   (show-paren-delay 0)
-  :config
-  (show-paren-mode 1))
+  :hook (prog-mode . show-paren-mode))
 
 (use-package projectile
   :straight t
@@ -218,6 +209,7 @@
   :straight (corfu-doc :host github
                        :repo "galeo/corfu-doc"
                        :branch "main")
+  :defer t
   :config
   (add-hook 'corfu-mode-hook #'corfu-doc-mode)
   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
@@ -437,6 +429,10 @@
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
 
+(use-package sunrise-commander
+  :defer t
+  :straight t)
+
 (use-package dired+
   :if (memq window-system '(w32 pc ns))
   :defer t
@@ -501,12 +497,14 @@
 
 (use-package flyspell
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :delight
+  :delight t
+  :defer t
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (use-package gnus
+  :defer t
   :custom
   (gnus-init-file "~/.emacs.d/gnus.el"))
 
@@ -519,7 +517,6 @@
   :defer t)
 
 (use-package ibuffer
-  :defer t
   :bind
   ("C-x C-b" . ibuffer)
   :hook
@@ -853,6 +850,7 @@
   :straight t)
 
 (use-package treemacs-all-the-icons
+  :defer t
   :straight t)
 
 (use-package treemacs-magit
@@ -872,6 +870,7 @@
   (centaur-tabs-mode t))
 
 (use-package tramp
+  :defer t
   :config
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 
@@ -888,19 +887,19 @@
 (use-package yasnippet
   :straight t
   :delight t
-  :config
-  (yas-global-mode t))
+  :commands (yas-global-mode yas-minor-mode))
 
 (use-package yasnippet-snippets
-  :straight t)
+  :straight t
+  :defer t)
 
 (use-package minimap
-  :straight t)
+  :straight t
+  :defer t)
 
 (use-package rainbow-delimiters
   :straight t
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
 

@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-24 23:49:26 thomas>
+#+date: Time-stamp: <2022-01-25 21:42:30 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -45,6 +45,23 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
+* Custom Set Variables
+In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
+#+name: custom-file
+#+begin_src emacs-lisp :tangle yes
+
+  ;; Set the location of variables set using Emacs cusmtomize interface
+
+  (setq custom-file "~/.emacs.d/custom.el")
+#+end_src
+Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refeshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
+#+name: load-custom
+#+begin_src emacs-lisp :tangle yes
+
+  ;; Load the file custom.el file containing variables from Emacs customize
+
+  (load custom-file)
+#+end_src
 * Package Management
 ** Straight.el
 Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
@@ -73,40 +90,9 @@ In order to prevent conflicts between ~straight.el~ and the Emacs package manage
 ** Install use-package
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
 #+begin_src emacs-lisp :tangle yes
-  (straight-use-package 'use-package)
-#+end_src
-* Custom Set Variables
-In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
-#+name: custom-file
-#+begin_src emacs-lisp :tangle yes
-
-  ;; Set the location of variables set using Emacs cusmtomize interface
-
-  (setq custom-file "~/.emacs.d/custom.el")
-#+end_src
-Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refeshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
-#+name: load-custom
-#+begin_src emacs-lisp :tangle yes
-
-  ;; Load the file custom.el file containing variables from Emacs customize
-
-  (load custom-file)
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;
   ;; Packages
-  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-#+end_src
-* Track Load Time
-It can be beneficial to use the package ~benchmark-init~ to track the load time of Emacs if the initialization of Emacs takes a long time. As I often run Emacs as a portable application, I want to minimize the time it takes to start Emacs as much as possible.
-#+begin_src emacs-lisp :tangle yes
-  (use-package benchmark-init
-    :straight t
-    :hook
-    (after-init . benchmark-init/deactivate))
+
+  (straight-use-package 'use-package)
 #+end_src
 * Emacs General Options
 The code below collects customizations for Emacs built-in components.
@@ -188,7 +174,7 @@ Add icons representing different buffer types to Ibuffer mode.
   (use-package all-the-icons-ibuffer
     :if <<portable_check>>
     :straight t
-    :init (all-the-icons-ibuffer-mode 1))
+    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
 ***** Completion
 This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
@@ -250,6 +236,7 @@ This section contains customizations for writing programming code in Emacs.
   (use-package aggressive-indent
     :straight t
     :delight t
+    :defer t
     :config
     (global-aggressive-indent-mode 1)
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
@@ -258,8 +245,11 @@ This section contains customizations for writing programming code in Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
     :straight t
+    :defer t
     :config
-    (apheleia-global-mode +1))
+    (apheleia-global-mode +1)
+    (setf (alist-get 'black apheleia-formatters)
+    '("black" "--experimental-string-processing" "-")))
 #+end_src
 ** C
 I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
@@ -281,7 +271,6 @@ Add powerful features for Python progamming in Emacs.
     (elpy-rpc-python-command "python3")
     (python-shell-interpreter "ipython")
     (python-shell-interpreter-args "-i --simple-prompt")
-    (elpy-formatter 'black)
     :config
     <<elpy_config>>) 
 #+end_src
@@ -291,13 +280,6 @@ Check python syntax while writing with flycheck
   (when (load "flycheck" t t)
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     (add-hook 'elpy-mode-hook 'flycheck-mode))
-#+end_src
-*** Use Black to Format Code On Save
-Black will auto format any Pyhton code on save to be compliant with PEP8.
-#+begin_src emacs-lisp :noweb-ref elpy_config
-  (add-hook 'elpy-mode-hook (lambda ()
-                                (add-hook 'before-save-hook
-                                          'elpy-black-fix-code nil t)))
 #+end_src
 ** Flycheck
 Install flycheck mode so that python syntax can be checed while typing.
@@ -327,10 +309,10 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
     :delight
+    :defer t
     :custom
     (show-paren-delay 0)
-    :config
-    (show-paren-mode 1))
+    :hook (prog-mode . show-paren-mode))
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp :tangle yes
@@ -401,6 +383,7 @@ Use Corfu to complete commands in Eshell
     :straight (corfu-doc :host github
                          :repo "galeo/corfu-doc"
                          :branch "main")
+    :defer t
     :config
     (add-hook 'corfu-mode-hook #'corfu-doc-mode)
     (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
@@ -659,6 +642,12 @@ This will cause emacs to default to moving/copying/renaming files from the direc
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (dired-dwim-target t)
  #+end_src
+** Sunrise Commander
+#+begin_src emacs-lisp :tangle yes
+  (use-package sunrise-commander
+    :defer t
+    :straight t)
+#+end_src
 ** Use Dired+ for Windows
 Dired+ allows for better functionality when using Emacs as a portable applicatoin. =:if (memq window-system '(w32 pc ns))= will cause dired+ to only load on non-Linux systems.
 #+begin_src emacs-lisp :tangle yes
@@ -764,7 +753,8 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package flyspell
     :if <<portable_check>>
-    :delight
+    :delight t
+    :defer t
     :config
     (add-hook 'text-mode-hook 'flyspell-mode)
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
@@ -773,6 +763,7 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
 See the =~/gnus.el= file for configuration information.
 #+begin_src emacs-lisp :tangle yes
   (use-package gnus
+    :defer t
     :custom
     (gnus-init-file "~/.emacs.d/gnus.el"))
 #+end_src
@@ -791,7 +782,6 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
 A better buffer list.
 #+begin_src emacs-lisp :tangle yes
   (use-package ibuffer
-    :defer t
     :bind
     ("C-x C-b" . ibuffer)
     :hook
@@ -1280,6 +1270,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :straight t)
 
   (use-package treemacs-all-the-icons
+    :defer t
     :straight t)
 
   (use-package treemacs-magit
@@ -1305,6 +1296,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
 I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes
   (use-package tramp
+    :defer t
     :config
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 #+end_src
@@ -1345,26 +1337,26 @@ Install YASnippet and have it enabled globally
   (use-package yasnippet
     :straight t
     :delight t
-    :config
-    (yas-global-mode t))
+    :commands (yas-global-mode yas-minor-mode))
 #+end_src
 ** Install Snippets
 Get a library of snippets from YASnippet-snippets
 #+begin_src emacs-lisp :tangle yes
-  (use-package yasnippet-snippets
-    :straight t)
+    (use-package yasnippet-snippets
+      :straight t
+      :defer t)
 #+end_src
 * Minimap
 #+begin_src emacs-lisp :tangle yes
-  (use-package minimap
-    :straight t)
+    (use-package minimap
+      :straight t
+      :defer t)
 #+end_src
 * Rainbow Delimiters
 #+begin_src emacs-lisp :tangle yes
   (use-package rainbow-delimiters
     :straight t
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...
