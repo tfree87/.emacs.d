@@ -46,6 +46,14 @@
 
 (straight-use-package 'use-package)
 
+(use-package benchmark-init
+  :straight t
+  :init
+  :config
+  (benchmark-init/activate)
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 (use-package emacs
   :init
   (setq tab-always-indent 'complete)
@@ -118,7 +126,6 @@
 
 (use-package apheleia
   :straight t
-  :defer t
   :config
   (apheleia-global-mode +1)
   (setf (alist-get 'black apheleia-formatters)
@@ -209,9 +216,9 @@
   :straight (corfu-doc :host github
                        :repo "galeo/corfu-doc"
                        :branch "main")
-  :defer t
+  :hook
+  (corfu-mode . corfu-doc-mode)
   :config
-  (add-hook 'corfu-mode-hook #'corfu-doc-mode)
   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 
@@ -447,10 +454,6 @@
   :defer t
   :straight t)
 
-(use-package use-package-ensure-system-package
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-  :straight t)
-
 (use-package eshell
   :defer t
   :hook
@@ -554,9 +557,9 @@
                              (mode . term)
                              (mode . shell))))))))
 
-(use-package tex
+(use-package auctex
+  :straight t
   :defer t
-  :ensure auctex
   :custom
   (TeX-auto-save t)
   (TeX-parse-self t)
@@ -644,7 +647,8 @@
                                  (shell . t))))
 
 (use-package org-contrib
-  :straight t)
+  :straight t
+  :after org)
 
 (use-package org-bullets
   :if window-system
@@ -706,7 +710,6 @@
   :commands org-mind-map-write
   :init
   (require 'ox-org)
-  :ensure-system-package (gvgen . graphviz)
   :custom
   (org-mind-map-engine "dot"))
 

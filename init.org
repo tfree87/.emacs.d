@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-25 21:42:30 thomas>
+#+date: Time-stamp: <2022-01-25 23:27:25 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -93,6 +93,16 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   ;; Packages
 
   (straight-use-package 'use-package)
+#+end_src
+* Track Load Time
+#+begin_src emacs-lisp :tangle yes
+  (use-package benchmark-init
+    :straight t
+    :init
+    :config
+    (benchmark-init/activate)
+    ;; To disable collection of benchmark data after init is done.
+    (add-hook 'after-init-hook 'benchmark-init/deactivate))
 #+end_src
 * Emacs General Options
 The code below collects customizations for Emacs built-in components.
@@ -245,7 +255,6 @@ This section contains customizations for writing programming code in Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
     :straight t
-    :defer t
     :config
     (apheleia-global-mode +1)
     (setf (alist-get 'black apheleia-formatters)
@@ -383,9 +392,9 @@ Use Corfu to complete commands in Eshell
     :straight (corfu-doc :host github
                          :repo "galeo/corfu-doc"
                          :branch "main")
-    :defer t
+    :hook
+    (corfu-mode . corfu-doc-mode)
     :config
-    (add-hook 'corfu-mode-hook #'corfu-doc-mode)
     (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
     (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
@@ -673,13 +682,6 @@ Major mode for editing Docker Compose files.
     :defer t
     :straight t)
 #+end_src
-* Ensure System Package
-ensure-system-package will install packages on the computer system so that Emacs components are functional and not broken. In order to prevent ~ensure-system-package~ from installing when it is run as a portableapp from a flash drive onto the work computer, ~use-package~ will check to see if =~/runemacs.bat= can be found on the flash drive.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package use-package-ensure-system-package
-    :if <<portable_check>>
-    :straight t)
-#+end_src
 * Eshell
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
 ** Set up Eshell
@@ -824,9 +826,9 @@ Modifcations to buffers with TeX and LaTeX major modes.
 ** AUCTeX
 Use AUCTEX for writing documents using LaTeX.
 #+begin_src emacs-lisp :tangle yes
-  (use-package tex
+  (use-package auctex
+    :straight t
     :defer t
-    :ensure auctex
     :custom
     (TeX-auto-save t)
     (TeX-parse-self t)
@@ -893,7 +895,8 @@ Multiple cursors allows for editing emacs buffers at multiple locations simultan
     <<babel_languages>>)
 
   (use-package org-contrib
-    :straight t)
+    :straight t
+    :after org)
 #+end_src
 ** Org-mode Directories
 Set up the default directories for Org Mode.
@@ -1105,7 +1108,6 @@ Turn any ~org-mode~ buffer into a mind map in various output formats.
     :commands org-mind-map-write
     :init
     (require 'ox-org)
-    :ensure-system-package (gvgen . graphviz)
     :custom
     (org-mind-map-engine "dot"))
 #+end_src
