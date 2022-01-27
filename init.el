@@ -110,6 +110,8 @@
 (use-package nyan-mode
   :if window-system
   :straight t
+  :defer 4                  
+  :delight
   :custom
   (nyan-wavy-trail t)
   :config
@@ -658,8 +660,12 @@
   (org-mode . (lambda () (org-bullets-mode 1))))
 
 (use-package calfw
-  :disabled t
-  :straight t
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-calendar-buffer)
+  :init
+  (defalias 'calfw 'cfw:open-calendar-buffer)
   :custom
   (cfw:fchar-junction ?╋)
   (cfw:fchar-vertical-line ?┃)
@@ -671,10 +677,11 @@
   (cfw:fchar-top-right-corner ?┓))
 
 (use-package calfw-org
-  :disabled t
-  :straight t
-  :requires calfw
-  :config
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-org-calendar)
+  :init
   (defalias 'calfworg 'cfw:open-org-calendar))
 
 (use-package org-agenda
@@ -879,6 +886,7 @@
 
 (use-package which-key
   :straight t
+  :defer 3
   :delight
   :custom
   (which-key-show-early-on-C-h t)
@@ -904,7 +912,7 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(load-file "~/.emacs.d/elisp/oh-my-zsh.el")
+;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )

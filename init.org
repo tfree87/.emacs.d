@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-25 23:27:25 thomas>
+#+date: Time-stamp: <2022-01-26 21:10:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -233,6 +233,8 @@ Display a nyan cat on the mode line that shows progress through a buffer.
   (use-package nyan-mode
     :if window-system
     :straight t
+    :defer 4                  
+    :delight
     :custom
     (nyan-wavy-trail t)
     :config
@@ -1034,12 +1036,16 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     :hook
     (org-mode . (lambda () (org-bullets-mode 1))))
 #+end_src
-** Calfw-org
-~org-calfw~ provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files.
+** Calfw
+~calfw~ provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw
-    :disabled t
-    :straight t
+    :straight (emacs-calfw :host github
+                           :repo "zemaye/emacs-calfw"
+                           :branch "master")
+    :commands (cfw:open-calendar-buffer)
+    :init
+    (defalias 'calfw 'cfw:open-calendar-buffer)
     :custom
     (cfw:fchar-junction ?╋)
     (cfw:fchar-vertical-line ?┃)
@@ -1049,12 +1055,16 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     (cfw:fchar-top-junction ?┯)
     (cfw:fchar-top-left-corner ?┏)
     (cfw:fchar-top-right-corner ?┓))
-
+#+end_src
+*** Use calfw-org
+Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like the long command =M-x cfw:open-org-calendar= so I have shortened to it to =M-x calfworg= which is much easier to type and remember.
+#+begin_src emacs-lisp :tangle yes
   (use-package calfw-org
-    :disabled t
-    :straight t
-    :requires calfw
-    :config
+    :straight (emacs-calfw :host github
+                           :repo "zemaye/emacs-calfw"
+                           :branch "master")
+    :commands (cfw:open-org-calendar)
+    :init
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 ** Org-agenda
@@ -1307,6 +1317,7 @@ I occasinally use Tramp to access remote files but it seems to have problems whe
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :straight t
+    :defer 3
     :delight
     :custom
     <<wk_custom>>
@@ -1344,15 +1355,15 @@ Install YASnippet and have it enabled globally
 ** Install Snippets
 Get a library of snippets from YASnippet-snippets
 #+begin_src emacs-lisp :tangle yes
-    (use-package yasnippet-snippets
-      :straight t
-      :defer t)
+  (use-package yasnippet-snippets
+    :straight t
+    :defer t)
 #+end_src
 * Minimap
 #+begin_src emacs-lisp :tangle yes
-    (use-package minimap
-      :straight t
-      :defer t)
+  (use-package minimap
+    :straight t
+    :defer t)
 #+end_src
 * Rainbow Delimiters
 #+begin_src emacs-lisp :tangle yes
@@ -1363,7 +1374,7 @@ Get a library of snippets from YASnippet-snippets
 * Oh My Eshell
 Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
-  (load-file "~/.emacs.d/elisp/oh-my-zsh.el")
+ ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
 * Performance Optimization End
 Close off the statement to increase Emacs initialization speed up.
