@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-26 21:10:17 thomas>
+#+date: Time-stamp: <2022-01-27 21:17:27 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -124,6 +124,11 @@ I like have line numbers turned on all the time even if it reduces some screen s
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
 #+end_src
+*** Show Column Number
+I find it useful to have the column number displayed in the modeline in Emacs.
+#+begin_src emacs-lisp :tangle yes
+  (column-number-mode 1)
+#+end_src
 *** Automatic Time Stamps When Saving
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :noweb-ref emacs_config
@@ -167,7 +172,7 @@ I like to use All the Icons to add some graphical elements to dired and the mini
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons
     :if <<portable_check>>
-  :straight t)
+    :straight t)
 #+end_src
 ***** Dired
 Add file-type icons to Dired when browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
@@ -233,7 +238,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
   (use-package nyan-mode
     :if window-system
     :straight t
-    :defer 4                  
+    :defer 3
     :delight
     :custom
     (nyan-wavy-trail t)
@@ -257,8 +262,8 @@ This section contains customizations for writing programming code in Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
     :straight t
+    :hook (prog-mode . apheleia-mode)
     :config
-    (apheleia-global-mode +1)
     (setf (alist-get 'black apheleia-formatters)
     '("black" "--experimental-string-processing" "-")))
 #+end_src
@@ -658,14 +663,6 @@ This will cause emacs to default to moving/copying/renaming files from the direc
   (use-package sunrise-commander
     :defer t
     :straight t)
-#+end_src
-** Use Dired+ for Windows
-Dired+ allows for better functionality when using Emacs as a portable applicatoin. =:if (memq window-system '(w32 pc ns))= will cause dired+ to only load on non-Linux systems.
-#+begin_src emacs-lisp :tangle yes
-  (use-package dired+
-    :if (memq window-system '(w32 pc ns))
-    :defer t
-    :load-path "~/.emacs.d/elisp")
 #+end_src
 * Docker
 This section contains customization for managing the Docker containers on my home server.
@@ -1294,7 +1291,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
     :straight t
-    :demand
+    :defer 3
     :bind
     ("C-<prior>" . centaur-tabs-backward)
     ("C-<next>" . centaur-tabs-forward)
@@ -1347,10 +1344,12 @@ YASnippet is a system that povides easy access to many templates that can be ins
 ** Install YASnippet
 Install YASnippet and have it enabled globally
 #+begin_src emacs-lisp :tangle yes
-  (use-package yasnippet
-    :straight t
-    :delight t
-    :commands (yas-global-mode yas-minor-mode))
+    (use-package yasnippet
+      :straight t
+      :delight t
+      :defer 4
+      :config
+      (yas-global-mode 1))
 #+end_src
 ** Install Snippets
 Get a library of snippets from YASnippet-snippets

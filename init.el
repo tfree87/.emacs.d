@@ -75,9 +75,11 @@
   (tool-bar-mode -1)
   (toggle-scroll-bar -1))
 
+(column-number-mode 1)
+
 (use-package all-the-icons
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
-:straight t)
+  :straight t)
 
 (use-package all-the-icons-dired
   :if (and window-system (not (file-exists-p "~/runemacs.bat")))
@@ -110,7 +112,7 @@
 (use-package nyan-mode
   :if window-system
   :straight t
-  :defer 4                  
+  :defer 3
   :delight
   :custom
   (nyan-wavy-trail t)
@@ -128,8 +130,8 @@
 
 (use-package apheleia
   :straight t
+  :hook (prog-mode . apheleia-mode)
   :config
-  (apheleia-global-mode +1)
   (setf (alist-get 'black apheleia-formatters)
   '("black" "--experimental-string-processing" "-")))
 
@@ -441,11 +443,6 @@
 (use-package sunrise-commander
   :defer t
   :straight t)
-
-(use-package dired+
-  :if (memq window-system '(w32 pc ns))
-  :defer t
-  :load-path "~/.emacs.d/elisp")
 
 (use-package docker
   :if (executable-find "docker")
@@ -869,7 +866,7 @@
 
 (use-package centaur-tabs
   :straight t
-  :demand
+  :defer 3
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)
@@ -898,7 +895,9 @@
 (use-package yasnippet
   :straight t
   :delight t
-  :commands (yas-global-mode yas-minor-mode))
+  :defer 4
+  :config
+  (yas-global-mode 1))
 
 (use-package yasnippet-snippets
   :straight t
