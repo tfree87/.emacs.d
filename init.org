@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-28 19:34:07 thomas>
+#+date: Time-stamp: <2022-01-28 23:24:08 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -32,6 +32,11 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
+* Performance Optimization Start
+In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
+#+begin_src emacs-lisp :tangle yes
+  (let ((file-name-handler-alist nil))
+#+end_src
 * Running Emacs as a Portable App
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
 ** Check for Portable Emacs Instance
@@ -44,15 +49,10 @@ The following line of code below is used frequently to check for a file in the E
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
- #+begin_src emacs-lisp :tangle yes
+ #+begin_src emacs-lisp :tangle yes :noweb no-export
 (when <<portable_check>>
     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
-* Performance Optimization Start
-In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
-#+begin_src emacs-lisp :tangle yes
-  (let ((file-name-handler-alist nil))
-#+end_src
 * Custom Set Variables
 In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
 #+name: custom-file
@@ -71,6 +71,13 @@ Once the file location has been set, Emacs needs to load the custom file. This n
   (load custom-file)
 #+end_src
 * Package Management
+In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this swtich are:
+
+1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
+2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
+3. The entire package repository is cloned, which, while it takes up a lot of space, allows for editing the source code directly if desired.
+4. Github repositories that are not included in ELPA, MELPA, or marmalade can be pulled and used in ~use-package~ statements.
+ 
 ** Straight.el
 Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
 #+begin_src emacs-lisp :tangle yes
@@ -103,6 +110,7 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   (straight-use-package 'use-package)
 #+end_src
 * Track Load Time
+The benchmark init package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
 #+begin_src emacs-lisp :tangle yes
   (use-package benchmark-init
     :straight t
@@ -259,20 +267,24 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 * Coding
 This section contains customizations for writing programming code in Emacs.
 ** Aggressive Indent Mode
+Aggressive indent mode will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
 #+begin_src emacs-lisp :tangle yes
   (use-package aggressive-indent
     :straight t
     :delight t
-    :defer t
+    :hook
+    (prog-mode . aggressive-indent-mode)
     :config
-    (global-aggressive-indent-mode 1)
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+end_src
 ** Apheleia
+Apheleia will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
     :straight t
-    :hook (prog-mode . apheleia-mode)
+    :hook
+    (prog-mode . apheleia-mode)
+    (tex-mode . apheleia-mode)
     :config
     (setf (alist-get 'black apheleia-formatters)
     '("black" "--experimental-string-processing" "-")))
@@ -295,7 +307,7 @@ Add powerful features for Python progamming in Emacs.
     (advice-add 'python-mode :before 'elpy-enable)
     :custom
     (elpy-rpc-python-command "python3")
-    (python-shell-interpreter "ipython")
+    (python-shell-interpreter "ipython3")
     (python-shell-interpreter-args "-i --simple-prompt")
     :config
     <<elpy_config>>) 
@@ -315,7 +327,7 @@ Install flycheck mode so that python syntax can be checed while typing.
     :defer t)
 #+end_src
 ** Magit
-Magit provides an interface to Git through Emacs.
+Magit provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 #+begin_src emacs-lisp :tangle yes
   (use-package magit
     :if (executable-find "git")
@@ -331,7 +343,9 @@ Using Numpydoc provides an interactive tool to automatically generate Numpy styl
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 ** Paren Mode
-Always highlight matching parenthesis when coding /immediately/ without delay.
+Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
+
+The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
     :delight
@@ -351,6 +365,7 @@ Always highlight matching parenthesis when coding /immediately/ without delay.
                 ("C-c p" . projectile-command-map)))
 #+end_src
 * Autocompletion
+This section contains configuration for auto-completion utilities in Emacs.
 ** Corfu
 Use Corfu for in-buffer completion.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -623,6 +638,7 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
               (car (project-roots project))))))
 #+end_src 
 * BBDB
+The Insidious Big Brother DataBase (BBDB) is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package bbdb
     :straight t
@@ -739,7 +755,7 @@ Below are a list of command-line aliases for use in eshell.
   (eshell/alias "cpv" "rsync -ah --info=progress2")
   (eshell/alias "ll" "ls -AlohG")
 #+end_src
-** Change Eshell Prompt to be More Informative
+** Eshell Prompt
 Create a custom prompt for eshell that shows some more information.
 #+begin_src emacs-lisp :noweb-ref eshell_custom
   (eshell-prompt-function
@@ -790,8 +806,8 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     :defer t)
 #+end_src
 * Ibuffer
-A better buffer list.
-#+begin_src emacs-lisp :tangle yes
+A better buffer list than the default.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package ibuffer
     :bind
     ("C-x C-b" . ibuffer)
@@ -800,38 +816,42 @@ A better buffer list.
     (ibuffer-mode .  (lambda ()
                             (ibuffer-switch-to-saved-filter-groups "default")))
     :custom
-    ;; Create default groupings for ibuffer
-    (ibuffer-saved-filter-groups
-          (quote (("default"
-                   ("Dired" (mode . dired-mode))
-                   ("Emacs" (or
-                             (name . "^\\*scratch\\*$")            
-                             (name . "^\\*Messages\\*$")
-                             (name . "^\\*GNU Emacs\\*$")
-                             (name . "^\\*Help\\*$")
-                             (name . "^\\*Calendar\\*$")
-                             (name . "^\\*Calculator\\*$")
-                             (name . "^\\*Calc Trail\\*$")
-                             (name . "^\\*Completions\\*$")))
-                   ("Gnus" (or
-                            (mode . message-mode)
-                            (mode . bbdb-mode)
-                            (mode . mail-mode)
-                            (mode . gnus-group-mode)
-                            (mode . gnus-summary-mode)
-                            (mode . gnus-article-mode)
-                            (name . "^\\.bbdb$")
-                            (name . "^\\.newsrc-dribble")))
-                   ("Org"   (or
-                             (mode . org-mode)
-                             (name . "^\\*Org Agenda\\*$")))
-                   ("Shell"   (or
-                               (mode . eshell)
-                               (mode . term)
-                               (mode . shell))))))))
-#+end_src 
+    <<ibuffer_custom>>)
+#+end_src
+** Group Buffers in Groups
+Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
+#+begin_src emacs-lisp :noweb-ref ibuffer_custom
+  (ibuffer-saved-filter-groups
+        (quote (("default"
+                 ("Dired" (mode . dired-mode))
+                 ("Emacs" (or
+                           (name . "^\\*scratch\\*$")            
+                           (name . "^\\*Messages\\*$")
+                           (name . "^\\*GNU Emacs\\*$")
+                           (name . "^\\*Help\\*$")
+                           (name . "^\\*Calendar\\*$")
+                           (name . "^\\*Calculator\\*$")
+                           (name . "^\\*Calc Trail\\*$")
+                           (name . "^\\*Completions\\*$")))
+                 ("Gnus" (or
+                          (mode . message-mode)
+                          (mode . bbdb-mode)
+                          (mode . mail-mode)
+                          (mode . gnus-group-mode)
+                          (mode . gnus-summary-mode)
+                          (mode . gnus-article-mode)
+                          (name . "^\\.bbdb$")
+                          (name . "^\\.newsrc-dribble")))
+                 ("Org"   (or
+                           (mode . org-mode)
+                           (name . "^\\*Org Agenda\\*$")))
+                 ("Shell"   (or
+                             (mode . eshell)
+                             (mode . term)
+                             (mode . shell)))))))
+#+end_src
 * LaTeX
-Modifcations to buffers with TeX and LaTeX major modes.
+This section contains modifications to buffers with TeX and LaTeX major modes.
 ** AUCTeX
 Use AUCTEX for writing documents using LaTeX.
 #+begin_src emacs-lisp :tangle yes
@@ -844,7 +864,7 @@ Use AUCTEX for writing documents using LaTeX.
     (TeX-master nil))
 #+end_src
 ** Use BibLaTeX
-BibLaTeX has much more powerful features than standard BibTeX.
+BibLaTeX has more powerful features than standard BibTeX.
 #+begin_src emacs-lisp :tangle yes
 (setq bibtex-dialect 'biblatex)
 #+end_src
@@ -856,7 +876,7 @@ To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed f
     :defer t)
 #+end_src
 * Markdown Mode
-Add a mode to edit and view markdown files.
+Add a mode to edit and view markdown files. While I prefer Org-mode for rich-text editing in Emacs, Github primarily supports markdown so I want to be able to edit and view these files when needed.
 #+begin_src emacs-lisp :tangle yes
   (use-package markdown-mode
     :straight t
@@ -870,7 +890,7 @@ Add a mode to edit and view markdown files.
     (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 #+end_src
 * Multiple Cursors
-Multiple cursors allows for editing emacs buffers at multiple locations simultaneously at the same time. This is great for things where multiple lines need the same text edited or added.
+Multiple cursors allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
 #+begin_src emacs-lisp :tangle yes
   (use-package multiple-cursors
     :straight t
@@ -1297,9 +1317,10 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :straight t)
 #+end_src
 * Centaur Tabs
-I like having tabs for all of my open buffers. The following code turns on tab
+I like having tabs for all of my open buffers. The following code turns on tabs using a nicer interface than the built-in ~tab-line-mode~:
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
+    :if window-system
     :straight t
     :defer 3
     :bind
@@ -1311,6 +1332,7 @@ I like having tabs for all of my open buffers. The following code turns on tab
     :config
     (centaur-tabs-mode t))
 #+end_src
+This setting can always be toggled off if a "cleaner" Emacs view is desired.
 * Tramp
 I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes
@@ -1320,7 +1342,7 @@ I occasinally use Tramp to access remote files but it seems to have problems whe
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
 #+end_src
 * Which-key
-~which-key~ provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
+Which-key provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :straight t
@@ -1352,7 +1374,7 @@ Set up which-key to use the side window preferably
 * YASnippet
 YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
 ** Install YASnippet
-Install YASnippet and have it enabled globally
+YASnippet takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
 #+begin_src emacs-lisp :tangle yes
     (use-package yasnippet
       :straight t
@@ -1362,19 +1384,21 @@ Install YASnippet and have it enabled globally
       (yas-global-mode 1))
 #+end_src
 ** Install Snippets
-Get a library of snippets from YASnippet-snippets
+The package YASnippet Snippets loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet-snippets
     :straight t
     :defer t)
 #+end_src
 * Minimap
+Minimap shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
 #+begin_src emacs-lisp :tangle yes
   (use-package minimap
     :straight t
     :defer t)
 #+end_src
 * Rainbow Delimiters
+Rainbow delimiters colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
 #+begin_src emacs-lisp :tangle yes
   (use-package rainbow-delimiters
     :straight t

@@ -15,10 +15,10 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when <<portable_check>>
-    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
-
 (let ((file-name-handler-alist nil))
+
+(when (file-exists-p "~/runemacs.bat")
+    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
 ;; Set the location of variables set using Emacs cusmtomize interface
 
@@ -128,14 +128,16 @@
 (use-package aggressive-indent
   :straight t
   :delight t
-  :defer t
+  :hook
+  (prog-mode . aggressive-indent-mode)
   :config
-  (global-aggressive-indent-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
 (use-package apheleia
   :straight t
-  :hook (prog-mode . apheleia-mode)
+  :hook
+  (prog-mode . apheleia-mode)
+  (tex-mode . apheleia-mode)
   :config
   (setf (alist-get 'black apheleia-formatters)
   '("black" "--experimental-string-processing" "-")))
@@ -152,7 +154,7 @@
   (advice-add 'python-mode :before 'elpy-enable)
   :custom
   (elpy-rpc-python-command "python3")
-  (python-shell-interpreter "ipython")
+  (python-shell-interpreter "ipython3")
   (python-shell-interpreter-args "-i --simple-prompt")
   :config
   (when (load "flycheck" t t)
@@ -531,7 +533,6 @@
   (ibuffer-mode .  (lambda ()
                           (ibuffer-switch-to-saved-filter-groups "default")))
   :custom
-  ;; Create default groupings for ibuffer
   (ibuffer-saved-filter-groups
         (quote (("default"
                  ("Dired" (mode . dired-mode))
@@ -870,6 +871,7 @@
   :straight t)
 
 (use-package centaur-tabs
+  :if window-system
   :straight t
   :defer 3
   :bind
