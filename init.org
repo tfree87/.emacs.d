@@ -827,7 +827,7 @@ A better buffer list than the default.
     :custom
     <<ibuffer_custom>>)
 #+end_src
-** Group Buffers in Groups
+** Group Buffers
 Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
 #+begin_src emacs-lisp :noweb-ref ibuffer_custom
   (ibuffer-saved-filter-groups
