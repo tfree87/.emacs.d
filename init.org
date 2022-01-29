@@ -71,7 +71,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
   (load custom-file)
 #+end_src
 * Package Management
-In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this swtich are:
+In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this switch are:
 
 1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
 2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
