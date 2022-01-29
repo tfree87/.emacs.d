@@ -17,6 +17,8 @@
 
 (let ((file-name-handler-alist nil))
 
+(setq gc-cons-threshold (* 500 1000 1000))
+
 (when (file-exists-p "~/runemacs.bat")
     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -69,16 +71,15 @@
   (sentence-end-double-space nil)
   (dired-dwim-target t)
   :config
-  (when (version<= "26.0.50" emacs-version )
+  (when (version<= "26.0.50" emacs-version)
     (global-display-line-numbers-mode))
+  (column-number-mode 1)
   (add-hook 'before-save-hook 'time-stamp)
   (fset 'yes-or-no-p 'y-or-n-p)
   (display-time-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1))
-
-(column-number-mode 1)
 
 (use-package all-the-icons
   :if (not (file-exists-p "~/runemacs.bat"))
@@ -107,12 +108,14 @@
 (use-package doom-themes
   :if window-system
   :straight t
-  :init (load-theme 'doom-vibrant))
+  :defer 1
+  :config (load-theme 'doom-vibrant))
 
 (use-package doom-modeline
   :if window-system
   :straight t
-  :init (doom-modeline-mode))
+  :defer 1
+  :config (doom-modeline-mode))
 
 (use-package nyan-mode
   :if window-system
@@ -235,48 +238,32 @@
 
 (use-package cape
   :straight t
-  ;; Bind dedicated completion commands
-  :bind (("C-c p p" . completion-at-point) ;; capf
-         ("C-c p t" . complete-tag)        ;; etags
-         ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+  :bind (("C-c p p" . completion-at-point)
+         ("C-c p t" . complete-tag)
+         ("C-c p d" . cape-dabbrev)
          ("C-c p f" . cape-file)
          ("C-c p k" . cape-keyword)
          ("C-c p s" . cape-symbol)
          ("C-c p a" . cape-abbrev)
-         ("C-c p i" . cape-ispell)
-         ("C-c p l" . cape-line)
-         ("C-c p w" . cape-dict)
          ("C-c p \\" . cape-tex)
          ("C-c p _" . cape-tex)
-         ("C-c p ^" . cape-tex)
-         ("C-c p &" . cape-sgml)
-         ("C-c p r" . cape-rfc1345))
+         ("C-c p ^" . cape-tex))
   :init
-  ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-sgml)
-  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-ispell)
-  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-  (add-to-list 'completion-at-point-functions #'cape-symbol)
-  ;;(add-to-list 'completion-at-point-functions #'cape-line)
-)
+  (add-to-list 'completion-at-point-functions #'cape-symbol))
 
 (use-package embark
   :straight t
   :bind
   (("C-." . embark-act)
    ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+   ("C-h B" . embark-bindings))
   :init
-  ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
-  ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
@@ -300,10 +287,11 @@
 
 (use-package orderless
   :straight t
-  :init
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+  :defer 5
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package savehist
   :straight t
@@ -358,15 +346,7 @@
          ("M-s e" . consult-isearch-history)
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi))
-
-  ;; Enable automatic preview at point in the *Completions* buffer. This is
-  ;; relevant when you use the default completion UI. You may want to also
-  ;; enable `consult-preview-at-point-mode` in Embark Collect buffers.
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-
-  ;; The :init configuration is always executed (Not lazy)
   :init
-
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
@@ -383,18 +363,7 @@
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
-
-  ;; Configure other variables and modes in the :config section,
-  ;; after lazily loading the package.
   :config
-
-  ;; Optionally configure preview. The default value
-  ;; is 'any, such that any key triggers the preview.
-  ;; (setq consult-preview-key 'any)
-  ;; (setq consult-preview-key (kbd "M-."))
-  ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
-  ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-theme
    :preview-key '(:debounce 0.2 any)
@@ -402,15 +371,7 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
    :preview-key (kbd "M-."))
-
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<") ;; (kbd "C-+")
-
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))

@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-28 23:24:08 thomas>
+#+date: Time-stamp: <2022-01-29 16:14:19 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -34,9 +34,19 @@ The following code block will add a header to the ~init.el~ file when it is gene
 #+end_src
 * Performance Optimization Start
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
+** Reduce File Lookups on Loading
+See https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/.
+wn_steps_to_speed_up_emacs_start/.
+wn_steps_to_speed_up_emacs_start/.
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
+** Decrease Garbage Collection Frequency
+Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el.
+#+begin_src emacs-lisp :tangle yes
+  (setq gc-cons-threshold (* 500 1000 1000))
+#+end_src
+
 * Running Emacs as a Portable App
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
 ** Check for Portable Emacs Instance
@@ -71,7 +81,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
   (load custom-file)
 #+end_src
 * Package Management
-In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this swtich are:
+In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this switch are:
 
 1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
 2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
@@ -137,12 +147,12 @@ This section contains modifications for Emacs that affect the behavior in nearly
 *** Number Line Mode
 I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
 #+begin_src emacs-lisp :noweb-ref emacs_config
-  (when (version<= "26.0.50" emacs-version )
+  (when (version<= "26.0.50" emacs-version)
     (global-display-line-numbers-mode))
 #+end_src
 *** Show Column Number
 I find it useful to have the column number displayed in the modeline in Emacs.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref emacs_config
   (column-number-mode 1)
 #+end_src
 *** Automatic Time Stamps When Saving
@@ -228,7 +238,8 @@ I have switched to the Doom theme ~doom-vibrant~ because I find the colors appea
   (use-package doom-themes
     :if window-system
     :straight t
-    :init (load-theme 'doom-vibrant))
+    :defer 1
+    :config (load-theme 'doom-vibrant))
 #+end_src
 ****** Doom Modeline
 I like the Doom modeline because it has icons and bright colors.
@@ -236,7 +247,8 @@ I like the Doom modeline because it has icons and bright colors.
   (use-package doom-modeline
     :if window-system
     :straight t
-    :init (doom-modeline-mode))
+    :defer 1
+    :config (doom-modeline-mode))
 #+end_src
 **** Display Time
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
@@ -419,6 +431,7 @@ Use Corfu to complete commands in Eshell
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 #+end_src
 *** Corfu-doc
+Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
 #+begin_src emacs-lisp :tangle yes
   (use-package corfu-doc
     :straight (corfu-doc :host github
@@ -433,62 +446,75 @@ Use Corfu to complete commands in Eshell
 *** Cape
 Cape provides some extensions for corfu.
 #+name: cape
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package cape
     :straight t
-    ;; Bind dedicated completion commands
-    :bind (("C-c p p" . completion-at-point) ;; capf
-           ("C-c p t" . complete-tag)        ;; etags
-           ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+    :bind (("C-c p p" . completion-at-point)
+           ("C-c p t" . complete-tag)
+           ("C-c p d" . cape-dabbrev)
            ("C-c p f" . cape-file)
            ("C-c p k" . cape-keyword)
            ("C-c p s" . cape-symbol)
            ("C-c p a" . cape-abbrev)
-           ("C-c p i" . cape-ispell)
-           ("C-c p l" . cape-line)
-           ("C-c p w" . cape-dict)
            ("C-c p \\" . cape-tex)
            ("C-c p _" . cape-tex)
-           ("C-c p ^" . cape-tex)
-           ("C-c p &" . cape-sgml)
-           ("C-c p r" . cape-rfc1345))
+           ("C-c p ^" . cape-tex))
     :init
-    ;; Add `completion-at-point-functions', used by `completion-at-point'.
-    (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-tex)
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-    (add-to-list 'completion-at-point-functions #'cape-keyword)
-    (add-to-list 'completion-at-point-functions #'cape-sgml)
-    ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-    ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
-    (add-to-list 'completion-at-point-functions #'cape-ispell)
-    ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-    (add-to-list 'completion-at-point-functions #'cape-symbol)
-    ;;(add-to-list 'completion-at-point-functions #'cape-line)
-  )
+    <<capfs>>)
+#+end_src
+*** Cape Completion Functions
+Cape provides a number of ~completion-at-point~ functions that can be used. Below are the functions that I use that have not been intrusive.
+
+The following will complete file names in buffers:
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-file)
+#+end_src
+
+This will complete items in TeX and LaTeX modes:
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+#+end_src
+
+Search other buffers for completion candidates:
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+#+end_src
+
+Complete keywords in programming modes:
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+#+end_src
+
+Complete Emacs-lisp symbols:
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
 #+end_src
 ** Minibuffer Completion
 This section contains customization to improve command completion in the minibuffer in Emacs.
 *** Embark
 Embark provides the ability to execute commands on completion options found in the minibuffer.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package embark
     :straight t
     :bind
     (("C-." . embark-act)
      ("C-;" . embark-dwim)
-     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+     ("C-h B" . embark-bindings))
     :init
-    ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
     :config
-    ;; Hide the mode line of the Embark live/completions buffers
-    (add-to-list 'display-buffer-alist
-                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                   nil
-                   (window-parameters (mode-line-format . none)))))
+    <<embark_config>>)
+#+end_src
+*** Embark Mode Line
+Hide the mode line of the Embark live/completions buffers.
+#+begin_src emacs-lisp :noweb-ref embark_config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
 #+end_src
 *** Embark Integration with Consult
+Allow use of Embark commands after issuing a Consult command.
 #+begin_src emacs-lisp :tangle yes
   (use-package embark-consult
     :straight t
@@ -510,13 +536,15 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
     (vertico-mode))
 #+end_src
 *** Orderless
+Orderless will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
 #+begin_src emacs-lisp :tangle yes
   (use-package orderless
     :straight t
-    :init
-    (setq completion-styles '(orderless)
-          completion-category-defaults nil
-          completion-category-overrides '((file (styles partial-completion)))))
+    :defer 5
+    :custom
+    (completion-styles '(orderless))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 *** Savehist
 Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in [[Vertico]].
@@ -538,7 +566,8 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
     (marginalia-mode))
 #+end_src
 * Consult
-#+begin_src emacs-lisp :tangle yes
+Consult provides a number of highly useful commands. The complete list of commands can be found at https://github.com/minad/consult#available-commands.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package consult
     :straight t
     :bind (("C-c h" . consult-history)
@@ -579,15 +608,7 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
            ("M-s e" . consult-isearch-history)
            ("M-s l" . consult-line)
            ("M-s L" . consult-line-multi))
-
-    ;; Enable automatic preview at point in the *Completions* buffer. This is
-    ;; relevant when you use the default completion UI. You may want to also
-    ;; enable `consult-preview-at-point-mode` in Embark Collect buffers.
-    :hook (completion-list-mode . consult-preview-at-point-mode)
-
-    ;; The :init configuration is always executed (Not lazy)
     :init
-
     ;; Optionally configure the register formatting. This improves the register
     ;; preview for `consult-register', `consult-register-load',
     ;; `consult-register-store' and the Emacs built-ins.
@@ -604,18 +625,7 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
     ;; Use Consult to select xref locations with preview
     (setq xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref)
-
-    ;; Configure other variables and modes in the :config section,
-    ;; after lazily loading the package.
     :config
-
-    ;; Optionally configure preview. The default value
-    ;; is 'any, such that any key triggers the preview.
-    ;; (setq consult-preview-key 'any)
-    ;; (setq consult-preview-key (kbd "M-."))
-    ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
-    ;; For some commands and buffer sources it is useful to configure the
-    ;; :preview-key on a per-command basis using the `consult-customize' macro.
     (consult-customize
      consult-theme
      :preview-key '(:debounce 0.2 any)
@@ -623,19 +633,20 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
      consult-bookmark consult-recent-file consult-xref
      consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
      :preview-key (kbd "M-."))
-
-    ;; Optionally configure the narrowing key.
-    ;; Both < and C-+ work reasonably well.
-    (setq consult-narrow-key "<") ;; (kbd "C-+")
-
-    ;; Optionally make narrowing help available in the minibuffer.
-    ;; You may want to use `embark-prefix-help-command' or which-key instead.
-    ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-    (setq consult-project-root-function
-          (lambda ()
-            (when-let (project (project-current))
-              (car (project-roots project))))))
+    <<consult_config>>)
+#+end_src
+** Set the Narrowing Key
+The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks 
+#+begin_src emacs-lisp :noweb-ref consult_config
+  (setq consult-narrow-key "<") ;; (kbd "C-+")
+#+end_src
+** Set Root Function for Projects
+Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
+#+begin_src emacs-lisp :noweb-ref consult_config
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project)))))
 #+end_src 
 * BBDB
 The Insidious Big Brother DataBase (BBDB) is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
@@ -1084,7 +1095,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     (cfw:fchar-top-right-corner ?┓))
 #+end_src
 *** Use calfw-org
-Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like the long command =M-x cfw:open-org-calendar= so I have shortened to it to =M-x calfworg= which is much easier to type and remember.
+Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw-org
     :straight (emacs-calfw :host github
@@ -1410,7 +1421,7 @@ Something I am fiddling around with...
  ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
 * Performance Optimization End
-Close off the statement to increase Emacs initialization speed up.
+Reset the value for Emacs garbage collection from the beginning of the init file and close off the ~let~ statement at the beginning of the init file.
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 2 1000 1000))
   )
