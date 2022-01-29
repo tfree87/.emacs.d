@@ -36,8 +36,6 @@ The following code block will add a header to the ~init.el~ file when it is gene
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
 ** Reduce File Lookups on Loading
 See https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/.
-wn_steps_to_speed_up_emacs_start/.
-wn_steps_to_speed_up_emacs_start/.
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
