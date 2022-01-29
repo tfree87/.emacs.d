@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-27 21:17:27 thomas>
+#+date: Time-stamp: <2022-01-28 19:34:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -33,12 +33,20 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
 * Running Emacs as a Portable App
-I love running Emacs but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer.
-
-Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
+I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
+** Check for Portable Emacs Instance
+The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
 #+name: portable_check
 #+begin_src emacs-lisp
-  (and window-system (not (file-exists-p "~/runemacs.bat")))
+  (file-exists-p "~/runemacs.bat")
+ #+end_src
+** Set Location of Portable Git
+Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
+
+The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
+ #+begin_src emacs-lisp :tangle yes
+(when <<portable_check>>
+    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
 * Performance Optimization Start
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
@@ -171,14 +179,15 @@ All the changes contained here affect how Emacs looks when run such as faces, co
 I like to use All the Icons to add some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons
-    :if <<portable_check>>
+    :if (not <<portable_check>>)
+    :defer t
     :straight t)
 #+end_src
 ***** Dired
 Add file-type icons to Dired when browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons-dired
-    :if <<portable_check>>
+    :if (not <<portable_check>>)
     :straight t
     :hook
     (dired-mode . all-the-icons-dired-mode))
@@ -187,7 +196,7 @@ Add file-type icons to Dired when browsing files and directories. I find this ve
 Add icons representing different buffer types to Ibuffer mode.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons-ibuffer
-    :if <<portable_check>>
+    :if (not <<portable_check>>)
     :straight t
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
@@ -195,8 +204,9 @@ Add icons representing different buffer types to Ibuffer mode.
 This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons-completion
-    :if <<portable_check>>
+    :if (not <<portable_check>>)
     :straight t
+    :defer 3
     :config
     (all-the-icons-completion-mode)
     (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
@@ -753,7 +763,7 @@ Flyspell mode can be hooked to various buffer modes so that spell-checking can b
 I have this mode disabled if Emacs is run as a portable app as this will not work on another Windows system without the spell check libraries installed.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package flyspell
-    :if <<portable_check>>
+    :if (not <<portable_check>>)
     :delight t
     :defer t
     :config
@@ -1347,7 +1357,7 @@ Install YASnippet and have it enabled globally
     (use-package yasnippet
       :straight t
       :delight t
-      :defer 4
+      :defer 3
       :config
       (yas-global-mode 1))
 #+end_src

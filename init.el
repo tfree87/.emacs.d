@@ -15,6 +15,9 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(when <<portable_check>>
+    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+
 (let ((file-name-handler-alist nil))
 
 ;; Set the location of variables set using Emacs cusmtomize interface
@@ -78,23 +81,25 @@
 (column-number-mode 1)
 
 (use-package all-the-icons
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :if (not (file-exists-p "~/runemacs.bat"))
+  :defer t
   :straight t)
 
 (use-package all-the-icons-dired
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :if (not (file-exists-p "~/runemacs.bat"))
   :straight t
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :if (not (file-exists-p "~/runemacs.bat"))
   :straight t
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :if (not (file-exists-p "~/runemacs.bat"))
   :straight t
+  :defer 3
   :config
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
@@ -498,7 +503,7 @@
   (eshell-review-quick-commands nil))
 
 (use-package flyspell
-  :if (and window-system (not (file-exists-p "~/runemacs.bat")))
+  :if (not (file-exists-p "~/runemacs.bat"))
   :delight t
   :defer t
   :config
@@ -895,7 +900,7 @@
 (use-package yasnippet
   :straight t
   :delight t
-  :defer 4
+  :defer 3
   :config
   (yas-global-mode 1))
 
