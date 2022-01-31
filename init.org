@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-29 16:14:19 thomas>
+#+date: Time-stamp: <2022-01-30 23:38:56 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -44,7 +44,6 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold (* 500 1000 1000))
 #+end_src
-
 * Running Emacs as a Portable App
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
 ** Check for Portable Emacs Instance
@@ -122,7 +121,6 @@ The benchmark init package allows me to track how long each component of my Emac
 #+begin_src emacs-lisp :tangle yes
   (use-package benchmark-init
     :straight t
-    :init
     :config
     (benchmark-init/activate)
     ;; To disable collection of benchmark data after init is done.
@@ -196,7 +194,7 @@ I like to use All the Icons to add some graphical elements to dired and the mini
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package all-the-icons
     :if (not <<portable_check>>)
-    :defer t
+    :defer 1
     :straight t)
 #+end_src
 ***** Dired
@@ -732,8 +730,8 @@ Get Eshell configuration set up.
     (eshell-hist-ignoredups t)
     (eshell-save-history-on-exit t)
     (eshell-destroy-buffer-when-process-dies t)
-    <<eshell_custom>>
     :config
+    <<eshell_config>>
     (setenv "PAGER" "cat"))
 
   (use-package em-smart
@@ -766,22 +764,37 @@ Below are a list of command-line aliases for use in eshell.
 #+end_src
 ** Eshell Prompt
 Create a custom prompt for eshell that shows some more information.
-#+begin_src emacs-lisp :noweb-ref eshell_custom
-  (eshell-prompt-function
-   (lambda ()
-     (concat
-      (propertize "┌─[" 'face `(:foreground "green"))
-      (propertize (user-login-name) 'face `(:foreground "red"))
-      (propertize "@" 'face `(:foreground "green"))
-      (propertize (system-name) 'face `(:foreground "blue"))
-      (propertize "]──[" 'face `(:foreground "green"))
-      (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-      (propertize "]──[" 'face `(:foreground "green"))
-      (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-      (propertize "]\n" 'face `(:foreground "green"))
-      (propertize "└─>" 'face `(:foreground "green"))
-      (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green")))))  
-  #+end_src
+#+begin_src emacs-lisp :noweb-ref eshell_config
+  (defun git-prompt-branch-name ()
+    "Get current git branch name"
+    (let ((args '("symbolic-ref" "HEAD" "--short")))
+      (with-temp-buffer
+        (apply #'process-file "git" nil (list t nil) nil args)
+        (unless (bobp)
+          (goto-char (point-min))
+          (buffer-substring-no-properties (point) (line-end-position))))))
+
+  (setq eshell-prompt-function
+        (lambda ()
+          (let ((branch-name (git-prompt-branch-name)))
+            (concat
+             (propertize "┌─(" 'face `(:inherit "eshell-prompt"))
+             (propertize (user-login-name) 'face `(:inherit "eshell-prompt" :foreground "magenta"))
+             (propertize "@" 'face `(:inherit "eshell-prompt"))
+             (propertize (system-name) 'face `(:inherit "eshell-prompt" :foreground "green"))
+             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+             (propertize (format-time-string "%H:%M" (current-time)) 'face `(:inherit "eshell-prompt" :foreground "yellow"))
+             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+             (propertize (concat (eshell/pwd)) 'face `(:inherit "eshell-prompt" :foreground "white"))
+             (if branch-name
+                 (concat
+                  (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+                  (propertize (format "git: %s" branch-name) 'face `(:inherit "eshell-prompt" :foreground "red")))
+               "")
+             (propertize ")\n" 'face `(:inherit "eshell-prompt"))
+             (propertize "└─>>" 'face `(:inherit "eshell-prompt"))
+             (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:inherit "eshell-prompt"))))))
+#+end_src
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
 
@@ -828,7 +841,7 @@ A better buffer list than the default.
     <<ibuffer_custom>>)
 #+end_src
 ** Group Buffers
-Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
+kes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
 #+begin_src emacs-lisp :noweb-ref ibuffer_custom
   (ibuffer-saved-filter-groups
         (quote (("default"
@@ -1417,6 +1430,16 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
 Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
  ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
+#+end_src
+* Start Emacs Server
+Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
+
+I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  ;; Start an Emacs server
+
+  (when (not <<portable_check>>)
+    (server-start))
 #+end_src
 * Performance Optimization End
 Reset the value for Emacs garbage collection from the beginning of the init file and close off the ~let~ statement at the beginning of the init file.

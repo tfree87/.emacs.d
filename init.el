@@ -53,7 +53,6 @@
 
 (use-package benchmark-init
   :straight t
-  :init
   :config
   (benchmark-init/activate)
   ;; To disable collection of benchmark data after init is done.
@@ -83,7 +82,7 @@
 
 (use-package all-the-icons
   :if (not (file-exists-p "~/runemacs.bat"))
-  :defer t
+  :defer 1
   :straight t)
 
 (use-package all-the-icons-dired
@@ -441,21 +440,36 @@
   (eshell-hist-ignoredups t)
   (eshell-save-history-on-exit t)
   (eshell-destroy-buffer-when-process-dies t)
-  (eshell-prompt-function
-   (lambda ()
-     (concat
-      (propertize "┌─[" 'face `(:foreground "green"))
-      (propertize (user-login-name) 'face `(:foreground "red"))
-      (propertize "@" 'face `(:foreground "green"))
-      (propertize (system-name) 'face `(:foreground "blue"))
-      (propertize "]──[" 'face `(:foreground "green"))
-      (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-      (propertize "]──[" 'face `(:foreground "green"))
-      (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-      (propertize "]\n" 'face `(:foreground "green"))
-      (propertize "└─>" 'face `(:foreground "green"))
-      (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green")))))  
   :config
+  (defun git-prompt-branch-name ()
+    "Get current git branch name"
+    (let ((args '("symbolic-ref" "HEAD" "--short")))
+      (with-temp-buffer
+        (apply #'process-file "git" nil (list t nil) nil args)
+        (unless (bobp)
+          (goto-char (point-min))
+          (buffer-substring-no-properties (point) (line-end-position))))))
+  
+  (setq eshell-prompt-function
+        (lambda ()
+          (let ((branch-name (git-prompt-branch-name)))
+            (concat
+             (propertize "┌─(" 'face `(:inherit "eshell-prompt"))
+             (propertize (user-login-name) 'face `(:inherit "eshell-prompt" :foreground "magenta"))
+             (propertize "@" 'face `(:inherit "eshell-prompt"))
+             (propertize (system-name) 'face `(:inherit "eshell-prompt" :foreground "green"))
+             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+             (propertize (format-time-string "%H:%M" (current-time)) 'face `(:inherit "eshell-prompt" :foreground "yellow"))
+             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+             (propertize (concat (eshell/pwd)) 'face `(:inherit "eshell-prompt" :foreground "white"))
+             (if branch-name
+                 (concat
+                  (propertize ")──(" 'face `(:inherit "eshell-prompt"))
+                  (propertize (format "git: %s" branch-name) 'face `(:inherit "eshell-prompt" :foreground "red")))
+               "")
+             (propertize ")\n" 'face `(:inherit "eshell-prompt"))
+             (propertize "└─>>" 'face `(:inherit "eshell-prompt"))
+             (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:inherit "eshell-prompt"))))))
   (setenv "PAGER" "cat"))
 
 (use-package em-smart
@@ -880,6 +894,11 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
+
+;; Start an Emacs server
+
+(when (not (file-exists-p "~/runemacs.bat"))
+  (server-start))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
