@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-01-30 23:38:56 thomas>
+#+date: Time-stamp: <2022-02-02 20:40:31 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -123,7 +123,6 @@ The benchmark init package allows me to track how long each component of my Emac
     :straight t
     :config
     (benchmark-init/activate)
-    ;; To disable collection of benchmark data after init is done.
     (add-hook 'after-init-hook 'benchmark-init/deactivate))
 #+end_src
 * Emacs General Options
@@ -841,7 +840,7 @@ A better buffer list than the default.
     <<ibuffer_custom>>)
 #+end_src
 ** Group Buffers
-kes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
+Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
 #+begin_src emacs-lisp :noweb-ref ibuffer_custom
   (ibuffer-saved-filter-groups
         (quote (("default"
@@ -1344,7 +1343,7 @@ I like having tabs for all of my open buffers. The following code turns on tabs 
   (use-package centaur-tabs
     :if window-system
     :straight t
-    :defer 3
+    :defer t
     :bind
     ("C-<prior>" . centaur-tabs-backward)
     ("C-<next>" . centaur-tabs-forward)

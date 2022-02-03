@@ -55,7 +55,6 @@
   :straight t
   :config
   (benchmark-init/activate)
-  ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (use-package emacs
@@ -848,7 +847,7 @@
 (use-package centaur-tabs
   :if window-system
   :straight t
-  :defer 3
+  :defer t
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)
