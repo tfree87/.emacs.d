@@ -47,7 +47,6 @@ While this is my personal Emacs configuration, I have left the [[https://github.
 - The [[https://github.com/tfree87/.emacs.d/issues][issues]] page is mainly for /bugs/ or /typos/ that you have discovered and want to report.
 - This repository is my personal configuration and therefore reflects my personal taste in how I use Emacs. If you like this configuration but would prefer different themes, keybindings, or different packages then I would recommend forking this repository for your own use.
 - If you have /suggestions/ for improving this configuration, feel free to post an issue to this repository and I will consider it as I am open to new ideas, however, *do not count on it being incorporated into this repository.* Once again, I would recommend forking the repository.
-
 * Features
 This Emacs configuration is implemented with the following key features:
 - Portable :: This configuration is designed to work under both Linux /and/ Windows. It has been tested in Linux Mint, on Raspberry Pi OS, Windows 10, and Windows 11. It is also designed to run quickly from a flash drive with [[file:runemacs.bat][runemacs.bat]].
