@@ -433,7 +433,7 @@
                    (eshell/alias "emacs" "find-file $1")
                    (eshell/alias "untar" "tar -zxvf")
                    (eshell/alias "cpv" "rsync -ah --info=progress2")
-                   (eshell/alias "ll" "ls -AlohG")))
+                   (eshell/alias "ll" "ls -Alh")))
   :custom
   (eshell-error-if-no-glob t)
   (eshell-hist-ignoredups t)

@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-03 18:26:11 thomas>
+#+date: Time-stamp: <2022-02-03 19:25:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -759,7 +759,7 @@ Below are a list of command-line aliases for use in eshell.
   (eshell/alias "emacs" "find-file $1")
   (eshell/alias "untar" "tar -zxvf")
   (eshell/alias "cpv" "rsync -ah --info=progress2")
-  (eshell/alias "ll" "ls -AlohG")
+  (eshell/alias "ll" "ls -Alh")
 #+end_src
 ** Eshell Prompt
 Create a custom prompt for eshell that shows some more information.
