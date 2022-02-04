@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 ;; 
-;;; init.el --- Emacs initialzation file
+;;; init.el --- Emacs initialization file
 
 ;; Author: Thomas Freeman
 ;; Maintainer: Thomas Freeman
@@ -16,8 +16,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (let ((file-name-handler-alist nil))
-
-(setq gc-cons-threshold (* 500 1000 1000))
 
 (when (file-exists-p "~/runemacs.bat")
     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
@@ -45,8 +43,6 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq package-enable-at-startup nil)
-
 ;; Packages
 
 (straight-use-package 'use-package)
@@ -58,10 +54,10 @@
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (use-package emacs
-  :init
-  (setq tab-always-indent 'complete)
-  (setq completion-cycle-threshold 6)
   :custom
+  (inhibit-startup-screen t)
+  (tab-always-indent 'complete)
+  (completion-cycle-threshold 6)
   (delete-by-moving-to-trash t)
   (version-control t)
   (delete-old-versions t)
@@ -70,7 +66,8 @@
   (dired-dwim-target t)
   :config
   (when (version<= "26.0.50" emacs-version)
-    (global-display-line-numbers-mode))
+    (add-hook 'text-mode-hook 'display-line-numbers-mode)
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (column-number-mode 1)
   (add-hook 'before-save-hook 'time-stamp)
   (fset 'yes-or-no-p 'y-or-n-p)

@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-04 13:42:48 thomas>
+#+date: Time-stamp: <2022-02-04 15:10:52 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -17,7 +17,7 @@ The following code block will add a header to the ~init.el~ file when it is gene
 #+begin_src emacs-lisp :tangle yes
   ;; -*- lexical-binding: t -*-
   ;; 
-  ;;; init.el --- Emacs initialzation file
+  ;;; init.el --- Emacs initialization file
 
   ;; Author: Thomas Freeman
   ;; Maintainer: Thomas Freeman
@@ -39,11 +39,7 @@ See https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
 #+end_src
-** Decrease Garbage Collection Frequency
-Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el.
-#+begin_src emacs-lisp :tangle yes
-  (setq gc-cons-threshold (* 500 1000 1000))
-#+end_src
+
 * Running Emacs as a Portable App
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
 ** Check for Portable Emacs Instance
@@ -104,11 +100,6 @@ Instead of using the built-in package manager, use ~straight.el~ to pull all the
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
  #+end_src
-** Disable Emacs Package Manager
-In order to prevent conflicts between ~straight.el~ and the Emacs package manager, ~package-enable-at-startup~ should be set to ~nil~.
-#+begin_src emacs-lisp :tangle yes
-  (setq package-enable-at-startup nil)
-#+end_src
 ** Install use-package
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
 #+begin_src emacs-lisp :tangle yes
@@ -129,10 +120,10 @@ The benchmark init package allows me to track how long each component of my Emac
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
-    :init
-    (setq tab-always-indent 'complete)
-    (setq completion-cycle-threshold 6)
     :custom
+    (inhibit-startup-screen t)
+    (tab-always-indent 'complete)
+    (completion-cycle-threshold 6)
     <<emacs_custom>>
     :config
     <<emacs_config>>)
@@ -142,8 +133,9 @@ This section contains modifications for Emacs that affect the behavior in nearly
 *** Number Line Mode
 I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
 #+begin_src emacs-lisp :noweb-ref emacs_config
-  (when (version<= "26.0.50" emacs-version)
-    (global-display-line-numbers-mode))
+    (when (version<= "26.0.50" emacs-version)
+      (add-hook 'text-mode-hook 'display-line-numbers-mode)
+      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
 *** Show Column Number
 I find it useful to have the column number displayed in the modeline in Emacs.
@@ -154,13 +146,6 @@ I find it useful to have the column number displayed in the modeline in Emacs.
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (add-hook 'before-save-hook 'time-stamp)
-#+end_src
-*** Default to UTF-8
-This will cause Emacs to defer to encoding text files as UTF-8 by default.
-#+begin_src emacs-lisp :noweb emacs_config
-  (prefer-coding-system 'utf-8)
-  (when (display-graphic-p)
-    (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 #+end_src
 *** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
