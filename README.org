@@ -62,10 +62,11 @@ Many of you might be asking:
 The reasons for creating my own custom version are below:
 1. Vanilla Emacs was my first experience with serious text editing. Unlike many users who have switched from Vim to Emacs, I started as an Emacs user from the beginning. This led to:
    1. I learned the default Emacs keybindings from the GNU Emacs manual and I am not interested in switching to vi keybindings. I have become so accustomed to Emacs keys that I find I try to use them everywhere as they have become muscle memory.
-   2. I have found J. Wiegly's [[https://jwiegley.github.io/use-package/][use-package]] to be modular enough that I don't need a modular system such as Spacemacs or Doom Emacs.
-   3. Having spent a lot of time reading the GNU Emacs manual, I feel more comfortable editing my own init.el file rather than having to learn how to wrangle with Spacemacs or Doom Emacs init files.
-2. Creating my own Emacs customization has allowed me to learn a lot about Emacs Lisp.
-3. I have been able to incorporate code into my Emacs configuration that makes it flexible enough to run on multiple operating systems and even as a portable Windows app without too many features being broken.
+   2. Having spent a lot of time reading the GNU Emacs manual, I feel more comfortable editing my own init.el file rather than having to learn how to wrangle with Spacemacs or Doom Emacs init files.
+2. I have found [[https://jwiegley.github.io/use-package/][use-package]] to be modular enough that I don't need a modular system such as Spacemacs or Doom Emacs.
+3. Using [[https://github.com/raxod502/straight.el][straight.el]] has allowed me to pick and choose which exactly which packages I want to use allowing for both cutting edge features when desired or freezing a version for stability without having to rely on waiting for package updates. It also provides the ability to easy fix or add features to code by allowing for editing the Emacs Lisp directly or by downloading your own forks of packages.
+4. I have been able to incorporate code into my Emacs configuration that makes it flexible enough to run on multiple operating systems and even as a portable Windows app without too many features being broken.
+5. Creating my own Emacs customization has allowed me to learn a lot about Emacs Lisp.
 
 To summarize, this configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
 * Inspiration
