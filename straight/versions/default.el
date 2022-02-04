@@ -53,6 +53,7 @@
  ("melpa" . "866abc2f4ea48fbc1782ce40b0f16873825f65be")
  ("minimap" . "ed7490652a676c0510ed57d5366c445de20a370b")
  ("multiple-cursors.el" . "8a60fc7ef0ae6e5ca089a7c95264cd0ae83e7274")
+ ("no-littering" . "ba3facc3f6204ca82fa5b139dc01d8ce9e202443")
  ("numpydoc.el" . "7b803432ce62fc54a5c9d87294e3a499e55381ae")
  ("nyan-mode" . "06e67ab2c490756d3eeed4a68aba7c33e508a5d5")
  ("orderless" . "ce462a63e32dd32bceea041f656bb79da953d62f")
