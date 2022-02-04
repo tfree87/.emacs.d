@@ -39,17 +39,17 @@ In order to manage the large ~init.el~ configuration file, the configuration is 
 * About This Repository
 I have made this repository public as I have found inspiration from looking at the configuration of other Emacs users and thought that I would post this publicly in the small possibility that even one person might find this useful. Everything in this repository has been gathered from the GNU Emacs manual or sites that have been scoured from the internet in my quest to get Emacs to behave in the manner that fits my workflow.
 ** Stars
-If you like this configuration, please star it by clicking the star button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
+If you like this configuration, please star it by clicking the star :star: button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
 ** Issues
 If you like what you see here and you want to use this configuration yourself, that is fantastic. Feel free to clone this repository for yourself or make a fork of it as you see fit.
 
-While this is my personal Emacs configuration, I have left the [[https://github.com/tfree87/.emacs.d/issues][issues]] section open if anyone finds any errors that I may have missed and I will be grateful to your reporting of any issues that you find, however, keep the following in mind when you report any issues:
+While this is my personal Emacs configuration, I have left the [[https://github.com/tfree87/.emacs.d/issues][issues]] section open if anyone finds any errors that I may have missed and I will be :heart: grateful :heart: to your reporting of any issues that you find, however, keep the following in mind when you report any issues:
 - The [[https://github.com/tfree87/.emacs.d/issues][issues]] page is mainly for /bugs/ or /typos/ that you have discovered and want to report.
 - This repository is my personal configuration and therefore reflects my personal taste in how I use Emacs. If you like this configuration but would prefer different themes, keybindings, or different packages then I would recommend forking this repository for your own use.
 - If you have /suggestions/ for improving this configuration, feel free to post an issue to this repository and I will consider it as I am open to new ideas, however, *do not count on it being incorporated into this repository.* Once again, I would recommend forking the repository.
 
 * Features
-This Emacs configuration is implemented with the following 
+This Emacs configuration is implemented with the following key features:
 - Portable :: This configuration is designed to work under both Linux /and/ Windows. It has been tested in Linux Mint, on Raspberry Pi OS, Windows 10, and Windows 11. It is also designed to run quickly from a flash drive with [[file:runemacs.bat][runemacs.bat]].
 - Fast :: I am always trying to make Emacs run as fast as possible as I am often on slow machines and running Emacs from a flash drive /really/ slows things down. Nearly every package has loading deferred.
 - Default Keybindings :: When possible, the default keybindings are used. Emacs was my first text editor and I have learned and memorized many of the keybindings from reading through the Emacs manual. This version of Emacs is /not/ designed for Evil.
