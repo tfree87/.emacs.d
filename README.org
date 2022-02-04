@@ -68,8 +68,8 @@ The reasons for creating my own custom version are below:
 To summarize, this configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
 * Inspiration
 In an open source world, sharing is caring. This configuration would not be the way it is without the work of others who were also willing to share their configurations: 
-- [[https://github.com/hlissner/doom-emacs][Doom Emacs]]
-- [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][Make Emacs totally portable under Windows]] :: A Medium.com article explaning how to make Emacs /fully/ portable in Windows with a USB drive
-- [[https://www.spacemacs.org/][Spacemacs]] 
+- [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
+- [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][Make Emacs totally portable under Windows]]
+- [[https://www.spacemacs.org/][Spacemacs]]
 - [[https://sachachua.com/dotemacs/][Sacha Chua's Emacs Config]]
-- [[https://github.com/zzamboni/dot-emacs][zzamboni/dot-emacs]] 
+- [[https://github.com/zzamboni/dot-emacs][zzamboni/dot-emacs]]
