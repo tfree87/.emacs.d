@@ -68,7 +68,7 @@ The reasons for creating my own custom version are below:
 4. I have been able to incorporate code into my Emacs configuration that makes it flexible enough to run on multiple operating systems and even as a portable Windows app without too many features being broken.
 5. Creating my own Emacs customization has allowed me to learn a lot about Emacs Lisp.
 
-To summarize: this configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
+To summarize: This configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
 * Inspiration
 In an open source world, sharing is caring. This configuration would not be the way it is without the work of others who were also willing to share their configurations: 
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
