@@ -49,11 +49,13 @@ While this is my personal Emacs configuration, I have left the [[https://github.
 - The [[https://github.com/tfree87/.emacs.d/issues][issues]] page is mainly for /bugs/ or /typos/ that you have discovered and want to report.
 - This repository is my personal configuration and therefore reflects my personal taste in how I use Emacs. If you like this configuration but would prefer different themes, keybindings, or different packages then I would recommend forking this repository for your own use.
 - If you have /suggestions/ for improving this configuration, feel free to post an issue to this repository and I will consider it as I am open to new ideas, however, *do not count on it being incorporated into this repository.* Once again, I would recommend forking the repository.
+
 * Features
 This Emacs configuration is implemented with the following key features:
 - Portable :: This configuration is designed to work under both Linux /and/ Windows. It has been tested in Linux Mint, on Raspberry Pi OS, Windows 10, and Windows 11. It is also designed to run quickly from a flash drive with [[file:runemacs.bat][runemacs.bat]].
 - Fast :: I am always trying to make Emacs run as fast as possible as I am often on slow machines and running Emacs from a flash drive /really/ slows things down. Nearly every package has loading deferred.
 - Default Keybindings :: When possible, the default keybindings are used. Emacs was my first text editor and I have learned and memorized many of the keybindings from reading through the Emacs manual. This version of Emacs is /not/ designed for Evil.
+
 * Rationale
 Many of you might be asking:
 #+begin_quote
@@ -69,6 +71,23 @@ The reasons for creating my own custom version are below:
 5. Creating my own Emacs customization has allowed me to learn a lot about Emacs Lisp.
 
 To summarize: This configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
+
+* Like What You See?
+If you wish to give this configuration of Emacs a spin, use the following procedure:
+1. If you already have Emacs installed, make sure you make a backup of your current configuration so you can restore it if needed.
+#+begin_src shell
+  cd ~
+  mv .emacs.d .emacs.d.bak
+#+end_src
+2. Clone this git repository into your home directory.
+#+begin_src shell
+  git clone https://github.com/tfree87/.emacs.d.git
+#+end_src
+3. Run Emacs and wait for it to load.
+#+begin_src 
+  emacs 
+#+end_src
+
 * Inspiration
 In an open source world, sharing is caring. This configuration would not be the way it is without the work of others who were also willing to share their configurations: 
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
