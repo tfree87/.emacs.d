@@ -34,6 +34,7 @@
  ("emacsql" . "c82a0e6b4d256a3743b718cfb640fa9efc045f6e")
  ("embark" . "2f147726fef37b085e3f4ee2d94d953480544552")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
+ ("eshell-git-prompt" . "8374e2c5e90ce6de22dc6d391827d49299dfd471")
  ("f.el" . "50af874cd19042f17c8686813d52569b1025c76a")
  ("flycheck" . "784f184cdd9f9cb4e3dbb997c09d93e954142842")
  ("gnu-elpa-mirror" . "5581ba1ce971deffacd249022b0f3b87ee15eb27")
