@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-04 15:10:52 thomas>
+#+date: Time-stamp: <2022-02-04 17:15:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -56,6 +56,7 @@ The following line code will check to see if Emacs is being run as a portable ap
 (when <<portable_check>>
     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
+
 * Custom Set Variables
 In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
 #+name: custom-file
@@ -115,6 +116,14 @@ The benchmark init package allows me to track how long each component of my Emac
     :config
     (benchmark-init/activate)
     (add-hook 'after-init-hook 'benchmark-init/deactivate))
+#+end_src
+* No-littering
+The no-littering package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files.
+#+begin_src emacs-lisp :tangle yes
+  (use-package no-littering
+    :straight (no-littering :host github
+                            :repo "emacscollective/no-littering"
+                            :branch "master"))
 #+end_src
 * Emacs General Options
 The code below collects customizations for Emacs built-in components.

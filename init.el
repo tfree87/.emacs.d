@@ -53,6 +53,11 @@
   (benchmark-init/activate)
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
+(use-package no-littering
+  :straight (no-littering :host github
+                          :repo "emacscollective/no-littering"
+                          :branch "master"))
+
 (use-package emacs
   :custom
   (inhibit-startup-screen t)
