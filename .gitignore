@@ -1,0 +1,17 @@
+# Packages
+elpa/
+straight/build/
+straight/repos/
+
+#Personal information
+bbdb
+bookmarks
+game/
+
+#Backups and history
+auto-save-list/
+backups/
+.cache/
+history
+places
+session.*
