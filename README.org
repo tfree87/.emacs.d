@@ -32,7 +32,7 @@ This repository contains the following key files and folders:
 - [[./straight/versions/default.el]] :: A file generated from ~straight-freeze-versions~ containing the current versions of all the packages defined in [[./init.el]].
 
 * Literate Programming with Org-mode
-In order to manage the large ~init.el~ configuration file, the configuration is written using Org-mode. There are some reasons for using Org-mode to manage the Emacs configuration.
+In order to manage the large ~init.el~ configuration file, the configuration is written using Org-mode. There are some reasons for using Org-mode to manage the Emacs configuration:
 1. When a change to the configuration is made, it is easy to document why the change was made.
 2. Org-mode makes it much easier to navigate a large Emacs configuration as different code blocks can be nested under headings which can be folded or unfolded.
 
