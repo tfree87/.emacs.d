@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-04 17:15:17 thomas>
+#+date: Time-stamp: <2022-02-04 17:54:46 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -228,7 +228,9 @@ I have switched to the Doom theme ~doom-vibrant~ because I find the colors appea
     :if window-system
     :straight t
     :defer 1
-    :config (load-theme 'doom-vibrant))
+    :config
+    (load-theme 'doom-vibrant t)
+    (doom-themes-org-config))
 #+end_src
 ****** Doom Modeline
 I like the Doom modeline because it has icons and bright colors.

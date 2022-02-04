@@ -109,7 +109,9 @@
   :if window-system
   :straight t
   :defer 1
-  :config (load-theme 'doom-vibrant))
+  :config
+  (load-theme 'doom-vibrant t)
+  (doom-themes-org-config))
 
 (use-package doom-modeline
   :if window-system
