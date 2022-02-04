@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-02 20:40:31 thomas>
+#+date: Time-stamp: <2022-02-03 18:26:11 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -764,35 +764,13 @@ Below are a list of command-line aliases for use in eshell.
 ** Eshell Prompt
 Create a custom prompt for eshell that shows some more information.
 #+begin_src emacs-lisp :noweb-ref eshell_config
-  (defun git-prompt-branch-name ()
-    "Get current git branch name"
-    (let ((args '("symbolic-ref" "HEAD" "--short")))
-      (with-temp-buffer
-        (apply #'process-file "git" nil (list t nil) nil args)
-        (unless (bobp)
-          (goto-char (point-min))
-          (buffer-substring-no-properties (point) (line-end-position))))))
-
-  (setq eshell-prompt-function
-        (lambda ()
-          (let ((branch-name (git-prompt-branch-name)))
-            (concat
-             (propertize "┌─(" 'face `(:inherit "eshell-prompt"))
-             (propertize (user-login-name) 'face `(:inherit "eshell-prompt" :foreground "magenta"))
-             (propertize "@" 'face `(:inherit "eshell-prompt"))
-             (propertize (system-name) 'face `(:inherit "eshell-prompt" :foreground "green"))
-             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-             (propertize (format-time-string "%H:%M" (current-time)) 'face `(:inherit "eshell-prompt" :foreground "yellow"))
-             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-             (propertize (concat (eshell/pwd)) 'face `(:inherit "eshell-prompt" :foreground "white"))
-             (if branch-name
-                 (concat
-                  (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-                  (propertize (format "git: %s" branch-name) 'face `(:inherit "eshell-prompt" :foreground "red")))
-               "")
-             (propertize ")\n" 'face `(:inherit "eshell-prompt"))
-             (propertize "└─>>" 'face `(:inherit "eshell-prompt"))
-             (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:inherit "eshell-prompt"))))))
+  (use-package eshell-git-prompt
+    :straight (emacs-git-prompt :host github
+                                :repo "tfree87/eshell-git-prompt"
+                                :branch "master")
+    :hook
+    (eshell-mode . (lambda ()
+                     (eshell-git-prompt-use-theme 'multiline2))))
 #+end_src
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.

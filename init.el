@@ -440,35 +440,13 @@
   (eshell-save-history-on-exit t)
   (eshell-destroy-buffer-when-process-dies t)
   :config
-  (defun git-prompt-branch-name ()
-    "Get current git branch name"
-    (let ((args '("symbolic-ref" "HEAD" "--short")))
-      (with-temp-buffer
-        (apply #'process-file "git" nil (list t nil) nil args)
-        (unless (bobp)
-          (goto-char (point-min))
-          (buffer-substring-no-properties (point) (line-end-position))))))
-  
-  (setq eshell-prompt-function
-        (lambda ()
-          (let ((branch-name (git-prompt-branch-name)))
-            (concat
-             (propertize "┌─(" 'face `(:inherit "eshell-prompt"))
-             (propertize (user-login-name) 'face `(:inherit "eshell-prompt" :foreground "magenta"))
-             (propertize "@" 'face `(:inherit "eshell-prompt"))
-             (propertize (system-name) 'face `(:inherit "eshell-prompt" :foreground "green"))
-             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-             (propertize (format-time-string "%H:%M" (current-time)) 'face `(:inherit "eshell-prompt" :foreground "yellow"))
-             (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-             (propertize (concat (eshell/pwd)) 'face `(:inherit "eshell-prompt" :foreground "white"))
-             (if branch-name
-                 (concat
-                  (propertize ")──(" 'face `(:inherit "eshell-prompt"))
-                  (propertize (format "git: %s" branch-name) 'face `(:inherit "eshell-prompt" :foreground "red")))
-               "")
-             (propertize ")\n" 'face `(:inherit "eshell-prompt"))
-             (propertize "└─>>" 'face `(:inherit "eshell-prompt"))
-             (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:inherit "eshell-prompt"))))))
+  (use-package eshell-git-prompt
+    :straight (emacs-git-prompt :host github
+                                :repo "tfree87/eshell-git-prompt"
+                                :branch "master")
+    :hook
+    (eshell-mode . (lambda ()
+                     (eshell-git-prompt-use-theme 'multiline2))))
   (setenv "PAGER" "cat"))
 
 (use-package em-smart
