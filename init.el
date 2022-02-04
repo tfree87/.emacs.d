@@ -725,7 +725,6 @@
   :after org)
 
 (use-package treemacs
-  :after treemacs-all-the-icons
   :straight t
   :defer t
   :init
@@ -815,8 +814,9 @@
   :straight t)
 
 (use-package treemacs-all-the-icons
-  :defer t
-  :straight t)
+  :after treemacs
+  :straight t
+  :config (treemacs-load-theme 'all-the-icons))
 
 (use-package treemacs-magit
   :after (treemacs magit)
