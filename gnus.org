@@ -1,0 +1,154 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+title: Gnus Configuration
+#+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
+#+language: en
+#+property: header-args    :results silent :exports code
+
+
+* Mail Directory
+Set the default mail directory
+#+begin_src emacs-lisp :tangle yes
+  (setq nnml-directory "~/Mail")
+  (setq message-directory "~/Mail")
+#+end_src
+* Change Reply Position
+Put all replies at the top of the email since many people just want to read the most recent message and skip the whole email thread.
+  #+begin_src emacs-lisp :tangle yes
+  (setq message-cite-reply-position 'above)
+  #+end_src
+* IMAP Email Accounts
+Set up IMAP email accounts in Gnus
+#+begin_src emacs-lisp :tangle yes
+  (setq gnus-select-method '(nnnil nil))
+  (setq gnus-secondary-select-methods
+        '((nnimap "gmail"
+                  (nnimap-address "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl)
+                  (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")
+                  (nnmail-expiry-wait 'immediate))
+          (nnimap "albion"
+                  (nnimap-address "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl)
+                  (nnmail-expiry-target "nnimap+albion:[Gmail]/Trash")
+                  (nnmail-expiry-wait 'immediate))
+          (nnimap "work"
+                  (nnimap-address "outlook.office365.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl)
+                  (nnmail-expiry-target "nnimap+work:Deleted Items")
+                  (nnmail-expiry-wait 'immediate))))
+#+end_src
+* Show Gmail Folders
+Make Gnus NOT ignore [Gmail] folders where Trash, Sent Mail and Draft are found
+#+begin_src emacs-lisp :tangle yes
+  (setq  gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+#+end_src
+* Replying
+Reply to mails with matching email address
+#+begin_src emacs-lisp :tangle yes
+  (load-file "gnus-styles.el")
+#+end_src
+* Groups View
+Place Gnus messages under headings listed by topic.
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+  
+  (eval-after-load 'gnus-topic
+    '(progn
+       (setq gnus-message-archive-group '((format-time-string "sent.%Y")))
+       (setq gnus-server-alist '(("archive" nnfolder "archive" (nnfolder-directory "~/mail/archive")
+                                  (nnfolder-active-file "~/mail/archive/active")
+                                  (nnfolder-get-new-mail nil)
+                                  (nnfolder-inhibit-expiry t))))
+  
+       (setq gnus-topic-topology '(("Gnus" visible)
+                                   (("Misc" visible))
+                                   (("Work" visible nil nil))
+                                   (("Gmail" visible nil nil))
+                                   (("Albion" visible nil nil))))
+  
+       (setq gnus-topic-alist '(("Work"
+                                 "nnimap+work:INBOX"
+                                 "nnimap+work:Sent Items"
+                                 "nnimap+work:Drafts"
+                                 "nnimap+work:Junk Email"
+                                 "nnimap+work:Deleted Items")
+                                ("Gmail"
+                                 "nnimap+gmail:INBOX"
+                                 "nnimap+gmail:[Gmail]/Sent Mail"
+                                 "nnimap+gmail:[Gmail]/Drafts"
+                                 "nnimap+gmail:[Gmail]/Spam"
+                                 "nnimap+gmail:[Gmail]/Trash")
+                                ("Albion"
+                                 "nnimap+albion:INBOX"
+                                 "nnimap+albion:[Gmail]/Sent Mail"
+                                 "nnimap+albion:[Gmail]/Drafts"
+                                 "nnimap+albion:[Gmail]/Spam"
+                                 "nnimap+albion:[Gmail]/Trash")
+                                ("Misc"
+                                 "nndraft:drafts")
+                                ("Gnus")))))
+#+end_src
+  
+* Appearance of Summary Buffer
+The code below will change the appearance of the summary buffer so that reading emails from the summary buffer is a little cleaner and easier to view the threads.
+#+begin_src emacs-lisp :tangle yes
+  ;; The following lines will display threads in a clearer way with UTF-8 text showing message replies
+  (when window-system
+    (setq gnus-sum-thread-tree-indent "  ")
+    (setq gnus-sum-thread-tree-root "● ")
+    (setq gnus-sum-thread-tree-false-root "◯ ")
+    (setq gnus-sum-thread-tree-single-indent "◎ ")
+    (setq gnus-sum-thread-tree-vertical        "│")
+    (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+    (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
+  
+  ;; The following lines change how emails are listed in the summary buffer
+  (setq gnus-summary-line-format
+        (concat
+         "%0{%U%R%z%}"
+         "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+         "  "
+         "%4{%-20,20f%}"               ;; name
+         "  "
+         "%3{│%}"
+         " "
+         "%1{%B%}"
+         "%s\n"))
+  (setq gnus-summary-display-arrow t)
+  
+  ;; Change the group line format
+  (setq gnus-group-line-format "%M%S%5y:%B%(%G%)\n")
+  #+end_src
+* BBDB
+Use BBDB to collect email addresses from emails and use for composition.
+  #+begin_src emacs-lisp
+  ;; BBDB Settings
+  (require 'bbdb)
+  (bbdb-initialize 'message 'gnus 'mail)
+  (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+  (setq bbdb/mail-auto-create-p t
+        bbdb/news-auto-create-p t)
+  #+end_src
+* Three-pane Layout
+Setting a three-pane layout will put the different folders on the left side, the summary buffer on top right, and the article view at the bottom left.
+  #+begin_src emacs-lisp :tangle yes
+  ;; Three-pane layout for gnus
+  (gnus-add-configuration
+   '(article
+     (horizontal 1.0
+                 (vertical 35
+                           (group 1.0))
+                 (vertical 1.0
+                           (summary 0.25 point)
+                           (article 1.0)))))
+  (gnus-add-configuration
+   '(summary
+     (horizontal 1.0
+                 (vertical 35
+                           (group 1.0))
+                 (vertical 1.0
+                           (summary 1.0 point)))))
+#+end_src
