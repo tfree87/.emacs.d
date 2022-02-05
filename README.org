@@ -77,10 +77,8 @@ The reasons for creating my own custom version are below:
 To summarize: This configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
 
 * Like What You See?
-
-** Stars
-If you like this configuration, please star it by clicking the star :star: button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
-** Installation
+Fantastic! Here are some things you can do:
+** Install
 If you wish to give this configuration of Emacs a spin, use the following procedure:
 1. If you already have Emacs installed, make sure you make a backup of your current configuration so you can restore it if needed.
    #+begin_src shell
@@ -95,7 +93,10 @@ If you wish to give this configuration of Emacs a spin, use the following proced
    #+begin_src shell
      emacs 
    #+end_src
-
+** Fork
+Feel free to fork this configuration and make any changes you see fit. If you add something cool :sunglasses: please let me know!
+** Star
+If you like this configuration, please star it by clicking the star :star: button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
 * Inspiration
 In an open source world, sharing is caring. This configuration would not be the way it is without the work of others who were also willing to share their configurations: 
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
