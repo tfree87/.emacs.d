@@ -13,7 +13,7 @@
 #+options: timestamp:t title:t toc:t todo:t |:t
 
 
-This repository contains the configuration for my personal Emacs setup.
+This repository contains the configuration for my personal Emacs setup. Feel free to try it out for yourself or take any bits that you find useful.
 
 #+ATTR_HTML: title="Screenshot of Emacs"
 [[./screenshot.png]]
@@ -40,15 +40,19 @@ In order to manage the large ~init.el~ configuration file, the configuration is 
 
 * About This Repository
 I have made this repository public as I have found inspiration from looking at the configuration of other Emacs users and thought that I would post this publicly in the small possibility that even one person might find this useful. Everything in this repository has been gathered from the GNU Emacs manual or sites that have been scoured from the internet in my quest to get Emacs to behave in the manner that fits my workflow.
-** Stars
-If you like this configuration, please star it by clicking the star :star: button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
 ** Issues
 If you like what you see here and you want to use this configuration yourself, that is fantastic. Feel free to clone this repository for yourself or make a fork of it as you see fit.
 
 While this is my personal Emacs configuration, I have left the [[https://github.com/tfree87/.emacs.d/issues][issues]] section open if anyone finds any errors that I may have missed and I will be :heart: grateful :heart: for your reporting of any issues that you find, however, keep the following in mind when you report any issues:
 - The [[https://github.com/tfree87/.emacs.d/issues][issues]] page is mainly for /bugs/ or /typos/ that you have discovered and want to report.
 - This repository is my personal configuration and therefore reflects my personal taste in how I use Emacs. If you like this configuration but would prefer different themes, keybindings, or different packages then I would recommend forking this repository for your own use.
-- If you have /suggestions/ for improving this configuration, feel free to post an issue to this repository and I will consider it as I am open to new ideas, however, *do not count on it being incorporated into this repository.* Once again, I would recommend forking the repository.
+- If you have /suggestions/ for improving this configuration, feel free to post an issue to this repository and I will consider it as I am open to new ideas, however, *do not count on it being incorporated into this repository.* Once again, I would recommend forking the
+** Pull Requests
+Even though this is a personal Emacs configuration, I have left the [[https://github.com/tfree87/.emacs.d/pulls][pull requests]] page open for a couple reasons:
+1. Occasionally, I use the Github web interface to merge my branches
+2. If someone finds an error in my code and wants to suggest a fix a pull request would be welcome. 
+** Wiki
+I have not enabled the wiki for this repository or created a site for this page as nearly everything is documented in [[file:early-init.org][early-init.org]] and [[file:init.org][init.org]]. If you want to learn about the code, check out these files. I am constantly updating the files to reference where I have found these Emacs Lisp snippets and why I use them. I may consider enabling a wiki or a site in the future if I believe that may be useful to others and provide something that the ~.org~ files cannot provide.
 
 * Features
 This Emacs configuration is implemented with the following key features:
@@ -73,6 +77,10 @@ The reasons for creating my own custom version are below:
 To summarize: This configuration was created by an Emacs user who /started out/ as an Emacs user and doesn't want to relearn new keys and enjoys customizing.
 
 * Like What You See?
+
+** Stars
+If you like this configuration, please star it by clicking the star :star: button at the top of the page. If I get enough stars, I will consider making a public, community-driven repository of this configuration for general use.
+** Installation
 If you wish to give this configuration of Emacs a spin, use the following procedure:
 1. If you already have Emacs installed, make sure you make a backup of your current configuration so you can restore it if needed.
    #+begin_src shell
