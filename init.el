@@ -170,6 +170,10 @@
   :straight t
   :defer t)
 
+(use-package go-mode
+  :straight t
+  :defer t)
+
 (use-package magit
   :if (executable-find "git")
   :straight t
