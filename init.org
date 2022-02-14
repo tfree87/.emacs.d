@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-09 20:32:40 thomas>
+#+date: Time-stamp: <2022-02-13 10:42:36 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -267,111 +267,11 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (nyan-mode)
     (nyan-start-animation))
 #+end_src
-* Coding
-This section contains customizations for writing programming code in Emacs.
-** Aggressive Indent Mode
-Aggressive indent mode will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+* Ace-Window
 #+begin_src emacs-lisp :tangle yes
-  (use-package aggressive-indent
+  (use-package ace-window
     :straight t
-    :delight t
-    :hook
-    (prog-mode . aggressive-indent-mode)
-    :config
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-#+end_src
-** Apheleia
-Apheleia will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
-#+begin_src emacs-lisp :tangle yes
-  (use-package apheleia
-    :straight t
-    :hook
-    (prog-mode . apheleia-mode)
-    (tex-mode . apheleia-mode)
-    :config
-    (setf (alist-get 'black apheleia-formatters)
-    '("black" "--experimental-string-processing" "-")))
-#+end_src
-** C
-I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
-#+begin_src emacs-lisp :tangle yes
-  (use-package c-mode
-    :defer t
-    :mode ("\\.c\\'"
-           "\\.ino\\'"))
-#+end_src
-** Elpy
-Add powerful features for Python progamming in Emacs.
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package elpy
-    :straight t
-    :defer t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
-    :custom
-    (elpy-rpc-python-command "python3")
-    (python-shell-interpreter "ipython3")
-    (python-shell-interpreter-args "-i --simple-prompt")
-    :config
-    <<elpy_config>>) 
-#+end_src
-*** Use Flycheck for Python Syntax
-Check python syntax while writing with flycheck
-#+begin_src emacs-lisp :noweb-ref elpy_config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-#+end_src
-** Flycheck
-Install flycheck mode so that python syntax can be checed while typing.
-#+begin_src emacs-lisp :tangle yes
-  (use-package flycheck
-    :straight t
-    :defer t)
-#+end_src
-** Go
-#+begin_src emacs-lisp :tangle yes
-  (use-package go-mode
-    :straight t
-    :defer t)
-#+end_src
-** Magit
-Magit provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
-#+begin_src emacs-lisp :tangle yes
-  (use-package magit
-    :if (executable-find "git")
-    :straight t
-    :bind ("C-x g" . magit-status))
-#+end_src
-** Numpydoc
-Using Numpydoc provides an interactive tool to automatically generate Numpy style docstrings.
-#+begin_src emacs-lisp :tangle yes
-  (use-package numpydoc
-    :straight t
-    :bind (:map python-mode-map
-                ("C-c C-n" . numpydoc-generate)))
-#+end_src
-** Paren Mode
-Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
-
-The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
-#+begin_src emacs-lisp :tangle yes  
-  (use-package paren
-    :delight
-    :defer t
-    :custom
-    (show-paren-delay 0)
-    :hook (prog-mode . show-paren-mode))
-#+end_src
-** Projectile
-#+begin_src emacs-lisp :tangle yes
-  (use-package projectile
-    :straight t
-    :delight t
-    :config
-    (projectile-mode +1)
-    :bind (:map projectile-mode-map
-                ("C-c p" . projectile-command-map)))
+    :bind ("M-o" . ace-window))
 #+end_src
 * Autocompletion
 This section contains configuration for auto-completion utilities in Emacs.
@@ -491,6 +391,18 @@ This section contains customization to improve command completion in the minibuf
 *** Embark
 Embark provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
+  (defun sudo-find-file (file)
+    "Open FILE as root."
+    (interactive "FOpen file as root: ")
+    (when (file-writable-p file)
+      (user-error "File is user writeable, aborting sudo"))
+    (find-file (if (file-remote-p file)
+                   (concat "/" (file-remote-p file 'method) ":"
+                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                           "|sudo:root@"
+                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                 (concat "/sudo:root@localhost:" file))))
+
   (use-package embark
     :straight t
     :bind
@@ -500,7 +412,8 @@ Embark provides the ability to execute commands on completion options found in t
     :init
     (setq prefix-help-command #'embark-prefix-help-command)
     :config
-    <<embark_config>>)
+    <<embark_config>>
+    (define-key embark-file-map (kbd "S") 'sudo-find-file))
 #+end_src
 *** Embark Mode Line
 Hide the mode line of the Embark live/completions buffers.
@@ -561,6 +474,112 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
            ("M-A" . marginalia-cycle))
     :init
     (marginalia-mode))
+#+end_src
+* Coding
+This section contains customizations for writing programming code in Emacs.
+** Aggressive Indent Mode
+Aggressive indent mode will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+#+begin_src emacs-lisp :tangle yes
+  (use-package aggressive-indent
+    :straight t
+    :delight t
+    :hook
+    (prog-mode . aggressive-indent-mode)
+    :config
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+#+end_src
+** Apheleia
+Apheleia will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
+#+begin_src emacs-lisp :tangle yes
+  (use-package apheleia
+    :straight t
+    :hook
+    (prog-mode . apheleia-mode)
+    (tex-mode . apheleia-mode)
+    :config
+    (setf (alist-get 'black apheleia-formatters)
+    '("black" "--experimental-string-processing" "-")))
+#+end_src
+** C
+I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
+#+begin_src emacs-lisp :tangle yes
+  (use-package c-mode
+    :defer t
+    :mode ("\\.c\\'"
+           "\\.ino\\'"))
+#+end_src
+** Elpy
+Add powerful features for Python progamming in Emacs.
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elpy
+    :straight t
+    :defer t
+    :init
+    (advice-add 'python-mode :before 'elpy-enable)
+    :custom
+    (elpy-rpc-python-command "python3")
+    (python-shell-interpreter "ipython3")
+    (python-shell-interpreter-args "-i --simple-prompt")
+    :config
+    <<elpy_config>>) 
+#+end_src
+*** Use Flycheck for Python Syntax
+Check python syntax while writing with flycheck
+#+begin_src emacs-lisp :noweb-ref elpy_config
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+#+end_src
+** Flycheck
+Install flycheck mode so that python syntax can be checed while typing.
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck
+    :straight t
+    :defer t)
+#+end_src
+** Go
+#+begin_src emacs-lisp :tangle yes
+  (use-package go-mode
+    :straight t
+    :defer t)
+#+end_src
+** Magit
+Magit provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
+#+begin_src emacs-lisp :tangle yes
+  (use-package magit
+    :if (executable-find "git")
+    :straight t
+    :bind ("C-x g" . magit-status))
+#+end_src
+** Numpydoc
+Using Numpydoc provides an interactive tool to automatically generate Numpy style docstrings.
+#+begin_src emacs-lisp :tangle yes
+  (use-package numpydoc
+    :straight t
+    :bind (:map python-mode-map
+                ("C-c C-n" . numpydoc-generate)))
+#+end_src
+** Paren Mode
+Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
+
+The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
+#+begin_src emacs-lisp :tangle yes  
+  (use-package paren
+    :delight
+    :defer t
+    :custom
+    (show-paren-delay 0)
+    :hook (prog-mode . show-paren-mode))
+#+end_src
+** Projectile
+#+begin_src emacs-lisp :tangle yes
+  (use-package projectile
+    :straight t
+    :delight t
+    :config
+    (projectile-mode +1)
+    :bind (:map projectile-mode-map
+                ("C-c p" . projectile-command-map)))
 #+end_src
 * Consult
 Consult provides a number of highly useful commands. The complete list of commands can be found at https://github.com/minad/consult#available-commands.
@@ -742,17 +761,6 @@ Get Eshell configuration set up.
     (eshell-where-to-jump 'begin)
     (eshell-review-quick-commands nil))
   #+end_src
-** Eshell Visual Commands
-Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
-#+name: eshell_visual_commands
-#+begin_src emacs-lisp
-  (add-to-list 'eshell-visual-commands "htop")
-  (add-to-list 'eshell-visual-commands "ipython")
-  (add-to-list 'eshell-visual-commands "rclone")
-  (add-to-list 'eshell-visual-commands "ssh")
-  (add-to-list 'eshell-visual-commands "tail")
-  (add-to-list 'eshell-visual-commands "top")
-#+end_src
 ** Eshell Aliases
 Below are a list of command-line aliases for use in eshell.
 #+name: eshell_aliases
@@ -773,6 +781,31 @@ Create a custom prompt for eshell that shows some more information.
     :hook
     (eshell-mode . (lambda ()
                      (eshell-git-prompt-use-theme 'multiline2))))
+#+end_src
+** Eshell Toggle
+#+begin_src emacs-lisp :tangle yes
+  (use-package eshell-toggle
+    :straight (eshell-toggle :repo "4DA/eshell-toggle"
+                             :host github
+                             :repo "master")
+    :custom
+    (eshell-toggle-size-fraction 3)
+    ;; (eshell-toggle-use-projectile-root t)
+    (eshell-toggle-run-command nil)
+    (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+    :bind
+    ("M-s-`" . eshell-toggle))
+#+end_src
+** Eshell Visual Commands
+Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
+#+name: eshell_visual_commands
+#+begin_src emacs-lisp
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ipython")
+  (add-to-list 'eshell-visual-commands "rclone")
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "tail")
+  (add-to-list 'eshell-visual-commands "top")
 #+end_src
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
@@ -1216,6 +1249,24 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :straight t
     :defer t
     :after org)
+#+end_src
+* Popper
+#+begin_src emacs-lisp :tangle yes
+  (use-package popper
+    :straight t
+    :bind (("C-`"   . popper-toggle-latest)
+           ("M-`"   . popper-cycle)
+           ("C-M-`" . popper-toggle-type))
+    :init
+    (setq popper-reference-buffers
+          '("\\*Messages\\*"
+            "\\*Embark Actions\\*"
+            "Output\\*$"
+            "\\*Async Shell Command\\*"
+            help-mode
+            compilation-mode))
+    (popper-mode +1)
+    (popper-echo-mode +1))
 #+end_src
 * Treemacs
 #+begin_src emacs-lisp :tangle yes
