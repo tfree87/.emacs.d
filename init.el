@@ -447,6 +447,8 @@
 (use-package eshell
   :defer t
   :hook
+  (eshell-load . (lambda ()
+                        (eshell-git-prompt-use-theme 'multiline2)))
   (eshell-mode . (lambda ()
                    (add-to-list 'eshell-visual-commands "htop")
                    (add-to-list 'eshell-visual-commands "ipython")
@@ -465,21 +467,14 @@
   (eshell-save-history-on-exit t)
   (eshell-destroy-buffer-when-process-dies t)
   :config
-  (use-package eshell-git-prompt
-    :straight (emacs-git-prompt :host github
-                                :repo "tfree87/eshell-git-prompt"
-                                :branch "master")
-    :hook
-    (eshell-mode . (lambda ()
-                     (eshell-git-prompt-use-theme 'multiline2))))
+  
   (setenv "PAGER" "cat"))
 
-(use-package em-smart
-  :defer t
-  :custom
-  (eshell-smart-space-goes-to-end t)
-  (eshell-where-to-jump 'begin)
-  (eshell-review-quick-commands nil))
+(use-package eshell-git-prompt
+  :straight (emacs-git-prompt :host github
+                              :repo "tfree87/eshell-git-prompt"
+                              :branch "master")
+  :defer t)
 
 (use-package eshell-toggle
   :straight (eshell-toggle :repo "4DA/eshell-toggle"
