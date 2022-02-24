@@ -60,15 +60,19 @@
 
 (use-package emacs
   :custom
-  (desktop-save-mode t)
-  (inhibit-startup-screen t)
+  (register-preview-delay 0)
   (tab-always-indent 'complete)
-  (completion-cycle-threshold 6)
+  (completion-cycle-threshold t)
   (delete-by-moving-to-trash t)
   (version-control t)
   (delete-old-versions t)
   (vc-make-backup-files t)
+  (inhibit-startup-screen t)
+  (desktop-save-mode t)
   (sentence-end-double-space nil)
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref)
+  (register-preview-function #'consult-register-format)
   (dired-dwim-target t)
   :hook
   (before-save . 'time-stamp)  
@@ -76,12 +80,14 @@
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'text-mode-hook 'display-line-numbers-mode)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
-  (column-number-mode 1)
   (fset 'yes-or-no-p 'y-or-n-p)
+  (column-number-mode 1)
   (display-time-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (toggle-scroll-bar -1))
+  (toggle-scroll-bar -1)
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  (advice-add #'register-preview :override #'consult-register-window))
 
 (use-package all-the-icons
   :if (not (file-exists-p "~/runemacs.bat"))
@@ -371,32 +377,8 @@
          ("M-s e" . consult-isearch-history)
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi))
-  :init
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
-  (setq register-preview-delay 0
-        register-preview-function #'consult-register-format)
-
-  ;; Optionally tweak the register preview window.
-  ;; This adds thin lines, sorting and hides the mode line of the window.
-  (advice-add #'register-preview :override #'consult-register-window)
-
-  ;; Optionally replace `completing-read-multiple' with an enhanced version.
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-
-  ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
   :config
-  (consult-customize
-   consult-theme
-   :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-   :preview-key (kbd "M-."))
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
+  (setq consult-narrow-key "<")
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))

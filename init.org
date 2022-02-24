@@ -125,15 +125,11 @@ The no-littering package will put Emacs configuration files for many third-party
                             :repo "emacscollective/no-littering"
                             :branch "master"))
 #+end_src
-* Emacs General Options
+* Emacs Options
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
     :custom
-    (desktop-save-mode t)
-    (inhibit-startup-screen t)
-    (tab-always-indent 'complete)
-    (completion-cycle-threshold 6)
     <<emacs_custom>>
     :hook
     <<emacs_hooks>>
@@ -142,22 +138,24 @@ The code below collects customizations for Emacs built-in components.
 #+end_src
 ** General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
-*** Number Line Mode
-I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-    (when (version<= "26.0.50" emacs-version)
-      (add-hook 'text-mode-hook 'display-line-numbers-mode)
-      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+*** Register Delay
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (register-preview-delay 0)
 #+end_src
-*** Show Column Number
-I find it useful to have the column number displayed in the modeline in Emacs.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (column-number-mode 1)
-#+end_src
-*** Automatic Time Stamps When Saving
+*** Automatic Time Stamps
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :noweb-ref emacs_hooks
   (before-save . 'time-stamp)  
+#+end_src
+*** Completion by Pressing Tab
+~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate autocomplete.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (tab-always-indent 'complete)
+#+end_src
+*** Completion Cycling
+Cycle through completion candidates by pressing the completion key.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (completion-cycle-threshold t)
 #+end_src
 *** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
@@ -173,10 +171,32 @@ Changing how Emacs deletes files and how it creates backups.
    (delete-old-versions t)
    (vc-make-backup-files t)
  #+end_src
+*** Inhibit Startup Screen
+After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (inhibit-startup-screen t)
+#+end_src
+*** Number Line Mode
+I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~dispaly-line-numbers-mode~ on the fly if I want to hide the line numbers.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+    (when (version<= "26.0.50" emacs-version)
+      (add-hook 'text-mode-hook 'display-line-numbers-mode)
+      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+#+end_src
+*** Save Work Session
+The following option will cause Emacs to always save the state of Emacs when it was closed. Local buffers, tabs in ~tab-bar-mode~, and window arrangements are all saved if possible. Turning this on makes it much simpler to continue working on the same projects when Emacs is closed and then opened again.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+(desktop-save-mode t)
+#+end_src
 *** Shorten "Yes or No" to "Y or N"
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+*** Show Column Number
+I find it useful to have the column number displayed in the modeline in Emacs.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (column-number-mode 1)
 #+end_src
 *** Single Space at the End of Sentences
 Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
@@ -627,37 +647,34 @@ Consult provides a number of highly useful commands. The complete list of comman
            ("M-s e" . consult-isearch-history)
            ("M-s l" . consult-line)
            ("M-s L" . consult-line-multi))
-    :init
-    ;; Optionally configure the register formatting. This improves the register
-    ;; preview for `consult-register', `consult-register-load',
-    ;; `consult-register-store' and the Emacs built-ins.
-    (setq register-preview-delay 0
-          register-preview-function #'consult-register-format)
-
-    ;; Optionally tweak the register preview window.
-    ;; This adds thin lines, sorting and hides the mode line of the window.
-    (advice-add #'register-preview :override #'consult-register-window)
-
-    ;; Optionally replace `completing-read-multiple' with an enhanced version.
-    (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-
-    ;; Use Consult to select xref locations with preview
-    (setq xref-show-xrefs-function #'consult-xref
-          xref-show-definitions-function #'consult-xref)
     :config
-    (consult-customize
-     consult-theme
-     :preview-key '(:debounce 0.2 any)
-     consult-ripgrep consult-git-grep consult-grep
-     consult-bookmark consult-recent-file consult-xref
-     consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-     :preview-key (kbd "M-."))
     <<consult_config>>)
 #+end_src
+** Use Consult to Select xref Locations
+Use Consult to search through and select xref locations in buffers
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref)
+#+end_src
+** Enhanced ~completing-read~ Function
+Replace the default Emacs ~completing-read~ function with the enhanced ~consult-completing-read-multiple~.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+#+end_src
+** Change Register Preview to Consult
+Change the default Emacs ~register-preview-function~ to use consult effectively.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (register-preview-function #'consult-register-format)
+#+end_src
+** Tweak Register Preview Window
+The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+    (advice-add #'register-preview :override #'consult-register-window)
+#+end_src
 ** Set the Narrowing Key
-The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks 
+The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks after calling ~consult-buffer~.
 #+begin_src emacs-lisp :noweb-ref consult_config
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
+  (setq consult-narrow-key "<")
 #+end_src
 ** Set Root Function for Projects
 Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
