@@ -86,11 +86,13 @@ In this section, I have included customization to replace the default Emacs pack
 Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
 #+begin_src emacs-lisp :tangle yes
 
-  ;; Install Straight.el to manage packages by downloading directly from repositories
+  ;; Install Straight.el to manage packages
 
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          user-emacs-directory))
         (bootstrap-version 5))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
@@ -420,10 +422,16 @@ Embark provides the ability to execute commands on completion options found in t
     (when (file-writable-p file)
       (user-error "File is user writeable, aborting sudo"))
     (find-file (if (file-remote-p file)
-                   (concat "/" (file-remote-p file 'method) ":"
-                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                   (concat "/"
+                           (file-remote-p file 'method)
+                           ":"
+                           (file-remote-p file 'user)
+                           "@"
+                           (file-remote-p file 'host)
                            "|sudo:root@"
-                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                           (file-remote-p file 'host)
+                           ":"
+                           (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
 
   (use-package embark
@@ -659,7 +667,8 @@ Use Consult to search through and select xref locations in buffers
 ** Enhanced ~completing-read~ Function
 Replace the default Emacs ~completing-read~ function with the enhanced ~consult-completing-read-multiple~.
 #+begin_src emacs-lisp :noweb-ref emacs_config
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  (advice-add #'completing-read-multiple
+              :override #'consult-completing-read-multiple)
 #+end_src
 ** Change Register Preview to Consult
 Change the default Emacs ~register-preview-function~ to use consult effectively.
@@ -669,7 +678,8 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 ** Tweak Register Preview Window
 The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
 #+begin_src emacs-lisp :noweb-ref emacs_config
-    (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add #'register-preview
+              :override #'consult-register-window)
 #+end_src
 ** Set the Narrowing Key
 The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks after calling ~consult-buffer~.
@@ -692,7 +702,9 @@ The Insidious Big Brother DataBase (BBDB) is used to store contact information i
     :defer t
     :hook
     (gnus-summary-mode . (lambda ()
-                           (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
+                           (define-key gnus-summary-mode-map
+                             (kbd ";")
+                             'bbdb-mua-edit-field)))
     :custom
     (bbdb-file "~/Dropbox/bbdb")
     (bbdb-use-pop-up 'horiz)
@@ -1307,11 +1319,6 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
             treemacs-wide-toggle-width               60
             treemacs-width                           30
             treemacs-width-is-initially-locked       nil)
-
-      ;; The default width and height of the icons is 22 pixels. If you are
-      ;; using a Hi-DPI display, uncomment this to double the icon size.
-      (treemacs-resize-icons 22)
-
       (treemacs-follow-mode t)
       (treemacs-filewatch-mode t)
       (treemacs-fringe-indicator-mode 'always)

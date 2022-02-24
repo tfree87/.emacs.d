@@ -28,11 +28,13 @@
 
 (load custom-file)
 
-;; Install Straight.el to manage packages by downloading directly from repositories
+;; Install Straight.el to manage packages
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -86,8 +88,10 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-  (advice-add #'register-preview :override #'consult-register-window))
+  (advice-add #'completing-read-multiple
+              :override #'consult-completing-read-multiple)
+  (advice-add #'register-preview
+              :override #'consult-register-window))
 
 (use-package all-the-icons
   :if (not (file-exists-p "~/runemacs.bat"))
@@ -210,10 +214,16 @@
   (when (file-writable-p file)
     (user-error "File is user writeable, aborting sudo"))
   (find-file (if (file-remote-p file)
-                 (concat "/" (file-remote-p file 'method) ":"
-                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                 (concat "/"
+                         (file-remote-p file 'method)
+                         ":"
+                         (file-remote-p file 'user)
+                         "@"
+                         (file-remote-p file 'host)
                          "|sudo:root@"
-                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                         (file-remote-p file 'host)
+                         ":"
+                         (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
 
 (use-package embark
@@ -389,7 +399,9 @@
   :defer t
   :hook
   (gnus-summary-mode . (lambda ()
-                         (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
+                         (define-key gnus-summary-mode-map
+                           (kbd ";")
+                           'bbdb-mua-edit-field)))
   :custom
   (bbdb-file "~/Dropbox/bbdb")
   (bbdb-use-pop-up 'horiz)
@@ -777,11 +789,6 @@
           treemacs-wide-toggle-width               60
           treemacs-width                           30
           treemacs-width-is-initially-locked       nil)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    (treemacs-resize-icons 22)
-
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
