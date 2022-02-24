@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-17 19:49:15 thomas>
+#+date: Time-stamp: <2022-02-18 19:02:47 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -130,10 +130,13 @@ The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package emacs
     :custom
+    (desktop-save-mode t)
     (inhibit-startup-screen t)
     (tab-always-indent 'complete)
     (completion-cycle-threshold 6)
     <<emacs_custom>>
+    :hook
+    <<emacs_hooks>>
     :config
     <<emacs_config>>)
 #+end_src
@@ -153,8 +156,8 @@ I find it useful to have the column number displayed in the modeline in Emacs.
 #+end_src
 *** Automatic Time Stamps When Saving
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (add-hook 'before-save-hook 'time-stamp)
+#+begin_src emacs-lisp :noweb-ref emacs_hooks
+  (before-save . 'time-stamp)  
 #+end_src
 *** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
@@ -832,6 +835,7 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     :if (executable-find "gnuplot")
     :straight t
     :defer t)
+
   (use-package gnuplot-mode
     :straight t
     :defer t)
@@ -1007,10 +1011,13 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
   (org-log-into-drawer t)
 #+end_src
 *** Custom TODO Keywords
-*** 
 Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
 #+begin_src emacs-lisp :noweb-ref org_customize
-  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-todo-keywords
+   '((sequence "TODO(t)"
+               "WAITING(w)"
+               "|" "DONE(d)"
+               "CANCELLED(c)")))
 #+end_src
 *** Project Tags
 I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
@@ -1021,7 +1028,10 @@ I like to mark projects with a tag, however, I do not want my tasks to inherit t
 Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-stuck-projects
-   '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
+   '("+project/-MAYBE-DONE"
+     ("NEXT" "TODO")
+     nil
+     "\\<IGNORE\\>"))
 #+end_src
 ** BibLaTeX in Org-mode
 I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the ~org-latex-pdf-process~ variable needs to be changed to reflect this.
@@ -1380,12 +1390,12 @@ YASnippet is a system that povides easy access to many templates that can be ins
 ** Install YASnippet
 YASnippet takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
 #+begin_src emacs-lisp :tangle yes
-    (use-package yasnippet
-      :straight t
-      :delight t
-      :defer 3
-      :config
-      (yas-global-mode 1))
+  (use-package yasnippet
+    :straight t
+    :delight t
+    :defer 3
+    :config
+    (yas-global-mode 1))
 #+end_src
 ** Install Snippets
 The package YASnippet Snippets loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.

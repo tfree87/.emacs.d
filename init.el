@@ -60,6 +60,7 @@
 
 (use-package emacs
   :custom
+  (desktop-save-mode t)
   (inhibit-startup-screen t)
   (tab-always-indent 'complete)
   (completion-cycle-threshold 6)
@@ -69,12 +70,13 @@
   (vc-make-backup-files t)
   (sentence-end-double-space nil)
   (dired-dwim-target t)
+  :hook
+  (before-save . 'time-stamp)  
   :config
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'text-mode-hook 'display-line-numbers-mode)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (column-number-mode 1)
-  (add-hook 'before-save-hook 'time-stamp)
   (fset 'yes-or-no-p 'y-or-n-p)
   (display-time-mode 1)
   (menu-bar-mode -1)
@@ -505,6 +507,7 @@
   :if (executable-find "gnuplot")
   :straight t
   :defer t)
+
 (use-package gnuplot-mode
   :straight t
   :defer t)
@@ -598,10 +601,17 @@
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-log-into-drawer t)
-  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-todo-keywords
+   '((sequence "TODO(t)"
+               "WAITING(w)"
+               "|" "DONE(d)"
+               "CANCELLED(c)")))
   (org-tags-exclude-from-inheritance '("project"))
   (org-stuck-projects
-   '("+project/-MAYBE-DONE" ("NEXT" "TODO") nil "\\<IGNORE\\>"))
+   '("+project/-MAYBE-DONE"
+     ("NEXT" "TODO")
+     nil
+     "\\<IGNORE\\>"))
   (org-latex-pdf-process
    '("pdflatex -interaction nonstopmode -output-directory %o %f"
      "biber %b"
