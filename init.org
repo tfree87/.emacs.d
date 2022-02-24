@@ -117,7 +117,8 @@ The benchmark init package allows me to track how long each component of my Emac
     :straight t
     :config
     (benchmark-init/activate)
-    (add-hook 'after-init-hook 'benchmark-init/deactivate))
+    :hook
+    (after-init . #'benchmark-init/deactivate))
 #+end_src
 * No-littering
 The no-littering package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files.
@@ -306,6 +307,8 @@ Use Corfu for in-buffer completion.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package corfu
     :straight t
+    :hook
+    (minibuffer-setup . #'corfu-enable-in-minibuffer)
     :custom
     (corfu-cycle t)
     (corfu-preselect-first nil)
@@ -334,17 +337,15 @@ When running lisp code or shell commands in the minibuffer, use Corfu to offer c
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 #+end_src
 *** Use Corfu in Eshell
 Use Corfu to complete commands in Eshell
 #+begin_src emacs-lisp :noweb-ref corfu-config
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (setq-local corfu-quit-at-boundary t
-                          corfu-quit-no-match t
-                          corfu-auto nil)
-              (corfu-mode)))
+  (eshell-mode-hook . (lambda ()
+                        (setq-local corfu-quit-at-boundary t
+                                    corfu-quit-no-match t
+                                    corfu-auto nil)
+                        (corfu-mode)))
 
   ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
@@ -859,13 +860,14 @@ Flyspell mode can be hooked to various buffer modes so that spell-checking can b
 
 I have this mode disabled if Emacs is run as a portable app as this will not work on another Windows system without the spell check libraries installed.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package flyspell
-    :if (not <<portable_check>>)
-    :delight t
-    :defer t
-    :hook
-    (text-mode . 'flyspell-mode)
-    (prog-mode . 'flyspell-prog-mode))
+    (use-package flyspell
+      :if (not <<portable_check>>)
+      :delight t
+      :defer t
+      :hook
+      (text-mode . #'flyspell-mode)
+      (prog-mode . #'flyspell-prog-mode)
+      (org-mode . #'flyspell-mode)
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -1011,7 +1013,8 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
     ("C-c a" . org-agenda)
     (:map org-mode-map
           ("C-c l" . org-store-link))
-    :hook (org-mode . turn-on-flyspell)
+    :hook
+    <<org_hooks>>
     :custom
     <<org_customize>> 
     :config
@@ -1127,8 +1130,8 @@ In order to use active code in org-mode, you must define which programming langu
 ** Appearance
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
-#+begin_src emacs-lisp :noweb-ref org_config
-  (add-hook 'org-mode-hook #'toggle-truncate-lines)
+#+begin_src emacs-lisp :noweb-ref org_hooks
+  (org-mode . #'toggle-truncate-lines)
 #+end_src
 *** Single Space Between Headline and Tags
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
