@@ -122,7 +122,7 @@
   :straight t
   :defer 1
   :config
-  (load-theme 'doom-vibrant t)
+  (load-theme 'doom-outrun-electric t)
   (doom-themes-org-config))
 
 (use-package doom-modeline
@@ -767,12 +767,12 @@
          ("C-M-`" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "\\*Embark Actions\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          help-mode
-          compilation-mode))
+          '("\\*Messages\\*"
+            "\\*Embark Actions\\*"
+            "Output\\*$"
+            "\\*Async Shell Command\\*"
+            help-mode
+            compilation-mode))
   (popper-mode +1)
   (popper-echo-mode +1))
 
@@ -782,25 +782,23 @@
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :custom
+  (treemacs-show-hidden-files t)
+  (treemacs-wide-toggle-width 60)
+  (treemacs-width 30)
+  (treemacs-width-is-initially-locked nil)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (treemacs-hide-gitignored-files-mode nil)
   :config
   (treemacs-load-theme "all-the-icons")
-  (progn
-    (setq treemacs-show-hidden-files               t
-          treemacs-wide-toggle-width               60
-          treemacs-width                           30
-          treemacs-width-is-initially-locked       nil)
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
-
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
-
-    (treemacs-hide-gitignored-files-mode nil))
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
