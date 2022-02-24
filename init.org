@@ -241,7 +241,8 @@ This will add icons for many Emacs minibuffer completion systems so that files a
     :defer 3
     :config
     (all-the-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+    :hook
+    (marginalia-mode . #'all-the-icons-completion-marginalia-setup))
 #+end_src
 **** Emacs Theme
 This section contains modifications to the default Emacs theme.
@@ -506,6 +507,23 @@ Marginalia provides annotations to items in the minibuffer similar to what is ac
     :init
     (marginalia-mode))
 #+end_src
+* Centaur Tabs
+I like having tabs for all of my open buffers. The following code turns on tabs using a nicer interface than the built-in ~tab-line-mode~:
+#+begin_src emacs-lisp :tangle yes
+  (use-package centaur-tabs
+    :if window-system
+    :straight t
+    :defer t
+    :bind
+    ("C-<prior>" . centaur-tabs-backward)
+    ("C-<next>" . centaur-tabs-forward)
+    :custom
+    (centaur-tabs-set-bar 'over)
+    (centaur-tabs-style "chamfer")
+    :config
+    (centaur-tabs-mode t))
+#+end_src
+This setting can always be toggled off if a "cleaner" Emacs view is desired.
 * Coding
 This section contains customizations for writing programming code in Emacs.
 ** Aggressive Indent Mode
@@ -845,9 +863,9 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
     :if (not <<portable_check>>)
     :delight t
     :defer t
-    :config
-    (add-hook 'text-mode-hook 'flyspell-mode)
-    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+    :hook
+    (text-mode . 'flyspell-mode)
+    (prog-mode . 'flyspell-prog-mode))
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -958,6 +976,13 @@ Add a mode to edit and view markdown files. While I prefer Org-mode for rich-tex
     (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
     (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
     (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+#+end_src
+* Minimap
+Minimap shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
+#+begin_src emacs-lisp :tangle yes
+  (use-package minimap
+    :straight t
+    :defer t)
 #+end_src
 * Multiple Cursors
 Multiple cursors allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
@@ -1316,6 +1341,14 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
             help-mode
             compilation-mode))
 #+end_src
+* Tramp
+I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
+#+begin_src emacs-lisp :tangle yes
+  (use-package tramp
+    :defer t
+    :config
+    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+#+end_src
 * Treemacs
 Treemacs provides a separate Emacs window to browse file directory trees for projects.
 #+begin_src emacs-lisp :tangle yes
@@ -1365,31 +1398,6 @@ Treemacs provides a separate Emacs window to browse file directory trees for pro
     :after (treemacs magit)
     :straight t)
 #+end_src
-* Centaur Tabs
-I like having tabs for all of my open buffers. The following code turns on tabs using a nicer interface than the built-in ~tab-line-mode~:
-#+begin_src emacs-lisp :tangle yes
-  (use-package centaur-tabs
-    :if window-system
-    :straight t
-    :defer t
-    :bind
-    ("C-<prior>" . centaur-tabs-backward)
-    ("C-<next>" . centaur-tabs-forward)
-    :custom
-    (centaur-tabs-set-bar 'over)
-    (centaur-tabs-style "chamfer")
-    :config
-    (centaur-tabs-mode t))
-#+end_src
-This setting can always be toggled off if a "cleaner" Emacs view is desired.
-* Tramp
-I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
-#+begin_src emacs-lisp :tangle yes
-  (use-package tramp
-    :defer t
-    :config
-    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
-#+end_src
 * Which-key
 Which-key provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -1436,13 +1444,6 @@ YASnippet takes a small bit of text or an abbreviation and expands it into a tem
 The package YASnippet Snippets loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet-snippets
-    :straight t
-    :defer t)
-#+end_src
-* Minimap
-Minimap shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
-#+begin_src emacs-lisp :tangle yes
-  (use-package minimap
     :straight t
     :defer t)
 #+end_src

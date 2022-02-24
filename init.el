@@ -115,7 +115,8 @@
   :defer 3
   :config
   (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+  :hook
+  (marginalia-mode-hook . #'all-the-icons-completion-marginalia-setup))
 
 (use-package doom-themes
   :if window-system
@@ -277,6 +278,19 @@
          ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
+
+(use-package centaur-tabs
+  :if window-system
+  :straight t
+  :defer t
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward)
+  :custom
+  (centaur-tabs-set-bar 'over)
+  (centaur-tabs-style "chamfer")
+  :config
+  (centaur-tabs-mode t))
 
 (use-package aggressive-indent
   :straight t
@@ -488,9 +502,9 @@
   :if (not (file-exists-p "~/runemacs.bat"))
   :delight t
   :defer t
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  :hook
+  (text-mode . 'flyspell-mode)
+  (prog-mode . 'flyspell-prog-mode))
 
 (use-package gnus
   :defer t
@@ -567,6 +581,10 @@
   (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
   (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
   (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+
+(use-package minimap
+  :straight t
+  :defer t)
 
 (use-package multiple-cursors
   :straight t
@@ -776,6 +794,11 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
+(use-package tramp
+  :defer t
+  :config
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+
 (use-package treemacs
   :straight t
   :defer t
@@ -822,24 +845,6 @@
   :after (treemacs magit)
   :straight t)
 
-(use-package centaur-tabs
-  :if window-system
-  :straight t
-  :defer t
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward)
-  :custom
-  (centaur-tabs-set-bar 'over)
-  (centaur-tabs-style "chamfer")
-  :config
-  (centaur-tabs-mode t))
-
-(use-package tramp
-  :defer t
-  :config
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
-
 (use-package which-key
   :straight t
   :defer 3
@@ -859,10 +864,6 @@
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
-  :straight t
-  :defer t)
-
-(use-package minimap
   :straight t
   :defer t)
 
