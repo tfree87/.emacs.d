@@ -53,7 +53,7 @@
   :straight t
   :config
   (benchmark-init/activate)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package no-littering
   :straight (no-littering :host github
@@ -115,8 +115,7 @@
   :defer 3
   :config
   (all-the-icons-completion-mode)
-  :hook
-  (marginalia-mode-hook . #'all-the-icons-completion-marginalia-setup))
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
 (use-package doom-themes
   :if window-system
@@ -149,6 +148,12 @@
 
 (use-package corfu
   :straight t
+  :hook
+  (eshell-mode-hook . (lambda ()
+                        (setq-local corfu-quit-at-boundary t
+                                    corfu-quit-no-match t
+                                    corfu-auto nil)
+                        (corfu-mode)))
   :custom
   (corfu-cycle t)
   (corfu-preselect-first nil)
@@ -165,14 +170,8 @@
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (setq-local corfu-quit-at-boundary t
-                          corfu-quit-no-match t
-                          corfu-auto nil)
-              (corfu-mode)))
   
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
   ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
   
@@ -502,9 +501,10 @@
   :if (not (file-exists-p "~/runemacs.bat"))
   :delight t
   :defer t
-  :hook
-  (text-mode . 'flyspell-mode)
-  (prog-mode . 'flyspell-prog-mode))
+  :config
+  (add-hook 'text-mode-hook . #'turn-on-flyspell)
+  (add-hook 'prog-mode-hook . #'flyspell-prog-mode)
+  (add-hook 'org-mode-hook . #'turn-on-flyspell))
 
 (use-package gnus
   :defer t
@@ -603,7 +603,8 @@
   ("C-c a" . org-agenda)
   (:map org-mode-map
         ("C-c l" . org-store-link))
-  :hook (org-mode . turn-on-flyspell)
+  :hook
+  (org-mode . #'toggle-truncate-lines)
   :custom
   (org-directory "~/Dropbox/gtd")
   (org-agenda-files
@@ -639,7 +640,7 @@
      ("DONE" . org-done)))
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
   :config
-  (add-hook 'org-mode-hook #'toggle-truncate-lines)
+  
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)

@@ -117,8 +117,7 @@ The benchmark init package allows me to track how long each component of my Emac
     :straight t
     :config
     (benchmark-init/activate)
-    :hook
-    (after-init . #'benchmark-init/deactivate))
+    (add-hook 'after-init-hook #'benchmark-init/deactivate))
 #+end_src
 * No-littering
 The no-littering package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files.
@@ -242,8 +241,7 @@ This will add icons for many Emacs minibuffer completion systems so that files a
     :defer 3
     :config
     (all-the-icons-completion-mode)
-    :hook
-    (marginalia-mode . #'all-the-icons-completion-marginalia-setup))
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 **** Emacs Theme
 This section contains modifications to the default Emacs theme.
@@ -308,7 +306,7 @@ Use Corfu for in-buffer completion.
   (use-package corfu
     :straight t
     :hook
-    (minibuffer-setup . #'corfu-enable-in-minibuffer)
+    <<corfu_hooks>>
     :custom
     (corfu-cycle t)
     (corfu-preselect-first nil)
@@ -316,7 +314,7 @@ Use Corfu for in-buffer completion.
     :init
     (corfu-global-mode)
     :config
-    <<corfu-config>>)
+    <<corfu_config>>)
 #+end_src
 *** Use TAB for Selecting Candidates
 Instead of using M-tab which will switch windows in XFCE---my default desktop---use TAB to cycle between the different possible options.
@@ -332,21 +330,24 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop---
 *** Enable Corfu for Command Evaluation in Minibuffer
 When running lisp code or shell commands in the minibuffer, use Corfu to offer completion suggestions.
 #+name: corfu-minibuffer
-#+begin_src emacs-lisp :noweb-ref corfu-config
+#+begin_src emacs-lisp :noweb-ref corfu_config
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       (corfu-mode 1)))
+
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 #+end_src
 *** Use Corfu in Eshell
 Use Corfu to complete commands in Eshell
-#+begin_src emacs-lisp :noweb-ref corfu-config
+#+begin_src emacs-lisp :noweb-ref corfu_hooks
   (eshell-mode-hook . (lambda ()
                         (setq-local corfu-quit-at-boundary t
                                     corfu-quit-no-match t
                                     corfu-auto nil)
                         (corfu-mode)))
-
+#+end_src
+#+begin_src emacs-lisp :noweb-ref corfu_config
   ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
 
@@ -864,10 +865,10 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
       :if (not <<portable_check>>)
       :delight t
       :defer t
-      :hook
-      (text-mode . #'flyspell-mode)
-      (prog-mode . #'flyspell-prog-mode)
-      (org-mode . #'flyspell-mode)
+      :config
+      (add-hook 'text-mode-hook . #'turn-on-flyspell)
+      (add-hook 'prog-mode-hook . #'flyspell-prog-mode)
+      (add-hook 'org-mode-hook . #'turn-on-flyspell))
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
