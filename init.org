@@ -876,43 +876,49 @@ A better buffer list than the default.
     :bind
     ("C-x C-b" . ibuffer)
     :hook
-    ;; Start ibuffer with default groupings
-    (ibuffer-mode .  (lambda ()
-                            (ibuffer-switch-to-saved-filter-groups "default")))
+    <<ibuffer_hooks>>
     :custom
     <<ibuffer_custom>>)
 #+end_src
 ** Group Buffers
 Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
+
+1. First we need to start ibuffer with default groupings:
+#+begin_src emacs-lisp :noweb-ref ibuffer_hooks
+  (ibuffer-mode .  (lambda ()
+                     (ibuffer-switch-to-saved-filter-groups
+                           "default")))
+#+end_src
+2. Then we need to define our groups for ibuffer:
 #+begin_src emacs-lisp :noweb-ref ibuffer_custom
   (ibuffer-saved-filter-groups
-        (quote (("default"
-                 ("Dired" (mode . dired-mode))
-                 ("Emacs" (or
-                           (name . "^\\*scratch\\*$")            
-                           (name . "^\\*Messages\\*$")
-                           (name . "^\\*GNU Emacs\\*$")
-                           (name . "^\\*Help\\*$")
-                           (name . "^\\*Calendar\\*$")
-                           (name . "^\\*Calculator\\*$")
-                           (name . "^\\*Calc Trail\\*$")
-                           (name . "^\\*Completions\\*$")))
-                 ("Gnus" (or
-                          (mode . message-mode)
-                          (mode . bbdb-mode)
-                          (mode . mail-mode)
-                          (mode . gnus-group-mode)
-                          (mode . gnus-summary-mode)
-                          (mode . gnus-article-mode)
-                          (name . "^\\.bbdb$")
-                          (name . "^\\.newsrc-dribble")))
-                 ("Org"   (or
-                           (mode . org-mode)
-                           (name . "^\\*Org Agenda\\*$")))
-                 ("Shell"   (or
-                             (mode . eshell)
-                             (mode . term)
-                             (mode . shell)))))))
+   '(("default"
+      ("Dired" (mode . dired-mode))
+      ("Emacs" (or
+                (name . "^\\*scratch\\*$")            
+                (name . "^\\*Messages\\*$")
+                (name . "^\\*GNU Emacs\\*$")
+                (name . "^\\*Help\\*$")
+                (name . "^\\*Calendar\\*$")
+                (name . "^\\*Calculator\\*$")
+                (name . "^\\*Calc Trail\\*$")
+                (name . "^\\*Completions\\*$")))
+      ("Gnus" (or
+               (mode . message-mode)
+               (mode . bbdb-mode)
+               (mode . mail-mode)
+               (mode . gnus-group-mode)
+               (mode . gnus-summary-mode)
+               (mode . gnus-article-mode)
+               (name . "^\\.bbdb$")
+               (name . "^\\.newsrc-dribble")))
+      ("Org"   (or
+                (mode . org-mode)
+                (name . "^\\*Org Agenda\\*$")))
+      ("Shell"   (or
+                  (mode . eshell)
+                  (mode . term)
+                  (mode . shell))))))
 #+end_src
 * LaTeX
 This section contains modifications to buffers with TeX and LaTeX major modes.
@@ -1287,6 +1293,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :after org)
 #+end_src
 * Popper
+Popper lets a user define any window as a short-term pop up window.
 #+begin_src emacs-lisp :tangle yes
   (use-package popper
     :straight t
@@ -1305,6 +1312,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     (popper-echo-mode +1))
 #+end_src
 * Treemacs
+Treemacs provides a separate Emacs window to browse file directory trees for projects.
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs
     :straight t

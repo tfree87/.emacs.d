@@ -510,38 +510,38 @@
   :bind
   ("C-x C-b" . ibuffer)
   :hook
-  ;; Start ibuffer with default groupings
   (ibuffer-mode .  (lambda ()
-                          (ibuffer-switch-to-saved-filter-groups "default")))
+                     (ibuffer-switch-to-saved-filter-groups
+                           "default")))
   :custom
   (ibuffer-saved-filter-groups
-        (quote (("default"
-                 ("Dired" (mode . dired-mode))
-                 ("Emacs" (or
-                           (name . "^\\*scratch\\*$")            
-                           (name . "^\\*Messages\\*$")
-                           (name . "^\\*GNU Emacs\\*$")
-                           (name . "^\\*Help\\*$")
-                           (name . "^\\*Calendar\\*$")
-                           (name . "^\\*Calculator\\*$")
-                           (name . "^\\*Calc Trail\\*$")
-                           (name . "^\\*Completions\\*$")))
-                 ("Gnus" (or
-                          (mode . message-mode)
-                          (mode . bbdb-mode)
-                          (mode . mail-mode)
-                          (mode . gnus-group-mode)
-                          (mode . gnus-summary-mode)
-                          (mode . gnus-article-mode)
-                          (name . "^\\.bbdb$")
-                          (name . "^\\.newsrc-dribble")))
-                 ("Org"   (or
-                           (mode . org-mode)
-                           (name . "^\\*Org Agenda\\*$")))
-                 ("Shell"   (or
-                             (mode . eshell)
-                             (mode . term)
-                             (mode . shell))))))))
+   '(("default"
+      ("Dired" (mode . dired-mode))
+      ("Emacs" (or
+                (name . "^\\*scratch\\*$")            
+                (name . "^\\*Messages\\*$")
+                (name . "^\\*GNU Emacs\\*$")
+                (name . "^\\*Help\\*$")
+                (name . "^\\*Calendar\\*$")
+                (name . "^\\*Calculator\\*$")
+                (name . "^\\*Calc Trail\\*$")
+                (name . "^\\*Completions\\*$")))
+      ("Gnus" (or
+               (mode . message-mode)
+               (mode . bbdb-mode)
+               (mode . mail-mode)
+               (mode . gnus-group-mode)
+               (mode . gnus-summary-mode)
+               (mode . gnus-article-mode)
+               (name . "^\\.bbdb$")
+               (name . "^\\.newsrc-dribble")))
+      ("Org"   (or
+                (mode . org-mode)
+                (name . "^\\*Org Agenda\\*$")))
+      ("Shell"   (or
+                  (mode . eshell)
+                  (mode . term)
+                  (mode . shell)))))))
 
 (use-package auctex
   :straight t
