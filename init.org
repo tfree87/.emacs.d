@@ -850,13 +850,14 @@ Flyspell mode can be hooked to various buffer modes so that spell-checking can b
 
 I have this mode disabled if Emacs is run as a portable app as this will not work on another Windows system without the spell check libraries installed.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-    (use-package flyspell
-      :if (not <<portable_check>>)
-      :delight t
-      :defer t
-      :config
-      (add-hook 'text-mode-hook . #'turn-on-flyspell)
-      (add-hook 'prog-mode-hook . #'flyspell-prog-mode))
+  (use-package flyspell
+    :if (not <<portable_check>>)
+    :delight t
+    :defer t
+    :init
+    (progn
+      (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+      (add-hook 'text-mode-hook 'flyspell-mode)))
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -1120,7 +1121,7 @@ In order to use active code in org-mode, you must define which programming langu
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
 #+begin_src emacs-lisp :noweb-ref org_hooks
-  (org-mode . turn-on-flyspell)
+  (org-mode . #'turn-on-flyspell)
   (org-mode . #'toggle-truncate-lines)
 #+end_src
 *** Single Space Between Headline and Tags

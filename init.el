@@ -495,9 +495,10 @@
   :if (not (file-exists-p "~/runemacs.bat"))
   :delight t
   :defer t
-  :config
-  (add-hook 'text-mode-hook . #'turn-on-flyspell)
-  (add-hook 'prog-mode-hook . #'flyspell-prog-mode))
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode)))
 
 (use-package gnus
   :defer t
@@ -597,7 +598,7 @@
   (:map org-mode-map
         ("C-c l" . org-store-link))
   :hook
-  (org-mode . turn-on-flyspell)
+  (org-mode . #'turn-on-flyspell)
   (org-mode . #'toggle-truncate-lines)
   :custom
   (org-directory "~/Dropbox/gtd")
