@@ -726,7 +726,7 @@ The Insidious Big Brother DataBase (BBDB) is used to store contact information i
                              (kbd ";")
                              'bbdb-mua-edit-field)))
     :custom
-    (bbdb-file "~/Dropbox/bbdb")
+    (bbdb-file "~/Dropbox/bbdb.el")
     (bbdb-use-pop-up 'horiz)
     (bbdb-mua-update-interactive-p '(query . create))
     (bbdb-message-all-addresses t)
@@ -867,8 +867,7 @@ I have this mode disabled if Emacs is run as a portable app as this will not wor
       :defer t
       :config
       (add-hook 'text-mode-hook . #'turn-on-flyspell)
-      (add-hook 'prog-mode-hook . #'flyspell-prog-mode)
-      (add-hook 'org-mode-hook . #'turn-on-flyspell))
+      (add-hook 'prog-mode-hook . #'flyspell-prog-mode))
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -1008,7 +1007,7 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
     :straight t
-    :mode (("\\.org$" . org-mode))
+    :defer t
     :bind
     ("C-c c" . org-capture)
     ("C-c a" . org-agenda)
@@ -1024,7 +1023,7 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 
   (use-package org-contrib
     :straight t
-    :after org)
+    :defer t)
 #+end_src
 ** Org-mode Directories
 Set up the default directories for Org Mode.
@@ -1057,7 +1056,7 @@ I want to allow for refiling org-mode tasks at the top of a file. Setting this w
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
 #+end_src
-
+ 
 Setting this variable allows for refiling tasks under a new heading on the fly.
 #+begin_src :noweb-ref org_customize
   (org-refile-allow-creating-parent-nodes (quote confirm))
@@ -1132,6 +1131,7 @@ In order to use active code in org-mode, you must define which programming langu
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
 #+begin_src emacs-lisp :noweb-ref org_hooks
+  (org-mode . turn-on-flyspell)
   (org-mode . #'toggle-truncate-lines)
 #+end_src
 *** Single Space Between Headline and Tags

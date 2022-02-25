@@ -503,8 +503,7 @@
   :defer t
   :config
   (add-hook 'text-mode-hook . #'turn-on-flyspell)
-  (add-hook 'prog-mode-hook . #'flyspell-prog-mode)
-  (add-hook 'org-mode-hook . #'turn-on-flyspell))
+  (add-hook 'prog-mode-hook . #'flyspell-prog-mode))
 
 (use-package gnus
   :defer t
@@ -597,13 +596,14 @@
 
 (use-package org
   :straight t
-  :mode (("\\.org$" . org-mode))
+  :defer t
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
   (:map org-mode-map
         ("C-c l" . org-store-link))
   :hook
+  (org-mode . turn-on-flyspell)
   (org-mode . #'toggle-truncate-lines)
   :custom
   (org-directory "~/Dropbox/gtd")
@@ -660,7 +660,7 @@
 
 (use-package org-contrib
   :straight t
-  :after org)
+  :defer t)
 
 (use-package org-bullets
   :if window-system
