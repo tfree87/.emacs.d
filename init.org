@@ -327,17 +327,6 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop---
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
 #+end_src
-*** Enable Corfu for Command Evaluation in Minibuffer
-When running lisp code or shell commands in the minibuffer, use Corfu to offer completion suggestions.
-#+name: corfu-minibuffer
-#+begin_src emacs-lisp :noweb-ref corfu_config
-  (defun corfu-enable-in-minibuffer ()
-    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      (corfu-mode 1)))
-
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
-#+end_src
 *** Use Corfu in Eshell
 Use Corfu to complete commands in Eshell
 #+begin_src emacs-lisp :noweb-ref corfu_hooks

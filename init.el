@@ -166,12 +166,6 @@
   :init
   (corfu-global-mode)
   :config
-  (defun corfu-enable-in-minibuffer ()
-    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      (corfu-mode 1)))
-  
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
   ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
   
@@ -416,7 +410,7 @@
                            (kbd ";")
                            'bbdb-mua-edit-field)))
   :custom
-  (bbdb-file "~/Dropbox/bbdb")
+  (bbdb-file "~/Dropbox/bbdb.el")
   (bbdb-use-pop-up 'horiz)
   (bbdb-mua-update-interactive-p '(query . create))
   (bbdb-message-all-addresses t)
