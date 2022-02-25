@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-18 19:02:47 thomas>
+#+date: Time-stamp: <2022-02-24 22:09:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -133,8 +133,6 @@ The code below collects customizations for Emacs built-in components.
   (use-package emacs
     :custom
     <<emacs_custom>>
-    :hook
-    <<emacs_hooks>>
     :config
     <<emacs_config>>)
 #+end_src
@@ -146,8 +144,8 @@ This section contains modifications for Emacs that affect the behavior in nearly
 #+end_src
 *** Automatic Time Stamps
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
-#+begin_src emacs-lisp :noweb-ref emacs_hooks
-  (before-save . 'time-stamp)  
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (add-hook 'before-save-hook 'time-stamp)  
 #+end_src
 *** Completion by Pressing Tab
 ~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate autocomplete.
@@ -488,7 +486,7 @@ Savehist will save the selections from completion history between Emacs sessions
     (savehist-mode))
   #+end_src
 *** Marginalia
-Marginalia provides annotations to items in the minibuffer similar to what is accomplished in [[Ivy]].
+Marginalia provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
     :straight t
@@ -828,7 +826,6 @@ Create a custom prompt for eshell that shows some more information.
                              :repo "master")
     :custom
     (eshell-toggle-size-fraction 3)
-    ;; (eshell-toggle-use-projectile-root t)
     (eshell-toggle-run-command nil)
     (eshell-toggle-init-function #'eshell-toggle-init-eshell)
     :bind
@@ -885,19 +882,20 @@ A better buffer list than the default.
   (use-package ibuffer
     :bind
     ("C-x C-b" . ibuffer)
-    :hook
-    <<ibuffer_hooks>>
     :custom
-    <<ibuffer_custom>>)
+    <<ibuffer_custom>>
+    :config
+    <<ibuffer_config>>)
 #+end_src
 ** Group Buffers
 Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
 
 1. First we need to start ibuffer with default groupings:
-#+begin_src emacs-lisp :noweb-ref ibuffer_hooks
-  (ibuffer-mode .  (lambda ()
-                     (ibuffer-switch-to-saved-filter-groups
-                           "default")))
+#+begin_src emacs-lisp :noweb-ref ibuffer_config
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups
+               "default")))
 #+end_src
 2. Then we need to define our groups for ibuffer:
 #+begin_src emacs-lisp :noweb-ref ibuffer_custom
@@ -1013,7 +1011,8 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 
   (use-package org-contrib
     :straight t
-    :defer t)
+    :defer t
+    :after org)
 #+end_src
 ** Org-mode Directories
 Set up the default directories for Org Mode.
@@ -1048,14 +1047,16 @@ I want to allow for refiling org-mode tasks at the top of a file. Setting this w
 #+end_src
  
 Setting this variable allows for refiling tasks under a new heading on the fly.
-#+begin_src :noweb-ref org_customize
+#+begin_src emacs-lisp :noweb-ref org_customize
   (org-refile-allow-creating-parent-nodes (quote confirm))
 #+end_src
 ** Exporting
 To remove headers labeled with the ~:ignore:~ tag, the following code needs to be implemented:
-#+begin_src emacs-lisp :nowweb-ref org_config
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines)))
+#+begin_src emacs-lisp :tangle yes
+  (use-package ox-extra
+    :straight t
+    :config
+    (ox-extras-activate '(ignore-headlines)))
 #+end_src
 ** Task Management Customization
 *** Drawer for State Changes

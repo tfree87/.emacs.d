@@ -76,9 +76,8 @@
   (xref-show-definitions-function #'consult-xref)
   (register-preview-function #'consult-register-format)
   (dired-dwim-target t)
-  :hook
-  (before-save . 'time-stamp)  
   :config
+  (add-hook 'before-save-hook 'time-stamp)  
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'text-mode-hook 'display-line-numbers-mode)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
@@ -485,7 +484,6 @@
                            :repo "master")
   :custom
   (eshell-toggle-size-fraction 3)
-  ;; (eshell-toggle-use-projectile-root t)
   (eshell-toggle-run-command nil)
   (eshell-toggle-init-function #'eshell-toggle-init-eshell)
   :bind
@@ -517,10 +515,6 @@
 (use-package ibuffer
   :bind
   ("C-x C-b" . ibuffer)
-  :hook
-  (ibuffer-mode .  (lambda ()
-                     (ibuffer-switch-to-saved-filter-groups
-                           "default")))
   :custom
   (ibuffer-saved-filter-groups
    '(("default"
@@ -549,7 +543,12 @@
       ("Shell"   (or
                   (mode . eshell)
                   (mode . term)
-                  (mode . shell)))))))
+                  (mode . shell))))))
+  :config
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups
+               "default"))))
 
 (use-package auctex
   :straight t
@@ -608,6 +607,7 @@
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
+  (org-refile-allow-creating-parent-nodes (quote confirm))
   (org-log-into-drawer t)
   (org-todo-keywords
    '((sequence "TODO(t)"
@@ -655,7 +655,13 @@
 
 (use-package org-contrib
   :straight t
-  :defer t)
+  :defer t
+  :after org)
+
+(use-package ox-extra
+  :straight t
+  :config
+  (ox-extras-activate '(ignore-headlines)))
 
 (use-package org-bullets
   :if window-system
