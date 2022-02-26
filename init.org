@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-24 22:09:33 thomas>
+#+date: Time-stamp: <2022-02-26 08:56:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -994,8 +994,10 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 ** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
-    :straight t
-    :defer t
+    :straight (org :host github
+                   :repo "emacs-straight/org-mode"
+                   :branch "main")
+    :mode ("\\.org\\'" . org-mode)
     :bind
     ("C-c c" . org-capture)
     ("C-c a" . org-agenda)
@@ -1023,9 +1025,9 @@ Tell org-mode which directory is the default directory for all org-mode files.
 #+end_src
 *** Location of Agenda Files
 Tell org-mode in which directory all the agenda files can be found.
-#+begin_src emacs-lisp :noweb-ref org_customize
-  (org-agenda-files
-   `("~/Dropbox/gtd"))
+#+begin_src emacs-lisp :noweb-ref org_config
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-files `("~/Dropbox/gtd"))
 #+end_src
 ** Filing Notes
 *** Default Notes File
@@ -1190,15 +1192,6 @@ Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like
     :init
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
-** Org-agenda
-Defer loading ~org-agenda~ until it is called by =C-c a= to speed up Emacs loading time. I also prefer to have the current day at the beginning of the week so all current items are at the top of the agenda and I can look 6 days into the future.
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-agenda
-      :ensure nil
-      :after org
-      :custom
-      (org-agenda-start-on-weekday nil))
-  #+end_src
 ** Org-capture
 Set up templates for making capturing tasks with ~org-capture~ easier.
 #+begin_src emacs-lisp :tangle yes :noweb no-export

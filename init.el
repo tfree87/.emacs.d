@@ -589,8 +589,10 @@
   ("C-c C-<" . 'mc/mark-all-like-this))
 
 (use-package org
-  :straight t
-  :defer t
+  :straight (org :host github
+                 :repo "emacs-straight/org-mode"
+                 :branch "main")
+  :mode ("\\.org\\'" . org-mode)
   :bind
   ("C-c c" . org-capture)
   ("C-c a" . org-agenda)
@@ -601,8 +603,6 @@
   (org-mode . #'toggle-truncate-lines)
   :custom
   (org-directory "~/Dropbox/gtd")
-  (org-agenda-files
-   `("~/Dropbox/gtd"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
@@ -635,7 +635,8 @@
      ("DONE" . org-done)))
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
   :config
-  
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-files `("~/Dropbox/gtd"))
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
@@ -694,12 +695,6 @@
   :commands (cfw:open-org-calendar)
   :init
   (defalias 'calfworg 'cfw:open-org-calendar))
-
-(use-package org-agenda
-    :ensure nil
-    :after org
-    :custom
-    (org-agenda-start-on-weekday nil))
 
 (use-package org-capture
   :ensure nil
