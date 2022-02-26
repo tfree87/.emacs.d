@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 08:56:39 thomas>
+#+date: Time-stamp: <2022-02-26 17:23:18 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -109,6 +109,7 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   ;; Packages
 
   (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
 #+end_src
 * Track Load Time
 The benchmark init package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
@@ -542,6 +543,7 @@ Apheleia will format programming code using code formatters such as Black for Py
 I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
 #+begin_src emacs-lisp :tangle yes
   (use-package c-mode
+    :straight (:type built-in)
     :defer t
     :mode ("\\.c\\'"
            "\\.ino\\'"))
@@ -994,27 +996,18 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 ** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
-    :straight (org :host github
-                   :repo "emacs-straight/org-mode"
-                   :branch "main")
-    :mode ("\\.org\\'" . org-mode)
-    :bind
-    ("C-c c" . org-capture)
-    ("C-c a" . org-agenda)
-    (:map org-mode-map
-          ("C-c l" . org-store-link))
-    :hook
-    <<org_hooks>>
     :custom
-    <<org_customize>> 
-    :config
-    <<org_config>>
+    <<org_customize>>
+   :config
+   (global-set-key (kbd "C-c l") #'org-store-link)
+   (global-set-key (kbd "C-c a") #'org-agenda)
+   (global-set-key (kbd "C-c c") #'org-capture)
     <<babel_languages>>)
 
   (use-package org-contrib
     :straight t
-    :defer t
-    :after org)
+    :config
+    <<org_contrib_config>>)
 #+end_src
 ** Org-mode Directories
 Set up the default directories for Org Mode.
@@ -1025,9 +1018,9 @@ Tell org-mode which directory is the default directory for all org-mode files.
 #+end_src
 *** Location of Agenda Files
 Tell org-mode in which directory all the agenda files can be found.
-#+begin_src emacs-lisp :noweb-ref org_config
-  (setq org-agenda-start-on-weekday nil)
-  (setq org-agenda-files `("~/Dropbox/gtd"))
+#+begin_src emacs-lisp :noweb-ref org_customize
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-files `("~/Dropbox/gtd"))
 #+end_src
 ** Filing Notes
 *** Default Notes File
@@ -1054,11 +1047,9 @@ Setting this variable allows for refiling tasks under a new heading on the fly.
 #+end_src
 ** Exporting
 To remove headers labeled with the ~:ignore:~ tag, the following code needs to be implemented:
-#+begin_src emacs-lisp :tangle yes
-  (use-package ox-extra
-    :straight t
-    :config
-    (ox-extras-activate '(ignore-headlines)))
+#+begin_src emacs-lisp :noweb-ref org_contrib_config
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
 #+end_src
 ** Task Management Customization
 *** Drawer for State Changes
@@ -1103,7 +1094,8 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
 #+name: babel_languages
 #+begin_src emacs-lisp
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (with-eval-after-load "org"
+      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
                                  (calc . t)
@@ -1123,9 +1115,9 @@ In order to use active code in org-mode, you must define which programming langu
 ** Appearance
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
-#+begin_src emacs-lisp :noweb-ref org_hooks
-  (org-mode . #'turn-on-flyspell)
-  (org-mode . #'toggle-truncate-lines)
+#+begin_src emacs-lisp :noweb-ref org_config
+  (add-hook 'org-mode-hook #'turn-on-flyspell)
+  (add-hook 'org-mode-hook #'toggle-truncate-lines)
 #+end_src
 *** Single Space Between Headline and Tags
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
@@ -1193,32 +1185,23 @@ Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 ** Org-capture
-Set up templates for making capturing tasks with ~org-capture~ easier.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package org-capture
-    :ensure nil
-    :after org
-    :custom
-    <<org_capture_templates>>)
-#+end_src
-*** Org-capture Templates
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
-#+begin_src emacs-lisp 
-  (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-      "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-      "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-      "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+#+begin_src emacs-lisp :noweb-ref org_customize
+   (org-capture-templates
+    '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+       "* %? :project:")
+      ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+       "* %?\n%x")
+      ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+       "* %?\n%^{Scheduled}t\n%x")
+      ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 ** Org-download
 I have not yet tried this feature yet...
 #+begin_src emacs-lisp :tangle yes
-(use-package org-download
+ (use-package org-download
   :after org
   :bind
   (:map org-mode-map

@@ -48,6 +48,7 @@
 ;; Packages
 
 (straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 (use-package benchmark-init
   :straight t
@@ -302,6 +303,7 @@
   '("black" "--experimental-string-processing" "-")))
 
 (use-package c-mode
+  :straight (:type built-in)
   :defer t
   :mode ("\\.c\\'"
          "\\.ino\\'"))
@@ -589,20 +591,10 @@
   ("C-c C-<" . 'mc/mark-all-like-this))
 
 (use-package org
-  :straight (org :host github
-                 :repo "emacs-straight/org-mode"
-                 :branch "main")
-  :mode ("\\.org\\'" . org-mode)
-  :bind
-  ("C-c c" . org-capture)
-  ("C-c a" . org-agenda)
-  (:map org-mode-map
-        ("C-c l" . org-store-link))
-  :hook
-  (org-mode . #'turn-on-flyspell)
-  (org-mode . #'toggle-truncate-lines)
   :custom
   (org-directory "~/Dropbox/gtd")
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-files `("~/Dropbox/gtd"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
@@ -633,11 +625,22 @@
      ("WAITING" . "yellow")
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
-  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar")) 
-  :config
-  (setq org-agenda-start-on-weekday nil)
-  (setq org-agenda-files `("~/Dropbox/gtd"))
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (org-capture-templates
+   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+      "* %? :project:")
+     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+      "* %?\n%x")
+     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+      "* %?\n%^{Scheduled}t\n%x")
+     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
+ :config
+ (global-set-key (kbd "C-c l") #'org-store-link)
+ (global-set-key (kbd "C-c a") #'org-agenda)
+ (global-set-key (kbd "C-c c") #'org-capture)
+  (with-eval-after-load "org"
+      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
                                  (calc . t)
@@ -656,12 +659,8 @@
 
 (use-package org-contrib
   :straight t
-  :defer t
-  :after org)
-
-(use-package ox-extra
-  :straight t
   :config
+  (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
 
 (use-package org-bullets
@@ -696,26 +695,12 @@
   :init
   (defalias 'calfworg 'cfw:open-org-calendar))
 
-(use-package org-capture
-  :ensure nil
-  :after org
-  :custom
-  (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-      "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-      "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-      "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"))))
-
 (use-package org-download
-  :after org
-  :bind
-  (:map org-mode-map
-        (("s-Y" . org-download-screenshot)
-         ("s-y" . org-download-yank))))
+ :after org
+ :bind
+ (:map org-mode-map
+       (("s-Y" . org-download-screenshot)
+        ("s-y" . org-download-yank))))
 
 (use-package org-mind-map
   :straight t
