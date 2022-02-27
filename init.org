@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 21:27:12 thomas>
+#+date: Time-stamp: <2022-02-27 16:08:46 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1004,6 +1004,7 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
     :custom
     <<org_customize>>
     :config
+    (add-hook 'org-mode-hook #'turn-on-flyspell)
     <<org_config>>
     <<babel_languages>>)
 
@@ -1120,7 +1121,6 @@ In order to use active code in org-mode, you must define which programming langu
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
 #+begin_src emacs-lisp :noweb-ref org_config
-  (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook (lambda ()
                              (when truncate-lines
                                (toggle-truncate-lines))))
@@ -1320,12 +1320,17 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 #+end_src
 * Tramp
 I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package tramp
-    :straight (:type built-in)
+    :straight <<tramp_version>>
     :defer t
     :config
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+#+end_src
+** TRAMP Version
+The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
+#+begin_src emacs-lisp :noweb-ref tramp_version
+  (:type built-in)
 #+end_src
 * Treemacs
 Treemacs provides a separate Emacs window to browse file directory trees for projects.
