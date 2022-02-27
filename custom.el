@@ -3,6 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(bbdb-mua-interactive-action '(query . create) nil nil "Customized with use-package bbdb")
  '(column-number-mode t)
  '(custom-safe-themes
    '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1" default))
@@ -21,6 +24,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cfw:face-grid ((t (:foreground "magenta"))))
  '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
  '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
  '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
