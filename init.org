@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 17:23:18 thomas>
+#+date: Time-stamp: <2022-02-26 19:36:56 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -996,16 +996,19 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
 ** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
+    :defer t
+    :bind
+    ("C-c l" . #'org-store-link)
+    ("C-c a" . #'org-agenda)
+    ("C-c c" . #'org-capture)
     :custom
     <<org_customize>>
    :config
-   (global-set-key (kbd "C-c l") #'org-store-link)
-   (global-set-key (kbd "C-c a") #'org-agenda)
-   (global-set-key (kbd "C-c c") #'org-capture)
     <<babel_languages>>)
 
   (use-package org-contrib
     :straight t
+    :defer t
     :config
     <<org_contrib_config>>)
 #+end_src

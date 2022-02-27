@@ -591,6 +591,11 @@
   ("C-c C-<" . 'mc/mark-all-like-this))
 
 (use-package org
+  :defer t
+  :bind
+  ("C-c l" . #'org-store-link)
+  ("C-c a" . #'org-agenda)
+  ("C-c c" . #'org-capture)
   :custom
   (org-directory "~/Dropbox/gtd")
   (org-agenda-start-on-weekday nil)
@@ -636,9 +641,6 @@
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
  :config
- (global-set-key (kbd "C-c l") #'org-store-link)
- (global-set-key (kbd "C-c a") #'org-agenda)
- (global-set-key (kbd "C-c c") #'org-capture)
   (with-eval-after-load "org"
       (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -659,6 +661,7 @@
 
 (use-package org-contrib
   :straight t
+  :defer t
   :config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
