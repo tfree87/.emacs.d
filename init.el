@@ -640,7 +640,11 @@
      ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
- :config
+  :config
+  (add-hook 'org-mode-hook #'turn-on-flyspell)
+  (add-hook 'org-mode-hook (lambda ()
+                             (when truncate-lines
+                               (toggle-truncate-lines))))
   (with-eval-after-load "org"
       (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages

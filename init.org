@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 20:20:09 thomas>
+#+date: Time-stamp: <2022-02-26 21:27:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1003,7 +1003,8 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
     ("C-c c" . #'org-capture)
     :custom
     <<org_customize>>
-   :config
+    :config
+    <<org_config>>
     <<babel_languages>>)
 
   (use-package org-contrib
@@ -1120,7 +1121,9 @@ In order to use active code in org-mode, you must define which programming langu
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
 #+begin_src emacs-lisp :noweb-ref org_config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
-  (add-hook 'org-mode-hook #'toggle-truncate-lines)
+  (add-hook 'org-mode-hook (lambda ()
+                             (when truncate-lines
+                               (toggle-truncate-lines))))
 #+end_src
 *** Single Space Between Headline and Tags
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
