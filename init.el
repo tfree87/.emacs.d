@@ -780,6 +780,7 @@
   (popper-echo-mode +1))
 
 (use-package tramp
+  :straight (:type built-in)
   :defer t
   :config
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))

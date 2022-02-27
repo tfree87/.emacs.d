@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 19:36:56 thomas>
+#+date: Time-stamp: <2022-02-26 20:20:09 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1319,6 +1319,7 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes
   (use-package tramp
+    :straight (:type built-in)
     :defer t
     :config
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
