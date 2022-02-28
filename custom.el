@@ -11,6 +11,8 @@
    '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1" default))
  '(display-time-mode t)
  '(menu-bar-mode nil)
+ '(org-modules
+   '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
  '(safe-local-variable-values
    '((org-use-tag-inheritance)
      (eval add-hook 'after-save-hook

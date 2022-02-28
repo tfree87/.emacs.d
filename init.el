@@ -514,6 +514,11 @@
   :straight t
   :defer t)
 
+(use-package habitica
+  :custom
+  (habitica-turn-on-highlighting t)
+  (habitica-show-streak t))
+
 (use-package ibuffer
   :bind
   ("C-x C-b" . ibuffer)
