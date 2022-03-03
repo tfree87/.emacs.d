@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-04 15:49:12 thomas>
+#+date: Time-stamp: <2022-03-02 19:53:27 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -42,7 +42,7 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 #+end_src
 * Prevent Unwanted Runtime Compilation
 Prevent extra unnecessary runtime compilation for gccemacs. This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] early-init.el file.
-#+begin_src emacs-lisp :tangle
+#+begin_src emacs-lisp :tangle yes
   (setq native-comp-deferred-compilation nil)
 #+end_src 
 * Disable Emacs Package Manager
