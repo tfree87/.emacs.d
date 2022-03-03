@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-27 20:28:52 thomas>
+#+date: Time-stamp: <2022-02-27 21:44:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -881,6 +881,7 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
 * Habitica
 #+begin_src emacs-lisp :tangle yes
   (use-package habitica
+    :after org
     :custom
     (habitica-turn-on-highlighting t)
     (habitica-show-streak t))

@@ -515,6 +515,7 @@
   :defer t)
 
 (use-package habitica
+  :after org
   :custom
   (habitica-turn-on-highlighting t)
   (habitica-show-streak t))
