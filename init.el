@@ -867,6 +867,8 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package academic-phrases)
+
 ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 
 ;; Start an Emacs server
