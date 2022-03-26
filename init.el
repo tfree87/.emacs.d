@@ -309,7 +309,9 @@
          "\\.ino\\'"))
 
 (use-package elpy
-  :straight t
+  :straight (elpy :host github
+                  :repo "jorgenschaefer/elpy"
+                  :branch "master")
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)

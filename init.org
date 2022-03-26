@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-03 21:02:39 thomas>
+#+date: Time-stamp: <2022-03-25 18:31:22 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -552,7 +552,9 @@ I have added .ino files to C mode so that I can have syntax highlighting when I 
 Add powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
-    :straight t
+    :straight (elpy :host github
+                    :repo "jorgenschaefer/elpy"
+                    :branch "master")
     :defer t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
