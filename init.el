@@ -491,14 +491,22 @@
   :bind
   ("M-s-`" . eshell-toggle))
 
+(use-package ispell
+  :defer t
+  :config
+  (when (eq system-type 'windows-nt)
+    (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+    (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+    (setq ispell-local-dictionary "en_US")
+    (setq ispell-local-dictionary-alist
+     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
+
 (use-package flyspell
-  :if (not (file-exists-p "~/runemacs.bat"))
   :delight t
   :defer t
   :init
-  (progn
-    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-    (add-hook 'text-mode-hook 'flyspell-mode)))
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode))
 
 (use-package gnus
   :defer t
@@ -860,6 +868,17 @@
 (use-package rainbow-delimiters
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package powershell
+  :if (eq system-type 'windows-nt)
+  :straight t
+  :config
+  ;; Change default compile command for powershell
+  (add-hook 'powershell-mode-hook
+            (lambda ()
+              (set (make-local-variable 'compile-command)
+                   (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
+                           (buffer-file-name))))))
 
 ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 

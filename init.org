@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-02-26 21:27:12 thomas>
+#+date: Time-stamp: <2022-03-28 16:48:52 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -847,16 +847,27 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 * Flyspell-mode
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
 
-I have this mode disabled if Emacs is run as a portable app as this will not work on another Windows system without the spell check libraries installed.
+In order for this to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive.
+#+begin_src emacs-lisp :tangle yes
+  (use-package ispell
+    :defer t
+    :config
+    (when (eq system-type 'windows-nt)
+      (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+      (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+      (setq ispell-local-dictionary "en_US")
+      (setq ispell-local-dictionary-alist
+       '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
+#+end_src
+
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package flyspell
-    :if (not <<portable_check>>)
     :delight t
     :defer t
     :init
-    (progn
-      (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-      (add-hook 'text-mode-hook 'flyspell-mode)))
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode))
+
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -1431,6 +1442,20 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
   (use-package rainbow-delimiters
     :straight t
     :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+* Modifications for Windows
+** Enable Windows PowerShell
+#+begin_src emacs-lisp :tangle yes
+  (use-package powershell
+    :if (eq system-type 'windows-nt)
+    :straight t
+    :config
+    ;; Change default compile command for powershell
+    (add-hook 'powershell-mode-hook
+              (lambda ()
+                (set (make-local-variable 'compile-command)
+                     (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
+                             (buffer-file-name))))))
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...
