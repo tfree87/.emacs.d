@@ -17,8 +17,10 @@
 
 (let ((file-name-handler-alist nil))
 
-(when (file-exists-p "~/runemacs.bat")
-    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+;;(when (eq system-type 'windows-nt)
+;;  (add-to-list 'exec-path "C:/Program Files/Git/cmd"))
+(when (eq (getenv "EMACS_PORTABLE") "Y")
+  (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
 ;; Set the location of variables set using Emacs cusmtomize interface
 
@@ -94,23 +96,23 @@
               :override #'consult-register-window))
 
 (use-package all-the-icons
-  :if (not (file-exists-p "~/runemacs.bat"))
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
   :defer 1
   :straight t)
 
 (use-package all-the-icons-dired
-  :if (not (file-exists-p "~/runemacs.bat"))
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if (not (file-exists-p "~/runemacs.bat"))
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
-  :if (not (file-exists-p "~/runemacs.bat"))
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :defer 3
   :config
@@ -154,10 +156,15 @@
                                     corfu-quit-no-match t
                                     corfu-auto nil)
                         (corfu-mode)))
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
   :custom
   (corfu-cycle t)
   (corfu-preselect-first nil)
-  :bind
   (:map corfu-map
         ("TAB" . corfu-next)
         ([tab] . corfu-next)
@@ -309,9 +316,7 @@
          "\\.ino\\'"))
 
 (use-package elpy
-  :straight (elpy :host github
-                  :repo "jorgenschaefer/elpy"
-                  :branch "master")
+  :straight t
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
@@ -877,9 +882,9 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-<<<<<<< HEAD
 (use-package powershell
   :if (eq system-type 'windows-nt)
+  :defer t
   :straight t
   :config
   ;; Change default compile command for powershell
@@ -888,15 +893,16 @@
               (set (make-local-variable 'compile-command)
                    (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
                            (buffer-file-name))))))
-=======
-(use-package academic-phrases)
->>>>>>> origin/main
+
+(use-package academic-phrases
+  :straight t
+  :defer t)
 
 ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 
 ;; Start an Emacs server
 
-(when (not (file-exists-p "~/runemacs.bat"))
+(when (not (eq (getenv "EMACS_PORTABLE") "Y"))
   (server-start))
 
 (setq gc-cons-threshold (* 2 1000 1000))

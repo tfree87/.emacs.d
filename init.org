@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-28 17:01:11 Thomas>
+#+date: Time-stamp: <2022-03-28 18:54:32 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -43,18 +43,20 @@ See https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_
 * Running Emacs as a Portable App
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs
 ** Check for Portable Emacs Instance
-The following line of code below is used frequently to check for a file in the Emacs home directory called ~runemacs.bat~. The ~runemacs.bat~ is a Windows batch script created to boot Emacs from the flash drive and set the home directory to the path of ~emacshome~ on the flash disk drive. Since I include this file when I run Emacs as a portable app only, this is a simple way to check if I am running Emacs as a portable app from a flash drive.
+When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
 #+name: portable_check
 #+begin_src emacs-lisp
-  (file-exists-p "~/runemacs.bat")
+  (eq (getenv "EMACS_PORTABLE") "Y")
  #+end_src
 ** Set Location of Portable Git
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
  #+begin_src emacs-lisp :tangle yes :noweb no-export
-(when <<portable_check>>
-    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+   ;;(when (eq system-type 'windows-nt)
+   ;;  (add-to-list 'exec-path "C:/Program Files/Git/cmd"))
+   (when <<portable_check>>
+     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
 
 * Custom Set Variables
@@ -306,6 +308,8 @@ Use Corfu for in-buffer completion.
     :straight t
     :hook
     <<corfu_hooks>>
+    :bind
+    <<corfu_bind>>
     :custom
     (corfu-cycle t)
     (corfu-preselect-first nil)
@@ -318,8 +322,7 @@ Use Corfu for in-buffer completion.
 *** Use TAB for Selecting Candidates
 Instead of using M-tab which will switch windows in XFCE---my default desktop---use TAB to cycle between the different possible options.
 #+name: tab-selection
-#+begin_src emacs-lisp
-  :bind
+#+begin_src emacs-lisp :noweb-ref corfu_bind
   (:map corfu-map
         ("TAB" . corfu-next)
         ([tab] . corfu-next)
@@ -552,9 +555,7 @@ I have added .ino files to C mode so that I can have syntax highlighting when I 
 Add powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
-    :straight (elpy :host github
-                    :repo "jorgenschaefer/elpy"
-                    :branch "master")
+    :straight t
     :defer t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
@@ -862,14 +863,13 @@ In order for this to work in Windows, hunspell must be installed with the proper
        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes
   (use-package flyspell
     :delight t
     :defer t
     :init
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
     (add-hook 'text-mode-hook 'flyspell-mode))
-
 #+end_src
 * Gnus
 See the =~/gnus.el= file for configuration information.
@@ -1458,12 +1458,12 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
     :straight t
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
-<<<<<<< HEAD
 * Modifications for Windows
 ** Enable Windows PowerShell
 #+begin_src emacs-lisp :tangle yes
   (use-package powershell
     :if (eq system-type 'windows-nt)
+    :defer t
     :straight t
     :config
     ;; Change default compile command for powershell
@@ -1472,11 +1472,13 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
                 (set (make-local-variable 'compile-command)
                      (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
                              (buffer-file-name))))))
-=======
+#+end_src
 * Academic Phrases
+Academic phrases is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
 #+begin_src emacs-lisp :tangle yes
-  (use-package academic-phrases)
->>>>>>> origin/main
+  (use-package academic-phrases
+    :straight t
+    :defer t)
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...
