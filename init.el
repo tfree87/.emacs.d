@@ -17,8 +17,6 @@
 
 (let ((file-name-handler-alist nil))
 
-;;(when (eq system-type 'windows-nt)
-;;  (add-to-list 'exec-path "C:/Program Files/Git/cmd"))
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 

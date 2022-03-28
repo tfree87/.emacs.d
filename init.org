@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-28 18:54:32 Thomas>
+#+date: Time-stamp: <2022-03-28 19:14:22 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -53,8 +53,6 @@ Straight.el cannot operate without access to Git. Luckily, there is a portable v
 
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
  #+begin_src emacs-lisp :tangle yes :noweb no-export
-   ;;(when (eq system-type 'windows-nt)
-   ;;  (add-to-list 'exec-path "C:/Program Files/Git/cmd"))
    (when <<portable_check>>
      (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
