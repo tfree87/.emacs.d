@@ -1,7 +1,11 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
+<<<<<<< HEAD
 #+date: Time-stamp: <2022-03-28 16:48:52 Thomas>
+=======
+#+date: Time-stamp: <2022-03-25 18:31:22 thomas>
+>>>>>>> origin/main
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -552,7 +556,9 @@ I have added .ino files to C mode so that I can have syntax highlighting when I 
 Add powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
-    :straight t
+    :straight (elpy :host github
+                    :repo "jorgenschaefer/elpy"
+                    :branch "master")
     :defer t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
@@ -889,6 +895,14 @@ Gnuplot mode can be used for editing files that are used to define a plot style 
     :straight t
     :defer t)
 #+end_src
+* Habitica
+#+begin_src emacs-lisp :tangle yes
+  (use-package habitica
+    :after org
+    :custom
+    (habitica-turn-on-highlighting t)
+    (habitica-show-streak t))
+#+end_src
 * Ibuffer
 A better buffer list than the default.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -1015,6 +1029,7 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
     :custom
     <<org_customize>>
     :config
+    (add-hook 'org-mode-hook #'turn-on-flyspell)
     <<org_config>>
     <<babel_languages>>)
 
@@ -1131,7 +1146,6 @@ In order to use active code in org-mode, you must define which programming langu
 *** Word Wrapping
 I like to wrap lines at the edge of the window because I often use org-mode to compose LaTeX documents. By having the lines truncated at the window edge, I can see the different paragraphs and read the whole text while also not having to deal with the issues of fill-column.
 #+begin_src emacs-lisp :noweb-ref org_config
-  (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook (lambda ()
                              (when truncate-lines
                                (toggle-truncate-lines))))
@@ -1331,12 +1345,17 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 #+end_src
 * Tramp
 I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package tramp
-    :straight (:type built-in)
+    :straight <<tramp_version>>
     :defer t
     :config
     (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+#+end_src
+** TRAMP Version
+The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
+#+begin_src emacs-lisp :noweb-ref tramp_version
+  (:type built-in)
 #+end_src
 * Treemacs
 Treemacs provides a separate Emacs window to browse file directory trees for projects.
@@ -1443,6 +1462,7 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
     :straight t
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
+<<<<<<< HEAD
 * Modifications for Windows
 ** Enable Windows PowerShell
 #+begin_src emacs-lisp :tangle yes
@@ -1456,6 +1476,11 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
                 (set (make-local-variable 'compile-command)
                      (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
                              (buffer-file-name))))))
+=======
+* Academic Phrases
+#+begin_src emacs-lisp :tangle yes
+  (use-package academic-phrases)
+>>>>>>> origin/main
 #+end_src
 * Oh My Eshell
 Something I am fiddling around with...

@@ -309,7 +309,9 @@
          "\\.ino\\'"))
 
 (use-package elpy
-  :straight t
+  :straight (elpy :host github
+                  :repo "jorgenschaefer/elpy"
+                  :branch "master")
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
@@ -521,6 +523,12 @@
 (use-package gnuplot-mode
   :straight t
   :defer t)
+
+(use-package habitica
+  :after org
+  :custom
+  (habitica-turn-on-highlighting t)
+  (habitica-show-streak t))
 
 (use-package ibuffer
   :bind
@@ -869,6 +877,7 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+<<<<<<< HEAD
 (use-package powershell
   :if (eq system-type 'windows-nt)
   :straight t
@@ -879,6 +888,9 @@
               (set (make-local-variable 'compile-command)
                    (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
                            (buffer-file-name))))))
+=======
+(use-package academic-phrases)
+>>>>>>> origin/main
 
 ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 
