@@ -149,6 +149,38 @@
   :straight t
   :bind ("M-o" . ace-window))
 
+(use-package aggressive-indent
+  :straight t
+  :hook
+  (prog-mode . aggressive-indent-mode)
+  :config
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+
+(use-package apheleia
+  :straight t
+  :hook
+  (prog-mode . apheleia-mode)
+  (tex-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'black apheleia-formatters)
+  '("black" "--experimental-string-processing" "-")))
+
+(use-package auctex
+  :straight t
+  :defer t
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-master nil))
+
+(setq bibtex-dialect 'biblatex)
+
+(use-package c-mode
+  :straight (:type built-in)
+  :defer t
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
+
 (use-package corfu
   :straight t
   :hook
@@ -164,6 +196,7 @@
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
   :custom
+  (corfu-auto t)
   (corfu-cycle t)
   (corfu-preselect-first nil)
   (:map corfu-map
@@ -210,37 +243,6 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-symbol))
 
-(use-package embark
-  :straight t
-  :bind
-  (("C-." . embark-act)
-   ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none))))
-  (define-key embark-file-map (kbd "S") 'sudo-find-file))
-
-(use-package embark-consult
-  :straight t
-  :after (embark consult)
-  :demand t
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package vertico
-  :straight t
-  :demand t
-  :custom
-  (vertico-cycle t)
-  (vertico-resize t)
-  :init
-  (vertico-mode))
-
 (use-package orderless
   :straight t
   :defer 5
@@ -249,11 +251,6 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package savehist
-  :straight t
-  :init
-  (savehist-mode))
-
 (use-package marginalia
   :straight t
   :bind (("M-A" . marginalia-cycle)
@@ -261,6 +258,31 @@
          ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
+
+(use-package calfw
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-calendar-buffer)
+  :init
+  (defalias 'calfw 'cfw:open-calendar-buffer)
+  :custom
+  (cfw:fchar-junction ?╋)
+  (cfw:fchar-vertical-line ?┃)
+  (cfw:fchar-horizontal-line ?━)
+  (cfw:fchar-left-junction ?┣)
+  (cfw:fchar-right-junction ?┫)
+  (cfw:fchar-top-junction ?┯)
+  (cfw:fchar-top-left-corner ?┏)
+  (cfw:fchar-top-right-corner ?┓))
+
+(use-package calfw-org
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-org-calendar)
+  :init
+  (defalias 'calfworg 'cfw:open-org-calendar))
 
 (use-package centaur-tabs
   :if window-system
@@ -274,73 +296,6 @@
   (centaur-tabs-style "chamfer")
   :config
   (centaur-tabs-mode t))
-
-(use-package aggressive-indent
-  :straight t
-  :hook
-  (prog-mode . aggressive-indent-mode)
-  :config
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-
-(use-package apheleia
-  :straight t
-  :hook
-  (prog-mode . apheleia-mode)
-  (tex-mode . apheleia-mode)
-  :config
-  (setf (alist-get 'black apheleia-formatters)
-  '("black" "--experimental-string-processing" "-")))
-
-(use-package c-mode
-  :straight (:type built-in)
-  :defer t
-  :mode ("\\.c\\'"
-         "\\.ino\\'"))
-
-(use-package elpy
-  :straight t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :custom
-  (elpy-rpc-python-command "python3")
-  (python-shell-interpreter "ipython3")
-  (python-shell-interpreter-args "-i --simple-prompt")
-  :config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
-(use-package flycheck
-  :straight t
-  :defer t)
-
-(use-package go-mode
-  :straight t
-  :defer t)
-
-(use-package magit
-  :if (executable-find "git")
-  :straight t
-  :bind ("C-x g" . magit-status))
-
-(use-package numpydoc
-  :straight t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
-
-(use-package paren
-  :defer t
-  :custom
-  (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
-
-(use-package projectile
-  :straight t
-  :config
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
 
 (use-package consult
   :straight t
@@ -422,10 +377,6 @@
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
 
-(use-package sunrise-commander
-  :defer t
-  :straight t)
-
 (use-package docker
   :if (executable-find "docker")
   :straight t
@@ -434,6 +385,42 @@
 (use-package docker-compose-mode
   :defer t
   :straight t)
+
+(use-package elpy
+  :straight t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :custom
+  (elpy-rpc-python-command "python3")
+  (python-shell-interpreter "ipython3")
+  (python-shell-interpreter-args "-i --simple-prompt")
+  :config
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode)))
+
+(use-package embark
+  :straight t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+  (define-key embark-file-map (kbd "S") 'sudo-find-file))
+
+(use-package embark-consult
+  :straight t
+  :after (embark consult)
+  :demand t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package eshell
   :defer t
@@ -478,6 +465,10 @@
   :bind
   ("M-s-`" . eshell-toggle))
 
+(use-package flycheck
+  :straight t
+  :defer t)
+
 (use-package ispell
   :defer t
   :config
@@ -499,6 +490,10 @@
   :defer t
   :custom
   (gnus-init-file "~/.emacs.d/gnus.el"))
+
+(use-package go-mode
+  :straight t
+  :defer t)
 
 (use-package gnuplot
   :if (executable-find "gnuplot")
@@ -553,19 +548,14 @@
               (ibuffer-switch-to-saved-filter-groups
                "default"))))
 
-(use-package auctex
-  :straight t
-  :defer t
-  :custom
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  (TeX-master nil))
-
-(setq bibtex-dialect 'biblatex)
-
 (use-package ledger-mode
   :straight t
   :defer t)
+
+(use-package magit
+  :if (executable-find "git")
+  :straight t
+  :bind ("C-x g" . magit-status))
 
 (use-package markdown-mode
   :straight t
@@ -590,6 +580,11 @@
   ("C->" . 'mc/mark-next-like-this)
   ("C-<" . 'mc/mark-previous-like-this)
   ("C-c C-<" . 'mc/mark-all-like-this))
+
+(use-package numpydoc
+  :straight t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
 
 (use-package org
   :defer t
@@ -678,31 +673,6 @@
   :hook
   (org-mode . (lambda () (org-bullets-mode 1))))
 
-(use-package calfw
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-calendar-buffer)
-  :init
-  (defalias 'calfw 'cfw:open-calendar-buffer)
-  :custom
-  (cfw:fchar-junction ?╋)
-  (cfw:fchar-vertical-line ?┃)
-  (cfw:fchar-horizontal-line ?━)
-  (cfw:fchar-left-junction ?┣)
-  (cfw:fchar-right-junction ?┫)
-  (cfw:fchar-top-junction ?┯)
-  (cfw:fchar-top-left-corner ?┏)
-  (cfw:fchar-top-right-corner ?┓))
-
-(use-package calfw-org
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-org-calendar)
-  :init
-  (defalias 'calfworg 'cfw:open-org-calendar))
-
 (use-package org-mind-map
   :straight t
   :after org
@@ -750,6 +720,12 @@
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
+(use-package paren
+  :defer t
+  :custom
+  (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
+
 (use-package pdf-tools
   :straight t
   :magic ("%PDF" . pdf-view-mode)
@@ -788,6 +764,22 @@
               (set (make-local-variable 'compile-command)
                    (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
                            (buffer-file-name))))))
+
+(use-package projectile
+  :straight t
+  :config
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
+
+(use-package savehist
+  :straight t
+  :init
+  (savehist-mode))
+
+(use-package sunrise-commander
+  :defer t
+  :straight t)
 
 (use-package tramp
   :straight (:type built-in)
@@ -841,6 +833,15 @@
   :after (treemacs magit)
   :straight t)
 
+(use-package vertico
+  :straight t
+  :demand t
+  :custom
+  (vertico-cycle t)
+  (vertico-resize t)
+  :init
+  (vertico-mode))
+
 (use-package which-key
   :straight t
   :defer 3
@@ -881,7 +882,7 @@
                          (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
 
-(load-file"~/.emacs.d/elisp/oh-my-esh.el")
+(load-file "~/.emacs.d/elisp/oh-my-esh.el")
 
 ;; Start an Emacs server
 
