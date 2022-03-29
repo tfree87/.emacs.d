@@ -135,7 +135,7 @@
   :if window-system
   :straight t
   :defer 3
-  :delight
+  :blackout t
   :custom
   (nyan-wavy-trail t)
   :config
@@ -292,7 +292,7 @@
 
 (use-package aggressive-indent
   :straight t
-  :delight t
+  :blackout t
   :hook
   (prog-mode . aggressive-indent-mode)
   :config
@@ -346,7 +346,7 @@
               ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
-  :delight
+  :blackout t
   :defer t
   :custom
   (show-paren-delay 0)
@@ -354,7 +354,7 @@
 
 (use-package projectile
   :straight t
-  :delight t
+  :blackout t
   :config
   (projectile-mode +1)
   :bind (:map projectile-mode-map
@@ -423,7 +423,7 @@
   :config
   (bbdb-mua-auto-update-init 'gnus 'message))
 
-(use-package delight
+(use-package blackout
   :straight t)
 
 (use-package deft
@@ -507,7 +507,7 @@
      '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
 
 (use-package flyspell
-  :delight t
+  :blackout t
   :defer t
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -857,7 +857,7 @@
 (use-package which-key
   :straight t
   :defer 3
-  :delight
+  :blackout t
   :custom
   (which-key-show-early-on-C-h t)
   :config
@@ -867,7 +867,7 @@
 
 (use-package yasnippet
   :straight t
-  :delight t
+  :blackout t
   :defer 3
   :config
   (yas-global-mode 1))
