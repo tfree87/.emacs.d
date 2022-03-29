@@ -291,7 +291,6 @@
 
 (use-package aggressive-indent
   :straight t
-  :blackout t
   :hook
   (prog-mode . aggressive-indent-mode)
   :config
@@ -345,7 +344,6 @@
               ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
-  :blackout t
   :defer t
   :custom
   (show-paren-delay 0)
@@ -353,7 +351,6 @@
 
 (use-package projectile
   :straight t
-  :blackout t
   :config
   (projectile-mode +1)
   :bind (:map projectile-mode-map

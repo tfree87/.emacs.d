@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 02:27:39 thomas>
+#+date: Time-stamp: <2022-03-29 02:32:08 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -521,7 +521,6 @@ Aggressive indent mode will keep code indented by the correct amount as you type
 #+begin_src emacs-lisp :tangle yes
   (use-package aggressive-indent
     :straight t
-    :blackout t
     :hook
     (prog-mode . aggressive-indent-mode)
     :config
@@ -605,7 +604,6 @@ Paren Mode will highlight matching parentheses in programming mode buffers makin
 The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
-    :blackout t
     :defer t
     :custom
     (show-paren-delay 0)
@@ -615,7 +613,6 @@ The following code will always highlight matching parenthesis when coding /immed
 #+begin_src emacs-lisp :tangle yes
   (use-package projectile
     :straight t
-    :blackout t
     :config
     (projectile-mode +1)
     :bind (:map projectile-mode-map
