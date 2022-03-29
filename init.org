@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 14:06:01 Thomas>
+#+date: Time-stamp: <2022-03-29 18:35:09 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -106,7 +106,7 @@ Instead of using the built-in package manager, use ~straight.el~ to pull all the
 ** Install use-package
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
 #+begin_src emacs-lisp :tangle yes
-  ;; Packages
+  ;; Set up use-package to manage package loading
 
   (straight-use-package 'use-package)
   (setq straight-use-package-by-default t)
@@ -274,8 +274,11 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (nyan-start-animation))
 #+end_src
 * Packages
+#+begin_src emacs-lisp :tangle yes
+;; Packages and Configuration
+#+end_src
 ** Benchmark Init :startup:
-The benchmark init (https://github.com/dholm/benchmark-init-el) package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
+The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
 #+begin_src emacs-lisp :tangle yes
   (use-package benchmark-init
     :straight t
@@ -284,7 +287,7 @@ The benchmark init (https://github.com/dholm/benchmark-init-el) package allows m
     (add-hook 'after-init-hook #'benchmark-init/deactivate))
 #+end_src
 ** No-littering :startup:
-The no-littering (https://github.com/emacscollective/no-littering) package will put Emacs configuration files for many third-party packages into separate folders under ~.eemacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
+The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.eemacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
 #+begin_src emacs-lisp :tangle yes
   (use-package no-littering
     :straight (no-littering :host github
@@ -292,21 +295,21 @@ The no-littering (https://github.com/emacscollective/no-littering) package will 
                             :branch "master"))
 #+end_src
 ** Academic Phrases
-Academic phrases (https://github.com/nashamri/academic-phrases) is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
+[[https://github.com/nashamri/academic-phrases][Academic phrases]] is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
 #+begin_src emacs-lisp :tangle yes
   (use-package academic-phrases
     :straight t
     :defer t)
 #+end_src
 ** Ace-Window
-ace-window (https://github.com/abo-abo/ace-window) makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
+[[https://github.com/abo-abo/ace-window][ace-window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package ace-window
     :straight t
     :bind ("M-o" . ace-window))
 #+end_src
-** Aggressive Indent Mode :coding:
-Aggressive indent mode (https://github.com/Malabarba/aggressive-indent-mode) will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+** Aggressive Indent :coding:
+[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
 #+begin_src emacs-lisp :tangle yes
   (use-package aggressive-indent
     :straight t
@@ -316,7 +319,7 @@ Aggressive indent mode (https://github.com/Malabarba/aggressive-indent-mode) wil
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+end_src
 ** Apheleia :coding:
-Apheleia (https://github.com/raxod502/apheleia) will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
+[[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
     :straight t
@@ -328,7 +331,7 @@ Apheleia (https://github.com/raxod502/apheleia) will format programming code usi
     '("black" "--experimental-string-processing" "-")))
 #+end_src
 ** AUCTeX :LaTeX:
-Use AUCTEX for writing documents using LaTeX.
+[[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using LaTeX.
 #+begin_src emacs-lisp :tangle yes
   (use-package auctex
     :straight t
@@ -344,7 +347,7 @@ BibLaTeX has more powerful features than standard BibTeX.
 (setq bibtex-dialect 'biblatex)
 #+end_src
 ** C :coding:
-I have added .ino files to C mode so that I can have syntax highlighting when I program my Arduino board.
+I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
 #+begin_src emacs-lisp :tangle yes
   (use-package c-mode
     :straight (:type built-in)
@@ -353,7 +356,7 @@ I have added .ino files to C mode so that I can have syntax highlighting when I 
            "\\.ino\\'"))
 #+end_src
 ** Corfu :completion:
-Use Corfu (https://github.com/minad/corfu) for in-buffer completion.
+[[https://github.com/minad/corfu][Corfu]] for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package corfu
     :straight t
@@ -457,8 +460,8 @@ Complete Emacs-lisp symbols:
 #+begin_src emacs-lisp :noweb-ref capfs
   (add-to-list 'completion-at-point-functions #'cape-symbol)
 #+end_src
-** Orde0rless :minibuffer:
-Orderless (https://github.com/oantolin/orderless) will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
+** Orderless :minibuffer:
+[[https://github.com/oantolin/orderless][Orderless]] will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
 #+begin_src emacs-lisp :tangle yes
   (use-package orderless
     :straight t
@@ -469,7 +472,7 @@ Orderless (https://github.com/oantolin/orderless) will allow for seaching in the
     (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 ** Marginalia :minibuffer:
-Marginalia (https://github.com/minad/marginalia) provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
+[[https://github.com/minad/marginalia][Marginalia]] provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
     :straight t
@@ -480,7 +483,7 @@ Marginalia (https://github.com/minad/marginalia) provides annotations to items i
     (marginalia-mode))
 #+end_src
 ** Calfw
-Calfw (https://github.com/kiwanami/emacs-calfw) provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
+[[https://github.com/kiwanami/emacs-calfw][Calfw]] provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw
     :straight (emacs-calfw :host github
@@ -511,7 +514,7 @@ Use ~calfw-org.el~ to display org-mode events in the ~calfw~ calendar. I don't l
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 ** Centaur Tabs
-I like having tabs for all of my open buffers. Centaur Tabs (https://github.com/ema2159/centaur-tabs) provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
+I like having tabs for all of my open buffers. [[https://github.com/ema2159/centaur-tabs][Centaur Tabs]] provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
     :if window-system
@@ -528,7 +531,7 @@ I like having tabs for all of my open buffers. Centaur Tabs (https://github.com/
 #+end_src
 This setting can always be toggled off if a "cleaner" Emacs view is desired.
 ** Consult
-Consult (https://github.com/minad/consult) provides a number of highly useful commands. The complete list of commands can be found at https://github.com/minad/consult#available-commands.
+[[https://github.com/minad/consult][Consult]] provides a number of highly useful commands. The complete list of commands can be found at https://github.com/minad/consult#available-commands.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package consult
     :straight t
@@ -629,13 +632,13 @@ The Insidious Big Brother DataBase (https://www.jwz.org/bbdb/), also known as BB
     (bbdb-mua-auto-update-init 'gnus 'message))
 #+end_src
 ** Blackout
-Blackout (https://github.com/raxod502/blackout) provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
+[[https://github.com/raxod502/blackout][Blackout]] provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
 #+begin_src emacs-lisp :tangle yes
   (use-package blackout
     :straight t)
 #+end_src
 ** Deft :org:
-Deft is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
+[[https://github.com/jrblevin/deft][Deft]] is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
 #+begin_src emacs-lisp :tangle yes
   (use-package deft
     :after org
@@ -659,7 +662,7 @@ This will cause emacs to default to moving/copying/renaming files from the direc
    (dired-dwim-target t)
  #+end_src
 ** Docker :docker:
-An interface in Emacs to manage Docker containers.
+[[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
     :if (executable-find "docker")
@@ -667,14 +670,14 @@ An interface in Emacs to manage Docker containers.
     :bind ("C-c d" . docker))
 #+end_src
 ** Docker Compose :docker:
-Major mode for editing Docker Compose files.
+[[https://github.com/meqif/docker-compose-mode][docker-compose-mode]] is a major mode for editing Docker Compose files.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
     :defer t
     :straight t)
 #+end_src
 ** Elpy :coding:python:
-Add powerful features for Python progamming in Emacs.
+[[https://github.com/jorgenschaefer/elpy][Elpy]]Adds powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
     :straight t
@@ -696,7 +699,7 @@ Check python syntax while writing with flycheck
     (add-hook 'elpy-mode-hook 'flycheck-mode))
 #+end_src
 ** Embark :minibuffer:
-Embark (https://github.com/oantolin/embark) provides the ability to execute commands on completion options found in the minibuffer.
+[[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package embark
     :straight t
@@ -730,7 +733,6 @@ Allow use of Embark commands after issuing a Consult command.
 #+end_src 
 ** Eshell
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
-*** Set up Eshell
 Get Eshell configuration set up.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
    (use-package eshell
@@ -789,7 +791,7 @@ Create a custom prompt for eshell that shows some more information.
 *** Eshell Visual Commands
 Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
 #+name: eshell_visual_commands
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref eshell_config
   (add-to-list 'eshell-visual-commands "htop")
   (add-to-list 'eshell-visual-commands "ipython")
   (add-to-list 'eshell-visual-commands "rclone")
@@ -798,7 +800,7 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
   (add-to-list 'eshell-visual-commands "top")
 #+end_src
 ** Flycheck :coding:
-Install flycheck mode (https://www.flycheck.org/en/latest/) so that python syntax can be checed while typing.
+[[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
 #+begin_src emacs-lisp :tangle yes
   (use-package flycheck
     :straight t
@@ -829,7 +831,7 @@ In order for this to work in Windows, hunspell must be installed with the proper
     (add-hook 'text-mode-hook 'flyspell-mode))
 #+end_src
 ** Gnus :mail:
-See the =~/gnus.el= file for configuration information.
+I sometimes use [[https://www.gnu.org/software/emacs/manual/html_node/gnus/][Gnus]] to check my mail. See the =~/gnus.el= file for configuration information.
 #+begin_src emacs-lisp :tangle yes
   (use-package gnus
     :defer t
@@ -837,21 +839,17 @@ See the =~/gnus.el= file for configuration information.
     (gnus-init-file "~/.emacs.d/gnus.el"))
 #+end_src
 ** Go :coding:
-Go mode (https://github.com/dominikh/go-mode.el) provides a major model for editing Go code.
+[[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
 #+begin_src emacs-lisp :tangle yes
   (use-package go-mode
     :straight t
     :defer t)
 #+end_src
-** Gnuplot-mode
-Gnuplot mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
+** Gnuplot
+[[https://github.com/emacs-gnuplot/gnuplot][Gnuplot]] mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package gnuplot
     :if (executable-find "gnuplot")
-    :straight t
-    :defer t)
-
-  (use-package gnuplot-mode
     :straight t
     :defer t)
 #+end_src
@@ -916,14 +914,14 @@ Ibuffer makes it possible to sort buffers in the buffer list into groupings. Thi
                   (mode . shell))))))
 #+end_src
 ** Ledger
-To conduct plain-text accounting in Emacs, ledger-mode (https://github.com/ledger/ledger-mode) needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
+To conduct plain-text accounting in Emacs, [[https://github.com/ledger/ledger-mode][ledger-mode]] needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 #+begin_src emacs-lisp :tangle yes
   (use-package ledger-mode
     :straight t
     :defer t)
 #+end_src
 ** Magit :coding:
-Magit (https://magit.vc/) provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
+[[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 #+begin_src emacs-lisp :tangle yes
   (use-package magit
     :if (executable-find "git")
@@ -931,11 +929,13 @@ Magit (https://magit.vc/) provides an interface to Git through Emacs. It is very
     :bind ("C-x g" . magit-status))
 #+end_src
 ** Markdown Mode
-Add a mode to edit and view markdown files. While I prefer Org-mode for rich-text editing in Emacs, Github primarily supports markdown so I want to be able to edit and view these files when needed.
-#+begin_src emacs-lisp :tangle yes
+[[https://jblevins.org/projects/markdown-mode/][Markdown Mode]] for markdown files. While I prefer Org-mode for rich-text editing in Emacs, Github primarily supports markdown so I want to be able to edit and view these files when needed.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package markdown-mode
     :straight t
     :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+    :init
+    <<markdown_init>>
     :config
     (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
     (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
@@ -944,15 +944,20 @@ Add a mode to edit and view markdown files. While I prefer Org-mode for rich-tex
     (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
     (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 #+end_src
+*** Set Markdown Mode to use Pandoc
+Since [[https://pandoc.org/][Pandoc]] can be installed on both Linux and in Windows with Chocolatey, set Markdown Mode to use this as the default markdown command.
+#+begin_src emacs-lisp :noweb-ref markdown_init
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+#+end_src
 ** Minimap :coding:
-Minimap shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
+[[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
 #+begin_src emacs-lisp :tangle yes
   (use-package minimap
     :straight t
     :defer t)
 #+end_src
 ** Multiple Cursors
-Multiple cursors allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
+[[https://github.com/magnars/multiple-cursors.el][multiple-cursors.el]] allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
 #+begin_src emacs-lisp :tangle yes
   (use-package multiple-cursors
     :straight t
@@ -964,7 +969,7 @@ Multiple cursors allows for editing Emacs buffers at multiple locations simultan
     ("C-c C-<" . 'mc/mark-all-like-this))
 #+end_src
 ** Numpydoc :coding:python:
-Using Numpydoc (https://github.com/douglasdavis/numpydoc.el) provides an interactive tool to automatically generate Numpy style docstrings.
+Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
 #+begin_src emacs-lisp :tangle yes
   (use-package numpydoc
     :straight t
@@ -972,12 +977,11 @@ Using Numpydoc (https://github.com/douglasdavis/numpydoc.el) provides an interac
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 
-** Org-mode :org:
-Org Mode (https://orgmode.org/) is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
+** Org :org:
+[[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 - Organizing my tasks and projects similar to David Allen's "Getting Things Done" method
 - Publishing LaTeX documents in a simpler and faster way
 - Saving reusable code snippets with documentation that can be executed from within Emacs as how this file was created.
-*** Initial Setup
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
     :defer t
@@ -1225,7 +1229,7 @@ The following code will always highlight matching parenthesis when coding /immed
     :hook (prog-mode . show-paren-mode))
 #+end_src
 ** PDF Tools
-PDF Tools (https://github.com/politza/pdf-tools) is a faster and more feature-rich than the built in DocView.
+[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
     :straight t
@@ -1234,14 +1238,14 @@ PDF Tools (https://github.com/politza/pdf-tools) is a faster and more feature-ri
     (pdf-loader-install :no-query))
 #+end_src
 ** PlantUML :productivity:
-PlantUML (https://plantuml.com/) is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
+[[https://plantuml.com/][PlantUML]] is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
 *** Set Location of PlantUML Binary
 When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
 #+end_src
 *** Install PlantUML Mode
-PlantUML mode (https://github.com/skuro/plantuml-mode) is not installed by default, so we need ~use-package~ to download and install it.
+[[https://github.com/skuro/plantuml-mode][PlantUML mode]] is not installed by default, so we need ~use-package~ to download and install it.
 #+begin_src emacs-lisp :tangle yes
   (use-package plantuml-mode
     :straight t
@@ -1249,7 +1253,7 @@ PlantUML mode (https://github.com/skuro/plantuml-mode) is not installed by defau
     :after org)
 #+end_src
 ** Popper
-Popper (https://github.com/karthink/popper) lets a user define any window as a short-term pop up window.
+[[https://github.com/karthink/popper][Popper]] lets a user define any window as a short-term pop up window.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package popper
     :straight t
@@ -1273,7 +1277,7 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
             compilation-mode))
 #+end_src
 ** PowerShell
-Powershell.el (https://github.com/jschaf/powershell.el) creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
+[[https://github.com/jschaf/powershell.el][Powershell.el]] creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
 #+begin_src emacs-lisp :tangle yes
   (use-package powershell
     :if (eq system-type 'windows-nt)
@@ -1288,7 +1292,7 @@ Powershell.el (https://github.com/jschaf/powershell.el) creates a function that 
                              (buffer-file-name))))))
 #+end_src
 ** Projectile :coding:
-(https://github.com/bbatsov/projectile)
+[[https://github.com/bbatsov/projectile][Projectile Mode]] to make switching between project files and managing projects easier in Emacs.
 #+begin_src emacs-lisp :tangle yes
   (use-package projectile
     :straight t
@@ -1312,7 +1316,7 @@ Savehist will save the selections from completion history between Emacs sessions
     :straight t)
 #+end_src
 ** Tramp
-I occasinally use Tramp (https://www.gnu.org/software/tramp/) to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
+I occasinally use [[https://www.gnu.org/software/tramp/][Tramp]] to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package tramp
     :straight <<tramp_version>>
@@ -1326,7 +1330,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
   (:type built-in)
 #+end_src
 ** Treemacs
-Treemacs (https://github.com/Alexander-Miller/treemacs) provides a separate Emacs window to browse file directory trees for projects.
+[[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs
     :straight t
@@ -1375,7 +1379,7 @@ Treemacs (https://github.com/Alexander-Miller/treemacs) provides a separate Emac
     :straight t)
 #+end_src
 ** Vertico :minibuffer:completion:
-Vertico (https://github.com/minad/vertico) removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
+[[https://github.com/minad/vertico][Vertico]] removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 #+begin_src emacs-lisp :tangle yes
   (use-package vertico
     :straight t
@@ -1419,7 +1423,7 @@ Set up which-key to use the side window preferably
 ** YASnippet
 YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
 *** Install YASnippet
-YASnippet (https://github.com/joaotavora/yasnippet) takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
+[[https://github.com/joaotavora/yasnippet][YASnippet]] takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet
     :straight t
@@ -1429,14 +1433,14 @@ YASnippet (https://github.com/joaotavora/yasnippet) takes a small bit of text or
     (yas-global-mode 1))
 #+end_src
 *** Install Snippets
-The package YASnippet Snippets (https://github.com/AndreaCrotti/yasnippet-snippets) loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
+The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snippets]] loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet-snippets
     :straight t
     :defer t)
 #+end_src
 ** Rainbow Delimiters :coding:
-Rainbow delimiters (https://github.com/Fanael/rainbow-delimiters) colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
+[[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
 #+begin_src emacs-lisp :tangle yes
   (use-package rainbow-delimiters
     :straight t

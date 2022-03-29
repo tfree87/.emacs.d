@@ -45,7 +45,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Packages
+;; Set up use-package to manage package loading
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
@@ -129,6 +129,8 @@
   :config
   (nyan-mode)
   (nyan-start-animation))
+
+;; Packages and Configuration
 
 (use-package benchmark-init
   :straight t
@@ -445,7 +447,12 @@
   (eshell-save-history-on-exit t)
   (eshell-destroy-buffer-when-process-dies t)
   :config
-  
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ipython")
+  (add-to-list 'eshell-visual-commands "rclone")
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "tail")
+  (add-to-list 'eshell-visual-commands "top")
   (setenv "PAGER" "cat"))
 
 (use-package eshell-git-prompt
@@ -497,10 +504,6 @@
 
 (use-package gnuplot
   :if (executable-find "gnuplot")
-  :straight t
-  :defer t)
-
-(use-package gnuplot-mode
   :straight t
   :defer t)
 
@@ -560,6 +563,8 @@
 (use-package markdown-mode
   :straight t
   :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+  :init
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
   :config
   (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
   (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
