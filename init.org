@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 02:32:08 thomas>
+#+date: Time-stamp: <2022-03-29 02:58:21 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -291,6 +291,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     (nyan-start-animation))
 #+end_src
 * Ace-Window
+ace-window (https://github.com/abo-abo/ace-window) makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package ace-window
     :straight t
@@ -299,7 +300,7 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 * Autocompletion
 This section contains configuration for auto-completion utilities in Emacs.
 ** Corfu
-Use Corfu for in-buffer completion.
+Use Corfu (https://github.com/minad/corfu) for in-buffer completion.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package corfu
     :straight t
@@ -357,7 +358,7 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
     (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
 *** Cape
-Cape provides some extensions for corfu.
+Cape (https://github.com/minad/cape) provides some extensions for corfu.
 #+name: cape
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package cape
@@ -405,26 +406,8 @@ Complete Emacs-lisp symbols:
 ** Minibuffer Completion
 This section contains customization to improve command completion in the minibuffer in Emacs.
 *** Embark
-Embark provides the ability to execute commands on completion options found in the minibuffer.
+Embark (https://github.com/oantolin/embark) provides the ability to execute commands on completion options found in the minibuffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-  (defun sudo-find-file (file)
-    "Open FILE as root."
-    (interactive "FOpen file as root: ")
-    (when (file-writable-p file)
-      (user-error "File is user writeable, aborting sudo"))
-    (find-file (if (file-remote-p file)
-                   (concat "/"
-                           (file-remote-p file 'method)
-                           ":"
-                           (file-remote-p file 'user)
-                           "@"
-                           (file-remote-p file 'host)
-                           "|sudo:root@"
-                           (file-remote-p file 'host)
-                           ":"
-                           (file-remote-p file 'localname))
-                 (concat "/sudo:root@localhost:" file))))
-
   (use-package embark
     :straight t
     :bind
@@ -456,7 +439,7 @@ Allow use of Embark commands after issuing a Consult command.
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src 
 *** Vertico
-Vertico removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
+Vertico (https://github.com/minad/vertico) removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 #+begin_src emacs-lisp :tangle yes
   (use-package vertico
     :straight t
@@ -468,7 +451,7 @@ Vertico removes the ~*Completions*~ buffer and instead, populates a vertical lis
     (vertico-mode))
 #+end_src
 *** Orderless
-Orderless will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
+Orderless (https://github.com/oantolin/orderless) will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
 #+begin_src emacs-lisp :tangle yes
   (use-package orderless
     :straight t
@@ -487,7 +470,7 @@ Savehist will save the selections from completion history between Emacs sessions
     (savehist-mode))
   #+end_src
 *** Marginalia
-Marginalia provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
+Marginalia (https://github.com/minad/marginalia) provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
     :straight t
@@ -964,7 +947,7 @@ BibLaTeX has more powerful features than standard BibTeX.
 (setq bibtex-dialect 'biblatex)
 #+end_src
 * Ledger
-To conduct plain-text accounting in Emacs, ~ledger-mode~ needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
+To conduct plain-text accounting in Emacs, ledger-mode (https://github.com/ledger/ledger-mode) needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 #+begin_src emacs-lisp :tangle yes
   (use-package ledger-mode
     :straight t
@@ -1322,6 +1305,21 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
             "\\*Async Shell Command\\*"
             help-mode
             compilation-mode))
+#+end_src
+* Sudo Find File
+This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
+#+begin_src emacs-lisp :tangle yes
+  (defun sudo-find-file (file)
+    "Open FILE as root."
+    (interactive "FOpen file as root: ")
+    (when (file-writable-p file)
+      (user-error "File is user writeable, aborting sudo"))
+    (find-file (if (file-remote-p file)
+                   (concat "/" (file-remote-p file 'method) ":"
+                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                           "|sudo:root@"
+                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                 (concat "/sudo:root@localhost:" file))))
 #+end_src
 * Tramp
 I occasinally use Tramp (https://www.gnu.org/software/tramp/) to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.

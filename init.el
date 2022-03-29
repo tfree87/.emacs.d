@@ -206,24 +206,6 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-symbol))
 
-(defun sudo-find-file (file)
-  "Open FILE as root."
-  (interactive "FOpen file as root: ")
-  (when (file-writable-p file)
-    (user-error "File is user writeable, aborting sudo"))
-  (find-file (if (file-remote-p file)
-                 (concat "/"
-                         (file-remote-p file 'method)
-                         ":"
-                         (file-remote-p file 'user)
-                         "@"
-                         (file-remote-p file 'host)
-                         "|sudo:root@"
-                         (file-remote-p file 'host)
-                         ":"
-                         (file-remote-p file 'localname))
-               (concat "/sudo:root@localhost:" file))))
-
 (use-package embark
   :straight t
   :bind
@@ -790,6 +772,18 @@
             compilation-mode))
   (popper-mode +1)
   (popper-echo-mode +1))
+
+(defun sudo-find-file (file)
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+                 (concat "/" (file-remote-p file 'method) ":"
+                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                         "|sudo:root@"
+                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
 
 (use-package tramp
   :straight (:type built-in)
