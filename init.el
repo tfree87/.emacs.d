@@ -50,17 +50,6 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-(use-package benchmark-init
-  :straight t
-  :config
-  (benchmark-init/activate)
-  (add-hook 'after-init-hook #'benchmark-init/deactivate))
-
-(use-package no-littering
-  :straight (no-littering :host github
-                          :repo "emacscollective/no-littering"
-                          :branch "master"))
-
 (use-package emacs
   :custom
   (register-preview-delay 0)
@@ -140,6 +129,21 @@
   :config
   (nyan-mode)
   (nyan-start-animation))
+
+(use-package benchmark-init
+  :straight t
+  :config
+  (benchmark-init/activate)
+  (add-hook 'after-init-hook #'benchmark-init/deactivate))
+
+(use-package no-littering
+  :straight (no-littering :host github
+                          :repo "emacscollective/no-littering"
+                          :branch "master"))
+
+(use-package academic-phrases
+  :straight t
+  :defer t)
 
 (use-package ace-window
   :straight t
@@ -773,17 +777,17 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-(defun sudo-find-file (file)
-  "Open FILE as root."
-  (interactive "FOpen file as root: ")
-  (when (file-writable-p file)
-    (user-error "File is user writeable, aborting sudo"))
-  (find-file (if (file-remote-p file)
-                 (concat "/" (file-remote-p file 'method) ":"
-                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
-                         "|sudo:root@"
-                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-               (concat "/sudo:root@localhost:" file))))
+(use-package powershell
+  :if (eq system-type 'windows-nt)
+  :defer t
+  :straight t
+  :config
+  ;; Change default compile command for powershell
+  (add-hook 'powershell-mode-hook
+            (lambda ()
+              (set (make-local-variable 'compile-command)
+                   (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
+                           (buffer-file-name))))))
 
 (use-package tramp
   :straight (:type built-in)
@@ -863,23 +867,21 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package powershell
-  :if (eq system-type 'windows-nt)
-  :defer t
-  :straight t
-  :config
-  ;; Change default compile command for powershell
-  (add-hook 'powershell-mode-hook
-            (lambda ()
-              (set (make-local-variable 'compile-command)
-                   (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
-                           (buffer-file-name))))))
+;; Custom Function Definitions
 
-(use-package academic-phrases
-  :straight t
-  :defer t)
+(defun sudo-find-file (file)
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+                 (concat "/" (file-remote-p file 'method) ":"
+                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                         "|sudo:root@"
+                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
 
-;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
+(load-file"~/.emacs.d/elisp/oh-my-esh.el")
 
 ;; Start an Emacs server
 
