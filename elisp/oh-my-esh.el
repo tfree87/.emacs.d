@@ -1,4 +1,4 @@
-;;; test.el --- a simple package -*- lexical-binding: t; -*-
+;;; oh-my-esh.el --- Extensions for Emacs Eshell -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Thomas Freeman
 
@@ -21,7 +21,7 @@
 
 ;;; Commentary:
 
-;; Extensions for the Emacs eshell
+;; Extensions for Emacs Eshell
 
 ;;; Code:
 
@@ -29,17 +29,23 @@
   "Takes the previous command entered into the eshell and appends sudo in front of it."
   (insert (concat "sudo " (format "%s" (eshell-get-history 1)))))
 
+(defun sudo-find-file (file)
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+                 (concat "/" (file-remote-p file 'method) ":"
+                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                         "|sudo:root@"
+                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
+
 (defun oh-my-esh/rsync ()
   "Adds aliases for commonly-used rsync commands."
   (eshell/alias "rsync-copy" "rsync -avz --progress -h")
   (eshell/alias "rsync-move" "rsync -avz --progress -h --remove-source-files")
   (eshell/alias "rsync-update" "rsync -avzu --progress -h")
   (exhell/alias "rsync-synchronize" "rsync -avzu --delete --progress -h"))
-
-;;;###autoload
-(defun oh-my-esh/load-plugins ()
-  )
-
-(provide 'oh-my-esh)
 
 ;;; oh-my-esh.el ends here
