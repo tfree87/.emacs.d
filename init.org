@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 01:28:43 thomas>
+#+date: Time-stamp: <2022-03-29 01:50:32 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1254,7 +1254,7 @@ A reference manager in org-mode.
     :after org)
 #+end_src
 ** Org-roam
-~org-roam~ adds features to make linking org notes easier and provided a database file to connect all the notes together.
+Org-roam (https://www.orgroam.com/) adds features to make linking org notes easier and provided a database file to connect all the notes together.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-roam
     :straight t
@@ -1290,7 +1290,7 @@ A reference manager in org-mode.
             ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
 * PDF Tools
-PDF Tools is a faster and more feature-rich than the built in DocView.
+PDF Tools (https://github.com/politza/pdf-tools) is a faster and more feature-rich than the built in DocView.
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
     :straight t
@@ -1299,14 +1299,14 @@ PDF Tools is a faster and more feature-rich than the built in DocView.
     (pdf-loader-install :no-query))
 #+end_src
 * PlantUML
-PlantUML is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
+PlantUML (https://plantuml.com/) is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
 ** Set Location of PlantUML Binary
 When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
 #+end_src
 ** Install PlantUML Mode
-PlantUML mode is not installed by default, so we need ~use-package~ to download and install it.
+PlantUML mode (https://github.com/skuro/plantuml-mode) is not installed by default, so we need ~use-package~ to download and install it.
 #+begin_src emacs-lisp :tangle yes
   (use-package plantuml-mode
     :straight t
@@ -1314,7 +1314,7 @@ PlantUML mode is not installed by default, so we need ~use-package~ to download 
     :after org)
 #+end_src
 * Popper
-Popper lets a user define any window as a short-term pop up window.
+Popper (https://github.com/karthink/popper) lets a user define any window as a short-term pop up window.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package popper
     :straight t
@@ -1338,7 +1338,7 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
             compilation-mode))
 #+end_src
 * Tramp
-I occasinally use Tramp to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
+I occasinally use Tramp (https://www.gnu.org/software/tramp/) to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package tramp
     :straight <<tramp_version>>
@@ -1352,7 +1352,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
   (:type built-in)
 #+end_src
 * Treemacs
-Treemacs provides a separate Emacs window to browse file directory trees for projects.
+Treemacs (https://github.com/Alexander-Miller/treemacs) provides a separate Emacs window to browse file directory trees for projects.
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs
     :straight t
@@ -1401,7 +1401,7 @@ Treemacs provides a separate Emacs window to browse file directory trees for pro
     :straight t)
 #+end_src
 * Which-key
-Which-key provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
+Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :straight t
@@ -1433,7 +1433,7 @@ Set up which-key to use the side window preferably
 * YASnippet
 YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
 ** Install YASnippet
-YASnippet takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
+YASnippet (https://github.com/joaotavora/yasnippet) takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet
     :straight t
@@ -1443,14 +1443,14 @@ YASnippet takes a small bit of text or an abbreviation and expands it into a tem
     (yas-global-mode 1))
 #+end_src
 ** Install Snippets
-The package YASnippet Snippets loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
+The package YASnippet Snippets (https://github.com/AndreaCrotti/yasnippet-snippets) loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
 #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet-snippets
     :straight t
     :defer t)
 #+end_src
 * Rainbow Delimiters
-Rainbow delimiters colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
+Rainbow delimiters (https://github.com/Fanael/rainbow-delimiters) colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
 #+begin_src emacs-lisp :tangle yes
   (use-package rainbow-delimiters
     :straight t
@@ -1458,6 +1458,7 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
 #+end_src
 * Modifications for Windows
 ** Enable Windows PowerShell
+Powershell.el (https://github.com/jschaf/powershell.el) creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
 #+begin_src emacs-lisp :tangle yes
   (use-package powershell
     :if (eq system-type 'windows-nt)
@@ -1472,7 +1473,7 @@ Rainbow delimiters colors delimiters such as brackets and parentheses in source 
                              (buffer-file-name))))))
 #+end_src
 * Academic Phrases
-Academic phrases is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
+Academic phrases (https://github.com/nashamri/academic-phrases) is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
 #+begin_src emacs-lisp :tangle yes
   (use-package academic-phrases
     :straight t
@@ -1483,7 +1484,7 @@ Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
  ;; (load-file"~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
-* Start Emacs Server
+* Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 
 I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
