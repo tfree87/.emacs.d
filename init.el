@@ -135,7 +135,6 @@
   :if window-system
   :straight t
   :defer 3
-  :blackout t
   :custom
   (nyan-wavy-trail t)
   :config
@@ -720,13 +719,6 @@
   :commands (cfw:open-org-calendar)
   :init
   (defalias 'calfworg 'cfw:open-org-calendar))
-
-(use-package org-download
- :after org
- :bind
- (:map org-mode-map
-       (("s-Y" . org-download-screenshot)
-        ("s-y" . org-download-yank))))
 
 (use-package org-mind-map
   :straight t

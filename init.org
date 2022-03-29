@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 01:50:32 thomas>
+#+date: Time-stamp: <2022-03-29 02:27:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -284,7 +284,6 @@ Display a nyan cat on the mode line that shows progress through a buffer.
     :if window-system
     :straight t
     :defer 3
-    :blackout t
     :custom
     (nyan-wavy-trail t)
     :config
@@ -1179,7 +1178,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     (org-mode . (lambda () (org-bullets-mode 1))))
 #+end_src
 ** Calfw
-~calfw~ provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
+Calfw (https://github.com/kiwanami/emacs-calfw) provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw
     :straight (emacs-calfw :host github
@@ -1199,7 +1198,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
     (cfw:fchar-top-right-corner ?┓))
 #+end_src
 *** Use calfw-org
-Use ~calfw-org~ to display org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
+Use ~calfw-org.el~ to display org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
 #+begin_src emacs-lisp :tangle yes
   (use-package calfw-org
     :straight (emacs-calfw :host github
@@ -1223,18 +1222,8 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
       ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
-** Org-download
-I have not yet tried this feature yet...
-#+begin_src emacs-lisp :tangle yes
- (use-package org-download
-  :after org
-  :bind
-  (:map org-mode-map
-        (("s-Y" . org-download-screenshot)
-         ("s-y" . org-download-yank))))
-#+end_src
 ** Org-mind-map
-Turn any ~org-mode~ buffer into a mind map in various output formats.
+Org-mind-map (https://github.com/the-ted/org-mind-map) turns any ~org-mode~ buffer into a mind map in various output formats.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-mind-map
     :straight t
@@ -1246,7 +1235,7 @@ Turn any ~org-mode~ buffer into a mind map in various output formats.
     (org-mind-map-engine "dot"))
 #+end_src
 ** Org-ref
-A reference manager in org-mode.
+Org-ref is (https://github.com/jkitchin/org-ref) a reference manager in org-mode.
 #+begin_src emacs-lisp :tangle yes
   (use-package org-ref
     :straight t
