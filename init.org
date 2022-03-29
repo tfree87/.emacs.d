@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 02:58:21 thomas>
+#+date: Time-stamp: <2022-03-29 03:09:01 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -481,7 +481,7 @@ Marginalia (https://github.com/minad/marginalia) provides annotations to items i
     (marginalia-mode))
 #+end_src
 * Centaur Tabs
-I like having tabs for all of my open buffers. The following code turns on tabs using a nicer interface than the built-in ~tab-line-mode~:
+I like having tabs for all of my open buffers. Centaur Tabs (https://github.com/ema2159/centaur-tabs) provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
 #+begin_src emacs-lisp :tangle yes
   (use-package centaur-tabs
     :if window-system
