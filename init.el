@@ -902,7 +902,7 @@
 
 ;; Custom Function Definitions
 
-(defun rclone-sync-local (source dest &optional rclone-path)
+(defun rclone-sync (source dest &optional rclone-path)
   "Sync DEST with SOURCE using rclone with remote. 
   The path to the rlcone executable can be set with RCLONE-PATH"
   (interactive)
@@ -931,6 +931,12 @@
 
 (when (not (eq (getenv "EMACS_PORTABLE") "Y"))
   (server-start))
+
+(when (eq (getenv "EMACS_PORTABLE") "Y")
+  (rclone-sync "dropbox:" "~/Dropbox/")
+  (add-hook 'kill-emacs-hook (lambda ()
+                               (rclone-sync "~/Dropbox/"
+                                            "dropbox:"))))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )

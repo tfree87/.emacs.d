@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-30 14:56:58 Thomas>
+#+date: Time-stamp: <2022-03-30 20:46:49 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1500,7 +1500,7 @@ This section contains custom functions that I have either created myself or borr
 #+end_src
 ** Rclone Functions
 #+begin_src emacs-lisp :tangle yes
-  (defun rclone-sync-local (source dest &optional rclone-path)
+  (defun rclone-sync (source dest &optional rclone-path)
     "Sync DEST with SOURCE using rclone with remote. 
     The path to the rlcone executable can be set with RCLONE-PATH"
     (interactive)
@@ -1532,6 +1532,7 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
                              (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                    (concat "/sudo:root@localhost:" file))))
 #+end_src
+
 * Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 
@@ -1541,6 +1542,16 @@ I have this option run only when I am not executing Emacs as a portable app as i
   
   (when (not <<portable_check>>)
     (server-start))
+#+end_src
+
+* Update Org Files on Portable App Startup
+When running Emacs as a portable app, I want to pull down the latest versions of my ~org-agenda-files~ and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (when <<portable_check>>
+    (rclone-sync "dropbox:" "~/Dropbox/")
+    (add-hook 'kill-emacs-hook (lambda ()
+                                 (rclone-sync "~/Dropbox/"
+                                              "dropbox:"))))
 #+end_src
 
 * Performance Optimization End
