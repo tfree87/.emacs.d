@@ -224,7 +224,7 @@ The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allow
     (add-hook 'after-init-hook #'benchmark-init/deactivate))
 #+end_src
 ** No-littering :startup:
-The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.eemacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
+The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
 #+begin_src emacs-lisp :tangle yes
   (use-package no-littering
     :straight (no-littering :host github
