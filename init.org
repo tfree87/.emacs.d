@@ -389,7 +389,7 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
     (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
 ** Cape
- [[https://github.com/minad/cape)[Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
+ [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
 #+name: cape
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package cape
