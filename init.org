@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 20:45:20 Thomas>
+#+date: Time-stamp: <2022-03-29 21:34:24 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -125,10 +125,6 @@ The code below collects customizations for Emacs built-in components.
 #+end_src
 ** General Configuration
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
-*** Register Delay
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (register-preview-delay 0)
-#+end_src
 *** Automatic Time Stamps
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 #+begin_src emacs-lisp :noweb-ref emacs_config
@@ -144,6 +140,16 @@ Cycle through completion candidates by pressing the completion key.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (completion-cycle-threshold t)
 #+end_src
+*** Desktop Save Mode
+The following option will cause Emacs to always save the state of Emacs when it was closed. Local buffers, tabs in ~tab-bar-mode~, and window arrangements are all saved if possible. Turning this on makes it much simpler to continue working on the same projects when Emacs is closed and then opened again.
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+(desktop-save-mode t)
+#+end_src
+*** Display Time
+This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (display-time-mode 1)
+#+end_src
 *** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
 **** Send Deleted Files to System Trash
@@ -158,6 +164,11 @@ Changing how Emacs deletes files and how it creates backups.
    (delete-old-versions t)
    (vc-make-backup-files t)
  #+end_src
+*** Indent With Spaces
+Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+(setq-default indent-tabs-mode nil)
+#+end_src
 *** Inhibit Startup Screen
 After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
@@ -170,10 +181,9 @@ I like have line numbers turned on all the time even if it reduces some screen s
       (add-hook 'text-mode-hook 'display-line-numbers-mode)
       (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
-*** Save Work Session
-The following option will cause Emacs to always save the state of Emacs when it was closed. Local buffers, tabs in ~tab-bar-mode~, and window arrangements are all saved if possible. Turning this on makes it much simpler to continue working on the same projects when Emacs is closed and then opened again.
+*** Register Delay
 #+begin_src emacs-lisp :noweb-ref emacs_custom
-(desktop-save-mode t)
+  (register-preview-delay 0)
 #+end_src
 *** Shorten "Yes or No" to "Y or N"
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
@@ -196,11 +206,6 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-#+end_src
-*** Display Time
-This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (display-time-mode 1)
 #+end_src
 * Packages
 This section contains the configuration for different packages included with Emacs. Each package is included in a ~use-package~ statement so that the loading of the package can be controlled by using the ~:bind~, ~:mode~, ~:hook~, and ~:defer~ keywords. If deferral of package loading is not controlled and all Emacs packages are loaded at startup, Emacs can take /extremely/ long to load if it is run as a portable application on a slow system and from a slow USB thumb drive. By deferring the loading, a large number of packages can be made available, but only loaded if they are actually needed or used.
@@ -1397,6 +1402,13 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     (vertico-resize t)
     :init
     (vertico-mode))
+#+end_src
+** Whicher
+#+begin_src emacs-lisp :tangle yes
+;;  (use-package whicher
+;;    :straight (whicher :host github
+;;                       :repo "abo-abo/whicher"
+;;                       :branch master))
 #+end_src
 ** Which-key
 Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.

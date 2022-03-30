@@ -52,21 +52,23 @@
 
 (use-package emacs
   :custom
-  (register-preview-delay 0)
   (tab-always-indent 'complete)
   (completion-cycle-threshold t)
+  (desktop-save-mode t)
   (delete-by-moving-to-trash t)
   (version-control t)
   (delete-old-versions t)
   (vc-make-backup-files t)
   (inhibit-startup-screen t)
-  (desktop-save-mode t)
+  (register-preview-delay 0)
   (sentence-end-double-space nil)
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   (register-preview-function #'consult-register-format)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
+  (display-time-mode 1)
+  (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'text-mode-hook 'display-line-numbers-mode)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
@@ -75,7 +77,6 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-  (display-time-mode 1)
   (advice-add #'completing-read-multiple
               :override #'consult-completing-read-multiple)
   (advice-add #'register-preview
@@ -845,6 +846,11 @@
   (vertico-resize t)
   :init
   (vertico-mode))
+
+;;  (use-package whicher
+;;    :straight (whicher :host github
+;;                       :repo "abo-abo/whicher"
+;;                       :branch master))
 
 (use-package which-key
   :straight t
