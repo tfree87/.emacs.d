@@ -82,7 +82,8 @@ In this section, I have included customization to replace the default Emacs pack
 1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
 2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
 3. The entire package repository is cloned, which, while it takes up a lot of space, allows for editing the source code directly if desired.
-4. Github repositories that are not included in ELPA, MELPA, or marmalade can be pulled and used in ~use-package~ statements.
+4. Github repositories that are not included in ELPA, MELPA, or marmalade can be pulled 
+ used in ~use-package~ statements.
  
 ** Straight.el
 Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
@@ -207,8 +208,9 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
 #+end_src
+
 * Packages
-This section contains the configuration for different packages included with Emacs. Each package is included in a ~use-package~ statement so that the loading of the package can be controlled by using the ~:bind~, ~:mode~, ~:hook~, and ~:defer~ keywords. If deferral of package loading is not controlled and all Emacs packages are loaded at startup, Emacs can take /extremely/ long to load if it is run as a portable application on a slow system and from a slow USB thumb drive. By deferring the loading, a large number of packages can be made available, but only loaded if they are actually needed or used.
+This section contains the configuration for different packages I use with Emacs. Each package is included in a ~use-package~ statement so that the loading of the package can be controlled by using the ~:bind~, ~:mode~, ~:hook~, and ~:defer~ keywords. If deferral of package loading is not controlled and all Emacs packages are loaded at startup, Emacs can take /extremely/ long to load if it is run as a portable application on a slow system and from a slow USB thumb drive. By deferring the loading, a large number of packages can be made available, but only loaded if they are actually needed or used.
 #+begin_src emacs-lisp :tangle yes
 ;; Packages and Their Configuration
 #+end_src
