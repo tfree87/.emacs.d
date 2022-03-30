@@ -6,7 +6,7 @@
 <!-- 2022-03-31 Thu 00:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Another Emacs Configuration</title>
+<title>Running Emacs as a Portable Application</title>
 <meta name="author" content="Thomas Freeman" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -196,102 +196,58 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Another Emacs Configuration</h1>
+<h1 class="title">Running Emacs as a Portable Application</h1>
 
 
-<div id="outline-container-org7b39116" class="outline-2">
-<h2 id="org7b39116"><span class="section-number-2">1.</span> Welcome</h2>
+<div id="outline-container-org7776d48" class="outline-2">
+<h2 id="org7776d48"><span class="section-number-2">1.</span> Depedencies</h2>
 <div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org69808b2" class="outline-3">
+<h3 id="org69808b2"><span class="section-number-3">1.1.</span> Creating LaTeX Documents</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
-Welcome to the Github page for my Emacs configuration. I have created this Github pages site to help provide a place where I can post all of the custom modifications I have made to make Emacs as productive as possible for me. While Emacs has excellent documentation, and I highly recommend reading it, there is so much in the Emacs ecosystem that it doesn't even begin to cover much of the excellent third-party packages that have been released to extend Emacs. This is why I have decided that I would post my own Emacs configuration for anyone else who wants to learn by example. I have certainly found a lot of inspiration in scouring the internet for Emacs configurations created by other users.
+MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgeff2794" class="outline-2">
-<h2 id="orgeff2794"><span class="section-number-2">2.</span> About My Emacs Setup</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org9edfcde" class="outline-3">
+<h3 id="org9edfcde"><span class="section-number-3">1.2.</span> Git</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
-I have tried to make an Emacs setup that is flexible for use in multiple contexts. While I prefer to use libre operating systems. I often find that for work I am limited to using a Windows system. As I have learned to rely on the powerful features of Emacs for much of the computing that I do, I have found a way to replicate the functions I love on Emacs as a portable system by running Emacs on a USB flash drive (based on <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>) alongside the <a href="https://portableapps.com/">PortableApps</a> platform. This allows me to take my Emacs setup everywhere I go. Here are some features of my setup:
-</p>
-<ol class="org-ol">
-<li>Portable
-<ul class="org-ul">
-<li>A file, runemacs.bat, will call the Emacs executable on the USB flash drive and set the home directory to the drive label of the flash drive.</li>
-<li>Emacs will check to see if it is being called as a portable app and can call on portable libraries such as MikTeX portable and Git portable to restore lost functionality.</li>
-<li>The Emacs configuration can be pulled from Github and uses straight.el to pull install all Emacs packages.</li>
-</ul></li>
-<li>Fast Loading
-<ul class="org-ul">
-<li>Package loading is deferred with use-package when possible</li>
-<li>Designed to load quickly on older computers and from a flash drives</li>
-</ul></li>
-<li>Multi-platform
-<ul class="org-ul">
-<li>This configuration has been tested on:
-<ul class="org-ul">
-<li>Linux Mint</li>
-<li>Windows using Chocolatey to install dependencies</li>
-<li>Windows as a USB PortableApp with dependencies installed on the USB drive as PortableApps</li>
-</ul></li>
-</ul></li>
-<li>Emacs Server
-<ul class="org-ul">
-<li>Starts an Emacs server so that other Emacs frames can be opened quickly and access the same buffers by running an <code>emacsclient</code> instance.</li>
-</ul></li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-org999e465" class="outline-2">
-<h2 id="org999e465"><span class="section-number-2">3.</span> Browse The Configuration</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-If you want to browse my Emacs configuration, there are a couple ways to do it.
-</p>
-</div>
-
-<div id="outline-container-orgbe3cd98" class="outline-3">
-<h3 id="orgbe3cd98"><span class="section-number-3">3.1.</span> With Documentation/Commentary</h3>
-<div class="outline-text-3" id="text-3-1">
-<p>
-I have used Org Mode to program my <code>init.el</code> file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to <code>init.el</code>.
+If you have the PortableApps.com platform installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found.
 </p>
 
-<dl class="org-dl">
-<dt><a href="init.html">init.html</a></dt><dd>Browse the code along with my commentary exported to HTML from my <code>init.org</code> file.</dd>
-</dl>
-
-<p>
-For more information on literate programming in Emacs, take a look at <a href="https://orgmode.org/worg/org-contrib/babel/how-to-use-Org-Babel-for-R.html">this site</a>.
-</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span><span style="color: #e61f44; font-weight: bold;">)</span>
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org9b63df5" class="outline-3">
-<h3 id="org9b63df5"><span class="section-number-3">3.2.</span> Without Documentation/Commentary</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org89f601b" class="outline-3">
+<h3 id="org89f601b"><span class="section-number-3">1.3.</span> Spell Checking</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
-You can also checkout the files directly on Github if you are not interested in sifting through all the extra text and just want to take a look at the raw code.
+Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:
 </p>
 
-<dl class="org-dl">
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/custom.el">custom.el</a></dt><dd>Customizations set by the Emacs <code>M-x customize</code> interface</dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/early-init.el">early-init.el</a></dt><dd>A file that is loaded before <code>init.el</code></dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/gnus.el">gnus.el</a></dt><dd>My Gnus newsreader/email setup (I only use Gnus for reading email)</dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/init.el">init.el</a></dt><dd>The standard Emacs init file</dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/runemacs.bat">runemacs.bat</a></dt><dd>A Windows batch file to set up the environment for running Emacs as a portable application</dd>
-</dl>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> <span style="color: #ff2afc;">(</span>eq system-type 'windows-nt<span style="color: #ff2afc;">)</span>
+    <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">progn</span> <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #df85ff;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/hunspell/bin/hunspell.exe"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
+           <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-personal-dictionary <span style="color: #7984D1;">"~/.emacs.d/hunspell_en_US"</span><span style="color: #a7da1e;">)</span>
+           <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-local-dictionary <span style="color: #7984D1;">"en_US"</span><span style="color: #a7da1e;">)</span>
+           <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-local-dictionary-alist
+                 '<span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span><span style="color: #7984D1;">"en_US"</span> <span style="color: #7984D1;">"[[:alpha:]]"</span> <span style="color: #7984D1;">"[</span><span style="color: #ff2afc; font-weight: bold;">^</span><span style="color: #7984D1;">[:alpha:]]"</span> <span style="color: #7984D1;">"[']"</span> nil <span style="color: #1ea8fc;">(</span><span style="color: #7984D1;">"-d"</span> <span style="color: #7984D1;">"en_US"</span><span style="color: #1ea8fc;">)</span> nil utf-8<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #a7da1e;">(</span>whicher <span style="color: #7984D1;">"hunspell"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0c68aea" class="outline-2">
-<h2 id="org0c68aea"><span class="section-number-2">4.</span> Running Emacs from a Flash Drive</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-If you want to run Emacs as a portable application, see <a href="emacs-portable.html">Emacs as a Portable Application</a>.
-</p>
+<div id="outline-container-org87f8c41" class="outline-3">
+<h3 id="org87f8c41"><span class="section-number-3">1.4.</span> PlantUML</h3>
 </div>
 </div>
 </div>
