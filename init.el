@@ -65,7 +65,6 @@
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   (register-preview-function #'consult-register-format)
-  (dired-dwim-target t)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
   (when (version<= "26.0.50" emacs-version)
@@ -73,64 +72,16 @@
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (fset 'yes-or-no-p 'y-or-n-p)
   (column-number-mode 1)
-  (display-time-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
+  (display-time-mode 1)
   (advice-add #'completing-read-multiple
               :override #'consult-completing-read-multiple)
   (advice-add #'register-preview
               :override #'consult-register-window))
 
-(use-package all-the-icons
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :defer 1
-  :straight t)
-
-(use-package all-the-icons-dired
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
-
-(use-package all-the-icons-ibuffer
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
-
-(use-package all-the-icons-completion
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :defer 3
-  :config
-  (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-
-(use-package doom-themes
-  :if window-system
-  :straight t
-  :defer 1
-  :config
-  (load-theme 'doom-outrun-electric t)
-  (doom-themes-org-config))
-
-(use-package doom-modeline
-  :if window-system
-  :straight t
-  :defer 1
-  :config (doom-modeline-mode))
-
-(use-package nyan-mode
-  :if window-system
-  :straight t
-  :defer 3
-  :custom
-  (nyan-wavy-trail t)
-  :config
-  (nyan-mode)
-  (nyan-start-animation))
-
-;; Packages and Configuration
+;; Packages and Their Configuration
 
 (use-package benchmark-init
   :straight t
@@ -158,6 +109,30 @@
   :config
   (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
+(use-package all-the-icons
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :defer 1
+  :straight t)
+
+(use-package all-the-icons-dired
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
+
+(use-package all-the-icons-ibuffer
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+
+(use-package all-the-icons-completion
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :defer 3
+  :config
+  (all-the-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+
 (use-package apheleia
   :straight t
   :hook
@@ -173,9 +148,8 @@
   :custom
   (TeX-auto-save t)
   (TeX-parse-self t)
-  (TeX-master nil))
-
-(setq bibtex-dialect 'biblatex)
+  (TeX-master nil)
+  (bibtex-dialect 'biblatex))
 
 (use-package c-mode
   :straight (:type built-in)
@@ -379,6 +353,13 @@
   (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (deft-use-filename-as-title t))
 
+(use-package dired
+  :straight nil
+  :ensure nil
+  :defer t
+  :custom
+  (dired-dwim-target t))
+
 (use-package docker
   :if (executable-find "docker")
   :straight t
@@ -387,6 +368,20 @@
 (use-package docker-compose-mode
   :defer t
   :straight t)
+
+(use-package doom-themes
+  :if window-system
+  :straight t
+  :defer 1
+  :config
+  (load-theme 'doom-outrun-electric t)
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :if window-system
+  :straight t
+  :defer 1
+  :config (doom-modeline-mode))
 
 (use-package elpy
   :straight t
@@ -447,12 +442,6 @@
   (eshell-save-history-on-exit t)
   (eshell-destroy-buffer-when-process-dies t)
   :config
-  (add-to-list 'eshell-visual-commands "htop")
-  (add-to-list 'eshell-visual-commands "ipython")
-  (add-to-list 'eshell-visual-commands "rclone")
-  (add-to-list 'eshell-visual-commands "ssh")
-  (add-to-list 'eshell-visual-commands "tail")
-  (add-to-list 'eshell-visual-commands "top")
   (setenv "PAGER" "cat"))
 
 (use-package eshell-git-prompt
@@ -590,6 +579,16 @@
   :straight t
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
+
+(use-package nyan-mode
+  :if window-system
+  :straight t
+  :defer 3
+  :custom
+  (nyan-wavy-trail t)
+  :config
+  (nyan-mode)
+  (nyan-start-animation))
 
 (use-package org
   :defer t

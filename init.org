@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 18:35:09 Thomas>
+#+date: Time-stamp: <2022-03-29 20:45:20 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -32,6 +32,7 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
+
 * Performance Optimization Start
 In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.
 ** Reduce File Lookups on Loading
@@ -74,6 +75,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 
   (load custom-file)
 #+end_src
+
 * Package Management
 In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this switch are:
 
@@ -111,6 +113,7 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   (straight-use-package 'use-package)
   (setq straight-use-package-by-default t)
 #+end_src
+
 * Emacs Options
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -187,95 +190,22 @@ Emacs when navigating expects sentences to end with a double space after a perio
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (sentence-end-double-space nil)
 #+end_src
-*** User Interface
-All the changes contained here affect how Emacs looks when run such as faces, colors, backgrounds, and display.
-**** All the Icons
-I like to use All the Icons to add some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons
-    :if (not <<portable_check>>)
-    :defer 1
-    :straight t)
-#+end_src
-***** Dired
-Add file-type icons to Dired when browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-dired
-    :if (not <<portable_check>>)
-    :straight t
-    :hook
-    (dired-mode . all-the-icons-dired-mode))
- #+end_src
-***** Ibuffer
-Add icons representing different buffer types to Ibuffer mode.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-ibuffer
-    :if (not <<portable_check>>)
-    :straight t
-    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
-#+end_src
-***** Completion
-This will add icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-completion
-    :if (not <<portable_check>>)
-    :straight t
-    :defer 3
-    :config
-    (all-the-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-#+end_src
-**** Emacs Theme
-This section contains modifications to the default Emacs theme.
-***** Doom Theme
-I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
-****** Color Theme
-#+begin_src emacs-lisp :tangle yes
-  (use-package doom-themes
-    :if window-system
-    :straight t
-    :defer 1
-    :config
-    (load-theme 'doom-outrun-electric t)
-    (doom-themes-org-config))
-#+end_src
-****** Doom Modeline
-I like the Doom modeline because it has icons and bright colors.
-#+begin_src emacs-lisp :tangle yes
-  (use-package doom-modeline
-    :if window-system
-    :straight t
-    :defer 1
-    :config (doom-modeline-mode))
-#+end_src
-**** Display Time
-This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (display-time-mode 1)
-#+end_src
-**** Menu Bar, Scroll Bar, and Tool Bar
+*** Menu Bar, Scroll Bar, and Tool Bar
 Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
 #+end_src
-**** Nyan Mode
-Display a nyan cat on the mode line that shows progress through a buffer.
-#+begin_src emacs-lisp :tangle yes
-  (use-package nyan-mode
-    :if window-system
-    :straight t
-    :defer 3
-    :custom
-    (nyan-wavy-trail t)
-    :config
-    (nyan-mode)
-    (nyan-start-animation))
+*** Display Time
+This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (display-time-mode 1)
 #+end_src
 * Packages
+This section contains the configuration for different packages included with Emacs. Each package is included in a ~use-package~ statement so that the loading of the package can be controlled by using the ~:bind~, ~:mode~, ~:hook~, and ~:defer~ keywords. If deferral of package loading is not controlled and all Emacs packages are loaded at startup, Emacs can take /extremely/ long to load if it is run as a portable application on a slow system and from a slow USB thumb drive. By deferring the loading, a large number of packages can be made available, but only loaded if they are actually needed or used.
 #+begin_src emacs-lisp :tangle yes
-;; Packages and Configuration
+;; Packages and Their Configuration
 #+end_src
 ** Benchmark Init :startup:
 The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
@@ -318,6 +248,42 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
     :config
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+end_src
+** All the Icons :theme:
+[[https://github.com/domtronn/all-the-icons.el][All The Icons]] adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons
+    :if (not <<portable_check>>)
+    :defer 1
+    :straight t)
+#+end_src
+** All The Icons Dired :theme:
+[[https://github.com/jtbm37/all-the-icons-dired][all-the-icons-dired]] will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-dired
+    :if (not <<portable_check>>)
+    :straight t
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+ #+end_src
+** All The Icons Ibuffer :theme:
+[[https://github.com/seagle0128/all-the-icons-ibuffer][all-the-icons-ibuffer]] adds icons representing different buffer types to Ibuffer mode.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-ibuffer
+    :if (not <<portable_check>>)
+    :straight t
+    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+#+end_src
+** All the Icons Completion :theme:
+[[https://github.com/iyefrat/all-the-icons-completion][all-the-icons-completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-completion
+    :if (not <<portable_check>>)
+    :straight t
+    :defer 3
+    :config
+    (all-the-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+end_src
 ** Apheleia :coding:
 [[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 #+begin_src emacs-lisp :tangle yes
@@ -332,19 +298,20 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
 #+end_src
 ** AUCTeX :LaTeX:
 [[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using LaTeX.
-#+begin_src emacs-lisp :tangle yes
-  (use-package auctex
-    :straight t
-    :defer t
-    :custom
-    (TeX-auto-save t)
-    (TeX-parse-self t)
-    (TeX-master nil))
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+    (use-package auctex
+      :straight t
+      :defer t
+      :custom
+      (TeX-auto-save t)
+      (TeX-parse-self t)
+      (TeX-master nil)
+      <<auctex_custom>>)
 #+end_src
 *** Use BibLaTeX
 BibLaTeX has more powerful features than standard BibTeX.
-#+begin_src emacs-lisp :tangle yes
-(setq bibtex-dialect 'biblatex)
+#+begin_src emacs-lisp :noweb-ref auctex_custom
+(bibtex-dialect 'biblatex)
 #+end_src
 ** C :coding:
 I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
@@ -656,9 +623,17 @@ The Insidious Big Brother DataBase (https://www.jwz.org/bbdb/), also known as BB
 #+end_src
 ** Dired :file_browsing:
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package dired
+    :straight nil
+    :ensure nil
+    :defer t
+    :custom
+    <<dired_custom>>)
+#+end_src
 *** Move/Rename/Copy Files to Another Pane
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
- #+begin_src emacs-lisp :noweb-ref emacs_custom
+ #+begin_src emacs-lisp :noweb-ref dired_custom
    (dired-dwim-target t)
  #+end_src
 ** Docker :docker:
@@ -676,8 +651,28 @@ This will cause emacs to default to moving/copying/renaming files from the direc
     :defer t
     :straight t)
 #+end_src
+** Doom Themes :theme:
+I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-themes
+    :if window-system
+    :straight t
+    :defer 1
+    :config
+    (load-theme 'doom-outrun-electric t)
+    (doom-themes-org-config))
+#+end_src
+** Doom Modeline :theme:
+I like the Doom modeline because it has icons and bright colors.
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-modeline
+    :if window-system
+    :straight t
+    :defer 1
+    :config (doom-modeline-mode))
+#+end_src
 ** Elpy :coding:python:
-[[https://github.com/jorgenschaefer/elpy][Elpy]]Adds powerful features for Python progamming in Emacs.
+[[https://github.com/jorgenschaefer/elpy][Elpy]] adds powerful features for Python progamming in Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elpy
     :straight t
@@ -735,21 +730,20 @@ Allow use of Embark commands after issuing a Consult command.
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
 Get Eshell configuration set up.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-   (use-package eshell
-     :defer t
-     :hook
-     <<eshell_prompt>>
-     (eshell-mode . (lambda ()
-                      <<eshell_visual_commands>>
-                      <<eshell_aliases>>))
-     :custom
-     (eshell-error-if-no-glob t)
-     (eshell-hist-ignoredups t)
-     (eshell-save-history-on-exit t)
-     (eshell-destroy-buffer-when-process-dies t)
-     :config
-     <<eshell_config>>
-     (setenv "PAGER" "cat"))
+  (use-package eshell
+    :defer t
+    :hook
+    <<eshell_prompt>>
+    (eshell-mode . (lambda ()
+                     <<eshell_visual_commands>>
+                     <<eshell_aliases>>))
+    :custom
+    (eshell-error-if-no-glob t)
+    (eshell-hist-ignoredups t)
+    (eshell-save-history-on-exit t)
+    (eshell-destroy-buffer-when-process-dies t)
+    :config
+    (setenv "PAGER" "cat"))
   #+end_src
 *** Eshell Aliases
 Below are a list of command-line aliases for use in eshell.
@@ -761,8 +755,19 @@ Below are a list of command-line aliases for use in eshell.
   (eshell/alias "cpv" "rsync -ah --info=progress2")
   (eshell/alias "ll" "ls -Alh")
 #+end_src
-*** Eshell Prompt
-Create a custom prompt for eshell that shows some more information.
+*** Eshell Visual Commands
+Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
+#+name: eshell_visual_commands
+#+begin_src emacs-lisp :noweb-ref eshell_visual_commands
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ipython")
+  (add-to-list 'eshell-visual-commands "rclone")
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "tail")
+  (add-to-list 'eshell-visual-commands "top")
+#+end_src
+** Eshell Git Prompt
+[[https://github.com/xuchunyang/eshell-git-prompt][eshell-git-prompt]] provides a series of Eshell prompts that provide extra information including the git status of the current project.
 #+begin_src emacs-lisp :tangle yes
   (use-package eshell-git-prompt
     :straight (emacs-git-prompt :host github
@@ -770,12 +775,13 @@ Create a custom prompt for eshell that shows some more information.
                                 :branch "master")
     :defer t)
 #+end_src
-**** Set the Eshell prompt on load
+*** Set the Eshell prompt on load
 #+begin_src emacs-lisp :noweb-ref eshell_prompt
   (eshell-load . (lambda ()
                         (eshell-git-prompt-use-theme 'multiline2)))
 #+end_src
-*** Eshell Toggle
+** Eshell Toggle
+[[https://github.com/4DA/eshell-toggle][eshell-toggle]] makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package eshell-toggle
     :straight (eshell-toggle :repo "4DA/eshell-toggle"
@@ -787,17 +793,6 @@ Create a custom prompt for eshell that shows some more information.
     (eshell-toggle-init-function #'eshell-toggle-init-eshell)
     :bind
     ("M-s-`" . eshell-toggle))
-#+end_src
-*** Eshell Visual Commands
-Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
-#+name: eshell_visual_commands
-#+begin_src emacs-lisp :noweb-ref eshell_config
-  (add-to-list 'eshell-visual-commands "htop")
-  (add-to-list 'eshell-visual-commands "ipython")
-  (add-to-list 'eshell-visual-commands "rclone")
-  (add-to-list 'eshell-visual-commands "ssh")
-  (add-to-list 'eshell-visual-commands "tail")
-  (add-to-list 'eshell-visual-commands "top")
 #+end_src
 ** Flycheck :coding:
 [[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
@@ -977,6 +972,19 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 
+** Nyan Mode :theme:
+Display a nyan cat on the mode line that shows progress through a buffer.
+#+begin_src emacs-lisp :tangle yes
+  (use-package nyan-mode
+    :if window-system
+    :straight t
+    :defer 3
+    :custom
+    (nyan-wavy-trail t)
+    :config
+    (nyan-mode)
+    (nyan-start-animation))
+#+end_src
 ** Org :org:
 [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 - Organizing my tasks and projects similar to David Allen's "Getting Things Done" method
