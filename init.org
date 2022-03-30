@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-30 21:02:19 thomas>
+#+date: Time-stamp: <2022-03-30 21:13:11 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1549,14 +1549,14 @@ I have this option run only when I am not executing Emacs as a portable app as i
 * Update Org Files on Portable App Startup
 When running Emacs as a portable app, I want to pull down the latest versions of my ~org-agenda-files~ and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-    (when <<portable_check>>
-      (rclone-sync "dropbox:"
-                   "~/Dropbox/"
-                   "~/rclone/rclone.exe")
-      (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync "~/Dropbox/"
-                                                "dropbox:"
-                                                "~/rclone/rclone.exe"))))
+  (when <<portable_check>>
+    (rclone-sync "dropbox:"
+                 "~/Dropbox/"
+                 "~/rclone/rclone.exe")
+    (add-hook 'kill-emacs-hook (lambda ()
+                                 (rclone-sync "~/Dropbox/"
+                                              "dropbox:"
+                                              "~/rclone/rclone.exe"))))
 #+end_src
 
 * Performance Optimization End
