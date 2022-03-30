@@ -50,9 +50,15 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(use-package whicher
+  :straight (whicher :host github
+                     :repo "tfree87/whicher"
+                     :branch "new-buffer")
+  :init
+  (setq whicher-report-new-buffer t))
+
 (use-package emacs
   :custom
-  (tab-always-indent 'complete)
   (completion-cycle-threshold t)
   (desktop-save-mode t)
   (delete-by-moving-to-trash t)
@@ -362,13 +368,16 @@
   (dired-dwim-target t))
 
 (use-package docker
-  :if (executable-find "docker")
+  :init
+  (whicher "docker")
   :straight t
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
   :defer t
-  :straight t)
+  :straight t
+  :init
+  (whicher "docker-compose"))
 
 (use-package doom-themes
   :if window-system
@@ -390,8 +399,8 @@
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :custom
-  (elpy-rpc-python-command "python3")
-  (python-shell-interpreter "ipython3")
+  (elpy-rpc-python-command (whicher "python3"))
+  (python-shell-interpreter (whicher "ipython3"))
   (python-shell-interpreter-args "-i --simple-prompt")
   :config
   (when (load "flycheck" t t)
@@ -469,12 +478,13 @@
 (use-package ispell
   :defer t
   :config
-  (when (eq system-type 'windows-nt)
-    (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-    (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-    (setq ispell-local-dictionary "en_US")
-    (setq ispell-local-dictionary-alist
-     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
+  (if (eq system-type 'windows-nt)
+    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+           (setq ispell-local-dictionary "en_US")
+           (setq ispell-local-dictionary-alist
+                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+      (setq ispell-program-name (whicher "hunspell"))))
 
 (use-package flyspell
   :blackout t
@@ -493,7 +503,8 @@
   :defer t)
 
 (use-package gnuplot
-  :if (executable-find "gnuplot")
+  :init
+  (whicher "gnuplot")
   :straight t
   :defer t)
 
@@ -543,10 +554,13 @@
 
 (use-package ledger-mode
   :straight t
-  :defer t)
+  :defer t
+  :init
+  (whicher "ledger"))
 
 (use-package magit
-  :if (executable-find "git")
+  :init
+  (whicher "git")
   :straight t
   :bind ("C-x g" . magit-status))
 
@@ -554,6 +568,7 @@
   :straight t
   :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
   :init
+  (whicher "pandoc")
   (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
   :config
   (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
@@ -585,6 +600,9 @@
   :if window-system
   :straight t
   :defer 3
+  :init
+  ;; Requires mplayer to play the music
+  (whicher "mplayer")
   :custom
   (nyan-wavy-trail t)
   :config
@@ -593,6 +611,9 @@
 
 (use-package org
   :defer t
+  :init
+  (whicher "pdflatex")
+  (whicher "biber")
   :bind
   ("C-c l" . #'org-store-link)
   ("C-c a" . #'org-agenda)
@@ -753,6 +774,7 @@
             "\\*Embark Actions\\*"
             "Output\\*$"
             "\\*Async Shell Command\\*"
+            "\\*Whicher Report\\*"
             help-mode
             compilation-mode))
   (popper-mode +1)
@@ -761,14 +783,18 @@
 (use-package powershell
   :if (eq system-type 'windows-nt)
   :defer t
+  :init
+  (whicher "powershell.exe")
   :straight t
   :config
   ;; Change default compile command for powershell
   (add-hook 'powershell-mode-hook
             (lambda ()
               (set (make-local-variable 'compile-command)
-                   (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
-                           (buffer-file-name))))))
+                   (format
+                    (whicher
+                     "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
+                    (buffer-file-name))))))
 
 (use-package projectile
   :straight t
@@ -796,6 +822,7 @@
   :straight t
   :defer t
   :init
+  (whicher "git")
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :custom
@@ -847,11 +874,6 @@
   :init
   (vertico-mode))
 
-(use-package whicher
-  :straight (whicher :host github
-                     :repo "abo-abo/whicher"
-                     :branch "master"))
-
 (use-package which-key
   :straight t
   :defer 3
@@ -880,17 +902,18 @@
 
 ;; Custom Function Definitions
 
+(whicher "sudo")
 (defun sudo-find-file (file)
-  "Open FILE as root."
-  (interactive "FOpen file as root: ")
-  (when (file-writable-p file)
-    (user-error "File is user writeable, aborting sudo"))
-  (find-file (if (file-remote-p file)
-                 (concat "/" (file-remote-p file 'method) ":"
-                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
-                         "|sudo:root@"
-                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-               (concat "/sudo:root@localhost:" file))))
+    "Open FILE as root."
+    (interactive "FOpen file as root: ")
+    (when (file-writable-p file)
+      (user-error "File is user writeable, aborting sudo"))
+    (find-file (if (file-remote-p file)
+                   (concat "/" (file-remote-p file 'method) ":"
+                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                           "|sudo:root@"
+                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                 (concat "/sudo:root@localhost:" file))))
 
 (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 

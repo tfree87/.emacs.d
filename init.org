@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-30 09:37:33 Thomas>
+#+date: Time-stamp: <2022-03-30 13:13:05 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -86,7 +86,7 @@ In this section, I have included customization to replace the default Emacs pack
  used in ~use-package~ statements.
  
 ** Straight.el
-Instead of using the built-in package manager, use ~straight.el~ to pull all the packages straight from their repositories.
+Instead of using the built-in package manager, use [[https://github.com/raxod502/straight.el][straight.el]] to pull all the packages straight from their repositories.
 #+begin_src emacs-lisp :tangle yes
 
   ;; Install Straight.el to manage packages
@@ -115,6 +115,17 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   (setq straight-use-package-by-default t)
 #+end_src
 
+* Whicher
+[[https://github.com/abo-abo/whicher][Whicher]] provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time. This needs to be loaded before the rest of init.el so that as init.el is loaded, it can look for missing executables on the host system.
+#+begin_src emacs-lisp :tangle yes
+  (use-package whicher
+    :straight (whicher :host github
+                       :repo "tfree87/whicher"
+                       :branch "new-buffer")
+    :init
+    (setq whicher-report-new-buffer t))
+#+end_src
+
 * Emacs Options
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
@@ -133,7 +144,7 @@ Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be foun
 #+end_src
 *** Completion by Pressing Tab
 ~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate autocomplete.
-#+begin_src emacs-lisp :noweb-ref emacs_custom
+>#+begin_src emacs-lisp :noweb-ref emacs_custom
   (tab-always-indent 'complete)
 #+end_src
 *** Completion Cycling
@@ -349,7 +360,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     <<corfu_config>>)
 #+end_src
 *** Use TAB for Selecting Candidates
-Instead of using M-tab which will switch windows in XFCE---my default desktop---use TAB to cycle between the different possible options.
+Instead of using M-tab which will switch windows in XFCE---my default desktop environment---use TAB to cycle between the different possible options.
 #+name: tab-selection
 #+begin_src emacs-lisp :noweb-ref corfu_bind
   (:map corfu-map
@@ -647,7 +658,8 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 [[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
-    :if (executable-find "docker")
+    :init
+    (whicher "docker")
     :straight t
     :bind ("C-c d" . docker))
 #+end_src
@@ -656,7 +668,9 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
     :defer t
-    :straight t)
+    :straight t
+    :init
+    (whicher "docker-compose"))
 #+end_src
 ** Doom Themes :theme:
 I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
@@ -687,8 +701,8 @@ I like the Doom modeline because it has icons and bright colors.
     :init
     (advice-add 'python-mode :before 'elpy-enable)
     :custom
-    (elpy-rpc-python-command "python3")
-    (python-shell-interpreter "ipython3")
+    (elpy-rpc-python-command (whicher "python3"))
+    (python-shell-interpreter (whicher "ipython3"))
     (python-shell-interpreter-args "-i --simple-prompt")
     :config
     <<elpy_config>>) 
@@ -816,12 +830,13 @@ In order for this to work in Windows, hunspell must be installed with the proper
   (use-package ispell
     :defer t
     :config
-    (when (eq system-type 'windows-nt)
-      (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-      (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-      (setq ispell-local-dictionary "en_US")
-      (setq ispell-local-dictionary-alist
-       '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))))
+    (if (eq system-type 'windows-nt)
+      (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+             (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+             (setq ispell-local-dictionary "en_US")
+             (setq ispell-local-dictionary-alist
+                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+        (setq ispell-program-name (whicher "hunspell"))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
@@ -850,10 +865,11 @@ I sometimes use [[https://www.gnu.org/software/emacs/manual/html_node/gnus/][Gnu
 ** Gnuplot
 [[https://github.com/emacs-gnuplot/gnuplot][Gnuplot]] mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 #+begin_src emacs-lisp :tangle yes
-  (use-package gnuplot
-    :if (executable-find "gnuplot")
-    :straight t
-    :defer t)
+    (use-package gnuplot
+      :init
+      (whicher "gnuplot")
+      :straight t
+      :defer t)
 #+end_src
 ** Habitica :productivity:
 #+begin_src emacs-lisp :tangle yes
@@ -918,15 +934,18 @@ Ibuffer makes it possible to sort buffers in the buffer list into groupings. Thi
 ** Ledger
 To conduct plain-text accounting in Emacs, [[https://github.com/ledger/ledger-mode][ledger-mode]] needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 #+begin_src emacs-lisp :tangle yes
-  (use-package ledger-mode
-    :straight t
-    :defer t)
+    (use-package ledger-mode
+      :straight t
+      :defer t
+      :init
+      (whicher "ledger"))
 #+end_src
 ** Magit :coding:
 [[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 #+begin_src emacs-lisp :tangle yes
   (use-package magit
-    :if (executable-find "git")
+    :init
+    (whicher "git")
     :straight t
     :bind ("C-x g" . magit-status))
 #+end_src
@@ -937,6 +956,7 @@ To conduct plain-text accounting in Emacs, [[https://github.com/ledger/ledger-mo
     :straight t
     :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
     :init
+    (whicher "pandoc")
     <<markdown_init>>
     :config
     (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
@@ -980,12 +1000,15 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
 #+end_src
 
 ** Nyan Mode :theme:
-Display a nyan cat on the mode line that shows progress through a buffer.
+[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
 #+begin_src emacs-lisp :tangle yes
   (use-package nyan-mode
     :if window-system
     :straight t
     :defer 3
+    :init
+    ;; Requires mplayer to play the music
+    (whicher "mplayer")
     :custom
     (nyan-wavy-trail t)
     :config
@@ -1000,6 +1023,9 @@ Display a nyan cat on the mode line that shows progress through a buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package org
     :defer t
+    :init
+    (whicher "pdflatex")
+    (whicher "biber")
     :bind
     ("C-c l" . #'org-store-link)
     ("C-c a" . #'org-agenda)
@@ -1097,7 +1123,6 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
      "pdflatex -interaction nonstopmode -output-directory %o %f"
      "pdflatex -interaction nonstopmode -output-directory %o %f"))
 #+end_src
-
 *** Org-babel Languages
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
 #+name: babel_languages
@@ -1288,6 +1313,7 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
             "\\*Embark Actions\\*"
             "Output\\*$"
             "\\*Async Shell Command\\*"
+            "\\*Whicher Report\\*"
             help-mode
             compilation-mode))
 #+end_src
@@ -1297,14 +1323,18 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
   (use-package powershell
     :if (eq system-type 'windows-nt)
     :defer t
+    :init
+    (whicher "powershell.exe")
     :straight t
     :config
     ;; Change default compile command for powershell
     (add-hook 'powershell-mode-hook
               (lambda ()
                 (set (make-local-variable 'compile-command)
-                     (format "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\""
-                             (buffer-file-name))))))
+                     (format
+                      (whicher
+                       "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
+                      (buffer-file-name))))))
 #+end_src
 ** Projectile :coding:
 [[https://github.com/bbatsov/projectile][Projectile Mode]] to make switching between project files and managing projects easier in Emacs.
@@ -1351,6 +1381,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     :straight t
     :defer t
     :init
+    (whicher "git")
     (with-eval-after-load 'winum
       (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
     :custom
@@ -1404,14 +1435,6 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     (vertico-resize t)
     :init
     (vertico-mode))
-#+end_src
-** Whicher
-[[https://github.com/abo-abo/whicher][Whicher]] provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time.
-#+begin_src emacs-lisp :tangle yes
-  (use-package whicher
-    :straight (whicher :host github
-                       :repo "abo-abo/whicher"
-                       :branch "master"))
 #+end_src
 ** Which-key
 Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
@@ -1469,6 +1492,7 @@ The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snip
     :straight t
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
+
 * Custom Functions
 This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
 #+begin_src emacs-lisp :tangle yes
@@ -1477,33 +1501,36 @@ This section contains custom functions that I have either created myself or borr
 ** Sudo Find File
 This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
 #+begin_src emacs-lisp :tangle yes
+  (whicher "sudo")
   (defun sudo-find-file (file)
-    "Open FILE as root."
-    (interactive "FOpen file as root: ")
-    (when (file-writable-p file)
-      (user-error "File is user writeable, aborting sudo"))
-    (find-file (if (file-remote-p file)
-                   (concat "/" (file-remote-p file 'method) ":"
-                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
-                           "|sudo:root@"
-                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-                 (concat "/sudo:root@localhost:" file))))
+      "Open FILE as root."
+      (interactive "FOpen file as root: ")
+      (when (file-writable-p file)
+        (user-error "File is user writeable, aborting sudo"))
+      (find-file (if (file-remote-p file)
+                     (concat "/" (file-remote-p file 'method) ":"
+                             (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                             "|sudo:root@"
+                             (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                   (concat "/sudo:root@localhost:" file))))
 #+end_src
 ** Oh My Eshell
 Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
   (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
+
 * Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 
 I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   ;; Start an Emacs server
-
+  
   (when (not <<portable_check>>)
     (server-start))
 #+end_src
+
 * Performance Optimization End
 Reset the value for Emacs garbage collection from the beginning of the init file and close off the ~let~ statement at the beginning of the init file.
 #+begin_src emacs-lisp :tangle yes
