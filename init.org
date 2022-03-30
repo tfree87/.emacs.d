@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-30 13:13:05 Thomas>
+#+date: Time-stamp: <2022-03-30 14:56:58 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -121,7 +121,7 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   (use-package whicher
     :straight (whicher :host github
                        :repo "tfree87/whicher"
-                       :branch "new-buffer")
+                       :branch "master")
     :init
     (setq whicher-report-new-buffer t))
 #+end_src
@@ -1498,6 +1498,24 @@ This section contains custom functions that I have either created myself or borr
 #+begin_src emacs-lisp :tangle yes
 ;; Custom Function Definitions
 #+end_src
+** Rclone Functions
+#+begin_src emacs-lisp :tangle yes
+  (defun rclone-sync-local (source dest &optional rclone-path)
+    "Sync DEST with SOURCE using rclone with remote. 
+    The path to the rlcone executable can be set with RCLONE-PATH"
+    (interactive)
+    (shell-command
+     (concat "rclone -vP sync "
+             source
+             " "
+             dest)))
+#+end_src
+** Oh My Eshell
+Something I am fiddling around with...
+#+begin_src emacs-lisp :tangle yes
+  (load-file "~/.emacs.d/elisp/oh-my-esh.el")
+#+end_src
+
 ** Sudo Find File
 This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
 #+begin_src emacs-lisp :tangle yes
@@ -1514,12 +1532,6 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
                              (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                    (concat "/sudo:root@localhost:" file))))
 #+end_src
-** Oh My Eshell
-Something I am fiddling around with...
-#+begin_src emacs-lisp :tangle yes
-  (load-file "~/.emacs.d/elisp/oh-my-esh.el")
-#+end_src
-
 * Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 

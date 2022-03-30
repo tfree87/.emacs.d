@@ -53,7 +53,7 @@
 (use-package whicher
   :straight (whicher :host github
                      :repo "tfree87/whicher"
-                     :branch "new-buffer")
+                     :branch "master")
   :init
   (setq whicher-report-new-buffer t))
 
@@ -902,6 +902,18 @@
 
 ;; Custom Function Definitions
 
+(defun rclone-sync-local (source dest &optional rclone-path)
+  "Sync DEST with SOURCE using rclone with remote. 
+  The path to the rlcone executable can be set with RCLONE-PATH"
+  (interactive)
+  (shell-command
+   (concat "rclone -vP sync "
+           source
+           " "
+           dest)))
+
+(load-file "~/.emacs.d/elisp/oh-my-esh.el")
+
 (whicher "sudo")
 (defun sudo-find-file (file)
     "Open FILE as root."
@@ -914,8 +926,6 @@
                            "|sudo:root@"
                            (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
-
-(load-file "~/.emacs.d/elisp/oh-my-esh.el")
 
 ;; Start an Emacs server
 
