@@ -61,8 +61,8 @@ If you want to browse my Emacs configuration, there are a couple ways to do it.
 ** With Documentation/Commentary
 I have used Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from.
 
-- [[file:init.html][Init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
-- [[https://github.com/tfree87/.emacs.d/blob/main/init.org][init.org on Github]] : Read the ~init.org~ file directly in
+- [[file:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
+- [[https://github.com/tfree87/.emacs.d/blob/main/init.org][init.org on Github]] :: Read the ~init.org~ file directly in
 
 ** Without Documentation/Commentary
 You can also checkout the files directly on Github if you are not interested in sifting through all the extra text and just want to take a look at the raw code.
