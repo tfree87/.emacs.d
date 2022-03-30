@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-29 21:34:24 Thomas>
+#+date: Time-stamp: <2022-03-30 09:37:33 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1406,11 +1406,12 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     (vertico-mode))
 #+end_src
 ** Whicher
+[[https://github.com/abo-abo/whicher][Whicher]] provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time.
 #+begin_src emacs-lisp :tangle yes
-;;  (use-package whicher
-;;    :straight (whicher :host github
-;;                       :repo "abo-abo/whicher"
-;;                       :branch master))
+  (use-package whicher
+    :straight (whicher :host github
+                       :repo "abo-abo/whicher"
+                       :branch "master"))
 #+end_src
 ** Which-key
 Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.

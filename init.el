@@ -847,10 +847,10 @@
   :init
   (vertico-mode))
 
-;;  (use-package whicher
-;;    :straight (whicher :host github
-;;                       :repo "abo-abo/whicher"
-;;                       :branch master))
+(use-package whicher
+  :straight (whicher :host github
+                     :repo "abo-abo/whicher"
+                     :branch "master"))
 
 (use-package which-key
   :straight t
