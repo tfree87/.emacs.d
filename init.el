@@ -907,10 +907,12 @@
   The path to the rlcone executable can be set with RCLONE-PATH"
   (interactive)
   (shell-command
-   (concat "rclone -vP sync "
-           source
-           " "
-           dest)))
+   (let ((rclone-path (or rclone-path "rclone"))
+         (concat rclone-path
+                 " -vP sync "
+                 source
+                 " "
+                 dest)))))
 
 (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 
@@ -933,10 +935,13 @@
   (server-start))
 
 (when (eq (getenv "EMACS_PORTABLE") "Y")
-  (rclone-sync "dropbox:" "~/Dropbox/")
+  (rclone-sync "dropbox:"
+               "~/Dropbox/"
+               "~/rclone/rclone.exe")
   (add-hook 'kill-emacs-hook (lambda ()
                                (rclone-sync "~/Dropbox/"
-                                            "dropbox:"))))
+                                            "dropbox:"
+                                            "~/rclone/rclone.exe"))))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
