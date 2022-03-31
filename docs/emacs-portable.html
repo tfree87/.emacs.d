@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-31 Thu 02:42 -->
+<!-- 2022-03-31 Thu 09:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Emacs as a Portable Application</title>
@@ -202,30 +202,39 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Running Emacs as a Portable Application</h1>
+<h1 class="title">Running Emacs as a Portable Application
+<br />
+<span class="subtitle">For Windows</span>
+</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgd3a85f7">1. About</a></li>
-<li><a href="#org100a71b">2. Why Run Emacs as a Portable App?</a></li>
-<li><a href="#orgfa96021">3. Access Org Agenda Files from the Cloud</a></li>
-<li><a href="#org6e60dce">4. Depedencies</a></li>
+<li><a href="#org940029f">1. About</a></li>
+<li><a href="#org48dd622">2. Why Run Emacs as a Portable App?</a></li>
+<li><a href="#org75ba8cb">3. Process</a></li>
+<li><a href="#orgc7f21a6">4. Access Org Agenda Files from the Cloud</a>
+<ul>
+<li><a href="#org8818964">4.1. Syncing Org Files Automatically</a></li>
+</ul>
+</li>
+<li><a href="#org384294d">5. Extending Portable Emacs</a></li>
+<li><a href="#orgf1d3380">6. About This Page</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd3a85f7" class="outline-2">
-<h2 id="orgd3a85f7"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-org940029f" class="outline-2">
+<h2 id="org940029f"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system.
+I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org100a71b" class="outline-2">
-<h2 id="org100a71b"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
+<div id="outline-container-org48dd622" class="outline-2">
+<h2 id="org48dd622"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here are some reasons why I run Emacs as a portable application:
@@ -242,11 +251,65 @@ Here are some reasons why I run Emacs as a portable application:
 </div>
 </div>
 
-<div id="outline-container-orgfa96021" class="outline-2">
-<h2 id="orgfa96021"><span class="section-number-2">3.</span> Access Org Agenda Files from the Cloud</h2>
+<div id="outline-container-org75ba8cb" class="outline-2">
+<h2 id="org75ba8cb"><span class="section-number-2">3.</span> Process</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacs.
+Here is the process I used to make Emacs run off of a USB flash drive:
+</p>
+
+<p>
+<i><b>Note:</b> On slow systems, I have found it <b>very</b> important to verify the speed of any flash drive you use to launch Emacs. I have found that the difference between two USB 3.0 flash drives can change <code>emacs-init-time</code> from minutes to seconds with the right flash drive. Apparently, not all USB 3.0 drive are alike.</i>
+</p>
+
+<ol class="org-ol">
+<li>Download Emacs from the <a href="http://ftp.gnu.org/gnu/emacs/windows/">Gnu.org ftp site</a>.</li>
+<li>Extract the <code>.zip</code> file to your flash drive into a new directory (I recommend calling it <code>emacs</code>).</li>
+<li>Create a <code>.emacs.d</code> directory on your flash drive.</li>
+<li>Create a <code>runemacs.bat</code> file to launch Emacs containing the following lines:
+<ul class="org-ul">
+<li><p>
+Set Emacs home directory to the flash drive label so files are not saved to the host system.
+</p>
+<pre class="example" id="org5f156b5">
+rem Set the Emacs home directory to the drive label of the flash drive.
+set HOME=%~dp0
+</pre></li>
+<li><p>
+Create an environment variable to tell Emacs it was launched as a portable application. I do this so I can use the same Emacs configuration for all instances of Emacs whether I am running it as a portable application or not. This lets me include code in <code>init.el</code> to check if Emacs was launched as a portable application. If Emacs detects it was launched as a portable application, I can call on different functions to set up Emacs differently.
+</p>
+<pre class="example" id="org9f9ceb9">
+rem Set an evironment variable to tell Emacs that it is running portably
+set EMACS_PORTABLE="Y"
+</pre>
+<p>
+Now, in your <code>init.el</code> configuration file, you can use the following code to check if Emacs was called by executing <code>runemacs.bat</code> in any <code>if</code> or <code>when</code> statement:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>eq <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+<p>
+In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#org8818964">4.1</a>.
+</p></li>
+<li><p>
+Call the Emacs executable and launch it.
+</p>
+<pre class="example" id="orgdfe400c">
+rem Find the Emacs executable and execute it.
+"%~dp0/emacs/bin/runemacs.exe" %
+</pre></li>
+</ul></li>
+<li>Enjoy!</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc7f21a6" class="outline-2">
+<h2 id="orgc7f21a6"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacos.
 </p>
 
 <p>
@@ -268,7 +331,11 @@ Rclone is single executable (rclone, or rclone.exe on Windows) that you can simp
 <li>Use Org Mode as normal</li>
 <li>Sync the changes back to the cloud with <code>rclone.exe sync --config /path/to/config/file remote: ~/local_folder remote:</code></li>
 </ol>
+</div>
 
+<div id="outline-container-org8818964" class="outline-3">
+<h3 id="org8818964"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 In order to avoid human error in this process, I have added functions to my <code>init.el</code> file to do this work for me automatically:
 </p>
@@ -320,7 +387,7 @@ I then run rclone when Emacs starts up and add a hook to run when Emacs is close
 </div>
 
 <p>
-<i>Note: you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work.</i>
+<i><b>Note:</b> you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work.</i>
 </p>
 
 <p>
@@ -328,30 +395,21 @@ This will cause Emacs to sync my Org Mode agenda files and anything else in my D
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org6e60dce" class="outline-2">
-<h2 id="org6e60dce"><span class="section-number-2">4.</span> Depedencies</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org384294d" class="outline-2">
+<h2 id="org384294d"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
 </p>
 
 <dl class="org-dl">
-<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#orgfa96021">above</a>.</dd>
+<dt>Git</dt><dd>If you have the <a href="https://portableapps.com/">PortableApps.com platform</a> installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.</dd>
 
-<dt>MiKTeX</dt><dd>MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.</dd>
-
-<dt>Git</dt><dd>If you have the PortableApps.com platform installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.</dd>
-</dl>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span><span style="color: #e61f44; font-weight: bold;">)</span>
-</pre>
-</div>
-
-<dl class="org-dl">
-<dt>Hunspell</dt><dd>Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:</dd>
-</dl>
+<dt>Hunspell</dt><dd><p>
+Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:
+</p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> <span style="color: #ff2afc;">(</span>eq system-type 'windows-nt<span style="color: #ff2afc;">)</span>
@@ -362,9 +420,19 @@ In order to replicate all the functionality of Linux that I use when I install i
                  '<span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span><span style="color: #7984D1;">"en_US"</span> <span style="color: #7984D1;">"[[:alpha:]]"</span> <span style="color: #7984D1;">"[</span><span style="color: #ff2afc; font-weight: bold;">^</span><span style="color: #7984D1;">[:alpha:]]"</span> <span style="color: #7984D1;">"[']"</span> nil <span style="color: #1ea8fc;">(</span><span style="color: #7984D1;">"-d"</span> <span style="color: #7984D1;">"en_US"</span><span style="color: #1ea8fc;">)</span> nil utf-8<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #a7da1e;">(</span>whicher <span style="color: #7984D1;">"hunspell"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+</div></dd>
 
-<dl class="org-dl">
+<dt>MiKTeX</dt><dd><p>
+MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></dd>
+
+<dt>PDFTools</dt><dd>If you use the PDFtools package on Emacs, if you have access to a Windows system where you have administrator access and <code>msys2</code> installed, you can install and compile PDFTools using that system so it will be ready when you take it on the road.</dd>
+
 <dt>PlantUML</dt><dd><p>
 In order to be able to make flowcharts and other diagrams with <a href="https://plantuml.com/">PlantUML</a>, I downloaded the <a href="https://plantuml.com/download">PlantUML</a> <code>.jar</code> file to the <code>.emacs.d</code> folder on the USB drive and told Org Mode how to find it with the following addition to <code>init.el</code>:
 </p>
@@ -373,14 +441,25 @@ In order to be able to make flowcharts and other diagrams with <a href="https://
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-plantuml-jar-path <span style="color: #ff2afc;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/plantuml/plantuml.jar"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div></dd>
+
+<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#orgc7f21a6">above</a>.</dd>
 </dl>
+</div>
+</div>
+
+<div id="outline-container-orgf1d3380" class="outline-2">
+<h2 id="orgf1d3380"><span class="section-number-2">6.</span> About This Page</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+This page was written in Emacs Org Mode and exported to HTML using the Org Mode export engine. This wonder "ReadTheOrg" theme along with how to use it can be found <a href="https://github.com/fniessen/org-html-themes">at this link</a>.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-03-31 Thu 02:42</p>
+<p class="date">Created: 2022-03-31 Thu 09:44</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
