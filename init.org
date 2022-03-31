@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 02:32:07 thomas>
+#+date: Time-stamp: <2022-03-31 10:40:55 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1095,7 +1095,7 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
   (org-log-into-drawer t)
 #+end_src
 **** Custom TODO Keywords
-Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
+Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELLED tasks.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-todo-keywords
    '((sequence "TODO(t)"
@@ -1358,6 +1358,7 @@ Savehist will save the selections from completion history between Emacs sessions
     (savehist-mode))
   #+end_src
 ** Sunrise Commander :file_browsing:
+[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander. 
 #+begin_src emacs-lisp :tangle yes
   (use-package sunrise-commander
     :defer t
@@ -1440,7 +1441,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     (vertico-mode))
 #+end_src
 ** Which-key
-Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
+[[https://github.com/justbur/emacs-which-key][Which-key]] provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :straight t
