@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 10:40:55 Thomas>
+#+date: Time-stamp: <2022-03-31 11:53:34 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -751,8 +751,7 @@ Allow use of Embark commands after issuing a Consult command.
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src 
 ** Eshell
-Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
-Get Eshell configuration set up.
+Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package eshell
     :defer t
