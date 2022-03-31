@@ -34,7 +34,7 @@
 #+cite_export:
 
 
-[[file:init.html][Home]]
+[[file:index.html][Home]]
 
 * About
 
