@@ -64,7 +64,9 @@ If you want to browse my Emacs configuration, there are a couple ways to do it.
 
 I have used Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to ~init.el~.
 
-- [[file:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
+- [[file:early-init.html][early-init.html]] :: A file that is loaded before ~init.el~
+- [[file:gnus.html][gnus.html]] :: My Gnus newsreader/email setup (I only use Gnus for reading email)
+- [[File:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
 
 For more information on literate programming in Emacs, take a look at [[https://orgmode.org/worg/org-contrib/babel/how-to-use-Org-Babel-for-R.html][this site]].
 

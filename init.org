@@ -4,12 +4,14 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 11:53:34 Thomas>
+#+date: Time-stamp: <2022-03-31 18:35:23 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
 
+
+[[file:index.html][Home]]
 
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
 

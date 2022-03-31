@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-31 Thu 02:31 -->
+<!-- 2022-03-31 Thu 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Another Emacs Configuration</title>
@@ -207,22 +207,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgafadf11">1. Welcome</a></li>
-<li><a href="#org5762056">2. About My Emacs Setup</a></li>
-<li><a href="#orgd2d8ac1">3. Browse The Configuration</a>
+<li><a href="#orgf861d2e">1. Welcome</a></li>
+<li><a href="#org30199da">2. About My Emacs Setup</a></li>
+<li><a href="#org10d9624">3. Browse The Configuration</a>
 <ul>
-<li><a href="#orgc08d83d">3.1. With Documentation/Commentary</a></li>
-<li><a href="#org7b9284a">3.2. Without Documentation/Commentary</a></li>
+<li><a href="#org55e1d5a">3.1. With Documentation/Commentary</a></li>
+<li><a href="#org9992152">3.2. Without Documentation/Commentary</a></li>
 </ul>
 </li>
-<li><a href="#orgda7dc1b">4. Running Emacs from a Flash Drive</a></li>
+<li><a href="#org4541c4c">4. Running Emacs from a Flash Drive</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgafadf11" class="outline-2">
-<h2 id="orgafadf11"><span class="section-number-2">1.</span> Welcome</h2>
+<div id="outline-container-orgf861d2e" class="outline-2">
+<h2 id="orgf861d2e"><span class="section-number-2">1.</span> Welcome</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Welcome to the Github page for my Emacs configuration. I have created this Github pages site to help provide a place where I can post all of the custom modifications I have made to make Emacs as productive as possible for me. While Emacs has excellent documentation, and I highly recommend reading it, there is so much in the Emacs ecosystem that it doesn't even begin to cover much of the excellent third-party packages that have been released to extend Emacs. This is why I have decided that I would post my own Emacs configuration for anyone else who wants to learn by example. I have certainly found a lot of inspiration in scouring the internet for Emacs configurations created by other users.
@@ -230,8 +230,8 @@ Welcome to the Github page for my Emacs configuration. I have created this Githu
 </div>
 </div>
 
-<div id="outline-container-org5762056" class="outline-2">
-<h2 id="org5762056"><span class="section-number-2">2.</span> About My Emacs Setup</h2>
+<div id="outline-container-org30199da" class="outline-2">
+<h2 id="org30199da"><span class="section-number-2">2.</span> About My Emacs Setup</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I have tried to make an Emacs setup that is flexible for use in multiple contexts. While I prefer to use libre operating systems. I often find that for work I am limited to using a Windows system. As I have learned to rely on the powerful features of Emacs for much of the computing that I do, I have found a way to replicate the functions I love on Emacs as a portable system by running Emacs on a USB flash drive (based on <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>) alongside the <a href="https://portableapps.com/">PortableApps</a> platform. This allows me to take my Emacs setup everywhere I go. Here are some features of my setup:
@@ -265,22 +265,24 @@ I have tried to make an Emacs setup that is flexible for use in multiple context
 </div>
 </div>
 
-<div id="outline-container-orgd2d8ac1" class="outline-2">
-<h2 id="orgd2d8ac1"><span class="section-number-2">3.</span> Browse The Configuration</h2>
+<div id="outline-container-org10d9624" class="outline-2">
+<h2 id="org10d9624"><span class="section-number-2">3.</span> Browse The Configuration</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 If you want to browse my Emacs configuration, there are a couple ways to do it.
 </p>
 </div>
 
-<div id="outline-container-orgc08d83d" class="outline-3">
-<h3 id="orgc08d83d"><span class="section-number-3">3.1.</span> With Documentation/Commentary</h3>
+<div id="outline-container-org55e1d5a" class="outline-3">
+<h3 id="org55e1d5a"><span class="section-number-3">3.1.</span> With Documentation/Commentary</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I have used Org Mode to program my <code>init.el</code> file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to <code>init.el</code>.
 </p>
 
 <dl class="org-dl">
+<dt><a href="early-init.html">early-init.html</a></dt><dd>A file that is loaded before <code>init.el</code></dd>
+<dt><a href="gnus.html">gnus.html</a></dt><dd>My Gnus newsreader/email setup (I only use Gnus for reading email)</dd>
 <dt><a href="init.html">init.html</a></dt><dd>Browse the code along with my commentary exported to HTML from my <code>init.org</code> file.</dd>
 </dl>
 
@@ -290,8 +292,8 @@ For more information on literate programming in Emacs, take a look at <a href="h
 </div>
 </div>
 
-<div id="outline-container-org7b9284a" class="outline-3">
-<h3 id="org7b9284a"><span class="section-number-3">3.2.</span> Without Documentation/Commentary</h3>
+<div id="outline-container-org9992152" class="outline-3">
+<h3 id="org9992152"><span class="section-number-3">3.2.</span> Without Documentation/Commentary</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 You can also checkout the files directly on Github if you are not interested in sifting through all the extra text and just want to take a look at the raw code.
@@ -308,8 +310,8 @@ You can also checkout the files directly on Github if you are not interested in 
 </div>
 </div>
 
-<div id="outline-container-orgda7dc1b" class="outline-2">
-<h2 id="orgda7dc1b"><span class="section-number-2">4.</span> Running Emacs from a Flash Drive</h2>
+<div id="outline-container-org4541c4c" class="outline-2">
+<h2 id="org4541c4c"><span class="section-number-2">4.</span> Running Emacs from a Flash Drive</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 If you want to run Emacs as a portable application, see <a href="emacs-portable.html">Emacs as a Portable Application</a>.
@@ -320,7 +322,7 @@ If you want to run Emacs as a portable application, see <a href="emacs-portable.
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-03-31 Thu 02:31</p>
+<p class="date">Created: 2022-03-31 Thu 19:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
