@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-31 Thu 00:19 -->
+<!-- 2022-03-31 Thu 02:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Emacs as a Portable Application</title>
@@ -198,40 +198,143 @@
 <div id="content" class="content">
 <h1 class="title">Running Emacs as a Portable Application</h1>
 
-
-<div id="outline-container-org7776d48" class="outline-2">
-<h2 id="org7776d48"><span class="section-number-2">1.</span> Depedencies</h2>
+<div id="outline-container-org48deb63" class="outline-2">
+<h2 id="org48deb63"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
-</div>
-<div id="outline-container-org69808b2" class="outline-3">
-<h3 id="org69808b2"><span class="section-number-3">1.1.</span> Creating LaTeX Documents</h3>
-<div class="outline-text-3" id="text-1-1">
 <p>
-MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system. 
+I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9edfcde" class="outline-3">
-<h3 id="org9edfcde"><span class="section-number-3">1.2.</span> Git</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orge4e0781" class="outline-2">
+<h2 id="orge4e0781"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
+<div class="outline-text-2" id="text-2">
 <p>
-If you have the PortableApps.com platform installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found.
+Here are some reasons why I run Emacs as a portable application:
 </p>
+<ul class="org-ul">
+<li>Access your Org Mode agenda on the go from any Windows computer</li>
+<li>Always have access to a double-pane file manager such as Dired or Sunshine commander even on Windows</li>
+<li>The ability to use the Emacs key bindings that have become muscle memory after much use</li>
+<li>Emacs Eshell will work even on a Windows system as many Linux shell commands are rewritten in Emacs Lisp</li>
+<li>Create LaTeX documents in Windows without having to use another editor</li>
+<li>Check your email using Gnus or some other Emacs mail reader and take your configuration with you</li>
+<li>Have acess to all the power of Emacs and you custom configuration anywhere you go</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org12d4bbe" class="outline-2">
+<h2 id="org12d4bbe"><span class="section-number-2">3.</span> Access Org Agenda Files from the Cloud</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacs.
+</p>
+
+<p>
+One of the biggest problems with Org Mode, however, has been how it is not based in the cloud. It took me quite a long time to figure out how to solve this problem and here is the solution I have come up with:
+</p>
+
+<ol class="org-ol">
+<li>Store all your <code>org-agenda</code> files in the cloud (I use Dropbox)</li>
+<li><p>
+Download <a href="https://rclone.org/downloads/">rclone</a> to your flash drive. As mentioned on the rclone website:
+</p>
+<blockquote>
+<p>
+Rclone is single executable (rclone, or rclone.exe on Windows) that you can simply download as a zip archive and extract into a location of your choosing. See the install documentation for more details
+</p>
+</blockquote></li>
+<li>Use Emacs eshell to call <code>rclone.exe</code> using the <code>--config-file</code> option to save the config file to your USB flash drive</li>
+<li>Run <code>rclone.exe sync --config /path/to/config/file remote: ~/local_folder</code> to download your Org Mode agenda files from your cloud site</li>
+<li>Use Org Mode as normal</li>
+<li>Sync the changes back to the cloud with <code>rclone.exe sync --config /path/to/config/file remote: ~/local_folder remote:</code></li>
+</ol>
+
+<p>
+In order to avoid human error in this process, I have added functions to my <code>init.el</code> file to do this work for me automatically:
+</p>
+
+<p>
+This function will create an Emacs Lisp function in Emacs to run rclone:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
+  <span style="color: #A875FF;">"Sync DEST with SOURCE using rclone.</span>
+<span style="color: #A875FF;">  The path to the rlcone executable can be set with RCLONE-PATH.</span>
+<span style="color: #A875FF;">  The rclone configuration can be set with RCLONE-CONFIG."</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">interactive</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>message
+   <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span>rclone-path <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-path <span style="color: #7984D1;">"rclone"</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span>
+         <span style="color: #A875FF;">(</span>rclone-config <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-config nil<span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span>
+         <span style="color: #A875FF;">(</span>config-option
+          <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> rclone-config
+              <span style="color: #ff2afc;">(</span>concat <span style="color: #7984D1;">" --config "</span> rclone-config<span style="color: #ff2afc;">)</span>
+            <span style="color: #ff2afc;">(</span>nil<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span>concat rclone-path
+             config-option
+             <span style="color: #7984D1;">" -vP sync "</span>
+             source
+             <span style="color: #7984D1;">" "</span>
+             dest<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+I then run rclone when Emacs starts up and add a hook to run when Emacs is closed with the <code>kill-emacs-hook</code> (killed):
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> &lt;&lt;portable_check&gt;&gt;
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span>rclone-remote <span style="color: #7984D1;">"dropbox:"</span><span style="color: #df85ff;">)</span>
+        <span style="color: #df85ff;">(</span>rclone-local <span style="color: #7984D1;">"~/Dropbox"</span><span style="color: #df85ff;">)</span>
+        <span style="color: #df85ff;">(</span>rclone-path  <span style="color: #7984D1;">"~/rclone/rclone.exe"</span><span style="color: #df85ff;">)</span>
+        <span style="color: #df85ff;">(</span>rclone-conf <span style="color: #7984D1;">"~/rclone/rclone.conf"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>rclone-sync rclone-remote
+                 rclone-local
+                 rclone-path
+                 rclone-conf<span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>add-hook 'kill-emacs-hook <span style="color: #df85ff;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #A875FF;">()</span>
+                                 <span style="color: #A875FF;">(</span>rclone-sync rclone-remote
+                                              rclone-local
+                                              rclone-path
+                                              rclone-conf<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+<i>Note: you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work.</i>
+</p>
+
+<p>
+This will cause Emacs to sync my Org Mode agenda files and anything else in my Dropbox automatically by downloading all my Dropbox files to my flash drive into a folder called <code>Dropbox</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org071b9c5" class="outline-2">
+<h2 id="org071b9c5"><span class="section-number-2">4.</span> Depedencies</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
+</p>
+
+<dl class="org-dl">
+<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org12d4bbe">above</a>.</dd>
+
+<dt>MiKTeX</dt><dd>MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.</dd>
+
+<dt>Git</dt><dd>If you have the PortableApps.com platform installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.</dd>
+</dl>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span><span style="color: #e61f44; font-weight: bold;">)</span>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org89f601b" class="outline-3">
-<h3 id="org89f601b"><span class="section-number-3">1.3.</span> Spell Checking</h3>
-<div class="outline-text-3" id="text-1-3">
-<p>
-Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:
-</p>
+<dl class="org-dl">
+<dt>Hunspell</dt><dd>Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:</dd>
+</dl>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> <span style="color: #ff2afc;">(</span>eq system-type 'windows-nt<span style="color: #ff2afc;">)</span>
@@ -243,18 +346,24 @@ Spell checking does not work by default in Windows as <code>ispell</code> and <c
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #a7da1e;">(</span>whicher <span style="color: #7984D1;">"hunspell"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org87f8c41" class="outline-3">
-<h3 id="org87f8c41"><span class="section-number-3">1.4.</span> PlantUML</h3>
+<dl class="org-dl">
+<dt>PlantUML</dt><dd><p>
+In order to be able to make flowcharts and other diagrams with <a href="https://plantuml.com/">PlantUML</a>, I downloaded the <a href="https://plantuml.com/download">PlantUML</a> <code>.jar</code> file to the <code>.emacs.d</code> folder on the USB drive and told Org Mode how to find it with the following addition to <code>init.el</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-plantuml-jar-path <span style="color: #ff2afc;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/plantuml/plantuml.jar"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></dd>
+</dl>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-03-31 Thu 00:19</p>
+<p class="date">Created: 2022-03-31 Thu 02:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
