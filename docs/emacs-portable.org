@@ -33,6 +33,8 @@
 #+creator: Emacs 27.1 (Org mode 9.5.2)
 #+cite_export:
 
+[[file:init.html][Home]]
+
 * About
 
 I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][this article]].
