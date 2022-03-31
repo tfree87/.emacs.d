@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-31 Thu 02:31 -->
+<!-- 2022-03-31 Thu 02:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Emacs as a Portable Application</title>
@@ -203,9 +203,20 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Running Emacs as a Portable Application</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgd3a85f7">1. About</a></li>
+<li><a href="#org100a71b">2. Why Run Emacs as a Portable App?</a></li>
+<li><a href="#orgfa96021">3. Access Org Agenda Files from the Cloud</a></li>
+<li><a href="#org6e60dce">4. Depedencies</a></li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-org81379b9" class="outline-2">
-<h2 id="org81379b9"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-orgd3a85f7" class="outline-2">
+<h2 id="orgd3a85f7"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system.
@@ -213,8 +224,8 @@ I have created this page to document what I have learned in trying to create an 
 </div>
 </div>
 
-<div id="outline-container-org8e4b231" class="outline-2">
-<h2 id="org8e4b231"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
+<div id="outline-container-org100a71b" class="outline-2">
+<h2 id="org100a71b"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here are some reasons why I run Emacs as a portable application:
@@ -231,8 +242,8 @@ Here are some reasons why I run Emacs as a portable application:
 </div>
 </div>
 
-<div id="outline-container-org240a4a1" class="outline-2">
-<h2 id="org240a4a1"><span class="section-number-2">3.</span> Access Org Agenda Files from the Cloud</h2>
+<div id="outline-container-orgfa96021" class="outline-2">
+<h2 id="orgfa96021"><span class="section-number-2">3.</span> Access Org Agenda Files from the Cloud</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacs.
@@ -318,15 +329,15 @@ This will cause Emacs to sync my Org Mode agenda files and anything else in my D
 </div>
 </div>
 
-<div id="outline-container-org163dcdd" class="outline-2">
-<h2 id="org163dcdd"><span class="section-number-2">4.</span> Depedencies</h2>
+<div id="outline-container-org6e60dce" class="outline-2">
+<h2 id="org6e60dce"><span class="section-number-2">4.</span> Depedencies</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
 </p>
 
 <dl class="org-dl">
-<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org240a4a1">above</a>.</dd>
+<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#orgfa96021">above</a>.</dd>
 
 <dt>MiKTeX</dt><dd>MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.</dd>
 
@@ -369,7 +380,7 @@ In order to be able to make flowcharts and other diagrams with <a href="https://
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-03-31 Thu 02:31</p>
+<p class="date">Created: 2022-03-31 Thu 02:42</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
