@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-30 21:13:11 thomas>
+#+date: Time-stamp: <2022-03-31 02:12:19 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1498,26 +1498,32 @@ This section contains custom functions that I have either created myself or borr
 #+begin_src emacs-lisp :tangle yes
 ;; Custom Function Definitions
 #+end_src
-** Rclone Functions
-#+begin_src emacs-lisp :tangle yes
-  (defun rclone-sync (source dest &optional rclone-path)
-    "Sync DEST with SOURCE using rclone with remote. 
-    The path to the rlcone executable can be set with RCLONE-PATH"
-    (interactive)
-    (shell-command
-     (let ((rclone-path (or rclone-path "rclone"))
-           (concat rclone-path
-                   " -vP sync "
-                   source
-                   " "
-                   dest)))))
-#+end_src
 ** Oh My Eshell
 Something I am fiddling around with...
 #+begin_src emacs-lisp :tangle yes
   (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
-
+** Rclone Sync
+#+begin_src emacs-lisp :tangle yes
+    (defun rclone-sync (source dest &optional rclone-path rclone-config)
+    "Sync DEST with SOURCE using rclone.
+    The path to the rlcone executable can be set with RCLONE-PATH.
+    The rclone configuration can be set with RCLONE-CONFIG."
+    (interactive)
+    (message
+     (let ((rclone-path (or rclone-path "rclone"))
+           (rclone-config (or rclone-config nil))
+           (config-option
+            (if rclone-config
+                (concat " --config " rclone-config)
+              (nil))))
+       (concat rclone-path
+               config-option
+               " -vP sync "
+               source
+               " "
+               dest))))
+#+end_src
 ** Sudo Find File
 This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
 #+begin_src emacs-lisp :tangle yes
@@ -1549,14 +1555,22 @@ I have this option run only when I am not executing Emacs as a portable app as i
 * Update Org Files on Portable App Startup
 When running Emacs as a portable app, I want to pull down the latest versions of my ~org-agenda-files~ and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
+  ;; Sync Dropbox containing org agenda files on load and close
+
   (when <<portable_check>>
-    (rclone-sync "dropbox:"
-                 "~/Dropbox/"
-                 "~/rclone/rclone.exe")
-    (add-hook 'kill-emacs-hook (lambda ()
-                                 (rclone-sync "~/Dropbox/"
-                                              "dropbox:"
-                                              "~/rclone/rclone.exe"))))
+    (let ((rclone-remote "dropbox:")
+          (rclone-local "~/Dropbox")
+          (rclone-path  "~/rclone/rclone.exe")
+          (rclone-conf "~/rclone/rclone.conf"))
+      (rclone-sync rclone-remote
+                   rclone-local
+                   rclone-path
+                   rclone-conf)
+      (add-hook 'kill-emacs-hook (lambda ()
+                                   (rclone-sync rclone-remote
+                                                rclone-local
+                                                rclone-path
+                                                rclone-conf)))))
 #+end_src
 
 * Performance Optimization End

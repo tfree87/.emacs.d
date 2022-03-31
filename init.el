@@ -902,19 +902,26 @@
 
 ;; Custom Function Definitions
 
-(defun rclone-sync (source dest &optional rclone-path)
-  "Sync DEST with SOURCE using rclone with remote. 
-  The path to the rlcone executable can be set with RCLONE-PATH"
-  (interactive)
-  (shell-command
-   (let ((rclone-path (or rclone-path "rclone"))
-         (concat rclone-path
-                 " -vP sync "
-                 source
-                 " "
-                 dest)))))
-
 (load-file "~/.emacs.d/elisp/oh-my-esh.el")
+
+(defun rclone-sync (source dest &optional rclone-path rclone-config)
+"Sync DEST with SOURCE using rclone.
+The path to the rlcone executable can be set with RCLONE-PATH.
+The rclone configuration can be set with RCLONE-CONFIG."
+(interactive)
+(message
+ (let ((rclone-path (or rclone-path "rclone"))
+       (rclone-config (or rclone-config nil))
+       (config-option
+        (if rclone-config
+            (concat " --config " rclone-config)
+          (nil))))
+   (concat rclone-path
+           config-option
+           " -vP sync "
+           source
+           " "
+           dest))))
 
 (whicher "sudo")
 (defun sudo-find-file (file)
@@ -934,14 +941,22 @@
 (when (not (eq (getenv "EMACS_PORTABLE") "Y"))
   (server-start))
 
+;; Sync Dropbox containing org agenda files on load and close
+
 (when (eq (getenv "EMACS_PORTABLE") "Y")
-  (rclone-sync "dropbox:"
-               "~/Dropbox/"
-               "~/rclone/rclone.exe")
-  (add-hook 'kill-emacs-hook (lambda ()
-                               (rclone-sync "~/Dropbox/"
-                                            "dropbox:"
-                                            "~/rclone/rclone.exe"))))
+  (let ((rclone-remote "dropbox:")
+        (rclone-local "~/Dropbox")
+        (rclone-path  "~/rclone/rclone.exe")
+        (rclone-conf "~/rclone/rclone.conf"))
+    (rclone-sync rclone-remote
+                 rclone-local
+                 rclone-path
+                 rclone-conf)
+    (add-hook 'kill-emacs-hook (lambda ()
+                                 (rclone-sync rclone-remote
+                                              rclone-local
+                                              rclone-path
+                                              rclone-conf)))))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 )
