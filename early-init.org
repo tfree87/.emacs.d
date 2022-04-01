@@ -4,7 +4,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 19:06:27 Thomas>
+#+date: Time-stamp: <2022-03-31 21:12:54 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code

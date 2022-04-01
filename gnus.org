@@ -98,6 +98,8 @@ Place Gnus messages under headings listed by topic.
   
 * Appearance of Summary Buffer
 The code below will change the appearance of the summary buffer so that reading emails from the summary buffer is a little cleaner and easier to view the threads.
+
+This idea came from [[https://github.com/jrblevin/config/blob/master/.gnus][jrblevin/config]]:
 #+begin_src emacs-lisp :tangle yes
   ;; The following lines will display threads in a clearer way with UTF-8 text showing message replies
   (when window-system
@@ -108,7 +110,9 @@ The code below will change the appearance of the summary buffer so that reading 
     (setq gnus-sum-thread-tree-vertical        "│")
     (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
     (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
-  
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
   ;; The following lines change how emails are listed in the summary buffer
   (setq gnus-summary-line-format
         (concat
@@ -122,10 +126,13 @@ The code below will change the appearance of the summary buffer so that reading 
          "%1{%B%}"
          "%s\n"))
   (setq gnus-summary-display-arrow t)
-  
+#+end_src
+
+This is based on the information from [[https://www.emacswiki.org/emacs/GnusFormatting][Emacs Wiki]]:
+#+begin_src emacs-lisp :tangle yes
   ;; Change the group line format
   (setq gnus-group-line-format "%M%S%5y:%B%(%G%)\n")
-  #+end_src
+#+end_src
 * BBDB
 Use BBDB to collect email addresses from emails and use for composition.
   #+begin_src emacs-lisp
@@ -137,7 +144,7 @@ Use BBDB to collect email addresses from emails and use for composition.
         bbdb/news-auto-create-p t)
   #+end_src
 * Three-pane Layout
-Setting a three-pane layout will put the different folders on the left side, the summary buffer on top right, and the article view at the bottom left.
+Setting a three-pane layout will put the different folders on the left side, the summary buffer on top right, and the article view at the bottom left. This idea came from the [[https://www.emacswiki.org/emacs/GnusWindowLayout][EmacsWiki page]].
   #+begin_src emacs-lisp :tangle yes
   ;; Three-pane layout for gnus
   (gnus-add-configuration
