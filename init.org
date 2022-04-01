@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 18:35:23 Thomas>
+#+date: Time-stamp: <2022-04-01 19:03:39 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -850,14 +850,6 @@ In order for this to work in Windows, hunspell must be installed with the proper
     :init
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
     (add-hook 'text-mode-hook 'flyspell-mode))
-#+end_src
-** Gnus :mail:
-I sometimes use [[https://www.gnu.org/software/emacs/manual/html_node/gnus/][Gnus]] to check my mail. See the =~/gnus.el= file for configuration information.
-#+begin_src emacs-lisp :tangle yes
-  (use-package gnus
-    :defer t
-    :custom
-    (gnus-init-file "~/.emacs.d/gnus.el"))
 #+end_src
 ** Go :coding:
 [[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
