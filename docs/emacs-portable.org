@@ -1,4 +1,4 @@
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+g#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
