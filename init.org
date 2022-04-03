@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 02:32:07 thomas>
+#+date: Time-stamp: <2022-04-02 22:34:41 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -657,6 +657,12 @@ This will cause emacs to default to moving/copying/renaming files from the direc
  #+begin_src emacs-lisp :noweb-ref dired_custom
    (dired-dwim-target t)
  #+end_src
+** Disc Usage
+#+begin_src emacs-lisp :tangle yes
+  (use-package disk-usage
+    :straight t
+    :defer t)
+#+end_src
 ** Docker :docker:
 [[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
@@ -1544,6 +1550,75 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
                    (concat "/sudo:root@localhost:" file))))
 #+end_src
 
+* EXWM
+#+begin_src emacs-lisp :tangle yes
+  (defun efs/exwm-update-class ()
+    (exwm-workspace-rename-buffer exwm-class-name))
+
+  ;; (when (get-buffer "*window-manager*")
+  ;;   (kill-buffer "*window-manager*"))
+  ;; (when (get-buffer "*window-manager-error*")
+  ;;   (kill-buffer "*window-manager-error*"))
+  ;; (when (executable-find "wmctrl")
+  ;;   (shell-command "wmctrl -m ; echo $?" "*window-manager*" "*window-manager-error*"))
+
+  (use-package exwm
+    :straight t
+    ;; :if
+    ;; (and (get-buffer "*window-manager-error*")
+    ;;     (eq window-system 'x))
+    :config
+    ;; (require 'exwm-systemtray)
+    ;; (exwm-systemtray-enable)
+    ;; Set the default number of workspaces
+    (setq exwm-workspace-number 1)
+
+    ;; When window "class" updates, use it to set the buffer name
+    (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+    ;; These keys should always pass through to Emacs
+    (setq exwm-input-prefix-keys
+          '(?\C-x
+            ?\C-u
+            ?\C-h
+            ?\M-x
+            ?\M-`
+            ?\M-&
+            ?\M-:
+            ?\C-\M-j  ;; Buffer list
+            ?\C-\ ))  ;; Ctrl+Space
+
+    ;; Ctrl+Q will enable the next key to be sent directly
+    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+    ;; Set up global key bindings.  These always work, no matter the input state!
+    ;; Keep in mind that changing this list after EXWM initializes has no effect.
+    (setq exwm-input-global-keys
+          `(
+            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+            ([?\s-r] . exwm-reset)
+
+            ;; Move between windows
+            ([s-left] . windmove-left)
+            ([s-right] . windmove-right)
+            ([s-up] . windmove-up)
+            ([s-down] . windmove-down)
+
+            ;; Switch workspace
+            ([?\s-w] . exwm-workspace-switch)
+
+            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+            ,@(mapcar (lambda (i)
+                        `(,(kbd (format "s-%d" i)) .
+                          (lambda ()
+                            (interactive)
+                            (exwm-workspace-switch-create ,i))))
+                      (number-sequence 0 9))))
+
+    (exwm-enable)
+    (require 'exwm-randr)
+    (exwm-randr-enable))
+#+end_src
 * Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 
