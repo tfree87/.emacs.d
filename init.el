@@ -940,9 +940,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
                            (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
 
-(defun efs/exwm-update-class ()
-  (exwm-workspace-rename-buffer exwm-class-name))
-
 ;; (when (get-buffer "*window-manager*")
 ;;   (kill-buffer "*window-manager*"))
 ;; (when (get-buffer "*window-manager-error*")
@@ -955,57 +952,72 @@ The rclone configuration can be set with RCLONE-CONFIG."
   ;; :if
   ;; (and (get-buffer "*window-manager-error*")
   ;;     (eq window-system 'x))
+  :custom
+  (exwm-workspace-number 1)
+  (exwm-input-global-keys
+   `(([?\s-r] . exwm-reset)
+  
+     ;; Move between windows
+     ([s-left] . windmove-left)
+     ([s-right] . windmove-right)
+     ([s-up] . windmove-up)
+     ([s-down] . windmove-down)
+  
+     ;; Switch workspace
+     ([?\s-w] . exwm-workspace-switch)
+  
+     ([?\s-&] . (lambda (command)
+                  (interactive (list (read-shell-command "$ ")))
+                               (start-process-shell-command command nil command)))
+  
+     ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+     ,@(mapcar (lambda (i)
+                 `(,(kbd (format "s-%d" i)) .
+                   (lambda ()
+                     (interactive)
+                     (exwm-workspace-switch-create ,i))))
+               (number-sequence 0 9))))
+  
+  (exwm-input-prefix-keys
+   '(?\C-x
+     ?\C-u
+     ?\C-h
+     ?\M-x
+     ?\M-`
+     ?\M-&
+     ?\M-:
+     ?\C-\M-j
+     ?\C-\ ))
   :config
   ;; (require 'exwm-systemtray)
   ;; (exwm-systemtray-enable)
   ;; Set the default number of workspaces
-  (setq exwm-workspace-number 1)
+
 
   ;; When window "class" updates, use it to set the buffer name
-  (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-  ;; These keys should always pass through to Emacs
-  (setq exwm-input-prefix-keys
-        '(?\C-x
-          ?\C-u
-          ?\C-h
-          ?\M-x
-          ?\M-`
-          ?\M-&
-          ?\M-:
-          ?\C-\M-j  ;; Buffer list
-          ?\C-\ ))  ;; Ctrl+Space
+  (add-hook 'exwm-update-class-hook (lambda()
+                                          (exwm-workspace-rename-buffer
+                                           exwm-class-name)))
 
   ;; Ctrl+Q will enable the next key to be sent directly
   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-  ;; Set up global key bindings.  These always work, no matter the input state!
-  ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  (setq exwm-input-global-keys
-        `(
-          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-          ([?\s-r] . exwm-reset)
-
-          ;; Move between windows
-          ([s-left] . windmove-left)
-          ([s-right] . windmove-right)
-          ([s-up] . windmove-up)
-          ([s-down] . windmove-down)
-
-          ;; Switch workspace
-          ([?\s-w] . exwm-workspace-switch)
-
-          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))))
-
   (exwm-enable)
   (require 'exwm-randr)
-  (exwm-randr-enable))
+  (exwm-randr-enable)
+  (display-battery-mode t))
+
+(use-package desktop-environment
+  :straight t
+  :init
+  (mapc #'whicher '("brightnessctl"
+                   "amixer"
+                   "scrot"
+                   "slock"
+                   "upower"
+                   "TLP"
+                   "playerctl"))
+  :after exwm
+  :config (desktop-environment-mode))
 
 ;; Start an Emacs server
 

@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-02 22:34:41 thomas>
+#+date: Time-stamp: <2022-04-05 21:27:44 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1551,10 +1551,7 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
 #+end_src
 
 * EXWM
-#+begin_src emacs-lisp :tangle yes
-  (defun efs/exwm-update-class ()
-    (exwm-workspace-rename-buffer exwm-class-name))
-
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   ;; (when (get-buffer "*window-manager*")
   ;;   (kill-buffer "*window-manager*"))
   ;; (when (get-buffer "*window-manager-error*")
@@ -1567,57 +1564,90 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
     ;; :if
     ;; (and (get-buffer "*window-manager-error*")
     ;;     (eq window-system 'x))
+    :custom
+    <<exwm_custom>>
     :config
     ;; (require 'exwm-systemtray)
     ;; (exwm-systemtray-enable)
     ;; Set the default number of workspaces
-    (setq exwm-workspace-number 1)
+
 
     ;; When window "class" updates, use it to set the buffer name
-    (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-    ;; These keys should always pass through to Emacs
-    (setq exwm-input-prefix-keys
-          '(?\C-x
-            ?\C-u
-            ?\C-h
-            ?\M-x
-            ?\M-`
-            ?\M-&
-            ?\M-:
-            ?\C-\M-j  ;; Buffer list
-            ?\C-\ ))  ;; Ctrl+Space
+    (add-hook 'exwm-update-class-hook (lambda()
+                                            (exwm-workspace-rename-buffer
+                                             exwm-class-name)))
 
     ;; Ctrl+Q will enable the next key to be sent directly
     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-    ;; Set up global key bindings.  These always work, no matter the input state!
-    ;; Keep in mind that changing this list after EXWM initializes has no effect.
-    (setq exwm-input-global-keys
-          `(
-            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-            ([?\s-r] . exwm-reset)
-
-            ;; Move between windows
-            ([s-left] . windmove-left)
-            ([s-right] . windmove-right)
-            ([s-up] . windmove-up)
-            ([s-down] . windmove-down)
-
-            ;; Switch workspace
-            ([?\s-w] . exwm-workspace-switch)
-
-            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-            ,@(mapcar (lambda (i)
-                        `(,(kbd (format "s-%d" i)) .
-                          (lambda ()
-                            (interactive)
-                            (exwm-workspace-switch-create ,i))))
-                      (number-sequence 0 9))))
-
     (exwm-enable)
     (require 'exwm-randr)
-    (exwm-randr-enable))
+    (exwm-randr-enable)
+    (display-battery-mode t))
+
+  (use-package desktop-environment
+    :straight t
+    :init
+    (mapc #'whicher '("brightnessctl"
+                     "amixer"
+                     "scrot"
+                     "slock"
+                     "upower"
+                     "TLP"
+                     "playerctl"))
+    :after exwm
+    :config (desktop-environment-mode))
+
+#+end_src
+** EXWM Default Workspaces
+With only a single monitor at the moment I only see the need for a single workspace as I can switch between tasks by switching buffers. This number should be increased with more monitors, however, as each workspace can display in a separate monitor and switching can then be done easily with the keyboard.
+#+begin_src emacs-lisp :noweb-ref exwm_custom
+  (exwm-workspace-number 1)
+#+end_src
+** EXWM Global Keys
+These key bindings will always work, regardless of whether the current buffer is in ~char-mode~ or ~line-mode~. Since these keybindings always work, it is best to use a prefix key such as the ~super~ key.
+#+begin_src emacs-lisp :noweb yes :noweb-ref exwm_custom
+  (exwm-input-global-keys
+   `(<<char_line_switch>>
+
+     ;; Move between windows
+     ([s-left] . windmove-left)
+     ([s-right] . windmove-right)
+     ([s-up] . windmove-up)
+     ([s-down] . windmove-down)
+
+     ;; Switch workspace
+     ([?\s-w] . exwm-workspace-switch)
+
+     ([?\s-&] . (lambda (command)
+                  (interactive (list (read-shell-command "$ ")))
+                               (start-process-shell-command command nil command)))
+
+     ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+     ,@(mapcar (lambda (i)
+                 `(,(kbd (format "s-%d" i)) .
+                   (lambda ()
+                     (interactive)
+                     (exwm-workspace-switch-create ,i))))
+               (number-sequence 0 9))))
+
+#+end_src
+*** Switching Between ~char-mode~ and ~line-mode~
+When using EXWM, opening an X11 application will load in ~line-mode~ by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that ~C-c~ will act as an Emacs prefix command. Pressing ~C-c C-k~ will switch to ~char-mode~ and ~C-c~ will then do the usual copy command. Pressing ~s-r~ retruns back to ~line-mode~.
+#+begin_src emacs-lisp :noweb yes :noweb-ref char_line_switch
+  ([?\s-r] . exwm-reset)
+#+end_src
+** 
+#+begin_src emacs-lisp :noweb-ref exwm_custom
+  (exwm-input-prefix-keys
+   '(?\C-x
+     ?\C-u
+     ?\C-h
+     ?\M-x
+     ?\M-`
+     ?\M-&
+     ?\M-:
+     ?\C-\M-j
+     ?\C-\ ))
 #+end_src
 * Emacs Server
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
