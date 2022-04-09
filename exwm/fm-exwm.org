@@ -4,7 +4,7 @@
 
 #+title: Emacs Desktop
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-08 21:52:35 thomas>
+#+date: Time-stamp: <2022-04-08 22:17:42 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -100,7 +100,7 @@ The following command can also be used to select a workspace if multiple workspa
 
 Another way to switch between workspaces by using the super key and any number.
 
-#+begin_src emacs-lisp :noweb-ref exwm_customize
+#+begin_src emacs-lisp :noweb-ref exwm_config
   ,@(mapcar (lambda (i)
               `(,(kbd (format "s-%d" i)) .
                 (lambda ()
@@ -144,7 +144,7 @@ Setting ~exwm-input-prefix-keys~ will cause those keys to be passed directly to 
 
 To name buffers based on the application that was launched to create them, the following code must be used:
 
-#+begin_src emacs-lisp :noweb-ref exwm_customize
+#+begin_src emacs-lisp :noweb-ref exwm_config
   (add-hook 'exwm-update-class-hook (lambda()
                                       (exwm-workspace-rename-buffer
                                        exwm-class-name)))

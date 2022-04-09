@@ -31,7 +31,17 @@
   (exwm-randr-enable)
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
+  ,@(mapcar (lambda (i)
+              `(,(kbd (format "s-%d" i)) .
+                (lambda ()
+                  (interactive)
+                  (exwm-workspace-switch-create ,i))))
+            (number-sequence 0 9))
+  
   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+  (add-hook 'exwm-update-class-hook (lambda()
+                                      (exwm-workspace-rename-buffer
+                                       exwm-class-name)))
   (shell-command
    (concat
     (whicher "xinput")
