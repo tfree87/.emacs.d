@@ -4,7 +4,7 @@
 
 #+title: Emacs Desktop
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-08 22:17:42 thomas>
+#+date: Time-stamp: <2022-04-09 09:59:18 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -100,7 +100,7 @@ The following command can also be used to select a workspace if multiple workspa
 
 Another way to switch between workspaces by using the super key and any number.
 
-#+begin_src emacs-lisp :noweb-ref exwm_config
+#+begin_src emacs-lisp :noweb-ref window_switching
   ,@(mapcar (lambda (i)
               `(,(kbd (format "s-%d" i)) .
                 (lambda ()
