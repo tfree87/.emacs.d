@@ -64,7 +64,8 @@ If you want to browse my Emacs configuration, there are a couple ways to do it.
 
 I have used Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to ~init.el~.
 
-- [[file:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
+- [[file:early-init.html][early-init.html]] :: A file that is loaded before ~init.el~
+- [[File:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
 
 For more information on literate programming in Emacs, take a look at [[https://orgmode.org/worg/org-contrib/babel/how-to-use-Org-Babel-for-R.html][this site]].
 
@@ -74,7 +75,6 @@ You can also checkout the files directly on Github if you are not interested in 
 
 - [[https://github.com/tfree87/.emacs.d/blob/main/custom.el][custom.el]] :: Customizations set by the Emacs ~M-x customize~ interface
 - [[https://github.com/tfree87/.emacs.d/blob/main/early-init.el][early-init.el]] :: A file that is loaded before ~init.el~
-- [[https://github.com/tfree87/.emacs.d/blob/main/gnus.el][gnus.el]] :: My Gnus newsreader/email setup (I only use Gnus for reading email)
 - [[https://github.com/tfree87/.emacs.d/blob/main/init.el][init.el]] :: The standard Emacs init file
 - [[https://github.com/tfree87/.emacs.d/blob/main/runemacs.bat][runemacs.bat]] :: A Windows batch file to set up the environment for running Emacs as a portable application 
 

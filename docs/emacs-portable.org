@@ -1,4 +1,4 @@
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+g#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
@@ -14,7 +14,7 @@
 #+html_equation_reference_format: \eqref{%s}
 #+html_head:
 #+html_head_extra:
-#+subtitle:
+#+subtitle: For Windows
 #+infojs_opt:
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+latex_header:
@@ -33,9 +33,12 @@
 #+creator: Emacs 27.1 (Org mode 9.5.2)
 #+cite_export:
 
+
+[[file:index.html][Home]]
+
 * About
 
-I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system.
+I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][this article]].
 
 * Why Run Emacs as a Portable App?
 
@@ -48,9 +51,41 @@ Here are some reasons why I run Emacs as a portable application:
 - Check your email using Gnus or some other Emacs mail reader and take your configuration with you
 - Have acess to all the power of Emacs and you custom configuration anywhere you go
 
+* Process
+
+Here is the process I used to make Emacs run off of a USB flash drive:
+
+/*Note:* On slow systems, I have found it *very* important to verify the speed of any flash drive you use to launch Emacs. I have found that the difference between two USB 3.0 flash drives can change ~emacs-init-time~ from minutes to seconds with the right flash drive. Apparently, not all USB 3.0 drive are alike./
+
+1. Download Emacs from the [[http://ftp.gnu.org/gnu/emacs/windows/][Gnu.org ftp site]].
+2. Extract the ~.zip~ file to your flash drive into a new directory (I recommend calling it ~emacs~).
+3. Create a ~.emacs.d~ directory on your flash drive.
+4. Create a ~runemacs.bat~ file to launch Emacs containing the following lines:
+   - Set Emacs home directory to the flash drive label so files are not saved to the host system.
+     #+begin_example
+     rem Set the Emacs home directory to the drive label of the flash drive.
+     set HOME=%~dp0
+     #+end_example
+   - Create an environment variable to tell Emacs it was launched as a portable application. I do this so I can use the same Emacs configuration for all instances of Emacs whether I am running it as a portable application or not. This lets me include code in ~init.el~ to check if Emacs was launched as a portable application. If Emacs detects it was launched as a portable application, I can call on different functions to set up Emacs differently.
+     #+begin_example
+     rem Set an evironment variable to tell Emacs that it is running portably
+     set EMACS_PORTABLE="Y"
+     #+end_example
+     Now, in your ~init.el~ configuration file, you can use the following code to check if Emacs was called by executing ~runemacs.bat~ in any ~if~ or ~when~ statement:
+     #+begin_src emacs-lisp
+       (eq (getenv "EMACS_PORTABLE") "Y")
+     #+end_src
+     In Emacs, I create my ~init.el~ file from Org Mode in a file called ~init.org~. I use [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb syntax]] to call it with ~<<portable_check>>~ so I can reuse the code easily. For an example see ~<<portable_check>>~ in [[Syncing Org Files Automatically]].
+   - Call the Emacs executable and launch it.
+     #+begin_example
+     rem Find the Emacs executable and execute it.
+     "%~dp0/emacs/bin/runemacs.exe" %
+     #+end_example
+5. Enjoy!
+
 * Access Org Agenda Files from the Cloud
 
-My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacs.
+My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacos.
 
 One of the biggest problems with Org Mode, however, has been how it is not based in the cloud. It took me quite a long time to figure out how to solve this problem and here is the solution I have come up with:
 
@@ -64,6 +99,7 @@ One of the biggest problems with Org Mode, however, has been how it is not based
 5. Use Org Mode as normal
 6. Sync the changes back to the cloud with ~rclone.exe sync --config /path/to/config/file remote: ~/local_folder remote:~
 
+** Syncing Org Files Automatically
 In order to avoid human error in this process, I have added functions to my ~init.el~ file to do this work for me automatically:
 
 This function will create an Emacs Lisp function in Emacs to run rclone:
@@ -106,34 +142,34 @@ I then run rclone when Emacs starts up and add a hook to run when Emacs is close
                                                 rclone-conf)))))
 #+end_src
 
-/Note: you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work./
+/*Note:* you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work./
 
 This will cause Emacs to sync my Org Mode agenda files and anything else in my Dropbox automatically by downloading all my Dropbox files to my flash drive into a folder called ~Dropbox~.
 
-* Depedencies
+* Extending Portable Emacs
 In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
 
-- Rclone :: Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See [[Access Org Agenda Files from the Cloud][above]].
-
-- MiKTeX :: MiKTeX provides a [[https://miktex.org/howto/portable-edition][portable version]] that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system. 
-
-- Git :: If you have the PortableApps.com platform installed on your flash drive. You can install [[https://github.com/sheabunge/GitPortable/releases][GitPortable]] and telling Emacs where the ~git~ executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.
-  
-#+begin_src emacs-lisp
-  (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
-#+end_src
+- Git :: If you have the [[https://portableapps.com/][PortableApps.com platform]] installed on your flash drive. You can install [[https://github.com/sheabunge/GitPortable/releases][GitPortable]] and telling Emacs where the ~git~ executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.
 
 - Hunspell :: Spell checking does not work by default in Windows as ~ispell~ and ~aspell~ are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the ~.emacs.d~ directory from [[https://sourceforge.net/projects/ezwinports/files/][ezwinports]] and set as the ~ispell-program-name~:
 
-#+begin_src emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-             (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-             (setq ispell-local-dictionary "en_US")
-             (setq ispell-local-dictionary-alist
-                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-    (setq ispell-program-name (whicher "hunspell")))
-#+end_src
+  #+begin_src emacs-lisp
+    (if (eq system-type 'windows-nt)
+        (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+               (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+               (setq ispell-local-dictionary "en_US")
+               (setq ispell-local-dictionary-alist
+                     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+      (setq ispell-program-name (whicher "hunspell")))
+  #+end_src
+
+- MiKTeX :: MiKTeX provides a [[https://miktex.org/howto/portable-edition][portable version]] that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.
+
+  #+begin_src emacs-lisp
+    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin")
+  #+end_src
+
+- PDFTools :: If you use the PDFtools package on Emacs, if you have access to a Windows system where you have administrator access and ~msys2~ installed, you can install and compile PDFTools using that system so it will be ready when you take it on the road.
 
 - PlantUML :: In order to be able to make flowcharts and other diagrams with [[https://plantuml.com/][PlantUML]], I downloaded the [[https://plantuml.com/download][PlantUML]] ~.jar~ file to the ~.emacs.d~ folder on the USB drive and told Org Mode how to find it with the following addition to ~init.el~:
 
@@ -141,3 +177,8 @@ In order to replicate all the functionality of Linux that I use when I install i
     (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
   #+end_src
 
+- Rclone :: Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See [[Access Org Agenda Files from the Cloud][above]].
+   
+* About This Page
+
+This page was written in Emacs Org Mode and exported to HTML using the Org Mode export engine. This wonder "ReadTheOrg" theme along with how to use it can be found [[https://github.com/fniessen/org-html-themes][at this link]].

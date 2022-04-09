@@ -1,12 +1,17 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-02 19:53:27 thomas>
+#+date: Time-stamp: <2022-03-31 21:12:54 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
 
+
+[[file:index.html][Home]]
 
 This file contains Emacs Lisp code that will run /before/ the Emacs [[file:init.el][init.el]] file.
 

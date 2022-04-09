@@ -500,11 +500,6 @@
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
   (add-hook 'text-mode-hook 'flyspell-mode))
 
-(use-package gnus
-  :defer t
-  :custom
-  (gnus-init-file "~/.emacs.d/gnus.el"))
-
 (use-package go-mode
   :straight t
   :defer t)

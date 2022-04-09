@@ -11,6 +11,8 @@
 #+options: tex:t
 
 
+[[file:index.html][Home]]
+
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
 
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the ~init.el~ file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to ~init.el~.
@@ -762,8 +764,7 @@ Allow use of Embark commands after issuing a Consult command.
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src 
 ** Eshell
-Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer. 
-Get Eshell configuration set up.
+Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package eshell
     :defer t
@@ -860,14 +861,6 @@ In order for this to work in Windows, hunspell must be installed with the proper
     :init
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
     (add-hook 'text-mode-hook 'flyspell-mode))
-#+end_src
-** Gnus :mail:
-I sometimes use [[https://www.gnu.org/software/emacs/manual/html_node/gnus/][Gnus]] to check my mail. See the =~/gnus.el= file for configuration information.
-#+begin_src emacs-lisp :tangle yes
-  (use-package gnus
-    :defer t
-    :custom
-    (gnus-init-file "~/.emacs.d/gnus.el"))
 #+end_src
 ** Go :coding:
 [[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
@@ -1106,7 +1099,7 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
   (org-log-into-drawer t)
 #+end_src
 **** Custom TODO Keywords
-Set up the sequence of org-todo task keywords to allow for delegated(WAITING) tasks and CANCELLED tasks.
+Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELLED tasks.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-todo-keywords
    '((sequence "TODO(t)"
@@ -1369,6 +1362,7 @@ Savehist will save the selections from completion history between Emacs sessions
     (savehist-mode))
   #+end_src
 ** Sunrise Commander :file_browsing:
+[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander. 
 #+begin_src emacs-lisp :tangle yes
   (use-package sunrise-commander
     :defer t
@@ -1451,7 +1445,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
     (vertico-mode))
 #+end_src
 ** Which-key
-Which-key (https://github.com/justbur/emacs-which-key) provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
+[[https://github.com/justbur/emacs-which-key][Which-key]] provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 #+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package which-key
     :straight t
