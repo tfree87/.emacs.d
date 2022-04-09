@@ -1,0 +1,192 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+#+title: Emacs Desktop
+#+authgor: Thomas Freeman
+#+date: Time-stamp: <2022-04-08 21:52:35 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+
+This file contains the configuration to set up Emacs as a complete desktop environment using EXWM as a window manger. The advantage of using EXWM over another window manager is that EXWM makes it easy to switch between applications and windows using Emacs commands for those who already spend a lot of time using Emacs. For instance, switching to an X11 program such as Mozilla Thunderbird can be as easy as switching to the buffer containing Thunderbird.
+
+* EXWM
+
+To use EXWM, the EXWM package can be pulled from using ~straight.el~.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package exwm
+    :straight t
+    :if
+    <<win_man_check>>
+    :custom
+    <<exwm_custom>>
+    :config
+    <<exwm_config>>    
+    (exwm-enable)
+    (display-battery-mode t)
+    (when (executable-find "nm-applet")
+      (start-process-shell-command "nm-applet" nil "nm-applet")))
+#+end_src
+
+** RandR
+
+For multi-screen displays, ~exwm-randr~ must be enabled.
+
+#+begin_src emacs-lisp :noweb-ref exwm_config
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+#+end_src
+
+** SystemTray
+
+Make sure to turn on the system tray in EXWM so that there is access to tray icons for things such as the ~nm-applet~ which controls access to the wifi connection without having to use the command line tools.
+
+#+begin_src emacs-lisp :noweb-ref exwm_config
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+#+end_src
+
+** Default Workspaces
+
+With only a single monitor at the moment I only see the need for a single workspace as I can switch between tasks by switching buffers. This number should be increased with more monitors, however, as each workspace can display in a separate monitor and switching can then be done easily with the keyboard.
+
+#+begin_src emacs-lisp :noweb-ref exwm_custom
+  (exwm-workspace-number 1)
+#+end_src
+
+** Keys
+
+It is extremely helpful to set up special keybindings for use in EXWM due to the fact that X11 applications won't see keyboard commands that are first intercepted by Emacs.
+
+*** Global Keys
+These key bindings will always work, regardless of whether the current buffer is in ~char-mode~ or ~line-mode~. Since these keybindings always work, it is best to use a prefix key such as the ~super~ key.
+#+begin_src emacs-lisp :noweb yes :noweb-ref exwm_custom
+  (exwm-input-global-keys
+   `(<<char_line_switch>>
+     <<window_switching>>
+     <<launch>>))
+#+end_src
+
+**** Launching Programs
+
+The following command can be used to launch programs in EWXM by using the command ~s-&~:
+
+#+begin_src emacs-lisp :noweb-ref launch
+  ([?\s-&] . (lambda (command)
+               (interactive (list (read-shell-command "$ ")))
+               (start-process-shell-command command nil command)))
+#+end_src
+
+**** Moving
+
+To have a universal command to switch between windows in EXWM, the super key and the arrow keys can be used to move about the windows directionally. Ace Window Mode doesn't work with X11 application windows, so it is convenient to have these keys set up.
+
+#+begin_src emacs-lisp :noweb-ref window_switching
+     ([s-left] . windmove-left)
+     ([s-right] . windmove-right)
+     ([s-up] . windmove-up)
+     ([s-down] . windmove-down)
+#+end_src
+
+The following command can also be used to select a workspace if multiple workspaces are created.
+
+#+begin_src emacs-lisp :noweb-ref window_switching
+     ([?\s-w] . exwm-workspace-switch)
+#+end_src
+
+Another way to switch between workspaces by using the super key and any number.
+
+#+begin_src emacs-lisp :noweb-ref exwm_customize
+  ,@(mapcar (lambda (i)
+              `(,(kbd (format "s-%d" i)) .
+                (lambda ()
+                  (interactive)
+                  (exwm-workspace-switch-create ,i))))
+            (number-sequence 0 9))
+
+#+end_src
+
+**** Switching Between ~char-mode~ and ~line-mode~
+When using EXWM, opening an X11 application will load in ~line-mode~ by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that ~C-c~ will act as an Emacs prefix command. Pressing ~C-c C-k~ will switch to ~char-mode~ and ~C-c~ will then do the usual copy command. Pressing ~s-r~ retruns back to ~line-mode~.
+#+begin_src emacs-lisp :noweb yes :noweb-ref char_line_switch
+  ([?\s-r] . exwm-reset)
+#+end_src
+*** ~input-send-next-key~
+Any keys that Emacs recognizes as a prefix key, will not be passed to any underlying X11 applications running in an Emacs window. If a specific key (i.e. ~C-c~ for copy) needs to be sent to the X11 application, a prefix key can be set as ~exwm-input-send-next-key~ and issued before calling the key.
+
+For example, to copy and paste from an X11 application running in an Emacs window, one could press ~C-q C-c~ to copy text and ~C-q C-v~ to paste text.
+
+#+begin_src emacs-lisp :noweb-ref exwm_config
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+#+end_src
+
+*** Input Prefix
+Setting ~exwm-input-prefix-keys~ will cause those keys to be passed directly to Emacs to be processed. These keys will not be passed to any app unless they are proceeded by the ~exwm-input-send-next-key~.
+
+#+begin_src emacs-lisp :noweb-ref exwm_custom
+  (exwm-input-prefix-keys
+   '(?\C-x
+     ?\C-u
+     ?\C-h
+     ?\M-x
+     ?\M-`
+     ?\M-&
+     ?\M-:
+     ?\C-\M-j
+     ?\C-\ ))
+#+end_src
+
+** Buffer Naming
+
+To name buffers based on the application that was launched to create them, the following code must be used:
+
+#+begin_src emacs-lisp :noweb-ref exwm_customize
+  (add-hook 'exwm-update-class-hook (lambda()
+                                      (exwm-workspace-rename-buffer
+                                       exwm-class-name)))
+#+end_src
+* Deskop Environment
+
+The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package desktop-environment
+    :straight t
+    :init
+    (mapc #'whicher '("brightnessctl"
+                     "amixer"
+                     "scrot"
+                     "slock"
+                     "upower"
+                     "TLP"
+                     "playerctl"))
+    :after exwm
+    :config (desktop-environment-mode))
+#+end_src
+
+** Check for Window Manager
+
+I generally only want to use EXWM when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
+
+There is also a check for the X window system as calling GUI programs from EXWM will not work without it.
+#+begin_src emacs-lisp :noweb-ref win_man_check
+  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
+                            -2 -1) "0"))
+   (eq window-system 'x))
+#+end_src
+
+* Tap to Click
+To ensure that the touchpad allows will take tapping as a click, activate it with the shell command ~xinput set-promp "SynPS/2 Synaptics Touchpad" "libinput Tapping Enabled" 1~. While we are doing this, we might as well tell Whicher that we need ~xinput~ installed.
+
+#+begin_src emacs-lisp :noweb-ref exwm_config
+  (shell-command
+   (concat
+    (whicher "xinput")
+    " set-prop \"SynPS/2 Synaptics TouchPad\""
+    " \"libinput Tapping Enabled\" 1"))
+#+end_src
+

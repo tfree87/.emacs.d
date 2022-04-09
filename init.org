@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-01 19:03:39 Thomas>
+#+date: Time-stamp: <2022-04-08 22:03:40 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -44,6 +44,11 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 See https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/.
 #+begin_src emacs-lisp :tangle yes
   (let ((file-name-handler-alist nil))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(defun fm-get-fullpath (@file-relative-path)
+  (concat (file-name-directory (or load-file-name buffer-file-name)) @file-relative-path))
 #+end_src
 
 * Running Emacs as a Portable App
@@ -659,6 +664,12 @@ This will cause emacs to default to moving/copying/renaming files from the direc
  #+begin_src emacs-lisp :noweb-ref dired_custom
    (dired-dwim-target t)
  #+end_src
+** Disc Usage
+#+begin_src emacs-lisp :tangle yes
+  (use-package disk-usage
+    :straight t
+    :defer t)
+#+end_src
 ** Docker :docker:
 [[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
@@ -1536,6 +1547,16 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
                              "|sudo:root@"
                              (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                    (concat "/sudo:root@localhost:" file))))
+#+end_src
+
+* Emacs Desktop
+
+When there is no window manager running, Emacs can run as a window manger using EXWM. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
+
+The configuration can be found [[./exwm/fm-exwm.org][here]].
+
+#+begin_src emacs-lisp :tangle yes
+  (load (fm-get-fullpath "./exwm/fm-exwm.el"))
 #+end_src
 
 * Emacs Server

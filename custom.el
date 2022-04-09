@@ -9,16 +9,20 @@
  '(column-number-mode t)
  '(custom-safe-themes
    '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1" default))
+ '(desktop-environment-volume-get-command "amixer -c 1 get Master")
+ '(desktop-environment-volume-set-command "amixer -c 1 set Master %s")
+ '(desktop-environment-volume-toggle-command "amixer -c 1 set Master toggle")
  '(display-time-mode t)
+ '(exwm-systemtray-height 17)
  '(menu-bar-mode nil)
  '(org-modules
    '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
  '(safe-local-variable-values
    '((org-use-tag-inheritance)
      (eval add-hook 'after-save-hook
-	   (lambda nil
-	     (org-babel-tangle))
-	   nil t)))
+           (lambda nil
+             (org-babel-tangle))
+           nil t)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -26,8 +30,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cfw:face-grid ((t (:foreground "magenta"))))
  '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal))))
+ '(cfw:face-grid ((t (:foreground "magenta"))))
  '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
  '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
  '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))

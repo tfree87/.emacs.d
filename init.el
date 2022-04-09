@@ -17,6 +17,9 @@
 
 (let ((file-name-handler-alist nil))
 
+(defun fm-get-fullpath (@file-relative-path)
+  (concat (file-name-directory (or load-file-name buffer-file-name)) @file-relative-path))
+
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -366,6 +369,10 @@
   :defer t
   :custom
   (dired-dwim-target t))
+
+(use-package disk-usage
+  :straight t
+  :defer t)
 
 (use-package docker
   :init
@@ -930,6 +937,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
                            "|sudo:root@"
                            (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
+
+(load (fm-get-fullpath "./exwm/fm-exwm.el"))
 
 ;; Start an Emacs server
 
