@@ -13,6 +13,7 @@
  '(desktop-environment-volume-set-command "amixer -c 1 set Master %s")
  '(desktop-environment-volume-toggle-command "amixer -c 1 set Master toggle")
  '(display-time-mode t)
+ '(exwm-systemtray-height 17)
  '(menu-bar-mode nil)
  '(org-modules
    '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))

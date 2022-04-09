@@ -17,6 +17,9 @@
 
 (let ((file-name-handler-alist nil))
 
+(defun fm-get-fullpath (@file-relative-path)
+  (concat (file-name-directory (or load-file-name buffer-file-name)) @file-relative-path))
+
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -940,84 +943,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
                            (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
 
-;; (when (get-buffer "*window-manager*")
-;;   (kill-buffer "*window-manager*"))
-;; (when (get-buffer "*window-manager-error*")
-;;   (kill-buffer "*window-manager-error*"))
-;; (when (executable-find "wmctrl")
-;;   (shell-command "wmctrl -m ; echo $?" "*window-manager*" "*window-manager-error*"))
-
-(use-package exwm
-  :straight t
-  ;; :if
-  ;; (and (get-buffer "*window-manager-error*")
-  ;;     (eq window-system 'x))
-  :custom
-  (exwm-workspace-number 1)
-  (exwm-input-global-keys
-   `(([?\s-r] . exwm-reset)
-  
-     ;; Move between windows
-     ([s-left] . windmove-left)
-     ([s-right] . windmove-right)
-     ([s-up] . windmove-up)
-     ([s-down] . windmove-down)
-  
-     ;; Switch workspace
-     ([?\s-w] . exwm-workspace-switch)
-  
-     ([?\s-&] . (lambda (command)
-                  (interactive (list (read-shell-command "$ ")))
-                               (start-process-shell-command command nil command)))
-  
-     ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-     ,@(mapcar (lambda (i)
-                 `(,(kbd (format "s-%d" i)) .
-                   (lambda ()
-                     (interactive)
-                     (exwm-workspace-switch-create ,i))))
-               (number-sequence 0 9))))
-  
-  (exwm-input-prefix-keys
-   '(?\C-x
-     ?\C-u
-     ?\C-h
-     ?\M-x
-     ?\M-`
-     ?\M-&
-     ?\M-:
-     ?\C-\M-j
-     ?\C-\ ))
-  :config
-  ;; (require 'exwm-systemtray)
-  ;; (exwm-systemtray-enable)
-  ;; Set the default number of workspaces
-
-
-  ;; When window "class" updates, use it to set the buffer name
-  (add-hook 'exwm-update-class-hook (lambda()
-                                          (exwm-workspace-rename-buffer
-                                           exwm-class-name)))
-
-  ;; Ctrl+Q will enable the next key to be sent directly
-  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-  (exwm-enable)
-  (require 'exwm-randr)
-  (exwm-randr-enable)
-  (display-battery-mode t))
-
-(use-package desktop-environment
-  :straight t
-  :init
-  (mapc #'whicher '("brightnessctl"
-                   "amixer"
-                   "scrot"
-                   "slock"
-                   "upower"
-                   "TLP"
-                   "playerctl"))
-  :after exwm
-  :config (desktop-environment-mode))
+(load (fm-get-fullpath "./exwm/fm-exwm.el"))
 
 ;; Start an Emacs server
 
