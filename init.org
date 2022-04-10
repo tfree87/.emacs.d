@@ -5,7 +5,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-10 17:30:10 thomas>
+#+date: Time-stamp: <2022-04-10 18:00:29 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1030,6 +1030,15 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
     (nyan-mode)
     (nyan-start-animation))
 #+end_src
+** Olivetti
+#+begin_src emacs-lisp :tangle yes
+    (use-package olivetti
+      :straight t
+      :custom
+      (olivetti-set-width 0.1)
+      :hook
+      (text-mode . olivetti-mode))
+#+end_src
 ** Paren Mode :coding:
 Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
 
@@ -1483,7 +1492,7 @@ I was envious of the org-mode look in Spacemacs and discovered that the bullets 
                                        (?+ . ?➤)
                                        (?- . ?•)))
     :hook
-    (org-mode . org-superstar-mode 1))
+    (org-mode . org-superstar-mode))
 #+end_src
 
 ** Org-capture

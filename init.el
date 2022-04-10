@@ -610,6 +610,13 @@
   (nyan-mode)
   (nyan-start-animation))
 
+(use-package olivetti
+  :straight t
+  :custom
+  (olivetti-set-width 0.1)
+  :hook
+  (text-mode . olivetti-mode))
+
 (use-package paren
   :defer t
   :custom
@@ -865,7 +872,7 @@
                                      (?+ . ?➤)
                                      (?- . ?•)))
   :hook
-  (org-mode . org-superstar-mode 1))
+  (org-mode . org-superstar-mode))
 
 (use-package org-mind-map
   :straight t
