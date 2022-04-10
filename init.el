@@ -611,143 +611,6 @@
   (nyan-mode)
   (nyan-start-animation))
 
-(use-package org
-  :defer t
-  :init
-  (whicher "pdflatex")
-  (whicher "biber")
-  :bind
-  ("C-c l" . #'org-store-link)
-  ("C-c a" . #'org-agenda)
-  ("C-c c" . #'org-capture)
-  :custom
-  (org-directory "~/Dropbox/gtd")
-  (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Dropbox/gtd"))
-  (org-default-notes-file (concat org-directory "/inbox.org"))
-  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
-  (org-refile-use-outline-path 'file)
-  (org-outline-path-complete-in-steps nil)
-  (org-refile-allow-creating-parent-nodes (quote confirm))
-  (org-log-into-drawer t)
-  (org-todo-keywords
-   '((sequence "TODO(t)"
-               "WAITING(w)"
-               "|" "DONE(d)"
-               "CANCELLED(c)")))
-  (org-tags-exclude-from-inheritance '("project"))
-  (org-stuck-projects
-   '("+project/-MAYBE-DONE"
-     ("NEXT" "TODO")
-     nil
-     "\\<IGNORE\\>"))
-  (org-latex-pdf-process
-   '("pdflatex -interaction nonstopmode -output-directory %o %f"
-     "biber %b"
-     "pdflatex -interaction nonstopmode -output-directory %o %f"
-     "pdflatex -interaction nonstopmode -output-directory %o %f"))
-  (org-tags-column 0)
-  (org-startup-indented t)
-  (org-src-tab-acts-natively t)
-  (org-todo-keyword-faces
-   '(("TODO" . org-warning)
-     ("WAITING" . "yellow")
-     ("CANCELED" . (:foreground "blue" :weight bold))
-     ("DONE" . org-done)))
-  (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
-      "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
-      "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
-      "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
-      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
-  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
-  :config
-  (add-hook 'org-mode-hook #'turn-on-flyspell)
-  (add-hook 'org-mode-hook (lambda ()
-                             (when truncate-lines
-                               (toggle-truncate-lines))))
-  (with-eval-after-load "org"
-      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((awk . t)
-                                 (calc . t)
-                                 (css . t)
-                                 (emacs-lisp . t)
-                                 (eshell . t)
-                                 (gnuplot . t)
-                                 (dot . t)
-                                 (latex . t)
-                                 (ledger . t)
-                                 (octave . t)
-                                 (plantuml . t)
-                                 (R . t)
-                                 (sed . t)
-                                 (shell . t))))
-
-(use-package org-contrib
-  :straight t
-  :defer t
-  :config
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines)))
-
-(use-package org-bullets
-  :if window-system
-  :straight t
-  :after org
-  :hook
-  (org-mode . (lambda () (org-bullets-mode 1))))
-
-(use-package org-mind-map
-  :straight t
-  :after org
-  :commands org-mind-map-write
-  :init
-  (require 'ox-org)
-  :custom
-  (org-mind-map-engine "dot"))
-
-(use-package org-ref
-  :straight t
-  :defer t
-  :after org)
-
-(use-package org-roam
-  :straight t
-  :defer t
-  :after org
-  :init
-  (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-  :custom
-  (org-roam-directory (file-truename "~/Dropbox/org-roam"))
-  :config
-  (org-roam-setup)
-  :custom
-  (org-roam-dailies-directory "daily/")
-  (org-roam-capture-templates
-   '(("d" "default" plain "%?"
-      :target (file+head "${slug}.org"
-                         "#+title: ${title}\n")
-      :unnarrowed t)))
-  (org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      "* %?"
-      :target (file+head "%<%Y-%m-%d>.org"
-                         "#+title: %<%Y-%m-%d>\n"))))
-  :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n r" . org-roam-node-random)		    
-   (:map org-mode-map
-         (("C-c n i" . org-roam-node-insert)
-          ("C-c n o" . org-id-get-create)
-          ("C-c n t" . org-roam-tag-add)
-          ("C-c n a" . org-roam-alias-add)
-          ("C-c n l" . org-roam-buffer-toggle)))))
-
 (use-package paren
   :defer t
   :custom
@@ -901,6 +764,157 @@
 (use-package rainbow-delimiters
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package org
+  :defer t
+  :init
+  (whicher "pdflatex")
+  (whicher "biber")
+  :bind
+  ("C-c l" . #'org-store-link)
+  ("C-c a" . #'org-agenda)
+  ("C-c c" . #'org-capture)
+  :custom
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
+  (org-directory "~/Dropbox/gtd")
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-files `("~/Dropbox/gtd"))
+  (org-default-notes-file (concat org-directory "/inbox.org"))
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+  (org-refile-allow-creating-parent-nodes (quote confirm))
+  (org-log-into-drawer t)
+  (org-todo-keywords
+   '((sequence "TODO(t)"
+               "WAITING(w)"
+               "|" "DONE(d)"
+               "CANCELLED(c)")))
+  (org-tags-exclude-from-inheritance '("project"))
+  (org-stuck-projects
+   '("+project/-MAYBE-DONE"
+     ("NEXT" "TODO")
+     nil
+     "\\<IGNORE\\>"))
+  (org-latex-pdf-process
+   '("pdflatex -interaction nonstopmode -output-directory %o %f"
+     "biber %b"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"
+     "pdflatex -interaction nonstopmode -output-directory %o %f"))
+  (org-hide-emphasis-markers t)
+  (org-tags-column 0)
+  (org-startup-indented t)
+  (org-src-tab-acts-natively t)
+  (org-todo-keyword-faces
+   '(("TODO" . org-warning)
+     ("WAITING" . "yellow")
+     ("CANCELED" . (:foreground "blue" :weight bold))
+     ("DONE" . org-done)))
+  (org-capture-templates
+   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+      "* %? :project:")
+     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+      "* %?\n%x")
+     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+      "* %?\n%^{Scheduled}t\n%x")
+     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+  :config
+  (add-hook 'org-mode-hook #'turn-on-flyspell)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (with-eval-after-load "org"
+      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((awk . t)
+                                 (calc . t)
+                                 (css . t)
+                                 (emacs-lisp . t)
+                                 (eshell . t)
+                                 (gnuplot . t)
+                                 (dot . t)
+                                 (latex . t)
+                                 (ledger . t)
+                                 (octave . t)
+                                 (plantuml . t)
+                                 (R . t)
+                                 (sed . t)
+                                 (shell . t)))
+  (dolist (face '((org-document-title . 2.00)
+                  (org-level-1 . 1.75)
+                  (org-level-2 . 1.50)
+                  (org-level-3 . 1.25)
+                  (org-level-4 . 1.10)
+                  (org-level-5 . 1.10)
+                  (org-level-6 . 1.10)
+                  (org-level-7 . 1.10)
+                  (org-level-8 . 1.10)))
+    (set-face-attribute (car face) nil :height (cdr face))))
+
+    (use-package org-contrib
+      :straight t
+      :defer t
+      :config
+      (require 'ox-extra)
+      (ox-extras-activate '(ignore-headlines)))
+
+(use-package org-superstar
+  ;; :if window-system
+  :straight t
+  :after org
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
+
+(use-package org-mind-map
+  :straight t
+  :after org
+  :commands org-mind-map-write
+  :init
+  (require 'ox-org)
+  :custom
+  (org-mind-map-engine "dot"))
+
+(use-package org-ref
+  :straight t
+  :defer t
+  :after org)
+
+(use-package org-roam
+  :straight t
+  :defer t
+  :after org
+  :init
+  (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  :custom
+  (org-roam-directory (file-truename "~/Dropbox/org-roam"))
+  :config
+  (org-roam-setup)
+  :custom
+  (org-roam-dailies-directory "daily/")
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "${slug}.org"
+                         "#+title: ${title}\n")
+      :unnarrowed t)))
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n"))))
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n g" . org-roam-graph)
+   ("C-c n r" . org-roam-node-random)		    
+   (:map org-mode-map
+         (("C-c n i" . org-roam-node-insert)
+          ("C-c n o" . org-id-get-create)
+          ("C-c n t" . org-roam-tag-add)
+          ("C-c n a" . org-roam-alias-add)
+          ("C-c n l" . org-roam-buffer-toggle)))))
+
+(use-package mixed-pitch
+  :straight t
+  :hook
+  (org-mode . mixed-pitch-mode))
 
 ;; Custom Function Definitions
 
