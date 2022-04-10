@@ -5,7 +5,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-10 14:17:36 thomas>
+#+date: Time-stamp: <2022-04-10 17:30:10 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -209,7 +209,6 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~display-line-numbers-mode~ on the fly if I want to hide the line numbers.
 #+begin_src emacs-lisp :noweb-ref emacs_config
     (when (version<= "26.0.50" emacs-version)
-      (add-hook 'text-mode-hook 'display-line-numbers-mode)
       (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
 *** Register Delay
@@ -1396,7 +1395,7 @@ In order to use active code in org-mode, you must define which programming langu
 #+name: babel_languages
 #+begin_src emacs-lisp
   (with-eval-after-load "org"
-      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
                                  (calc . t)
@@ -1415,6 +1414,8 @@ In order to use active code in org-mode, you must define which programming langu
 #+end_src
 
 ** Appearance
+
+This section contains modifications to how Org Mode appears in buffers.
 
 *** Hide Emphasis Characters
 
@@ -1468,17 +1469,21 @@ Change the color of the org-todo keywords to make it easier to see them on a col
      ("DONE" . org-done)))
 #+end_src
 
-*** Change Bullets
+*** Org Superstar Mode
 
 I was envious of the org-mode look in Spacemacs and discovered that the bullets that are used in Spacemacs can be achieved by using the ~org-bullets~ package and leaving it on the default settings.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package org-superstar
-    ;; :if window-system
     :straight t
     :after org
+    :custom
+    (org-superstar-prettify-item-bullets t)
+    (org-superstar-item-bullet-alist '((?* . ?•)
+                                       (?+ . ?➤)
+                                       (?- . ?•)))
     :hook
-    (org-mode . (lambda () (org-superstar-mode 1))))
+    (org-mode . org-superstar-mode 1))
 #+end_src
 
 ** Org-capture
@@ -1520,6 +1525,7 @@ Org-ref (https://github.com/jkitchin/org-ref) is a reference manager in org-mode
     :defer t
     :after org)
 #+end_src
+
 ** Org-roam
 
 Org-roam (https://www.orgroam.com/) adds features to make linking org notes easier and provided a database file to connect all the notes together.
@@ -1600,7 +1606,9 @@ Something I am fiddling around with...
                dest))))
 #+end_src
 ** Sudo Find File
+
 This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
+
 #+begin_src emacs-lisp :tangle yes
   (whicher "sudo")
   (defun sudo-find-file (file)

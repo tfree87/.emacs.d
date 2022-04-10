@@ -79,7 +79,6 @@
   (display-time-mode 1)
   (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
-    (add-hook 'text-mode-hook 'display-line-numbers-mode)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (fset 'yes-or-no-p 'y-or-n-p)
   (column-number-mode 1)
@@ -823,7 +822,7 @@
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (with-eval-after-load "org"
-      (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((awk . t)
                                  (calc . t)
@@ -858,11 +857,15 @@
       (ox-extras-activate '(ignore-headlines)))
 
 (use-package org-superstar
-  ;; :if window-system
   :straight t
   :after org
+  :custom
+  (org-superstar-prettify-item-bullets t)
+  (org-superstar-item-bullet-alist '((?* . ?•)
+                                     (?+ . ?➤)
+                                     (?- . ?•)))
   :hook
-  (org-mode . (lambda () (org-superstar-mode 1))))
+  (org-mode . org-superstar-mode 1))
 
 (use-package org-mind-map
   :straight t
