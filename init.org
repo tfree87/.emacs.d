@@ -5,7 +5,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-10 18:00:29 thomas>
+#+date: Time-stamp: <2022-04-10 18:09:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1031,18 +1031,21 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
     (nyan-start-animation))
 #+end_src
 ** Olivetti
+
+Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
+
 #+begin_src emacs-lisp :tangle yes
-    (use-package olivetti
-      :straight t
-      :custom
-      (olivetti-set-width 0.1)
-      :hook
-      (text-mode . olivetti-mode))
+  (use-package olivetti
+    :straight t
+    :hook
+    (text-mode . olivetti-mode))
 #+end_src
 ** Paren Mode :coding:
+
 Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
 
 The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
+
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
     :defer t
@@ -1050,8 +1053,11 @@ The following code will always highlight matching parenthesis when coding /immed
     (show-paren-delay 0)
     :hook (prog-mode . show-paren-mode))
 #+end_src
+
 ** PDF Tools
+
 [[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
     :straight t
@@ -1060,13 +1066,19 @@ The following code will always highlight matching parenthesis when coding /immed
     (pdf-loader-install :no-query))
 #+end_src
 ** PlantUML :productivity:
+
 [[https://plantuml.com/][PlantUML]] is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
+
 *** Set Location of PlantUML Binary
+
 When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
+
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
 #+end_src
+
 *** Install PlantUML Mode
+
 [[https://github.com/skuro/plantuml-mode][PlantUML mode]] is not installed by default, so we need ~use-package~ to download and install it.
 #+begin_src emacs-lisp :tangle yes
   (use-package plantuml-mode

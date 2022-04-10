@@ -612,8 +612,6 @@
 
 (use-package olivetti
   :straight t
-  :custom
-  (olivetti-set-width 0.1)
   :hook
   (text-mode . olivetti-mode))
 
