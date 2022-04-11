@@ -17,9 +17,6 @@
 
 (let ((file-name-handler-alist nil))
 
-(defun fm-get-fullpath (@file-relative-path)
-  (concat (file-name-directory (or load-file-name buffer-file-name)) @file-relative-path))
-
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -52,6 +49,22 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+
+;; Emacs Startup Tools
+
+(use-package benchmark-init
+  :straight t
+  :config
+  (benchmark-init/activate)
+  (add-hook 'after-init-hook #'benchmark-init/deactivate))
+
+(use-package blackout
+  :straight t)
+
+(use-package no-littering
+  :straight (no-littering :host github
+                          :repo "emacscollective/no-littering"
+                          :branch "master"))
 
 (use-package whicher
   :straight (whicher :host github
@@ -92,32 +105,6 @@
 
 ;; Packages and Their Configuration
 
-(use-package benchmark-init
-  :straight t
-  :config
-  (benchmark-init/activate)
-  (add-hook 'after-init-hook #'benchmark-init/deactivate))
-
-(use-package no-littering
-  :straight (no-littering :host github
-                          :repo "emacscollective/no-littering"
-                          :branch "master"))
-
-(use-package academic-phrases
-  :straight t
-  :defer t)
-
-(use-package ace-window
-  :straight t
-  :bind ("M-o" . ace-window))
-
-(use-package aggressive-indent
-  :straight t
-  :hook
-  (prog-mode . aggressive-indent-mode)
-  :config
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-
 (use-package all-the-icons
   :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
   :defer 1
@@ -142,133 +129,6 @@
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
-(use-package apheleia
-  :straight t
-  :hook
-  (prog-mode . apheleia-mode)
-  (tex-mode . apheleia-mode)
-  :config
-  (setf (alist-get 'black apheleia-formatters)
-  '("black" "--experimental-string-processing" "-")))
-
-(use-package auctex
-  :straight t
-  :defer t
-  :custom
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  (TeX-master nil)
-  (bibtex-dialect 'biblatex))
-
-(use-package c-mode
-  :straight (:type built-in)
-  :defer t
-  :mode ("\\.c\\'"
-         "\\.ino\\'"))
-
-(use-package corfu
-  :straight t
-  :hook
-  (eshell-mode-hook . (lambda ()
-                        (setq-local corfu-quit-at-boundary t
-                                    corfu-quit-no-match t
-                                    corfu-auto nil)
-                        (corfu-mode)))
-  :bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (corfu-preselect-first nil)
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
-  :init
-  (corfu-global-mode)
-  :config
-  ;; Silence the pcomplete capf, no errors or messages!
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-  
-  ;; Ensure that pcomplete does not write to the buffer
-  ;; and behaves as a pure `completion-at-point-function'.
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
-
-(use-package corfu-doc
-  :straight (corfu-doc :host github
-                       :repo "galeo/corfu-doc"
-                       :branch "main")
-  :hook
-  (corfu-mode . corfu-doc-mode)
-  :config
-  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
-  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
-
-(use-package cape
-  :straight t
-  :bind (("C-c p p" . completion-at-point)
-         ("C-c p t" . complete-tag)
-         ("C-c p d" . cape-dabbrev)
-         ("C-c p f" . cape-file)
-         ("C-c p k" . cape-keyword)
-         ("C-c p s" . cape-symbol)
-         ("C-c p a" . cape-abbrev)
-         ("C-c p \\" . cape-tex)
-         ("C-c p _" . cape-tex)
-         ("C-c p ^" . cape-tex))
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-tex)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-symbol))
-
-(use-package orderless
-  :straight t
-  :defer 5
-  :custom
-  (completion-styles '(orderless))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles partial-completion)))))
-
-(use-package marginalia
-  :straight t
-  :bind (("M-A" . marginalia-cycle)
-         :map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-  :init
-  (marginalia-mode))
-
-(use-package calfw
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-calendar-buffer)
-  :init
-  (defalias 'calfw 'cfw:open-calendar-buffer)
-  :custom
-  (cfw:fchar-junction ?╋)
-  (cfw:fchar-vertical-line ?┃)
-  (cfw:fchar-horizontal-line ?━)
-  (cfw:fchar-left-junction ?┣)
-  (cfw:fchar-right-junction ?┫)
-  (cfw:fchar-top-junction ?┯)
-  (cfw:fchar-top-left-corner ?┏)
-  (cfw:fchar-top-right-corner ?┓))
-
-(use-package calfw-org
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-org-calendar)
-  :init
-  (defalias 'calfworg 'cfw:open-org-calendar))
-
 (use-package centaur-tabs
   :if window-system
   :straight t
@@ -281,109 +141,6 @@
   (centaur-tabs-style "chamfer")
   :config
   (centaur-tabs-mode t))
-
-(use-package consult
-  :straight t
-  :bind (("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro)
-         ("C-x M-:" . consult-complex-command)
-         ("C-x b" . consult-buffer)
-         ("C-x 4 b" . consult-buffer-other-window)
-         ("C-x 5 b" . consult-buffer-other-frame)
-         ("C-x r b" . consult-bookmark)
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)
-         ("C-M-#" . consult-register)
-         ("M-y" . consult-yank-pop)
-         ("<help> a" . consult-apropos)
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)
-         ("M-g g" . consult-goto-line)
-         ("M-g M-g" . consult-goto-line)
-         ("M-g o" . consult-outline)
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
-         ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("M-s m" . consult-multi-occur)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
-         ("M-s e" . consult-isearch-history)
-         :map isearch-mode-map
-         ("M-e" . consult-isearch-history)
-         ("M-s e" . consult-isearch-history)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi))
-  :config
-  (setq consult-narrow-key "<")
-  (setq consult-project-root-function
-        (lambda ()
-          (when-let (project (project-current))
-            (car (project-roots project))))))
-
-(use-package bbdb
-  :straight t
-  :defer t
-  :hook
-  (gnus-summary-mode . (lambda ()
-                         (define-key gnus-summary-mode-map
-                           (kbd ";")
-                           'bbdb-mua-edit-field)))
-  :custom
-  (bbdb-file "~/Dropbox/bbdb.el")
-  (bbdb-use-pop-up 'horiz)
-  (bbdb-mua-update-interactive-p '(query . create))
-  (bbdb-message-all-addresses t)
-  :config
-  (bbdb-mua-auto-update-init 'gnus 'message))
-
-(use-package blackout
-  :straight t)
-
-(use-package deft
-  :after org
-  :defer t
-  :bind
-  ("C-c n d" . deft)
-  :commands (deft)
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/Dropbox/org-roam/")
-  (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
-  (deft-use-filename-as-title t))
-
-(use-package dired
-  :straight nil
-  :ensure nil
-  :defer t
-  :custom
-  (dired-dwim-target t))
-
-(use-package disk-usage
-  :straight t
-  :defer t)
-
-(use-package docker
-  :init
-  (whicher "docker")
-  :straight t
-  :bind ("C-c d" . docker))
-
-(use-package docker-compose-mode
-  :defer t
-  :straight t
-  :init
-  (whicher "docker-compose"))
 
 (use-package doom-themes
   :if window-system
@@ -399,203 +156,10 @@
   :defer 1
   :config (doom-modeline-mode))
 
-(use-package elpy
+(use-package mixed-pitch
   :straight t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :custom
-  (elpy-rpc-python-command (whicher "python3"))
-  (python-shell-interpreter (whicher "ipython3"))
-  (python-shell-interpreter-args "-i --simple-prompt")
-  :config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
-(use-package embark
-  :straight t
-  :bind
-  (("C-." . embark-act)
-   ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none))))
-  (define-key embark-file-map (kbd "S") 'sudo-find-file))
-
-(use-package embark-consult
-  :straight t
-  :after (embark consult)
-  :demand t
   :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-(use-package eshell
-  :defer t
-  :hook
-  (eshell-load . (lambda ()
-                        (eshell-git-prompt-use-theme 'multiline2)))
-  (eshell-mode . (lambda ()
-                   (add-to-list 'eshell-visual-commands "htop")
-                   (add-to-list 'eshell-visual-commands "ipython")
-                   (add-to-list 'eshell-visual-commands "rclone")
-                   (add-to-list 'eshell-visual-commands "ssh")
-                   (add-to-list 'eshell-visual-commands "tail")
-                   (add-to-list 'eshell-visual-commands "top")
-                   (eshell/alias "ff" "find-file $1")
-                   (eshell/alias "emacs" "find-file $1")
-                   (eshell/alias "untar" "tar -zxvf")
-                   (eshell/alias "cpv" "rsync -ah --info=progress2")
-                   (eshell/alias "ll" "ls -Alh")))
-  :custom
-  (eshell-error-if-no-glob t)
-  (eshell-hist-ignoredups t)
-  (eshell-save-history-on-exit t)
-  (eshell-destroy-buffer-when-process-dies t)
-  :config
-  (setenv "PAGER" "cat"))
-
-(use-package eshell-git-prompt
-  :straight (emacs-git-prompt :host github
-                              :repo "tfree87/eshell-git-prompt"
-                              :branch "master")
-  :defer t)
-
-(use-package eshell-toggle
-  :straight (eshell-toggle :repo "4DA/eshell-toggle"
-                           :host github
-                           :repo "master")
-  :custom
-  (eshell-toggle-size-fraction 3)
-  (eshell-toggle-run-command nil)
-  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
-  :bind
-  ("M-s-`" . eshell-toggle))
-
-(use-package flycheck
-  :straight t
-  :defer t)
-
-(use-package ispell
-  :defer t
-  :config
-  (if (eq system-type 'windows-nt)
-    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-           (setq ispell-local-dictionary "en_US")
-           (setq ispell-local-dictionary-alist
-                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-      (setq ispell-program-name (whicher "hunspell"))))
-
-(use-package flyspell
-  :blackout t
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  (add-hook 'text-mode-hook 'flyspell-mode))
-
-(use-package go-mode
-  :straight t
-  :defer t)
-
-(use-package gnuplot
-  :init
-  (whicher "gnuplot")
-  :straight t
-  :defer t)
-
-(use-package habitica
-  :after org
-  :custom
-  (habitica-turn-on-highlighting t)
-  (habitica-show-streak t))
-
-(use-package ibuffer
-  :bind
-  ("C-x C-b" . ibuffer)
-  :custom
-  (ibuffer-saved-filter-groups
-   '(("default"
-      ("Dired" (mode . dired-mode))
-      ("Emacs" (or
-                (name . "^\\*scratch\\*$")            
-                (name . "^\\*Messages\\*$")
-                (name . "^\\*GNU Emacs\\*$")
-                (name . "^\\*Help\\*$")
-                (name . "^\\*Calendar\\*$")
-                (name . "^\\*Calculator\\*$")
-                (name . "^\\*Calc Trail\\*$")
-                (name . "^\\*Completions\\*$")))
-      ("Gnus" (or
-               (mode . message-mode)
-               (mode . bbdb-mode)
-               (mode . mail-mode)
-               (mode . gnus-group-mode)
-               (mode . gnus-summary-mode)
-               (mode . gnus-article-mode)
-               (name . "^\\.bbdb$")
-               (name . "^\\.newsrc-dribble")))
-      ("Org"   (or
-                (mode . org-mode)
-                (name . "^\\*Org Agenda\\*$")))
-      ("Shell"   (or
-                  (mode . eshell)
-                  (mode . term)
-                  (mode . shell))))))
-  :config
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups
-               "default"))))
-
-(use-package ledger-mode
-  :straight t
-  :defer t
-  :init
-  (whicher "ledger"))
-
-(use-package magit
-  :init
-  (whicher "git")
-  :straight t
-  :bind ("C-x g" . magit-status))
-
-(use-package markdown-mode
-  :straight t
-  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
-  :init
-  (whicher "pandoc")
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
-  :config
-  (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
-  (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
-  (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
-  (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
-
-(use-package minimap
-  :straight t
-  :defer t)
-
-(use-package multiple-cursors
-  :straight t
-  :defer t
-  :bind
-  ("C-S-c C-S-c" . 'mc/edit-lines)
-  ("C->" . 'mc/mark-next-like-this)
-  ("C-<" . 'mc/mark-previous-like-this)
-  ("C-c C-<" . 'mc/mark-all-like-this))
-
-(use-package numpydoc
-  :straight t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
+  (org-mode . mixed-pitch-mode))
 
 (use-package nyan-mode
   :if window-system
@@ -615,11 +179,47 @@
   :hook
   (text-mode . olivetti-mode))
 
-(use-package paren
+(use-package org-superstar
+  :straight t
+  :after org
+  :custom
+  (org-superstar-prettify-item-bullets t)
+  (org-superstar-item-bullet-alist '((?* . ?•)
+                                     (?+ . ?➤)
+                                     (?- . ?•)))
+  :hook
+  (org-mode . org-superstar-mode))
+
+(use-package academic-phrases
+  :straight t
+  :defer t)
+
+(use-package auctex
+  :straight t
   :defer t
   :custom
-  (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-master nil)
+  (bibtex-dialect 'biblatex))
+
+(use-package ispell
+  :defer t
+  :config
+  (if (eq system-type 'windows-nt)
+    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+           (setq ispell-local-dictionary "en_US")
+           (setq ispell-local-dictionary-alist
+                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+      (setq ispell-program-name (whicher "hunspell"))))
+
+(use-package flyspell
+  :blackout t
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode))
 
 (use-package pdf-tools
   :straight t
@@ -627,65 +227,78 @@
   :config
   (pdf-loader-install :no-query))
 
-(use-package plantuml-mode
+(use-package ace-window
   :straight t
-  :defer t
-  :after org)
+  :bind ("M-o" . ace-window))
 
-(use-package popper
+(use-package aggressive-indent
   :straight t
-  :bind (("C-`"   . popper-toggle-latest)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
-  (setq popper-reference-buffers
-          '("\\*Messages\\*"
-            "\\*Embark Actions\\*"
-            "Output\\*$"
-            "\\*Async Shell Command\\*"
-            "\\*Whicher Report\\*"
-            help-mode
-            compilation-mode))
-  (popper-mode +1)
-  (popper-echo-mode +1))
-
-(use-package powershell
-  :if (eq system-type 'windows-nt)
-  :defer t
-  :init
-  (whicher "powershell.exe")
-  :straight t
+  :hook
+  (prog-mode . aggressive-indent-mode)
   :config
-  ;; Change default compile command for powershell
-  (add-hook 'powershell-mode-hook
-            (lambda ()
-              (set (make-local-variable 'compile-command)
-                   (format
-                    (whicher
-                     "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
-                    (buffer-file-name))))))
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
-(use-package projectile
+(use-package apheleia
   :straight t
+  :hook
+  (prog-mode . apheleia-mode)
+  (tex-mode . apheleia-mode)
   :config
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
+  (setf (alist-get 'black apheleia-formatters)
+  '("black" "--experimental-string-processing" "-")))
 
-(use-package savehist
-  :straight t
-  :init
-  (savehist-mode))
-
-(use-package sunrise-commander
-  :defer t
-  :straight t)
-
-(use-package tramp
+(use-package c-mode
   :straight (:type built-in)
   :defer t
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
+
+(use-package elpy
+  :straight t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :custom
+  (elpy-rpc-python-command (whicher "python3"))
+  (python-shell-interpreter (whicher "ipython3"))
+  (python-shell-interpreter-args "-i --simple-prompt")
   :config
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode)))
+
+(use-package flycheck
+  :straight t
+  :defer t)
+
+(use-package go-mode
+  :straight t
+  :defer t)
+
+(use-package minimap
+  :straight t
+  :defer t)
+
+(use-package magit
+  :init
+  (whicher "git")
+  :straight t
+  :bind ("C-x g" . magit-status))
+
+(use-package numpydoc
+  :straight t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
+(use-package paren
+  :defer t
+  :custom
+  (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
+
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package treemacs
   :straight t
@@ -734,6 +347,153 @@
   :after (treemacs magit)
   :straight t)
 
+(use-package cape
+  :straight t
+  :bind (("C-c p p" . completion-at-point)
+         ("C-c p t" . complete-tag)
+         ("C-c p d" . cape-dabbrev)
+         ("C-c p f" . cape-file)
+         ("C-c p k" . cape-keyword)
+         ("C-c p s" . cape-symbol)
+         ("C-c p a" . cape-abbrev)
+         ("C-c p \\" . cape-tex)
+         ("C-c p _" . cape-tex)
+         ("C-c p ^" . cape-tex))
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-symbol))
+
+(use-package consult
+  :straight t
+  :bind (("C-c h" . consult-history)
+         ("C-c m" . consult-mode-command)
+         ("C-c k" . consult-kmacro)
+         ("C-x M-:" . consult-complex-command)
+         ("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
+         ("C-x r b" . consult-bookmark)
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)
+         ("C-M-#" . consult-register)
+         ("M-y" . consult-yank-pop)
+         ("<help> a" . consult-apropos)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)
+         ("M-g g" . consult-goto-line)
+         ("M-g M-g" . consult-goto-line)
+         ("M-g o" . consult-outline)
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ("M-s d" . consult-find)
+         ("M-s D" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s m" . consult-multi-occur)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)
+         ("M-s e" . consult-isearch-history)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi))
+  :config
+  (setq consult-narrow-key "<")
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project))))))
+
+(use-package corfu
+  :straight t
+  :hook
+  (eshell-mode-hook . (lambda ()
+                        (setq-local corfu-quit-at-boundary t
+                                    corfu-quit-no-match t
+                                    corfu-auto nil)
+                        (corfu-mode)))
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-preselect-first nil)
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+  :init
+  (corfu-global-mode)
+  :config
+  ;; Silence the pcomplete capf, no errors or messages!
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+  
+  ;; Ensure that pcomplete does not write to the buffer
+  ;; and behaves as a pure `completion-at-point-function'.
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+
+(use-package corfu-doc
+  :straight (corfu-doc :host github
+                       :repo "galeo/corfu-doc"
+                       :branch "main")
+  :hook
+  (corfu-mode . corfu-doc-mode)
+  :config
+  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
+  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
+
+(use-package embark
+  :straight t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+  (define-key embark-file-map (kbd "S") 'sudo-find-file))
+
+(use-package embark-consult
+  :straight t
+  :after (embark consult)
+  :demand t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package orderless
+  :straight t
+  :defer 5
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package marginalia
+  :straight t
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
 (use-package vertico
   :straight t
   :demand t
@@ -743,31 +503,50 @@
   :init
   (vertico-mode))
 
-(use-package which-key
-  :straight t
-  :defer 3
-  :blackout t
+(use-package calfw
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-calendar-buffer)
+  :init
+  (defalias 'calfw 'cfw:open-calendar-buffer)
   :custom
-  (which-key-show-early-on-C-h t)
-  :config
-  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
-  (which-key-setup-side-window-right-bottom)
-  (which-key-mode))
+  (cfw:fchar-junction ?╋)
+  (cfw:fchar-vertical-line ?┃)
+  (cfw:fchar-horizontal-line ?━)
+  (cfw:fchar-left-junction ?┣)
+  (cfw:fchar-right-junction ?┫)
+  (cfw:fchar-top-junction ?┯)
+  (cfw:fchar-top-left-corner ?┏)
+  (cfw:fchar-top-right-corner ?┓))
 
-(use-package yasnippet
-  :straight t
-  :blackout t
-  :defer 3
-  :config
-  (yas-global-mode 1))
+(use-package calfw-org
+  :straight (emacs-calfw :host github
+                         :repo "zemaye/emacs-calfw"
+                         :branch "master")
+  :commands (cfw:open-org-calendar)
+  :init
+  (defalias 'calfworg 'cfw:open-org-calendar))
 
-(use-package yasnippet-snippets
-  :straight t
-  :defer t)
+(use-package deft
+  :after org
+  :defer t
+  :bind
+  ("C-c n d" . deft)
+  :commands (deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/Dropbox/org-roam/")
+  (deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
+  (deft-use-filename-as-title t))
 
-(use-package rainbow-delimiters
-  :straight t
-  :hook (prog-mode . rainbow-delimiters-mode))
+(use-package habitica
+  :after org
+  :custom
+  (habitica-turn-on-highlighting t)
+  (habitica-show-streak t))
 
 (use-package org
   :defer t
@@ -779,7 +558,6 @@
   ("C-c a" . #'org-agenda)
   ("C-c c" . #'org-capture)
   :custom
-  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
   (org-directory "~/Dropbox/gtd")
   (org-agenda-start-on-weekday nil)
   (org-agenda-files `("~/Dropbox/gtd"))
@@ -823,6 +601,7 @@
       "* %?\n%^{Scheduled}t\n%x")
      ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -854,23 +633,12 @@
                   (org-level-8 . 1.10)))
     (set-face-attribute (car face) nil :height (cdr face))))
 
-    (use-package org-contrib
-      :straight t
-      :defer t
-      :config
-      (require 'ox-extra)
-      (ox-extras-activate '(ignore-headlines)))
-
-(use-package org-superstar
+(use-package org-contrib
   :straight t
-  :after org
-  :custom
-  (org-superstar-prettify-item-bullets t)
-  (org-superstar-item-bullet-alist '((?* . ?•)
-                                     (?+ . ?➤)
-                                     (?- . ?•)))
-  :hook
-  (org-mode . org-superstar-mode))
+  :defer t
+  :config
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines)))
 
 (use-package org-mind-map
   :straight t
@@ -919,10 +687,292 @@
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
-(use-package mixed-pitch
+(use-package bbdb
   :straight t
+  :defer t
   :hook
-  (org-mode . mixed-pitch-mode))
+  (gnus-summary-mode . (lambda ()
+                         (define-key gnus-summary-mode-map
+                           (kbd ";")
+                           'bbdb-mua-edit-field)))
+  :custom
+  (bbdb-file "~/Dropbox/bbdb.el")
+  (bbdb-use-pop-up 'horiz)
+  (bbdb-mua-update-interactive-p '(query . create))
+  (bbdb-message-all-addresses t)
+  :config
+  (bbdb-mua-auto-update-init 'gnus 'message))
+
+(use-package dired
+  :straight nil
+  :ensure nil
+  :defer t
+  :custom
+  (dired-dwim-target t))
+
+(use-package disk-usage
+  :straight t
+  :defer t)
+
+(use-package sunrise-commander
+  :defer t
+  :straight t)
+
+(use-package tramp
+  :straight (:type built-in)
+  :defer t
+  :config
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+
+(use-package docker
+  :init
+  (whicher "docker")
+  :straight t
+  :bind ("C-c d" . docker))
+
+(use-package docker-compose-mode
+  :defer t
+  :straight t
+  :init
+  (whicher "docker-compose"))
+
+(use-package eshell
+  :defer t
+  :hook
+  (eshell-load . (lambda ()
+                        (eshell-git-prompt-use-theme 'multiline2)))
+  (eshell-mode . (lambda ()
+                   (add-to-list 'eshell-visual-commands "htop")
+                   (add-to-list 'eshell-visual-commands "ipython")
+                   (add-to-list 'eshell-visual-commands "rclone")
+                   (add-to-list 'eshell-visual-commands "ssh")
+                   (add-to-list 'eshell-visual-commands "tail")
+                   (add-to-list 'eshell-visual-commands "top")
+                   (eshell/alias "ff" "find-file $1")
+                   (eshell/alias "emacs" "find-file $1")
+                   (eshell/alias "untar" "tar -zxvf")
+                   (eshell/alias "cpv" "rsync -ah --info=progress2")
+                   (eshell/alias "ll" "ls -Alh")))
+  :custom
+  (eshell-error-if-no-glob t)
+  (eshell-hist-ignoredups t)
+  (eshell-save-history-on-exit t)
+  (eshell-destroy-buffer-when-process-dies t)
+  :config
+  (setenv "PAGER" "cat"))
+
+(use-package eshell-git-prompt
+  :straight (emacs-git-prompt :host github
+                              :repo "tfree87/eshell-git-prompt"
+                              :branch "master")
+  :defer t)
+
+(use-package eshell-toggle
+  :straight (eshell-toggle :repo "4DA/eshell-toggle"
+                           :host github
+                           :repo "master")
+  :custom
+  (eshell-toggle-size-fraction 3)
+  (eshell-toggle-run-command nil)
+  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+  :bind
+  ("M-s-`" . eshell-toggle))
+
+(use-package powershell
+  :if (eq system-type 'windows-nt)
+  :defer t
+  :init
+  (whicher "powershell.exe")
+  :straight t
+  :config
+  ;; Change default compile command for powershell
+  (add-hook 'powershell-mode-hook
+            (lambda ()
+              (set (make-local-variable 'compile-command)
+                   (format
+                    (whicher
+                     "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
+                    (buffer-file-name))))))
+
+(use-package gnuplot
+  :init
+  (whicher "gnuplot")
+  :straight t
+  :defer t)
+
+(use-package ibuffer
+  :bind
+  ("C-x C-b" . ibuffer)
+  :custom
+  (ibuffer-saved-filter-groups
+   '(("default"
+      ("Dired" (mode . dired-mode))
+      ("Emacs" (or
+                (name . "^\\*scratch\\*$")            
+                (name . "^\\*Messages\\*$")
+                (name . "^\\*GNU Emacs\\*$")
+                (name . "^\\*Help\\*$")
+                (name . "^\\*Calendar\\*$")
+                (name . "^\\*Calculator\\*$")
+                (name . "^\\*Calc Trail\\*$")
+                (name . "^\\*Completions\\*$")))
+      ("Gnus" (or
+               (mode . message-mode)
+               (mode . bbdb-mode)
+               (mode . mail-mode)
+               (mode . gnus-group-mode)
+               (mode . gnus-summary-mode)
+               (mode . gnus-article-mode)
+               (name . "^\\.bbdb$")
+               (name . "^\\.newsrc-dribble")))
+      ("Org"   (or
+                (mode . org-mode)
+                (name . "^\\*Org Agenda\\*$")))
+      ("Shell"   (or
+                  (mode . eshell)
+                  (mode . term)
+                  (mode . shell))))))
+  :config
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups
+               "default"))))
+
+(use-package ledger-mode
+  :straight t
+  :defer t
+  :init
+  (whicher "ledger"))
+
+(use-package multiple-cursors
+  :straight t
+  :defer t
+  :bind
+  ("C-S-c C-S-c" . 'mc/edit-lines)
+  ("C->" . 'mc/mark-next-like-this)
+  ("C-<" . 'mc/mark-previous-like-this)
+  ("C-c C-<" . 'mc/mark-all-like-this))
+
+(use-package plantuml-mode
+  :straight t
+  :defer t
+  :after org)
+
+(use-package popper
+  :straight t
+  :bind (("C-`"   . popper-toggle-latest)
+         ("M-`"   . popper-cycle)
+         ("C-M-`" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+          '("\\*Messages\\*"
+            "\\*Embark Actions\\*"
+            "Output\\*$"
+            "\\*Async Shell Command\\*"
+            "\\*Whicher Report\\*"
+            help-mode
+            compilation-mode))
+  (popper-mode +1)
+  (popper-echo-mode +1))
+
+(use-package savehist
+  :straight t
+  :init
+  (savehist-mode))
+
+(use-package which-key
+  :straight t
+  :defer 3
+  :blackout t
+  :custom
+  (which-key-show-early-on-C-h t)
+  :config
+  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode))
+
+(use-package yasnippet
+  :straight t
+  :blackout t
+  :defer 3
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :straight t
+  :defer t)
+
+(use-package exwm
+  :straight t
+  :if
+  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
+                            -2 -1) "0"))
+   (eq window-system 'x))
+  :custom
+  (exwm-workspace-number 1)
+  (exwm-input-global-keys
+   `(([?\s-r] . exwm-reset)
+     ([s-left] . windmove-left)
+     ([s-right] . windmove-right)
+     ([s-up] . windmove-up)
+     ([s-down] . windmove-down)
+     ([?\s-w] . exwm-workspace-switch)
+     ,@(mapcar (lambda (i)
+                 `(,(kbd (format "s-%d" i)) .
+                   (lambda ()
+                     (interactive)
+                     (exwm-workspace-switch-create ,i))))
+               (number-sequence 0 9))
+     
+     ([?\s-&] . (lambda (command)
+                  (interactive (list (read-shell-command "$ ")))
+                  (start-process-shell-command command nil command)))))
+  (exwm-input-prefix-keys
+   '(?\C-x
+     ?\C-u
+     ?\C-h
+     ?\M-x
+     ?\M-`
+     ?\M-&
+     ?\M-:
+     ?\C-\M-j
+     ?\C-\ ))
+  :config
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+  (add-hook 'exwm-update-class-hook (lambda()
+                                      (exwm-workspace-rename-buffer
+                                       exwm-class-name)))
+  (shell-command
+   (concat
+    (whicher "xinput")
+    " set-prop \"SynPS/2 Synaptics TouchPad\""
+    " \"libinput Tapping Enabled\" 1"))    
+  (exwm-enable)
+  (display-battery-mode t)
+  (when (executable-find "nm-applet")
+    (start-process-shell-command "nm-applet" nil "nm-applet")))
+
+(use-package desktop-environment
+  :straight t
+  :init
+  (mapc #'whicher '("brightnessctl"
+                   "amixer"
+                   "scrot"
+                   "slock"
+                   "upower"
+                   "TLP"
+                   "playerctl"))
+  :after exwm
+  :config (desktop-environment-mode))
+
+;; Start an Emacs server
+
+(when (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  (server-start))
 
 ;; Custom Function Definitions
 
@@ -959,13 +1009,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
                            "|sudo:root@"
                            (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                  (concat "/sudo:root@localhost:" file))))
-
-(load (fm-get-fullpath "./exwm/fm-exwm.el"))
-
-;; Start an Emacs server
-
-(when (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  (server-start))
 
 ;; Sync Dropbox containing org agenda files on load and close
 
