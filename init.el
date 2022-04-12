@@ -75,7 +75,6 @@
 
 (use-package emacs
   :custom
-  (completion-cycle-threshold t)
   (desktop-save-mode t)
   (delete-by-moving-to-trash t)
   (version-control t)
@@ -87,6 +86,8 @@
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   (register-preview-function #'consult-register-format)
+  (completion-cycle-threshold t)
+  (tab-always-indent 'complete)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
   (display-time-mode 1)
@@ -98,12 +99,11 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
+  (winner-mode t)
   (advice-add #'completing-read-multiple
               :override #'consult-completing-read-multiple)
   (advice-add #'register-preview
               :override #'consult-register-window))
-
-;; Packages and Their Configuration
 
 (use-package all-the-icons
   :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
@@ -155,6 +155,9 @@
   :straight t
   :defer 1
   :config (doom-modeline-mode))
+
+(use-package minions
+  (minions mode 1))
 
 (use-package mixed-pitch
   :straight t
@@ -215,7 +218,6 @@
       (setq ispell-program-name (whicher "hunspell"))))
 
 (use-package flyspell
-  :blackout t
   :defer t
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -229,7 +231,13 @@
 
 (use-package ace-window
   :straight t
-  :bind ("M-o" . ace-window))
+  :disabled t
+  :bind ("s-o" . ace-window))
+
+(use-package winum
+  :straight t
+  :config
+  (winum-mode t))
 
 (use-package aggressive-indent
   :straight t
@@ -687,22 +695,6 @@
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
-(use-package bbdb
-  :straight t
-  :defer t
-  :hook
-  (gnus-summary-mode . (lambda ()
-                         (define-key gnus-summary-mode-map
-                           (kbd ";")
-                           'bbdb-mua-edit-field)))
-  :custom
-  (bbdb-file "~/Dropbox/bbdb.el")
-  (bbdb-use-pop-up 'horiz)
-  (bbdb-mua-update-interactive-p '(query . create))
-  (bbdb-message-all-addresses t)
-  :config
-  (bbdb-mua-auto-update-init 'gnus 'message))
-
 (use-package dired
   :straight nil
   :ensure nil
@@ -794,6 +786,22 @@
                      "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
                     (buffer-file-name))))))
 
+(use-package bbdb
+  :straight t
+  :defer t
+  :hook
+  (gnus-summary-mode . (lambda ()
+                         (define-key gnus-summary-mode-map
+                           (kbd ";")
+                           'bbdb-mua-edit-field)))
+  :custom
+  (bbdb-file "~/Dropbox/bbdb.el")
+  (bbdb-use-pop-up 'horiz)
+  (bbdb-mua-update-interactive-p '(query . create))
+  (bbdb-message-all-addresses t)
+  :config
+  (bbdb-mua-auto-update-init 'gnus 'message))
+
 (use-package gnuplot
   :init
   (whicher "gnuplot")
@@ -883,7 +891,6 @@
 (use-package which-key
   :straight t
   :defer 3
-  :blackout t
   :custom
   (which-key-show-early-on-C-h t)
   :config
@@ -893,7 +900,6 @@
 
 (use-package yasnippet
   :straight t
-  :blackout t
   :defer 3
   :config
   (yas-global-mode 1))
@@ -924,9 +930,7 @@
                      (exwm-workspace-switch-create ,i))))
                (number-sequence 0 9))
      
-     ([?\s-&] . (lambda (command)
-                  (interactive (list (read-shell-command "$ ")))
-                  (start-process-shell-command command nil command)))))
+     ))
   (exwm-input-prefix-keys
    '(?\C-x
      ?\C-u
@@ -955,6 +959,13 @@
   (display-battery-mode t)
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet")))
+
+(use-package app-launcher
+  :straight '(app-launcher :host github
+                           :repo "SebastienWae/app-launcher"
+                           :branch "main")
+  :bind
+  ("s-l" . app-launcher-run-app))
 
 (use-package desktop-environment
   :straight t
