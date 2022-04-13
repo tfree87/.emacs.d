@@ -16,7 +16,7 @@
  '(exwm-systemtray-height 17)
  '(menu-bar-mode nil)
  '(org-modules
-   '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
+   '(ol-bbdb ol-bibtex ol-docview ol-doi org-habit))
  '(safe-local-variable-values
    '((org-use-tag-inheritance)
      (eval add-hook 'after-save-hook
