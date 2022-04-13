@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-12 22:39:48 thomas>
+#+date: Time-stamp: <2022-04-12 22:42:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -678,7 +678,9 @@ Indenting with spaces rather than tabs is genrally recommended when working with
 (setq-default indent-tabs-mode nil)
 #+end_src
 
-** LSP Mode
+** LSP Mode :testing:
+
+I am considering replacing elpy with LSP Mode. I will try this out for now but at the moment is seems slow.
 
 #+begin_src emacs-lisp :tangle yes
 (use-package lsp-mode
