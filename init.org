@@ -1,10 +1,10 @@
-# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+  # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-11 22:06:14 thomas>
+#+date: Time-stamp: <2022-04-12 20:57:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -60,6 +60,7 @@ When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTA
 #+begin_src emacs-lisp
   (eq (getenv "EMACS_PORTABLE") "Y")
  #+end_src
+ 
 ** Set Location of Portable Git
 
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
@@ -158,6 +159,7 @@ The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allow
 
 #+begin_src emacs-lisp :tangle yes
   (use-package blackout
+    :disabled t
     :straight t)
 #+end_src
 
@@ -217,20 +219,6 @@ The following option will cause Emacs to always save the state of Emacs when it 
 (desktop-save-mode t)
 #+end_src
 
-*** Display Time
-
-This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (display-time-mode 1)
-#+end_src
-
-When I am running Emacs with EXWM as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in EXWM and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
-
-#+begin_src emacs-lisp :noweb-ref
-  (display-time-and-date t)
-#+end_src
-
 *** File Deletion and Backup
 Changing how Emacs deletes files and how it creates backups.
 **** Send Deleted Files to System Trash
@@ -245,21 +233,10 @@ Changing how Emacs deletes files and how it creates backups.
    (delete-old-versions t)
    (vc-make-backup-files t)
  #+end_src
-*** Indent With Spaces
-Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-(setq-default indent-tabs-mode nil)
-#+end_src
 *** Inhibit Startup Screen
 After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (inhibit-startup-screen t)
-#+end_src
-*** Number Line Mode
-I like have line numbers turned on all the time even if it reduces some screen space. With wide monitors these days it is less of an issue and I can always toggle ~display-line-numbers-mode~ on the fly if I want to hide the line numbers.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-    (when (version<= "26.0.50" emacs-version)
-      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
 *** Register Delay
 #+begin_src emacs-lisp :noweb-ref emacs_custom
@@ -270,495 +247,6 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
-*** Show Column Number
-I find it useful to have the column number displayed in the modeline in Emacs.
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (column-number-mode 1)
-#+end_src
-* Theme and Appearance
-** All the Icons
-
-[[https://github.com/domtronn/all-the-icons.el][All The Icons]] adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons
-    :if (not <<portable_check>>)
-    :defer 1
-    :straight t)
-#+end_src
-
-** All The Icons Dired
-
-[[https://github.com/jtbm37/all-the-icons-dired][all-the-icons-dired]] will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-dired
-    :if (not <<portable_check>>)
-    :straight t
-    :hook
-    (dired-mode . all-the-icons-dired-mode))
- #+end_src
- 
-** All The Icons Ibuffer
-
-[[https://github.com/seagle0128/all-the-icons-ibuffer][all-the-icons-ibuffer]] adds icons representing different buffer types to Ibuffer mode.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-ibuffer
-    :if (not <<portable_check>>)
-    :straight t
-    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
-#+end_src
-
-** All the Icons Completion
-
-[[https://github.com/iyefrat/all-the-icons-completion][all-the-icons-completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package all-the-icons-completion
-    :if (not <<portable_check>>)
-    :straight t
-    :defer 3
-    :config
-    (all-the-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-#+end_src
-
-** Centaur Tabs
-
-I like having tabs for all of my open buffers. [[https://github.com/ema2159/centaur-tabs][Centaur Tabs]] provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package centaur-tabs
-    :if window-system
-    :straight t
-    :defer t
-    :bind
-    ("C-<prior>" . centaur-tabs-backward)
-    ("C-<next>" . centaur-tabs-forward)
-    :custom
-    (centaur-tabs-set-bar 'over)
-    (centaur-tabs-style "chamfer")
-    :config
-    (centaur-tabs-mode t))
-#+end_src
-
-This setting can always be toggled off if a "cleaner" Emacs view is desired.
-** Doom Themes
-
-I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package doom-themes
-    :if window-system
-    :straight t
-    :defer 1
-    :config
-    (load-theme 'doom-outrun-electric t)
-    (doom-themes-org-config))
-#+end_src
-
-** Doom Modeline
-
-I like the Doom modeline because it has icons and bright colors.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package doom-modeline
-    :if window-system
-    :straight t
-    :defer 1
-    :config (doom-modeline-mode))
-#+end_src
-
-** Minions
-
-Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
-
-Minions is a package that puts all of the minor modes into a menu in the modeline so that all minro modes can be displayed and viewed in this menu. This can be very helpful as it provides access to a list of all the enabled minor modes while consolidating information on the modeline and removes the need for packages such as blackout, delight, dim, and diminish.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package minions
-    (minions mode 1))
-#+end_src
-
-** Menu Bar, Scroll Bar, and Tool Bar
-
-Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (toggle-scroll-bar -1)
-#+end_src
-
-** Mixed Pitch
-
-Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package mixed-pitch
-    :straight t
-    :hook
-    (org-mode . mixed-pitch-mode))
-#+end_src
-
-** Nyan Mode
-
-[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package nyan-mode
-    :if window-system
-    :straight t
-    :defer 3
-    :init
-    ;; Requires mplayer to play the music
-    (whicher "mplayer")
-    :custom
-    (nyan-wavy-trail t)
-    :config
-    (nyan-mode)
-    (nyan-start-animation))
-#+end_src
-** Olivetti
-
-Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package olivetti
-    :straight t
-    :hook
-    (text-mode . olivetti-mode))
-#+end_src
-
-** Org Superstar Mode
-
-Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted bullets. What separates it from Org Bullets is that Org Superstar Mode also can support plain lists and it has the option to format TODO keywords.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-superstar
-    :straight t
-    :after org
-    :custom
-    (org-superstar-prettify-item-bullets t)
-    (org-superstar-item-bullet-alist '((?* . ?•)
-                                       (?+ . ?➤)
-                                       (?- . ?•)))
-    :hook
-    (org-mode . org-superstar-mode))
-#+end_src
-
-* Writing/Publishing/Reading
-** Academic Phrases
-
-[[https://github.com/nashamri/academic-phrases][Academic phrases]] is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package academic-phrases
-    :straight t
-    :defer t)
-#+end_src
-
-** AUCTeX :LaTeX:
-
-[[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using LaTeX.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-    (use-package auctex
-      :straight t
-      :defer t
-      :custom
-      (TeX-auto-save t)
-      (TeX-parse-self t)
-      (TeX-master nil)
-      <<auctex_custom>>)
-#+end_src
-
-*** Use BibLaTeX
-
-BibLaTeX has more powerful features than standard BibTeX.
-
-#+begin_src emacs-lisp :noweb-ref auctex_custom
-(bibtex-dialect 'biblatex)
-#+end_src
-
-** Flyspell
-
-Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
-
-In order for this to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package ispell
-    :defer t
-    :config
-    (if (eq system-type 'windows-nt)
-      (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-             (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-             (setq ispell-local-dictionary "en_US")
-             (setq ispell-local-dictionary-alist
-                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-        (setq ispell-program-name (whicher "hunspell"))))
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package flyspell
-    :defer t
-    :init
-    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-    (add-hook 'text-mode-hook 'flyspell-mode))
-#+end_src
-
-** PDF Tools
-
-[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package pdf-tools
-    :straight t
-    :magic ("%PDF" . pdf-view-mode)
-    :config
-    (pdf-loader-install :no-query))
-#+end_src
-** Single Space at the End of Sentences
-
-Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
-
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (sentence-end-double-space nil)
-#+end_src
-
-* Navigation
-** Ace Window :disabled:
-
-[[https://github.com/abo-abo/ace-window][ace-window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package ace-window
-    :straight t
-    :disabled t
-    :bind ("s-o" . ace-window))
-#+end_src
-
-** Winner Mode
-
-Winner Mode makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (winner-mode t)
-#+end_src
-
-** Winum
-
-
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package winum
-    :straight t
-    :config
-    (winum-mode t))
-#+end_src
-
-* Coding
-The following customizations are used to improve the coding environment in Emacs.
-** Aggressive Indent
-
-[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package aggressive-indent
-    :straight t
-    :hook
-    (prog-mode . aggressive-indent-mode)
-    :config
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-#+end_src
-
-** Apheleia
-
-[[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package apheleia
-    :straight t
-    :hook
-    (prog-mode . apheleia-mode)
-    (tex-mode . apheleia-mode)
-    :config
-    (setf (alist-get 'black apheleia-formatters)
-    '("black" "--experimental-string-processing" "-")))
-#+end_src
-
-** C
-
-I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package c-mode
-    :straight (:type built-in)
-    :defer t
-    :mode ("\\.c\\'"
-           "\\.ino\\'"))
-#+end_src
-
-** Elpy :python:
-
-[[https://github.com/jorgenschaefer/elpy][Elpy]] adds powerful features for Python progamming in Emacs.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package elpy
-    :straight t
-    :defer t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
-    :custom
-    (elpy-rpc-python-command (whicher "python3"))
-    (python-shell-interpreter (whicher "ipython3"))
-    (python-shell-interpreter-args "-i --simple-prompt")
-    :config
-    <<elpy_config>>) 
-#+end_src
-
-*** Use Flycheck for Python Syntax
-
-Check python syntax while writing with flycheck
-
-#+begin_src emacs-lisp :noweb-ref elpy_config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-#+end_src
-
-** Flycheck :python:
-
-[[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package flycheck
-    :straight t
-    :defer t)
-#+end_src
-
-** Go
-
-[[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package go-mode
-    :straight t
-    :defer t)
-#+end_src
-
-** Minimap
-
-[[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package minimap
-    :straight t
-    :defer t)
-#+end_src
-
-** Magit
-
-[[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package magit
-    :init
-    (whicher "git")
-    :straight t
-    :bind ("C-x g" . magit-status))
-#+end_src
-
-** Numpydoc :python:
-
-Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package numpydoc
-    :straight t
-    :bind (:map python-mode-map
-                ("C-c C-n" . numpydoc-generate)))
-#+end_src
-
-** Paren Mode
-
-Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
-
-The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
-
-#+begin_src emacs-lisp :tangle yes  
-  (use-package paren
-    :defer t
-    :custom
-    (show-paren-delay 0)
-    :hook (prog-mode . show-paren-mode))
-#+end_src
-
-** Rainbow Delimiters
-
-[[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package rainbow-delimiters
-    :straight t
-    :hook (prog-mode . rainbow-delimiters-mode))
-#+end_src
-
-** Treemacs
-
-[[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package treemacs
-    :straight t
-    :defer t
-    :init
-    (whicher "git")
-    (with-eval-after-load 'winum
-      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-    :custom
-    (treemacs-show-hidden-files t)
-    (treemacs-wide-toggle-width 60)
-    (treemacs-width 30)
-    (treemacs-width-is-initially-locked nil)
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
-    (treemacs-hide-gitignored-files-mode nil)
-    :config
-    (treemacs-load-theme "all-the-icons")
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
-    :bind
-    (:map global-map
-          ("M-0"       . treemacs-select-window)
-          ("C-x t 1"   . treemacs-delete-other-windows)
-          ("C-x t t"   . treemacs)
-          ("C-x t d"   . treemacs-select-directory)
-          ("C-x t B"   . treemacs-bookmark)
-          ("C-x t C-t" . treemacs-find-file)
-          ("C-x t M-t" . treemacs-find-tag)))
-
-  (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :straight t)
-
-  (use-package treemacs-all-the-icons
-    :after treemacs
-    :straight t
-    :config (treemacs-load-theme 'all-the-icons))
-
-  (use-package treemacs-magit
-    :after (treemacs magit)
-    :straight t)
-#+end_src
-
 * Auto-completion
 ** Cape
 
@@ -1054,7 +542,7 @@ Allow use of Embark commands after issuing a Consult command.
 #+begin_src emacs-lisp :tangle yes
   (use-package orderless
     :straight t
-    :defer 5
+    :defer 3
     :custom
     (completion-styles '(orderless))
     (completion-category-defaults nil)
@@ -1090,7 +578,336 @@ Allow use of Embark commands after issuing a Consult command.
     (vertico-mode))
 #+end_src
 
-* Organization/Time Managment/Notes
+* Coding
+
+The following customizations are used to improve the coding environment in Emacs.
+
+** Aggressive Indent
+
+[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package aggressive-indent
+    :straight t
+    :hook
+    (prog-mode . aggressive-indent-mode)
+    :config
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+#+end_src
+
+** Apheleia :python:go:
+
+[[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package apheleia
+    :straight t
+    :hook
+    (prog-mode . apheleia-mode)
+    (tex-mode . apheleia-mode)
+    :config
+    (setf (alist-get 'black apheleia-formatters)
+    '("black" "--experimental-string-processing" "-")))
+#+end_src
+
+** C
+
+I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package c-mode
+    :straight (:type built-in)
+    :defer t
+    :mode ("\\.c\\'"
+           "\\.ino\\'"))
+#+end_src
+
+** Elpy :python:
+
+[[https://github.com/jorgenschaefer/elpy][Elpy]] adds powerful features for Python progamming in Emacs.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elpy
+    :straight t
+    :defer t
+    :init
+    (advice-add 'python-mode :before 'elpy-enable)
+    :custom
+    (elpy-rpc-python-command (whicher "python3"))
+    (python-shell-interpreter (whicher "ipython3"))
+    (python-shell-interpreter-args "-i --simple-prompt")
+    :config
+    <<elpy_config>>) 
+#+end_src
+
+*** Use Flycheck for Python Syntax
+
+Check python syntax while writing with flycheck
+
+#+begin_src emacs-lisp :noweb-ref elpy_config
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+#+end_src
+
+** Flycheck :python:
+
+[[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck
+    :straight t
+    :defer t)
+#+end_src
+
+** Go
+
+[[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package go-mode
+    :straight t
+    :defer t)
+#+end_src
+
+** Indent Using Spaces :python:
+
+Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+(setq-default indent-tabs-mode nil)
+#+end_src
+
+** Minimap
+
+[[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package minimap
+    :straight t
+    :defer t)
+#+end_src
+
+** Magit
+
+[[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package magit
+    :init
+    (whicher "git")
+    :straight t
+    :bind ("C-x g" . magit-status))
+#+end_src
+
+** Number Line Mode
+
+Number lines can be very useful in programming modes. This code below will turn on the built-in ~display-line-numbers-mode~ in any major mode that inherits from ~prog-mode~. With wide monitors these days it is less of an issue and it can always toggled off with  ~display-line-numbers-mode~ on the fly.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+    (when (version<= "26.0.50" emacs-version)
+      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+#+end_src
+** Numpydoc :python:
+
+Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package numpydoc
+    :straight t
+    :bind (:map python-mode-map
+                ("C-c C-n" . numpydoc-generate)))
+#+end_src
+
+** Paren Mode
+
+Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
+
+The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
+
+#+begin_src emacs-lisp :tangle yes  
+  (use-package paren
+    :defer t
+    :custom
+    (show-paren-delay 0)
+    :hook (prog-mode . show-paren-mode))
+#+end_src
+
+** Rainbow Delimiters
+
+[[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rainbow-delimiters
+    :straight t
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** Show Column Number
+
+Many style guides to programming languages recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (column-number-mode 1)
+#+end_src
+
+A better fix would be to use code formatters to prevent lines from getting too long. For example, [[Apheleia]] will run formatters such as Black on Python code to keep code lines from becoming too long.
+
+** Treemacs
+
+[[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package treemacs
+    :straight t
+    :defer t
+    :init
+    (whicher "git")
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :custom
+    (treemacs-show-hidden-files t)
+    (treemacs-wide-toggle-width 60)
+    (treemacs-width 30)
+    (treemacs-width-is-initially-locked nil)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (treemacs-hide-gitignored-files-mode nil)
+    :config
+    (treemacs-load-theme "all-the-icons")
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t d"   . treemacs-select-directory)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :straight t)
+
+  (use-package treemacs-all-the-icons
+    :after treemacs
+    :straight t
+    :config (treemacs-load-theme 'all-the-icons))
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :straight t)
+#+end_src
+
+* File Browsing
+** Dired
+
+The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package dired
+    :straight nil
+    :ensure nil
+    :defer t
+    :custom
+    <<dired_custom>>)
+#+end_src
+
+*** Move/Rename/Copy Files to Another Pane
+
+This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
+
+ #+begin_src emacs-lisp :noweb-ref dired_custom
+   (dired-dwim-target t)
+ #+end_src
+ 
+** Disc Usage
+
+Disc usage is a tool that can be used to determine the amount of memory a directory uses in the filesystem.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package disk-usage
+    :straight t
+    :defer t)
+#+end_src
+
+** Sunrise Commander
+
+[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package sunrise-commander
+    :defer t
+    :straight t)
+#+end_src
+
+** Tramp
+
+I occasinally use [[https://www.gnu.org/software/tramp/][Tramp]] to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package tramp
+    :straight <<tramp_version>>
+    :defer t
+    :config
+    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+#+end_src
+
+*** TRAMP Version
+
+The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
+
+#+begin_src emacs-lisp :noweb-ref tramp_version
+  (:type built-in)
+#+end_src
+
+* Navigation
+** Ace Window :disabled:
+
+[[https://github.com/abo-abo/ace-window][ace-window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ace-window
+    :straight t
+    :disabled t
+    :bind ("s-o" . ace-window))
+#+end_src
+
+** Winner Mode
+
+Winner Mode makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (winner-mode t)
+#+end_src
+
+** Winum
+
+Winum is a package that adds number to the modeline for each window in Emacs. Windows can then easily be switched from one to the next by using the key combination ~C-x w~ followed by the number of the correct window.
+
+This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]] but it has a few advantages:
+
+1. This package has a key binding that does not conflict with ~M-o~ in [[Sunrise Commander]]
+2. This package works well with EXWM. Ace Window numbers do not display in EXWM windows that are running X11 applications.
+3. ~C-x w~ is similar to the window creation and deletion commands ~C-x~ which may make it easier to remember the key binding.
+
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package winum
+    :straight t
+    :defer 3
+    :config
+    (winum-mode t))
+#+end_src
+
+* Organization/Time Management/Notes
 
 Emacs is a great tool for managing projects, organizing information, calendaring, and note taking. A number of tools and extensions to Emacs make it great for this purpose.
 
@@ -1117,7 +934,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     (cfw:fchar-top-right-corner ?┓))
 #+end_src
 
-*** ~calfw-org~
+*** ~calfw-org~ :org:
 
 ~calfw-org.el~  displays org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
 
@@ -1131,7 +948,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 
-** Deft
+** Deft :org:
 
 [[https://github.com/jrblevin/deft][Deft]] is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
 
@@ -1151,7 +968,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     (deft-use-filename-as-title t))
 #+end_src
 
-** Habitica
+** Habitica :org:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package habitica
@@ -1183,17 +1000,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     :config
     (add-hook 'org-mode-hook #'turn-on-flyspell)
     <<org_config>>
-    <<babel_languages>>
-    (dolist (face '((org-document-title . 2.00)
-                    (org-level-1 . 1.75)
-                    (org-level-2 . 1.50)
-                    (org-level-3 . 1.25)
-                    (org-level-4 . 1.10)
-                    (org-level-5 . 1.10)
-                    (org-level-6 . 1.10)
-                    (org-level-7 . 1.10)
-                    (org-level-8 . 1.10)))
-      (set-face-attribute (car face) nil :height (cdr face))))
+    <<babel_languages>>)
 
   (use-package org-contrib
     :straight t
@@ -1483,91 +1290,86 @@ Org-roam (https://www.orgroam.com/) adds features to make linking org notes easi
             ("C-c n a" . org-roam-alias-add)
             ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
-* File Browsing
-** Dired :file_browsing:
+* Writing/Publishing/Reading
+** Academic Phrases
 
-The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
-
-#+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package dired
-    :straight nil
-    :ensure nil
-    :defer t
-    :custom
-    <<dired_custom>>)
-#+end_src
-
-*** Move/Rename/Copy Files to Another Pane
-
-This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
-
- #+begin_src emacs-lisp :noweb-ref dired_custom
-   (dired-dwim-target t)
- #+end_src
- 
-** Disc Usage
-
-Disc usage is a tool that can be used to determine the amount of memory a directory uses in the filesystem.
+[[https://github.com/nashamri/academic-phrases][Academic phrases]] is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package disk-usage
+  (use-package academic-phrases
     :straight t
     :defer t)
 #+end_src
 
-** Sunrise Commander
+** AUCTeX :LaTeX:
 
-[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package sunrise-commander
-    :defer t
-    :straight t)
-#+end_src
-
-** Tramp
-
-I occasinally use [[https://www.gnu.org/software/tramp/][Tramp]] to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
+[[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using LaTeX.
 
 #+begin_src emacs-lisp :tangle yes :noweb no-export
-  (use-package tramp
-    :straight <<tramp_version>>
+    (use-package auctex
+      :straight t
+      :defer t
+      :custom
+      (TeX-auto-save t)
+      (TeX-parse-self t)
+      (TeX-master nil)
+      <<auctex_custom>>)
+#+end_src
+
+*** Use BibLaTeX
+
+BibLaTeX has more powerful features than standard BibTeX.
+
+#+begin_src emacs-lisp :noweb-ref auctex_custom
+(bibtex-dialect 'biblatex)
+#+end_src
+
+** Flyspell
+
+Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
+
+In order for this to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ispell
     :defer t
     :config
-    (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+    (if (eq system-type 'windows-nt)
+      (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+             (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+             (setq ispell-local-dictionary "en_US")
+             (setq ispell-local-dictionary-alist
+                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+        (setq ispell-program-name (whicher "hunspell"))))
 #+end_src
-
-*** TRAMP Version
-
-The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
-
-#+begin_src emacs-lisp :noweb-ref tramp_version
-  (:type built-in)
-#+end_src
-
-** Docker :docker:
-
-[[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package docker
-    :init
-    (whicher "docker")
-    :straight t
-    :bind ("C-c d" . docker))
-#+end_src
-
-** Docker Compose :docker:
-
-[[https://github.com/meqif/docker-compose-mode][docker-compose-mode]] is a major mode for editing Docker Compose files.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package docker-compose-mode
+  (use-package flyspell
     :defer t
-    :straight t
     :init
-    (whicher "docker-compose"))
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode))
 #+end_src
+
+** PDF Tools
+
+[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package pdf-tools
+    :straight t
+    :magic ("%PDF" . pdf-view-mode)
+    :config
+    (pdf-loader-install :no-query))
+#+end_src
+** Single Space at the End of Sentences
+
+Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (sentence-end-double-space nil)
+#+end_src
+
 * Shells
 ** Eshell
 
@@ -1654,7 +1456,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
     ("M-s-`" . eshell-toggle))
 #+end_src
 
-** Windows PowerShell
+** PowerShell :Windows:
 
 [[https://github.com/jschaf/powershell.el][Powershell.el]] creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
 
@@ -1676,10 +1478,221 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
                       (buffer-file-name))))))
 #+end_src
 
+* Theme and Appearance
+** All the Icons
+
+[[https://github.com/domtronn/all-the-icons.el][All The Icons]] adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons
+    :if (not <<portable_check>>)
+    :defer t
+    :straight t)
+#+end_src
+
+** All the Icons Dired
+
+[[https://github.com/jtbm37/all-the-icons-dired][all-the-icons-dired]] will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-dired
+    :if (not <<portable_check>>)
+    :straight t
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+ #+end_src
+ 
+** All the Icons Ibuffer
+
+[[https://github.com/seagle0128/all-the-icons-ibuffer][all-the-icons-ibuffer]] adds icons representing different buffer types to Ibuffer mode.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-ibuffer
+    :if (not <<portable_check>>)
+    :straight t
+    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+#+end_src
+
+** All the Icons Completion
+
+[[https://github.com/iyefrat/all-the-icons-completion][all-the-icons-completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package all-the-icons-completion
+    :if (not <<portable_check>>)
+    :straight t
+    :defer 3
+    :config
+    (all-the-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+end_src
+
+** Centaur Tabs
+
+I like having tabs for all of my open buffers. [[https://github.com/ema2159/centaur-tabs][Centaur Tabs]] provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package centaur-tabs
+    :if window-system
+    :straight t
+    :defer t
+    :bind
+    ("C-<prior>" . centaur-tabs-backward)
+    ("C-<next>" . centaur-tabs-forward)
+    :custom
+    (centaur-tabs-set-bar 'over)
+    (centaur-tabs-style "chamfer")
+    :config
+    (centaur-tabs-mode t))
+#+end_src
+
+This setting can always be toggled off if a "cleaner" Emacs view is desired.
+** Display Time
+
+This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (display-time-mode 1)
+#+end_src
+
+When I am running Emacs with EXWM as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in EXWM and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (display-time-and-date t)
+#+end_src
+
+** Doom Themes
+
+I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-themes
+    :if window-system
+    :straight t
+    :defer 1
+    :config
+    (load-theme 'doom-outrun-electric t)
+    (doom-themes-org-config))
+#+end_src
+
+** Doom Modeline
+
+I like the Doom modeline because it has icons and bright colors.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-modeline
+    :if window-system
+    :straight t
+    :defer 1
+    :config (doom-modeline-mode))
+#+end_src
+
+** Minions
+
+Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
+
+Minions is a package that puts all of the minor modes into a menu in the modeline so that all minro modes can be displayed and viewed in this menu. This can be very helpful as it provides access to a list of all the enabled minor modes while consolidating information on the modeline and removes the need for packages such as blackout, delight, dim, and diminish.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package minions
+    :defer 3
+    :config
+    (minions-mode 1))
+#+end_src
+
+** Menu Bar, Scroll Bar, and Tool Bar
+
+Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1)
+#+end_src
+
+** Mixed Pitch
+
+Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mixed-pitch
+    :straight t
+    :hook
+    (org-mode . mixed-pitch-mode))
+#+end_src
+
+** Nyan Mode
+
+[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package nyan-mode
+    :if window-system
+    :straight t
+    :defer 3
+    :init
+    ;; Requires mplayer to play the music
+    (whicher "mplayer")
+    :custom
+    (nyan-wavy-trail t)
+    :config
+    (nyan-mode)
+    (nyan-start-animation))
+#+end_src
+
+** Olivetti
+
+Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package olivetti
+    :straight t
+    :hook
+    (text-mode . olivetti-mode))
+#+end_src
+
+** Org Superstar Mode :org:
+
+Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted bullets. What separates it from Org Bullets is that Org Superstar Mode also can support plain lists and it has the option to format TODO keywords.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+    (use-package org-superstar
+      :straight t
+      :after org
+      :custom
+      (org-superstar-prettify-item-bullets t)
+      (org-superstar-item-bullet-alist '((?* . ?•)
+                                         (?+ . ?➤)
+                                         (?- . ?•)))
+      :hook
+      (org-mode . org-superstar-mode)
+      :config
+      <<superstar_config>>
+      )
+#+end_src
+
+** Org Header Sizes :org:
+
+The following code will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] at [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
+
+#+begin_src emacs-lisp :noweb-ref org_config
+  (with-eval-after-load 'org
+    (dolist (face '((org-level-1 . 1.75)
+                    (org-level-2 . 1.50)
+                    (org-level-3 . 1.25)
+                    (org-level-4 . 1.10)
+                    (org-level-5 . 1.10)
+                    (org-level-6 . 1.10)
+                    (org-level-7 . 1.10)
+                    (org-level-8 . 1.10)
+                    (org-document-title . 2.00)))
+      (set-face-attribute (car face) nil :height (cdr face))))
+#+end_src
+
 * Other
 ** BBDB
 
-The Insidious Big Brother DataBase (https://www.jwz.org/bbdb/), also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
+The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package bbdb
@@ -1699,6 +1712,29 @@ The Insidious Big Brother DataBase (https://www.jwz.org/bbdb/), also known as BB
     (bbdb-mua-auto-update-init 'gnus 'message))
 #+end_src
 
+** Docker
+
+[[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package docker
+    :init
+    (whicher "docker")
+    :straight t
+    :bind ("C-c d" . docker))
+#+end_src
+
+** Docker Compose
+
+[[https://github.com/meqif/docker-compose-mode][docker-compose-mode]] is a major mode for editing Docker Compose files.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package docker-compose-mode
+    :defer t
+    :straight t
+    :init
+    (whicher "docker-compose"))
+#+end_src
 ** Gnuplot
 
 [[https://github.com/emacs-gnuplot/gnuplot][Gnuplot]] mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
@@ -2043,7 +2079,6 @@ Another way to switch between workspaces by using the super key and any number.
                   (interactive)
                   (exwm-workspace-switch-create ,i))))
             (number-sequence 0 9))
-
 #+end_src
 
 ***** Switching Between ~char-mode~ and ~line-mode~
@@ -2090,7 +2125,8 @@ To name buffers based on the application that was launched to create them, the f
                                       (exwm-workspace-rename-buffer
                                        exwm-class-name)))
 #+end_src
-** Deskop Environment
+
+** Desktop Environment
 
 The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 

@@ -59,6 +59,7 @@
   (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package blackout
+  :disabled t
   :straight t)
 
 (use-package no-littering
@@ -82,278 +83,29 @@
   (vc-make-backup-files t)
   (inhibit-startup-screen t)
   (register-preview-delay 0)
-  (sentence-end-double-space nil)
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   (register-preview-function #'consult-register-format)
   (completion-cycle-threshold t)
   (tab-always-indent 'complete)
+  (sentence-end-double-space nil)
+  (display-time-and-date t)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
-  (display-time-mode 1)
-  (setq-default indent-tabs-mode nil)
-  (when (version<= "26.0.50" emacs-version)
-    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (fset 'yes-or-no-p 'y-or-n-p)
-  (column-number-mode 1)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (toggle-scroll-bar -1)
-  (winner-mode t)
   (advice-add #'completing-read-multiple
               :override #'consult-completing-read-multiple)
   (advice-add #'register-preview
-              :override #'consult-register-window))
-
-(use-package all-the-icons
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :defer 1
-  :straight t)
-
-(use-package all-the-icons-dired
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
-
-(use-package all-the-icons-ibuffer
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
-
-(use-package all-the-icons-completion
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
-  :straight t
-  :defer 3
-  :config
-  (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-
-(use-package centaur-tabs
-  :if window-system
-  :straight t
-  :defer t
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward)
-  :custom
-  (centaur-tabs-set-bar 'over)
-  (centaur-tabs-style "chamfer")
-  :config
-  (centaur-tabs-mode t))
-
-(use-package doom-themes
-  :if window-system
-  :straight t
-  :defer 1
-  :config
-  (load-theme 'doom-outrun-electric t)
-  (doom-themes-org-config))
-
-(use-package doom-modeline
-  :if window-system
-  :straight t
-  :defer 1
-  :config (doom-modeline-mode))
-
-(use-package minions
-  (minions mode 1))
-
-(use-package mixed-pitch
-  :straight t
-  :hook
-  (org-mode . mixed-pitch-mode))
-
-(use-package nyan-mode
-  :if window-system
-  :straight t
-  :defer 3
-  :init
-  ;; Requires mplayer to play the music
-  (whicher "mplayer")
-  :custom
-  (nyan-wavy-trail t)
-  :config
-  (nyan-mode)
-  (nyan-start-animation))
-
-(use-package olivetti
-  :straight t
-  :hook
-  (text-mode . olivetti-mode))
-
-(use-package org-superstar
-  :straight t
-  :after org
-  :custom
-  (org-superstar-prettify-item-bullets t)
-  (org-superstar-item-bullet-alist '((?* . ?•)
-                                     (?+ . ?➤)
-                                     (?- . ?•)))
-  :hook
-  (org-mode . org-superstar-mode))
-
-(use-package academic-phrases
-  :straight t
-  :defer t)
-
-(use-package auctex
-  :straight t
-  :defer t
-  :custom
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  (TeX-master nil)
-  (bibtex-dialect 'biblatex))
-
-(use-package ispell
-  :defer t
-  :config
-  (if (eq system-type 'windows-nt)
-    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-           (setq ispell-local-dictionary "en_US")
-           (setq ispell-local-dictionary-alist
-                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-      (setq ispell-program-name (whicher "hunspell"))))
-
-(use-package flyspell
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  (add-hook 'text-mode-hook 'flyspell-mode))
-
-(use-package pdf-tools
-  :straight t
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-loader-install :no-query))
-
-(use-package ace-window
-  :straight t
-  :disabled t
-  :bind ("s-o" . ace-window))
-
-(use-package winum
-  :straight t
-  :config
-  (winum-mode t))
-
-(use-package aggressive-indent
-  :straight t
-  :hook
-  (prog-mode . aggressive-indent-mode)
-  :config
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-
-(use-package apheleia
-  :straight t
-  :hook
-  (prog-mode . apheleia-mode)
-  (tex-mode . apheleia-mode)
-  :config
-  (setf (alist-get 'black apheleia-formatters)
-  '("black" "--experimental-string-processing" "-")))
-
-(use-package c-mode
-  :straight (:type built-in)
-  :defer t
-  :mode ("\\.c\\'"
-         "\\.ino\\'"))
-
-(use-package elpy
-  :straight t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :custom
-  (elpy-rpc-python-command (whicher "python3"))
-  (python-shell-interpreter (whicher "ipython3"))
-  (python-shell-interpreter-args "-i --simple-prompt")
-  :config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
-(use-package flycheck
-  :straight t
-  :defer t)
-
-(use-package go-mode
-  :straight t
-  :defer t)
-
-(use-package minimap
-  :straight t
-  :defer t)
-
-(use-package magit
-  :init
-  (whicher "git")
-  :straight t
-  :bind ("C-x g" . magit-status))
-
-(use-package numpydoc
-  :straight t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
-
-(use-package paren
-  :defer t
-  :custom
-  (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
-
-(use-package rainbow-delimiters
-  :straight t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package treemacs
-  :straight t
-  :defer t
-  :init
-  (whicher "git")
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :custom
-  (treemacs-show-hidden-files t)
-  (treemacs-wide-toggle-width 60)
-  (treemacs-width 30)
-  (treemacs-width-is-initially-locked nil)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode 'always)
-  (treemacs-hide-gitignored-files-mode nil)
-  :config
-  (treemacs-load-theme "all-the-icons")
-  (pcase (cons (not (null (executable-find "git")))
-               (not (null treemacs-python-executable)))
-    (`(t . t)
-     (treemacs-git-mode 'deferred))
-    (`(t . _)
-     (treemacs-git-mode 'simple)))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :straight t)
-
-(use-package treemacs-all-the-icons
-  :after treemacs
-  :straight t
-  :config (treemacs-load-theme 'all-the-icons))
-
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :straight t)
+              :override #'consult-register-window)
+  (setq-default indent-tabs-mode nil)
+  (when (version<= "26.0.50" emacs-version)
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (column-number-mode 1)
+  (winner-mode t)
+  (display-time-mode 1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (toggle-scroll-bar -1))
 
 (use-package cape
   :straight t
@@ -488,7 +240,7 @@
 
 (use-package orderless
   :straight t
-  :defer 5
+  :defer 3
   :custom
   (completion-styles '(orderless))
   (completion-category-defaults nil)
@@ -510,6 +262,154 @@
   (vertico-resize t)
   :init
   (vertico-mode))
+
+(use-package aggressive-indent
+  :straight t
+  :hook
+  (prog-mode . aggressive-indent-mode)
+  :config
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+
+(use-package apheleia
+  :straight t
+  :hook
+  (prog-mode . apheleia-mode)
+  (tex-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'black apheleia-formatters)
+  '("black" "--experimental-string-processing" "-")))
+
+(use-package c-mode
+  :straight (:type built-in)
+  :defer t
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
+
+(use-package elpy
+  :straight t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :custom
+  (elpy-rpc-python-command (whicher "python3"))
+  (python-shell-interpreter (whicher "ipython3"))
+  (python-shell-interpreter-args "-i --simple-prompt")
+  :config
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode)))
+
+(use-package flycheck
+  :straight t
+  :defer t)
+
+(use-package go-mode
+  :straight t
+  :defer t)
+
+(use-package minimap
+  :straight t
+  :defer t)
+
+(use-package magit
+  :init
+  (whicher "git")
+  :straight t
+  :bind ("C-x g" . magit-status))
+
+(use-package numpydoc
+  :straight t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
+(use-package paren
+  :defer t
+  :custom
+  (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
+
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package treemacs
+  :straight t
+  :defer t
+  :init
+  (whicher "git")
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :custom
+  (treemacs-show-hidden-files t)
+  (treemacs-wide-toggle-width 60)
+  (treemacs-width 30)
+  (treemacs-width-is-initially-locked nil)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (treemacs-hide-gitignored-files-mode nil)
+  :config
+  (treemacs-load-theme "all-the-icons")
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :straight t)
+
+(use-package treemacs-all-the-icons
+  :after treemacs
+  :straight t
+  :config (treemacs-load-theme 'all-the-icons))
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :straight t)
+
+(use-package dired
+  :straight nil
+  :ensure nil
+  :defer t
+  :custom
+  (dired-dwim-target t))
+
+(use-package disk-usage
+  :straight t
+  :defer t)
+
+(use-package sunrise-commander
+  :defer t
+  :straight t)
+
+(use-package tramp
+  :straight (:type built-in)
+  :defer t
+  :config
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+
+(use-package ace-window
+  :straight t
+  :disabled t
+  :bind ("s-o" . ace-window))
+
+(use-package winum
+  :straight t
+  :defer 3
+  :config
+  (winum-mode t))
 
 (use-package calfw
   :straight (emacs-calfw :host github
@@ -613,6 +513,17 @@
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
+  (with-eval-after-load 'org
+    (dolist (face '((org-level-1 . 1.75)
+                    (org-level-2 . 1.50)
+                    (org-level-3 . 1.25)
+                    (org-level-4 . 1.10)
+                    (org-level-5 . 1.10)
+                    (org-level-6 . 1.10)
+                    (org-level-7 . 1.10)
+                    (org-level-8 . 1.10)
+                    (org-document-title . 2.00)))
+      (set-face-attribute (car face) nil :height (cdr face))))
   (with-eval-after-load "org"
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -629,17 +540,7 @@
                                  (plantuml . t)
                                  (R . t)
                                  (sed . t)
-                                 (shell . t)))
-  (dolist (face '((org-document-title . 2.00)
-                  (org-level-1 . 1.75)
-                  (org-level-2 . 1.50)
-                  (org-level-3 . 1.25)
-                  (org-level-4 . 1.10)
-                  (org-level-5 . 1.10)
-                  (org-level-6 . 1.10)
-                  (org-level-7 . 1.10)
-                  (org-level-8 . 1.10)))
-    (set-face-attribute (car face) nil :height (cdr face))))
+                                 (shell . t))))
 
 (use-package org-contrib
   :straight t
@@ -695,38 +596,41 @@
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
-(use-package dired
-  :straight nil
-  :ensure nil
-  :defer t
-  :custom
-  (dired-dwim-target t))
-
-(use-package disk-usage
+(use-package academic-phrases
   :straight t
   :defer t)
 
-(use-package sunrise-commander
+(use-package auctex
+  :straight t
   :defer t
-  :straight t)
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-master nil)
+  (bibtex-dialect 'biblatex))
 
-(use-package tramp
-  :straight (:type built-in)
+(use-package ispell
   :defer t
   :config
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+  (if (eq system-type 'windows-nt)
+    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+           (setq ispell-local-dictionary "en_US")
+           (setq ispell-local-dictionary-alist
+                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+      (setq ispell-program-name (whicher "hunspell"))))
 
-(use-package docker
-  :init
-  (whicher "docker")
-  :straight t
-  :bind ("C-c d" . docker))
-
-(use-package docker-compose-mode
+(use-package flyspell
   :defer t
-  :straight t
   :init
-  (whicher "docker-compose"))
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (add-hook 'text-mode-hook 'flyspell-mode))
+
+(use-package pdf-tools
+  :straight t
+  :magic ("%PDF" . pdf-view-mode)
+  :config
+  (pdf-loader-install :no-query))
 
 (use-package eshell
   :defer t
@@ -786,6 +690,99 @@
                      "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
                     (buffer-file-name))))))
 
+(use-package all-the-icons
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :defer t
+  :straight t)
+
+(use-package all-the-icons-dired
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
+
+(use-package all-the-icons-ibuffer
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+
+(use-package all-the-icons-completion
+  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :straight t
+  :defer 3
+  :config
+  (all-the-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+
+(use-package centaur-tabs
+  :if window-system
+  :straight t
+  :defer t
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward)
+  :custom
+  (centaur-tabs-set-bar 'over)
+  (centaur-tabs-style "chamfer")
+  :config
+  (centaur-tabs-mode t))
+
+(use-package doom-themes
+  :if window-system
+  :straight t
+  :defer 1
+  :config
+  (load-theme 'doom-outrun-electric t)
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :if window-system
+  :straight t
+  :defer 1
+  :config (doom-modeline-mode))
+
+(use-package minions
+  :defer 3
+  :config
+  (minions-mode 1))
+
+(use-package mixed-pitch
+  :straight t
+  :hook
+  (org-mode . mixed-pitch-mode))
+
+(use-package nyan-mode
+  :if window-system
+  :straight t
+  :defer 3
+  :init
+  ;; Requires mplayer to play the music
+  (whicher "mplayer")
+  :custom
+  (nyan-wavy-trail t)
+  :config
+  (nyan-mode)
+  (nyan-start-animation))
+
+(use-package olivetti
+  :straight t
+  :hook
+  (text-mode . olivetti-mode))
+
+(use-package org-superstar
+  :straight t
+  :after org
+  :custom
+  (org-superstar-prettify-item-bullets t)
+  (org-superstar-item-bullet-alist '((?* . ?•)
+                                     (?+ . ?➤)
+                                     (?- . ?•)))
+  :hook
+  (org-mode . org-superstar-mode)
+  :config
+  
+  )
+
 (use-package bbdb
   :straight t
   :defer t
@@ -801,6 +798,18 @@
   (bbdb-message-all-addresses t)
   :config
   (bbdb-mua-auto-update-init 'gnus 'message))
+
+(use-package docker
+  :init
+  (whicher "docker")
+  :straight t
+  :bind ("C-c d" . docker))
+
+(use-package docker-compose-mode
+  :defer t
+  :straight t
+  :init
+  (whicher "docker-compose"))
 
 (use-package gnuplot
   :init
@@ -929,7 +938,6 @@
                      (interactive)
                      (exwm-workspace-switch-create ,i))))
                (number-sequence 0 9))
-     
      ))
   (exwm-input-prefix-keys
    '(?\C-x
