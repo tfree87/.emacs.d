@@ -266,9 +266,9 @@
 (use-package aggressive-indent
   :straight t
   :hook
-  (prog-mode . aggressive-indent-mode)
-  :config
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+  (c-mode . aggressive-indent-mode)
+  (emacs-lisp-mode . aggressive-indent-mode)
+  (go-mode . aggressive-indent-mode))
 
 (use-package apheleia
   :straight t
@@ -306,6 +306,13 @@
 (use-package go-mode
   :straight t
   :defer t)
+
+(use-package lsp-mode
+  :hook
+  ((python-mode . lsp)))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
 
 (use-package minimap
   :straight t

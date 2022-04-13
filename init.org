@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-12 22:08:36 thomas>
+#+date: Time-stamp: <2022-04-12 22:39:48 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -590,9 +590,9 @@ The following customizations are used to improve the coding environment in Emacs
   (use-package aggressive-indent
     :straight t
     :hook
-    (prog-mode . aggressive-indent-mode)
-    :config
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+    (c-mode . aggressive-indent-mode)
+    (emacs-lisp-mode . aggressive-indent-mode)
+    (go-mode . aggressive-indent-mode))
 #+end_src
 
 ** Apheleia :python:go:
@@ -622,7 +622,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
            "\\.ino\\'"))
 #+end_src
 
-** Elpy :python:
+** Elpy :python:disabled:
 
 [[https://github.com/jorgenschaefer/elpy][Elpy]] adds powerful features for Python progamming in Emacs.
 
@@ -676,6 +676,17 @@ Indenting with spaces rather than tabs is genrally recommended when working with
 
 #+begin_src emacs-lisp :noweb-ref emacs_config
 (setq-default indent-tabs-mode nil)
+#+end_src
+
+** LSP Mode
+
+#+begin_src emacs-lisp :tangle yes
+(use-package lsp-mode
+  :hook
+  ((python-mode . lsp)))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
 #+end_src
 
 ** Minimap
