@@ -514,33 +514,36 @@
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (with-eval-after-load 'org
-    (dolist (face '((org-level-1 . 1.75)
-                    (org-level-2 . 1.50)
-                    (org-level-3 . 1.25)
-                    (org-level-4 . 1.10)
-                    (org-level-5 . 1.10)
-                    (org-level-6 . 1.10)
-                    (org-level-7 . 1.10)
-                    (org-level-8 . 1.10)
-                    (org-document-title . 2.00)))
+    (dolist
+        (face
+         '((org-level-1 . 1.75)
+           (org-level-2 . 1.50)
+           (org-level-3 . 1.25)
+           (org-level-4 . 1.10)
+           (org-level-5 . 1.10)
+           (org-level-6 . 1.10)
+           (org-level-7 . 1.10)
+           (org-level-8 . 1.10)
+           (org-document-title . 2.00)))
       (set-face-attribute (car face) nil :height (cdr face))))
   (with-eval-after-load "org"
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((awk . t)
-                                 (calc . t)
-                                 (css . t)
-                                 (emacs-lisp . t)
-                                 (eshell . t)
-                                 (gnuplot . t)
-                                 (dot . t)
-                                 (latex . t)
-                                 (ledger . t)
-                                 (octave . t)
-                                 (plantuml . t)
-                                 (R . t)
-                                 (sed . t)
-                                 (shell . t))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((awk . t)
+     (calc . t)
+     (css . t)
+     (emacs-lisp . t)
+     (eshell . t)
+     (gnuplot . t)
+     (dot . t)
+     (latex . t)
+     (ledger . t)
+     (octave . t)
+     (plantuml . t)
+     (R . t)
+     (sed . t)
+     (shell . t))))
 
 (use-package org-contrib
   :straight t
@@ -778,10 +781,7 @@
                                      (?+ . ?➤)
                                      (?- . ?•)))
   :hook
-  (org-mode . org-superstar-mode)
-  :config
-  
-  )
+  (org-mode . org-superstar-mode))
 
 (use-package bbdb
   :straight t

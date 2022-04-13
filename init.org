@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-12 20:57:07 thomas>
+#+date: Time-stamp: <2022-04-12 22:08:36 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1009,7 +1009,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     <<org_contrib_config>>)
 #+end_src
 
-*** Org-mode Directories
+*** Directories
 
 Set up the default directories for Org Mode.
 
@@ -1136,21 +1136,22 @@ In order to use active code in org-mode, you must define which programming langu
 #+begin_src emacs-lisp
   (with-eval-after-load "org"
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((awk . t)
-                                 (calc . t)
-                                 (css . t)
-                                 (emacs-lisp . t)
-                                 (eshell . t)
-                                 (gnuplot . t)
-                                 (dot . t)
-                                 (latex . t)
-                                 (ledger . t)
-                                 (octave . t)
-                                 (plantuml . t)
-                                 (R . t)
-                                 (sed . t)
-                                 (shell . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((awk . t)
+     (calc . t)
+     (css . t)
+     (emacs-lisp . t)
+     (eshell . t)
+     (gnuplot . t)
+     (dot . t)
+     (latex . t)
+     (ledger . t)
+     (octave . t)
+     (plantuml . t)
+     (R . t)
+     (sed . t)
+     (shell . t)))
 #+end_src
 
 *** Appearance
@@ -1197,7 +1198,7 @@ This will allow for source code blocks in emacs org-mode to be internally indent
   (org-src-tab-acts-natively t)
  #+end_src
  
-**** Change TODO Keyword Colors
+*** Change TODO Keyword Colors
 
 Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
 
@@ -1209,7 +1210,7 @@ Change the color of the org-todo keywords to make it easier to see them on a col
      ("DONE" . org-done)))
 #+end_src
 
-*** Org-capture
+*** Capturing Ideas
 
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 
@@ -1226,7 +1227,7 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 
-*** Org-mind-map
+** Org-mind-map
 
 Org-mind-map (https://github.com/the-ted/org-mind-map) turns any ~org-mode~ buffer into a mind map in various output formats.
 
@@ -1241,7 +1242,7 @@ Org-mind-map (https://github.com/the-ted/org-mind-map) turns any ~org-mode~ buff
     (org-mind-map-engine "dot"))
 #+end_src
 
-*** Org-ref
+** Org-ref
 
 Org-ref (https://github.com/jkitchin/org-ref) is a reference manager in org-mode.
 
@@ -1252,7 +1253,7 @@ Org-ref (https://github.com/jkitchin/org-ref) is a reference manager in org-mode
     :after org)
 #+end_src
 
-*** Org-roam
+** Org-roam
 
 Org-roam (https://www.orgroam.com/) adds features to make linking org notes easier and provided a database file to connect all the notes together.
 
@@ -1665,10 +1666,7 @@ Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted b
                                          (?+ . ?➤)
                                          (?- . ?•)))
       :hook
-      (org-mode . org-superstar-mode)
-      :config
-      <<superstar_config>>
-      )
+      (org-mode . org-superstar-mode))
 #+end_src
 
 ** Org Header Sizes :org:
@@ -1677,15 +1675,17 @@ The following code will change the heading sizes in Org Mode to make it easier t
 
 #+begin_src emacs-lisp :noweb-ref org_config
   (with-eval-after-load 'org
-    (dolist (face '((org-level-1 . 1.75)
-                    (org-level-2 . 1.50)
-                    (org-level-3 . 1.25)
-                    (org-level-4 . 1.10)
-                    (org-level-5 . 1.10)
-                    (org-level-6 . 1.10)
-                    (org-level-7 . 1.10)
-                    (org-level-8 . 1.10)
-                    (org-document-title . 2.00)))
+    (dolist
+        (face
+         '((org-level-1 . 1.75)
+           (org-level-2 . 1.50)
+           (org-level-3 . 1.25)
+           (org-level-4 . 1.10)
+           (org-level-5 . 1.10)
+           (org-level-6 . 1.10)
+           (org-level-7 . 1.10)
+           (org-level-8 . 1.10)
+           (org-document-title . 2.00)))
       (set-face-attribute (car face) nil :height (cdr face))))
 #+end_src
 
