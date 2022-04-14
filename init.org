@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-14 18:54:09 thomas>
+#+date: Time-stamp: <2022-04-14 19:13:56 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -17,7 +17,7 @@ Welcome to my Emacs configuration! This file contains the code along with docume
 
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the ~init.el~ file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to ~init.el~.
 
-* Header for init.el
+* Header for ~init.el~
 
 The following code block will add a header to the ~init.el~ file when it is generated on saving:
 
