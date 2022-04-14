@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-14 18:21:35 thomas>
+#+date: Time-stamp: <2022-04-14 18:54:09 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -760,8 +760,8 @@ The following code will always highlight matching parenthesis when coding /immed
 
 Many style guides to programming languages recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
 
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (column-number-mode 1)
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (column-number-mode t)
 #+end_src
 
 A better fix would be to use code formatters to prevent lines from getting too long. For example, [[Apheleia]] will run formatters such as Black on Python code to keep code lines from becoming too long.
@@ -1565,8 +1565,8 @@ This setting can always be toggled off if a "cleaner" Emacs view is desired.
 
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
 
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (display-time-mode 1)
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (display-time-mode t)
 #+end_src
 
 When I am running Emacs with EXWM as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in EXWM and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
@@ -2009,8 +2009,6 @@ Use ~app-launcher~ to launch Linux applications in EXWM.
                              :branch "main"))
 #+end_src
 
-
-
 ** EXWM
 
 To use EXWM, the EXWM package can be pulled from using ~straight.el~.
@@ -2145,7 +2143,7 @@ To name buffers based on the application that was launched to create them, the f
 
 The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb no-export
   (use-package desktop-environment
     :straight t
     :init
@@ -2157,7 +2155,19 @@ The desktop environment package makes it so that some of the features that are i
                      "TLP"
                      "playerctl"))
     :after exwm
+    :custom
+    <<amixer>>
     :config (desktop-environment-mode))
+#+end_src
+
+*** Set Audio Mixer Command
+
+To use the volume controls with with Desktop Environment mode, the command for amixer may need to be set to find the proper audio channel to set. The device can be set wih the ~-c~ option.
+
+#+begin_src emacs-lisp :noweb-ref amixer
+  (desktop-environment-volume-get-command "amixer -c 1 get Master")
+  (desktop-environment-volume-set-command "amixer -c 1 set Master %s")
+  (desktop-environment-volume-toggle-command "amixer -c 1 set Master toggle")
 #+end_src
 
 ** Tap to Click

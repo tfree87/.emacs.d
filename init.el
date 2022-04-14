@@ -88,7 +88,9 @@
   (register-preview-function #'consult-register-format)
   (completion-cycle-threshold t)
   (tab-always-indent 'complete)
+  (column-number-mode t)
   (sentence-end-double-space nil)
+  (display-time-mode t)
   (display-time-and-date t)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
@@ -100,9 +102,7 @@
   (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
-  (column-number-mode 1)
   (winner-mode t)
-  (display-time-mode 1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1))
@@ -988,6 +988,10 @@
                    "TLP"
                    "playerctl"))
   :after exwm
+  :custom
+  (desktop-environment-volume-get-command "amixer -c 1 get Master")
+  (desktop-environment-volume-set-command "amixer -c 1 set Master %s")
+  (desktop-environment-volume-toggle-command "amixer -c 1 set Master toggle")
   :config (desktop-environment-mode))
 
 ;; Start an Emacs server
