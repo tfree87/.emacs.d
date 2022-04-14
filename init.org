@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-13 22:49:40 thomas>
+#+date: Time-stamp: <2022-04-13 23:13:45 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1982,8 +1982,6 @@ The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snip
 
 When there is no window manager running, Emacs can run as a window manger using EXWM. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
 
-The configuration can be found [[./exwm/fm-exwm.org][here]].
-
 ** Check for Window Manager
 
 I generally only want to use EXWM when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
@@ -1991,9 +1989,13 @@ I generally only want to use EXWM when I do not have another window manger in pl
 There is also a check for the X window system as calling GUI programs from EXWM will not work without it.
 
 #+begin_src emacs-lisp :noweb-ref win_man_check
-  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
-                            -2 -1) "0"))
-   (eq window-system 'x))
+  (and (not
+        (string=
+         (substring
+          (shell-command-to-string
+           "wmctrl -m ; echo $?")
+          -2 -1) "0"))
+       (eq window-system 'x))
 #+end_src
 
 ** App Launcher

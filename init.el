@@ -931,9 +931,13 @@
 (use-package exwm
   :straight t
   :if
-  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
-                            -2 -1) "0"))
-   (eq window-system 'x))
+  (and (not
+        (string=
+         (substring
+          (shell-command-to-string
+           "wmctrl -m ; echo $?")
+          -2 -1) "0"))
+       (eq window-system 'x))
   :custom
   (exwm-workspace-number 1)
   (exwm-input-global-keys
