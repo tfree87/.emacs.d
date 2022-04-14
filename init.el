@@ -752,7 +752,6 @@
   :config (doom-modeline-mode))
 
 (use-package minions
-  :defer 3
   :config
   (minions-mode 1))
 
@@ -924,6 +923,11 @@
   :straight t
   :defer t)
 
+(use-package app-launcher
+  :straight '(app-launcher :host github
+                           :repo "SebastienWae/app-launcher"
+                           :branch "main"))
+
 (use-package exwm
   :straight t
   :if
@@ -939,13 +943,7 @@
      ([s-up] . windmove-up)
      ([s-down] . windmove-down)
      ([?\s-w] . exwm-workspace-switch)
-     ,@(mapcar (lambda (i)
-                 `(,(kbd (format "s-%d" i)) .
-                   (lambda ()
-                     (interactive)
-                     (exwm-workspace-switch-create ,i))))
-               (number-sequence 0 9))
-     ))
+     ([?\s-e] . app-launcher-run-app)))
   (exwm-input-prefix-keys
    '(?\C-x
      ?\C-u
@@ -974,13 +972,6 @@
   (display-battery-mode t)
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet")))
-
-(use-package app-launcher
-  :straight '(app-launcher :host github
-                           :repo "SebastienWae/app-launcher"
-                           :branch "main")
-  :bind
-  ("s-l" . app-launcher-run-app))
 
 (use-package desktop-environment
   :straight t

@@ -1,10 +1,10 @@
-  # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-12 22:42:33 thomas>
+#+date: Time-stamp: <2022-04-13 21:47:36 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1609,7 +1609,6 @@ Minions is a package that puts all of the minor modes into a menu in the modelin
 
 #+begin_src emacs-lisp :tangle yes
   (use-package minions
-    :defer 3
     :config
     (minions-mode 1))
 #+end_src
@@ -1985,6 +1984,31 @@ When there is no window manager running, Emacs can run as a window manger using 
 
 The configuration can be found [[./exwm/fm-exwm.org][here]].
 
+** Check for Window Manager
+
+I generally only want to use EXWM when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
+
+There is also a check for the X window system as calling GUI programs from EXWM will not work without it.
+
+#+begin_src emacs-lisp :noweb-ref win_man_check
+  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
+                            -2 -1) "0"))
+   (eq window-system 'x))
+#+end_src
+
+** Launch Linux Apps
+
+Use ~app-launcher~ to launch Linux applications in EXWM.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package app-launcher
+    :straight '(app-launcher :host github
+                             :repo "SebastienWae/app-launcher"
+                             :branch "main"))
+#+end_src
+
+
+
 ** EXWM
 
 To use EXWM, the EXWM package can be pulled from using ~straight.el~.
@@ -2002,19 +2026,6 @@ To use EXWM, the EXWM package can be pulled from using ~straight.el~.
     (display-battery-mode t)
     (when (executable-find "nm-applet")
       (start-process-shell-command "nm-applet" nil "nm-applet")))
-#+end_src
-
-*** Launch Linux Apps
-
-Use ~app-launcher~ to launch Linux applications in EXWM.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package app-launcher
-    :straight '(app-launcher :host github
-                             :repo "SebastienWae/app-launcher"
-                             :branch "main")
-    :bind
-    ("s-l" . app-launcher-run-app))
 #+end_src
 
 *** RandR
@@ -2062,8 +2073,8 @@ These key bindings will always work, regardless of whether the current buffer is
 
 The following command can be used to launch programs in EWXM by using the command ~s-&~:
 
-#+begin_src emacs-lisp :noweb-ref exwm_bind
-;;     ("s-l" . app-launcher-run-app)
+#+begin_src emacs-lisp :noweb-ref launch
+  ([?\s-e] . app-launcher-run-app)
 #+end_src
 
 ***** Moving
@@ -2071,27 +2082,16 @@ The following command can be used to launch programs in EWXM by using the comman
 To have a universal command to switch between windows in EXWM, the super key and the arrow keys can be used to move about the windows directionally. Ace Window Mode doesn't work with X11 application windows, so it is convenient to have these keys set up.
 
 #+begin_src emacs-lisp :noweb-ref window_switching
-     ([s-left] . windmove-left)
-     ([s-right] . windmove-right)
-     ([s-up] . windmove-up)
-     ([s-down] . windmove-down)
+  ([s-left] . windmove-left)
+  ([s-right] . windmove-right)
+  ([s-up] . windmove-up)
+  ([s-down] . windmove-down)
 #+end_src
 
 The following command can also be used to select a workspace if multiple workspaces are created.
 
 #+begin_src emacs-lisp :noweb-ref window_switching
-     ([?\s-w] . exwm-workspace-switch)
-#+end_src
-
-Another way to switch between workspaces by using the super key and any number.
-
-#+begin_src emacs-lisp :noweb-ref window_switching
-  ,@(mapcar (lambda (i)
-              `(,(kbd (format "s-%d" i)) .
-                (lambda ()
-                  (interactive)
-                  (exwm-workspace-switch-create ,i))))
-            (number-sequence 0 9))
+  ([?\s-w] . exwm-workspace-switch)
 #+end_src
 
 ***** Switching Between ~char-mode~ and ~line-mode~
@@ -2156,18 +2156,6 @@ The desktop environment package makes it so that some of the features that are i
                      "playerctl"))
     :after exwm
     :config (desktop-environment-mode))
-#+end_src
-
-*** Check for Window Manager
-
-I generally only want to use EXWM when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
-
-There is also a check for the X window system as calling GUI programs from EXWM will not work without it.
-
-#+begin_src emacs-lisp :noweb-ref win_man_check
-  (and (not (string= (substring (shell-command-to-string "wmctrl -m ; echo $?")
-                            -2 -1) "0"))
-   (eq window-system 'x))
 #+end_src
 
 ** Tap to Click
@@ -2285,4 +2273,3 @@ Reset the value for Emacs garbage collection from the beginning of the init file
   (setq gc-cons-threshold (* 2 1000 1000))
   )
 #+end_src
-x
