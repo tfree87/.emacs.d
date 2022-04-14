@@ -71,8 +71,8 @@
   :straight (whicher :host github
                      :repo "tfree87/whicher"
                      :branch "master")
-  :init
-  (setq whicher-report-new-buffer t))
+  :custom
+  (whicher-report-new-buffer t))
 
 (use-package emacs
   :custom

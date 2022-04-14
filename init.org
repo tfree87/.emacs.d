@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-13 23:13:45 thomas>
+#+date: Time-stamp: <2022-04-14 18:21:35 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -183,8 +183,8 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
     :straight (whicher :host github
                        :repo "tfree87/whicher"
                        :branch "master")
-    :init
-    (setq whicher-report-new-buffer t))
+    :custom
+    (whicher-report-new-buffer t))
 #+end_src
 
 * Emacs Options
