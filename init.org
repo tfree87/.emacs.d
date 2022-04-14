@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-13 21:47:36 thomas>
+#+date: Time-stamp: <2022-04-13 22:49:40 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1996,7 +1996,7 @@ There is also a check for the X window system as calling GUI programs from EXWM 
    (eq window-system 'x))
 #+end_src
 
-** Launch Linux Apps
+** App Launcher
 
 Use ~app-launcher~ to launch Linux applications in EXWM.
 
@@ -2071,7 +2071,7 @@ These key bindings will always work, regardless of whether the current buffer is
 
 ***** Launching Programs
 
-The following command can be used to launch programs in EWXM by using the command ~s-&~:
+The following command can be used to launch programs in EWXM by using the command ~s-e~. This will call the ~app-launcher-run-app~ function from the [[App Launcher]] package.
 
 #+begin_src emacs-lisp :noweb-ref launch
   ([?\s-e] . app-launcher-run-app)
