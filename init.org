@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-14 22:42:49 thomas>
+#+date: Time-stamp: <2022-04-14 22:58:14 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -125,7 +125,9 @@ Instead of using the built-in package manager, use [[https://github.com/raxod502
     (load bootstrap-file nil 'nomessage))
  #+end_src
 ** Install use-package
+
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
+
 #+begin_src emacs-lisp :tangle yes
   ;; Set up use-package to manage package loading
 
@@ -142,12 +144,16 @@ This section contains many of the tools used at Eamcs startup that are helpful w
 #+end_src
 
 ** Garbage Collection Magic Hack
+
+The Garbage Collection Magic Hack is a tool that will reduce garbage collection of Emacs in order to speed up the operation of Emacs during init. It will also run garbage collection more frequently when Emacs is idle to remove some of the garbage at a time when it will not come at a cost to performance.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package gcmh
     :straight t
     :config
     (gcmh-mode 1))
 #+end_src
+
 ** Minions
 
 Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
