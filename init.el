@@ -15,7 +15,7 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(let ((file-name-handler-alist nil))
+;;  (let ((file-name-handler-alist nil))
 
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
@@ -51,6 +51,15 @@
 (setq straight-use-package-by-default t)
 
 ;; Emacs Startup Tools
+
+(use-package gcmh
+  :straight t
+  :config
+  (gcmh-mode 1))
+
+(use-package minions
+  :config
+  (minions-mode 1))
 
 (use-package benchmark-init
   :straight t
@@ -751,10 +760,6 @@
   :defer 1
   :config (doom-modeline-mode))
 
-(use-package minions
-  :config
-  (minions-mode 1))
-
 (use-package mixed-pitch
   :straight t
   :hook
@@ -926,7 +931,8 @@
 (use-package app-launcher
   :straight '(app-launcher :host github
                            :repo "SebastienWae/app-launcher"
-                           :branch "main"))
+                           :branch "main")
+  :commands (app-launcher))
 
 (use-package exwm
   :straight t
@@ -959,23 +965,26 @@
      ?\C-\M-j
      ?\C-\ ))
   :config
+  (display-battery-mode t)
+  (add-hook
+   'exwm-update-class-hook (lambda()
+                             (exwm-workspace-rename-buffer
+                              exwm-class-name)))
+  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
   (require 'exwm-randr)
   (exwm-randr-enable)
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
-  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-  (add-hook 'exwm-update-class-hook (lambda()
-                                      (exwm-workspace-rename-buffer
-                                       exwm-class-name)))
+  (whicher "nm-applet")
+  (when (executable-find "nm-applet")
+    (start-process-shell-command "nm-applet" nil "nm-applet"))
+  
   (shell-command
    (concat
     (whicher "xinput")
     " set-prop \"SynPS/2 Synaptics TouchPad\""
     " \"libinput Tapping Enabled\" 1"))    
-  (exwm-enable)
-  (display-battery-mode t)
-  (when (executable-find "nm-applet")
-    (start-process-shell-command "nm-applet" nil "nm-applet")))
+  (exwm-enable))
 
 (use-package desktop-environment
   :straight t
@@ -1001,7 +1010,7 @@
 
 ;; Custom Function Definitions
 
-(load-file "~/.emacs.d/elisp/oh-my-esh.el")
+;; (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 
 (defun rclone-sync (source dest &optional rclone-path rclone-config)
 "Sync DEST with SOURCE using rclone.
@@ -1052,5 +1061,5 @@ The rclone configuration can be set with RCLONE-CONFIG."
                                               rclone-path
                                               rclone-conf)))))
 
-(setq gc-cons-threshold (* 2 1000 1000))
-)
+;;  (setq gc-cons-threshold (* 2 1000 1000))
+;;  )
