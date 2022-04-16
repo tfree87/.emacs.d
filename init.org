@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-15 20:55:59 thomas>
+#+date: Time-stamp: <2022-04-15 21:53:38 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -87,6 +87,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 #+end_src
 
 * Package Management
+
 In this section, I have included customization to replace the default Emacs package manager with [[https://github.com/raxod502/straight.el][straight.el]]. Some reasons for making this switch are:
 
 1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
@@ -96,7 +97,9 @@ In this section, I have included customization to replace the default Emacs pack
  used in ~use-package~ statements.
  
 ** Straight.el
+
 Instead of using the built-in package manager, use [[https://github.com/raxod502/straight.el][straight.el]] to pull all the packages straight from their repositories.
+
 #+begin_src emacs-lisp :tangle yes
 
   ;; Install Straight.el to manage packages
@@ -116,6 +119,7 @@ Instead of using the built-in package manager, use [[https://github.com/raxod502
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
  #+end_src
+ 
 ** Install use-package
 
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
@@ -237,30 +241,45 @@ The following option will cause Emacs to always save the state of Emacs when it 
 #+end_src
 
 *** File Deletion and Backup
+
 Changing how Emacs deletes files and how it creates backups.
+
 **** Send Deleted Files to System Trash
+
  Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
+ 
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (delete-by-moving-to-trash t)
  #+end_src
+ 
 **** Backup Files with Version Control
+
  Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
+ 
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (version-control t)
    (delete-old-versions t)
    (vc-make-backup-files t)
  #+end_src
+ 
 *** Inhibit Startup Screen
+
 After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
+
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (inhibit-startup-screen t)
 #+end_src
+
 *** Register Delay
+
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (register-preview-delay 0)
 #+end_src
+
 *** Shorten "Yes or No" to "Y or N"
-To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
+
+To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n"
+.
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -427,6 +446,7 @@ Use the built-in project function to find the root of any project. Projectile ca
           (when-let (project (project-current))
             (car (project-roots project)))))
 #+end_src
+
 ** Completion Cycling
 
 Cycle through completion candidates by pressing the completion key.
@@ -903,6 +923,7 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
 #+end_src
 
 * Navigation
+
 ** Ace Window :disabled:
 
 [[https://github.com/abo-abo/ace-window][ace-window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
