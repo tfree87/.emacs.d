@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-14 22:58:14 thomas>
+#+date: Time-stamp: <2022-04-15 20:55:59 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -38,14 +38,6 @@ The following code block will add a header to the ~init.el~ file when it is gene
   ;; For documentation and for editing this file, see the init.org in the
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-#+end_src
-
-* Performance Optimization Start
-
-In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
-
-#+begin_src emacs-lisp :tangle yes
-;;  (let ((file-name-handler-alist nil))
 #+end_src
 
 * Running Emacs as a Portable App
@@ -272,7 +264,11 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
+
 * Auto-completion
+
+
+
 ** Cape
 
  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
@@ -2307,12 +2303,4 @@ When running Emacs as a portable app, I want to pull down the latest versions of
                                                 rclone-local
                                                 rclone-path
                                                 rclone-conf)))))
-#+end_src
-
-* Performance Optimization End
-Reset the value for Emacs garbage collection from the beginning of the init file and close off the ~let~ statement at the beginning of the init file.
-
-#+begin_src emacs-lisp :tangle yes
-;;  (setq gc-cons-threshold (* 2 1000 1000))
-;;  )
 #+end_src

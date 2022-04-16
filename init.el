@@ -15,8 +15,6 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;  (let ((file-name-handler-alist nil))
-
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -1060,6 +1058,3 @@ The rclone configuration can be set with RCLONE-CONFIG."
                                               rclone-local
                                               rclone-path
                                               rclone-conf)))))
-
-;;  (setq gc-cons-threshold (* 2 1000 1000))
-;;  )
