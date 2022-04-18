@@ -4,14 +4,31 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-16 19:12:42 thomas>
+#+date: Time-stamp: <2022-04-17 22:10:34 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
 
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+description:
+#+keywords:
+#+html_link_home: index.html
+#+html_link_up: index.html
+#+html_mathjax:
+#+html_equation_reference_format: \eqref{%s}
+#+html_head:
+#+html_head_extra:
+#+subtitle:
+#+infojs_opt:
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+latex_header:
 
-[[file:index.html][Home]]
 
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
 
@@ -1800,6 +1817,37 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
       (whicher "gnuplot")
       :straight t
       :defer t)
+#+end_src
+
+** Helpful
+
+[[https://github.com/Wilfred/helpful][Helpful]] improves the Emacs help functions by adding new features to the ~*Help*~ buffers such as:
+
+- Links to source code
+- Better formatting of docstrings
+- Lists of callers
+- Keymaps
+- Aliases
+- And more...
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package helpful
+    :straight t
+    :commands
+    (helpful-at-point
+     helpful-callable
+     helpful-command
+     helpful-key
+     helpful-variable
+     helpful-key)
+    :config
+    (global-set-key (kbd "C-h f") #'helpful-callable)
+    (global-set-key (kbd "C-h v") #'helpful-variable)
+    (global-set-key (kbd "C-h k") #'helpful-key)
+    (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+    (global-set-key (kbd "C-h F") #'helpful-function)
+    (global-set-key (kbd "C-h C") #'helpful-command))
+
 #+end_src
 
 ** Ibuffer

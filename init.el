@@ -828,6 +828,23 @@
   :straight t
   :defer t)
 
+(use-package helpful
+  :straight t
+  :commands
+  (helpful-at-point
+   helpful-callable
+   helpful-command
+   helpful-key
+   helpful-variable
+   helpful-key)
+  :config
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+  (global-set-key (kbd "C-h F") #'helpful-function)
+  (global-set-key (kbd "C-h C") #'helpful-command))
+
 (use-package ibuffer
   :bind
   ("C-x C-b" . ibuffer)
