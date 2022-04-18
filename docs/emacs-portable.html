@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-01 Fri 20:49 -->
+<!-- 2022-04-17 Sun 22:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Emacs as a Portable Application</title>
@@ -201,7 +201,11 @@
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 </head>
 <body>
-<div id="content" class="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
 <h1 class="title">Running Emacs as a Portable Application
 <br />
 <span class="subtitle">For Windows</span>
@@ -210,25 +214,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgbc487dd">1. About</a></li>
-<li><a href="#org27a2014">2. Why Run Emacs as a Portable App?</a></li>
-<li><a href="#org12ffe2f">3. Process</a></li>
-<li><a href="#org804e260">4. Access Org Agenda Files from the Cloud</a>
+<li><a href="#org4936da1">1. About</a></li>
+<li><a href="#orge5195ec">2. Why Run Emacs as a Portable App?</a></li>
+<li><a href="#org17b5b5c">3. Process</a></li>
+<li><a href="#org91cc693">4. Access Org Agenda Files from the Cloud</a>
 <ul>
-<li><a href="#org64a0015">4.1. Syncing Org Files Automatically</a></li>
+<li><a href="#orgb134313">4.1. Syncing Org Files Automatically</a></li>
 </ul>
 </li>
-<li><a href="#org453205f">5. Extending Portable Emacs</a></li>
-<li><a href="#org8c92169">6. About This Page</a></li>
+<li><a href="#org9468550">5. Extending Portable Emacs</a></li>
+<li><a href="#org459e489">6. About This Page</a></li>
 </ul>
 </div>
 </div>
-<p>
-<a href="index.html">Home</a>
-</p>
 
-<div id="outline-container-orgbc487dd" class="outline-2">
-<h2 id="orgbc487dd"><span class="section-number-2">1.</span> About</h2>
+
+<div id="outline-container-org4936da1" class="outline-2">
+<h2 id="org4936da1"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>.
@@ -236,8 +238,8 @@ I have created this page to document what I have learned in trying to create an 
 </div>
 </div>
 
-<div id="outline-container-org27a2014" class="outline-2">
-<h2 id="org27a2014"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
+<div id="outline-container-orge5195ec" class="outline-2">
+<h2 id="orge5195ec"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here are some reasons why I run Emacs as a portable application:
@@ -254,8 +256,8 @@ Here are some reasons why I run Emacs as a portable application:
 </div>
 </div>
 
-<div id="outline-container-org12ffe2f" class="outline-2">
-<h2 id="org12ffe2f"><span class="section-number-2">3.</span> Process</h2>
+<div id="outline-container-org17b5b5c" class="outline-2">
+<h2 id="org17b5b5c"><span class="section-number-2">3.</span> Process</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Here is the process I used to make Emacs run off of a USB flash drive:
@@ -274,14 +276,14 @@ Here is the process I used to make Emacs run off of a USB flash drive:
 <li><p>
 Set Emacs home directory to the flash drive label so files are not saved to the host system.
 </p>
-<pre class="example" id="orge14396a">
+<pre class="example" id="orgeef5d5e">
 rem Set the Emacs home directory to the drive label of the flash drive.
 set HOME=%~dp0
 </pre></li>
 <li><p>
 Create an environment variable to tell Emacs it was launched as a portable application. I do this so I can use the same Emacs configuration for all instances of Emacs whether I am running it as a portable application or not. This lets me include code in <code>init.el</code> to check if Emacs was launched as a portable application. If Emacs detects it was launched as a portable application, I can call on different functions to set up Emacs differently.
 </p>
-<pre class="example" id="orge87e194">
+<pre class="example" id="org384dd44">
 rem Set an evironment variable to tell Emacs that it is running portably
 set EMACS_PORTABLE="Y"
 </pre>
@@ -293,12 +295,12 @@ Now, in your <code>init.el</code> configuration file, you can use the following 
 </pre>
 </div>
 <p>
-In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#org64a0015">4.1</a>.
+In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#orgb134313">4.1</a>.
 </p></li>
 <li><p>
 Call the Emacs executable and launch it.
 </p>
-<pre class="example" id="org0999ffc">
+<pre class="example" id="org024d8c2">
 rem Find the Emacs executable and execute it.
 "%~dp0/emacs/bin/runemacs.exe" %
 </pre></li>
@@ -308,8 +310,8 @@ rem Find the Emacs executable and execute it.
 </div>
 </div>
 
-<div id="outline-container-org804e260" class="outline-2">
-<h2 id="org804e260"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
+<div id="outline-container-org91cc693" class="outline-2">
+<h2 id="org91cc693"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacos.
@@ -336,8 +338,8 @@ Rclone is single executable (rclone, or rclone.exe on Windows) that you can simp
 </ol>
 </div>
 
-<div id="outline-container-org64a0015" class="outline-3">
-<h3 id="org64a0015"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
+<div id="outline-container-orgb134313" class="outline-3">
+<h3 id="orgb134313"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 In order to avoid human error in this process, I have added functions to my <code>init.el</code> file to do this work for me automatically:
@@ -400,8 +402,8 @@ This will cause Emacs to sync my Org Mode agenda files and anything else in my D
 </div>
 </div>
 
-<div id="outline-container-org453205f" class="outline-2">
-<h2 id="org453205f"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
+<div id="outline-container-org9468550" class="outline-2">
+<h2 id="org9468550"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
@@ -445,13 +447,13 @@ In order to be able to make flowcharts and other diagrams with <a href="https://
 </pre>
 </div></dd>
 
-<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org804e260">above</a>.</dd>
+<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org91cc693">above</a>.</dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-org8c92169" class="outline-2">
-<h2 id="org8c92169"><span class="section-number-2">6.</span> About This Page</h2>
+<div id="outline-container-org459e489" class="outline-2">
+<h2 id="org459e489"><span class="section-number-2">6.</span> About This Page</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 This page was written in Emacs Org Mode and exported to HTML using the Org Mode export engine. This wonder "ReadTheOrg" theme along with how to use it can be found <a href="https://github.com/fniessen/org-html-themes">at this link</a>.
@@ -462,7 +464,7 @@ This page was written in Emacs Org Mode and exported to HTML using the Org Mode 
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-04-01 Fri 20:49</p>
+<p class="date">Created: 2022-04-17 Sun 22:21</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

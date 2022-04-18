@@ -1,4 +1,13 @@
-g#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+#+title: Running Emacs as a Portable Application
+#+date: <2022-03-30 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.5.2)
+#+cite_export:
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
@@ -8,8 +17,8 @@ g#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.se
 #+html_content_class: content
 #+description:
 #+keywords:
-#+html_link_home:
-#+html_link_up:
+#+html_link_home: index.html
+#+html_link_up: index.html
 #+html_mathjax:
 #+html_equation_reference_format: \eqref{%s}
 #+html_head:
@@ -24,17 +33,7 @@ g#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.se
 #+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
 #+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+options: timestamp:t title:t toc:t todo:t |:t
-#+title: Running Emacs as a Portable Application
-#+date: <2022-03-30 Wed>
-#+author: Thomas Freeman
-#+language: en
-#+select_tags: export
-#+exclude_tags: noexport
-#+creator: Emacs 27.1 (Org mode 9.5.2)
-#+cite_export:
 
-
-[[file:index.html][Home]]
 
 * About
 
