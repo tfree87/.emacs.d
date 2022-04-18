@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-13 Wed 23:14 -->
+<!-- 2022-04-17 Sun 21:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Configuration</title>
@@ -208,269 +208,273 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb1ce330">1. Header for init.el</a></li>
-<li><a href="#org9059f1b">2. Performance Optimization Start</a></li>
-<li><a href="#org7990752">3. Running Emacs as a Portable App</a>
+<li><a href="#org76748ab">1. Header for <code>init.el</code></a></li>
+<li><a href="#org53e7b33">2. Running Emacs as a Portable App</a>
 <ul>
-<li><a href="#org8e9e4b9">3.1. Check for Portable Emacs Instance</a></li>
-<li><a href="#orgfeeb229">3.2. Set Location of Portable Git</a></li>
+<li><a href="#orgc1a9b31">2.1. Check for Portable Emacs Instance</a></li>
+<li><a href="#org9bccbec">2.2. Set Location of Portable Git</a></li>
 </ul>
 </li>
-<li><a href="#org5cf0fdc">4. Custom Set Variables</a></li>
-<li><a href="#orgb476d72">5. Package Management</a>
+<li><a href="#org9a4199d">3. Custom Set Variables</a></li>
+<li><a href="#orge535939">4. Package Management</a>
 <ul>
-<li><a href="#org3cfb8e2">5.1. Straight.el</a></li>
-<li><a href="#orgd0f8edf">5.2. Install use-package</a></li>
+<li><a href="#org915323b">4.1. Straight.el</a></li>
+<li><a href="#org22bc544">4.2. Install use-package</a></li>
 </ul>
 </li>
-<li><a href="#org7de47a5">6. Startup Tools</a>
+<li><a href="#orgce56abb">5. Startup Tools</a>
 <ul>
-<li><a href="#org983d13c">6.1. Benchmark Init</a></li>
-<li><a href="#org8aa09ef">6.2. Blackout&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></a></li>
-<li><a href="#org3eed000">6.3. No-littering</a></li>
-<li><a href="#org586387b">6.4. Whicher</a></li>
+<li><a href="#org6449993">5.1. Garbage Collection Magic Hack</a></li>
+<li><a href="#org17d18fb">5.2. Benchmark Init</a></li>
+<li><a href="#org3908f01">5.3. Blackout&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></a></li>
+<li><a href="#orgf31ae46">5.4. No-littering</a></li>
+<li><a href="#orgfe39ec0">5.5. Whicher</a></li>
 </ul>
 </li>
-<li><a href="#orgbdd172b">7. Emacs Options</a>
+<li><a href="#orgbdb12b6">6. Emacs Options</a>
 <ul>
-<li><a href="#org8c2744f">7.1. General Configuration</a>
+<li><a href="#org987bb0d">6.1. General Configuration</a>
 <ul>
-<li><a href="#org4b16e46">7.1.1. Automatic Time Stamps</a></li>
-<li><a href="#org763c2e4">7.1.2. Desktop Save Mode</a></li>
-<li><a href="#org5b2c235">7.1.3. File Deletion and Backup</a></li>
-<li><a href="#orgcbca1b7">7.1.4. Inhibit Startup Screen</a></li>
-<li><a href="#orga2f4a83">7.1.5. Register Delay</a></li>
-<li><a href="#org7ca02e8">7.1.6. Shorten "Yes or No" to "Y or N"</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org723ea2b">8. Auto-completion</a>
-<ul>
-<li><a href="#org2558c35">8.1. Cape</a>
-<ul>
-<li><a href="#org86c546c">8.1.1. Cape Completion Functions</a></li>
-</ul>
-</li>
-<li><a href="#orgefae497">8.2. Consult</a>
-<ul>
-<li><a href="#orga4ee442">8.2.1. Use Consult to Select xref Locations</a></li>
-<li><a href="#org85d4fd8">8.2.2. Enhanced <code>completing-read</code> Function</a></li>
-<li><a href="#org8ac4f10">8.2.3. Change Register Preview to Consult</a></li>
-<li><a href="#org7365596">8.2.4. Tweak Register Preview Window</a></li>
-<li><a href="#org0d9e167">8.2.5. Set the Narrowing Key</a></li>
-<li><a href="#orgd7c97ee">8.2.6. Set Root Function for Projects</a></li>
-</ul>
-</li>
-<li><a href="#orga60f51f">8.3. Completion Cycling</a></li>
-<li><a href="#orgfc2cdc3">8.4. Completion by Pressing Tab</a></li>
-<li><a href="#orgcc06c20">8.5. Corfu</a>
-<ul>
-<li><a href="#org2b820b9">8.5.1. Use TAB for Selecting Candidates</a></li>
-<li><a href="#orgb4c6465">8.5.2. Use Corfu in Eshell</a></li>
-<li><a href="#org9bdf6ae">8.5.3. Corfu-doc</a></li>
-</ul>
-</li>
-<li><a href="#org254a9c1">8.6. Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a>
-<ul>
-<li><a href="#org28a2330">8.6.1. Embark Mode Line</a></li>
-<li><a href="#orgfbf3dd7">8.6.2. Embark Integration with Consult</a></li>
-</ul>
-</li>
-<li><a href="#orgbdcbf3e">8.7. Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-<li><a href="#orgb1158d2">8.8. Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-<li><a href="#orgdba7cef">8.9. Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-</ul>
-</li>
-<li><a href="#org3d8a892">9. Coding</a>
-<ul>
-<li><a href="#org89604d5">9.1. Aggressive Indent</a></li>
-<li><a href="#org65bd243">9.2. Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></a></li>
-<li><a href="#org318e225">9.3. C</a></li>
-<li><a href="#orgf98e288">9.4. Elpy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="disabled">disabled</span></span></a>
-<ul>
-<li><a href="#orga25774a">9.4.1. Use Flycheck for Python Syntax</a></li>
-</ul>
-</li>
-<li><a href="#orgac3d76b">9.5. Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#org7fea904">9.6. Go</a></li>
-<li><a href="#org404f2f7">9.7. Indent Using Spaces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#orgc9a54be">9.8. LSP Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testing">testing</span></span></a></li>
-<li><a href="#org77c861e">9.9. Minimap</a></li>
-<li><a href="#orga16b523">9.10. Magit</a></li>
-<li><a href="#org03ce7f6">9.11. Number Line Mode</a></li>
-<li><a href="#org5adb46b">9.12. Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#org383d180">9.13. Paren Mode</a></li>
-<li><a href="#org01129a1">9.14. Rainbow Delimiters</a></li>
-<li><a href="#orga3e8ff3">9.15. Show Column Number</a></li>
-<li><a href="#org0c6a7f4">9.16. Treemacs</a></li>
-</ul>
-</li>
-<li><a href="#orgbb04504">10. File Browsing</a>
-<ul>
-<li><a href="#org0091127">10.1. Dired</a>
-<ul>
-<li><a href="#org0e6c387">10.1.1. Move/Rename/Copy Files to Another Pane</a></li>
-</ul>
-</li>
-<li><a href="#orge87ec52">10.2. Disc Usage</a></li>
-<li><a href="#orge92cbcd">10.3. Sunrise Commander</a></li>
-<li><a href="#org782b580">10.4. Tramp</a>
-<ul>
-<li><a href="#orge9ba86b">10.4.1. TRAMP Version</a></li>
+<li><a href="#org47b2286">6.1.1. Automatic Time Stamps</a></li>
+<li><a href="#org0388318">6.1.2. Desktop Save Mode</a></li>
+<li><a href="#orgeeabb20">6.1.3. File Deletion and Backup</a></li>
+<li><a href="#org4d6b387">6.1.4. Inhibit Startup Screen</a></li>
+<li><a href="#org80d4f24">6.1.5. Register Delay</a></li>
+<li><a href="#org6c067bb">6.1.6. Shorten "Yes or No" to "Y or N"</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgab5dd14">11. Navigation</a>
+<li><a href="#org9edc0fa">7. Auto-completion</a>
 <ul>
-<li><a href="#org5fc902d">11.1. Ace Window&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></a></li>
-<li><a href="#orgd14bdf9">11.2. Winner Mode</a></li>
-<li><a href="#orge99dfa3">11.3. Winum</a></li>
+<li><a href="#orgfca4455">7.1. Cape</a>
+<ul>
+<li><a href="#org30c4784">7.1.1. Cape Completion Functions</a></li>
 </ul>
 </li>
-<li><a href="#orgc1b3547">12. Organization/Time Management/Notes</a>
+<li><a href="#org25cbe98">7.2. Consult</a>
 <ul>
-<li><a href="#org3c454ff">12.1. Calfw</a>
-<ul>
-<li><a href="#org33b3cf6">12.1.1. <code>calfw-org</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org201e195">7.2.1. Use Consult to Select xref Locations</a></li>
+<li><a href="#orgffc33a2">7.2.2. Enhanced <code>completing-read</code> Function</a></li>
+<li><a href="#orga608f76">7.2.3. Change Register Preview to Consult</a></li>
+<li><a href="#orga22e12c">7.2.4. Tweak Register Preview Window</a></li>
+<li><a href="#org23d18e3">7.2.5. Set the Narrowing Key</a></li>
+<li><a href="#org8cd1add">7.2.6. Set Root Function for Projects</a></li>
 </ul>
 </li>
-<li><a href="#org028cd69">12.2. Deft&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#orge76b356">12.3. Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#org4d3f419">12.4. Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a>
+<li><a href="#org11d74fb">7.3. Completion Cycling</a></li>
+<li><a href="#orgfa68afc">7.4. Completion by Pressing Tab</a></li>
+<li><a href="#orgc397df2">7.5. Corfu</a>
 <ul>
-<li><a href="#orga047363">12.4.1. Directories</a></li>
-<li><a href="#org364fb72">12.4.2. Filing Notes</a></li>
-<li><a href="#org367053f">12.4.3. Exporting</a></li>
-<li><a href="#org17da56d">12.4.4. Task Management Customization</a></li>
-<li><a href="#org3a1b079">12.4.5. BibLaTeX in Org-mode</a></li>
-<li><a href="#org1427651">12.4.6. Org-babel Languages</a></li>
-<li><a href="#orgbff6277">12.4.7. Appearance</a></li>
-<li><a href="#org418f5d6">12.4.8. Change TODO Keyword Colors</a></li>
-<li><a href="#org0e94a48">12.4.9. Capturing Ideas</a></li>
+<li><a href="#org8cb37d4">7.5.1. Use TAB for Selecting Candidates</a></li>
+<li><a href="#orgaa4c6df">7.5.2. Use Corfu in Eshell</a></li>
+<li><a href="#org6d69ce6">7.5.3. Corfu-doc</a></li>
 </ul>
 </li>
-<li><a href="#orgf929242">12.5. Org-mind-map</a></li>
-<li><a href="#orga58b5f6">12.6. Org-ref</a></li>
-<li><a href="#orge2d01f6">12.7. Org-roam</a></li>
+<li><a href="#org1d73065">7.6. Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a>
+<ul>
+<li><a href="#org34a44fa">7.6.1. Embark Mode Line</a></li>
+<li><a href="#org285efe7">7.6.2. Embark Integration with Consult</a></li>
 </ul>
 </li>
-<li><a href="#org65c996d">13. Writing/Publishing/Reading</a>
-<ul>
-<li><a href="#orga2f7d01">13.1. Academic Phrases</a></li>
-<li><a href="#orgd955396">13.2. AUCTeX&#xa0;&#xa0;&#xa0;<span class="tag"><span class="LaTeX">LaTeX</span></span></a>
-<ul>
-<li><a href="#orgc797e8e">13.2.1. Use BibLaTeX</a></li>
+<li><a href="#org47298e8">7.7. Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
+<li><a href="#orgc85b863">7.8. Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
+<li><a href="#org1162332">7.9. Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org65c116b">13.3. Flyspell</a></li>
-<li><a href="#orgdfa82da">13.4. PDF Tools</a></li>
-<li><a href="#org514cb00">13.5. Single Space at the End of Sentences</a></li>
+<li><a href="#orgdfaf324">8. Coding</a>
+<ul>
+<li><a href="#orgbe0b43e">8.1. Aggressive Indent</a></li>
+<li><a href="#org6c46933">8.2. Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></a></li>
+<li><a href="#org2d0f361">8.3. C</a></li>
+<li><a href="#orgd7641c7">8.4. Elpy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="disabled">disabled</span></span></a>
+<ul>
+<li><a href="#org3396cb4">8.4.1. Use Flycheck for Python Syntax</a></li>
 </ul>
 </li>
-<li><a href="#org5876936">14. Shells</a>
-<ul>
-<li><a href="#org0ac7563">14.1. Eshell</a>
-<ul>
-<li><a href="#orgf2069ce">14.1.1. Eshell Aliases</a></li>
-<li><a href="#org763ad68">14.1.2. Eshell Visual Commands</a></li>
+<li><a href="#org1ad7833">8.5. Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
+<li><a href="#org43fb568">8.6. Go</a></li>
+<li><a href="#org0ef2536">8.7. Indent Using Spaces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
+<li><a href="#org011d0f4">8.8. LSP Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testing">testing</span></span></a></li>
+<li><a href="#org337ce8b">8.9. Minimap</a></li>
+<li><a href="#org8844d14">8.10. Magit</a></li>
+<li><a href="#org3d8c230">8.11. Number Line Mode</a></li>
+<li><a href="#org375f1b9">8.12. Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
+<li><a href="#orgafa2e80">8.13. Paren Mode</a></li>
+<li><a href="#org81658ad">8.14. Rainbow Delimiters</a></li>
+<li><a href="#org3c53d86">8.15. Show Column Number</a></li>
+<li><a href="#org0b68289">8.16. Treemacs</a></li>
 </ul>
 </li>
-<li><a href="#orgf745605">14.2. Eshell Git Prompt</a>
+<li><a href="#org1016e01">9. File Browsing</a>
 <ul>
-<li><a href="#org7d399a1">14.2.1. Set the Eshell prompt on load</a></li>
+<li><a href="#org4ba2215">9.1. Dired</a>
+<ul>
+<li><a href="#org54097e0">9.1.1. Move/Rename/Copy Files to Another Pane</a></li>
 </ul>
 </li>
-<li><a href="#orge196e65">14.3. Eshell Toggle</a></li>
-<li><a href="#orgc6682bf">14.4. PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></a></li>
-</ul>
-</li>
-<li><a href="#orgc6e4d03">15. Theme and Appearance</a>
+<li><a href="#orgaef4940">9.2. Disc Usage</a></li>
+<li><a href="#org38dfe96">9.3. Sunrise Commander</a></li>
+<li><a href="#org53eab60">9.4. Tramp</a>
 <ul>
-<li><a href="#orgdd44c9b">15.1. All the Icons</a></li>
-<li><a href="#org5e12997">15.2. All the Icons Dired</a></li>
-<li><a href="#org0d30f8f">15.3. All the Icons Ibuffer</a></li>
-<li><a href="#org832b12d">15.4. All the Icons Completion</a></li>
-<li><a href="#orgdeb8d42">15.5. Centaur Tabs</a></li>
-<li><a href="#org1f3bbd9">15.6. Display Time</a></li>
-<li><a href="#org7600f9f">15.7. Doom Themes</a></li>
-<li><a href="#org5454bf1">15.8. Doom Modeline</a></li>
-<li><a href="#orgce38a19">15.9. Minions</a></li>
-<li><a href="#org11b0552">15.10. Menu Bar, Scroll Bar, and Tool Bar</a></li>
-<li><a href="#org9f009eb">15.11. Mixed Pitch</a></li>
-<li><a href="#org14112c3">15.12. Nyan Mode</a></li>
-<li><a href="#org8ffe195">15.13. Olivetti</a></li>
-<li><a href="#orgc761c9d">15.14. Org Superstar Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#orgb6eefc4">15.15. Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-</ul>
-</li>
-<li><a href="#orgc09e799">16. Other</a>
-<ul>
-<li><a href="#org85d603a">16.1. BBDB</a></li>
-<li><a href="#org8205d92">16.2. Docker</a></li>
-<li><a href="#org1707350">16.3. Docker Compose</a></li>
-<li><a href="#org4113fe2">16.4. Gnuplot</a></li>
-<li><a href="#org544c294">16.5. Ibuffer</a>
-<ul>
-<li><a href="#orgbad889f">16.5.1. Group Buffers</a></li>
-</ul>
-</li>
-<li><a href="#orgad9e833">16.6. Ledger</a></li>
-<li><a href="#org01fe662">16.7. Multiple Cursors</a></li>
-<li><a href="#orge5f67d8">16.8. PlantUML</a>
-<ul>
-<li><a href="#org6984d09">16.8.1. Install PlantUML Mode</a></li>
-<li><a href="#orge8f2220">16.8.2. Set Location of PlantUML Binary</a></li>
-</ul>
-</li>
-<li><a href="#orgda581ba">16.9. Popper</a>
-<ul>
-<li><a href="#orga985253">16.9.1. Popper Buffer Buffers</a></li>
-</ul>
-</li>
-<li><a href="#org55b3d45">16.10. Savehist</a></li>
-<li><a href="#org41977e9">16.11. Which-key</a>
-<ul>
-<li><a href="#org6d82241">16.11.1. Activating Which-key</a></li>
-<li><a href="#org7e6f3df">16.11.2. Which-key Window Location</a></li>
-</ul>
-</li>
-<li><a href="#orge9f6d83">16.12. YASnippet</a>
-<ul>
-<li><a href="#orgde63c20">16.12.1. Install YASnippet</a></li>
-<li><a href="#org46bf40a">16.12.2. Install Snippets</a></li>
+<li><a href="#org3c7db1e">9.4.1. TRAMP Version</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3dddd31">17. Emacs Desktop</a>
+<li><a href="#orga818faf">10. Navigation</a>
 <ul>
-<li><a href="#orge0758d8">17.1. Check for Window Manager</a></li>
-<li><a href="#org98e0799">17.2. App Launcher</a></li>
-<li><a href="#org66dbbef">17.3. EXWM</a>
-<ul>
-<li><a href="#orgba29774">17.3.1. RandR</a></li>
-<li><a href="#orgc32ac88">17.3.2. SystemTray</a></li>
-<li><a href="#org5b09b64">17.3.3. Default Workspaces</a></li>
-<li><a href="#org698b600">17.3.4. Keys</a></li>
-<li><a href="#org0f83b75">17.3.5. Buffer Naming</a></li>
+<li><a href="#org480282b">10.1. Ace Window&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></a></li>
+<li><a href="#org3d86e39">10.2. Winner Mode</a></li>
+<li><a href="#orgb86df6c">10.3. Winum</a></li>
 </ul>
 </li>
-<li><a href="#orgcc8c4c7">17.4. Desktop Environment</a></li>
-<li><a href="#orgd5b2d3d">17.5. Tap to Click</a></li>
-</ul>
-</li>
-<li><a href="#orgc6fddba">18. Emacs Server</a></li>
-<li><a href="#orga1488cc">19. Custom Functions</a>
+<li><a href="#orge939ee3">11. Organization/Time Management/Notes</a>
 <ul>
-<li><a href="#orgc1f167d">19.1. Oh My Eshell</a></li>
-<li><a href="#orgf23d310">19.2. Rclone Sync</a></li>
-<li><a href="#org3d90b94">19.3. Sudo Find File</a></li>
+<li><a href="#org240d734">11.1. Calfw</a>
+<ul>
+<li><a href="#org5ab0661">11.1.1. <code>calfw-org</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org2957e25">20. Update Org Files on Portable App Startup</a></li>
-<li><a href="#org5b857f3">21. Performance Optimization End</a></li>
+<li><a href="#orged650fa">11.2. Deft&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org8842e84">11.3. Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org931009b">11.4. Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a>
+<ul>
+<li><a href="#org28ce16a">11.4.1. Directories</a></li>
+<li><a href="#orgdc8b64c">11.4.2. Filing Notes</a></li>
+<li><a href="#org5024161">11.4.3. Exporting</a></li>
+<li><a href="#org2a5369a">11.4.4. Task Management Customization</a></li>
+<li><a href="#org40c3736">11.4.5. BibLaTeX in Org-mode</a></li>
+<li><a href="#org7f5f8f2">11.4.6. Org-babel Languages</a></li>
+<li><a href="#org0b58df1">11.4.7. Appearance</a></li>
+<li><a href="#org2d708d6">11.4.8. Change TODO Keyword Colors</a></li>
+<li><a href="#org43cb00e">11.4.9. Capturing Ideas</a></li>
+</ul>
+</li>
+<li><a href="#org878f7e7">11.5. Org-mind-map</a></li>
+<li><a href="#orgd79bd7b">11.6. Org-ref</a></li>
+<li><a href="#org605c85b">11.7. Org-roam</a></li>
+</ul>
+</li>
+<li><a href="#orgc03f51f">12. Writing/Publishing/Reading</a>
+<ul>
+<li><a href="#org417ceb6">12.1. Academic Phrases</a></li>
+<li><a href="#org2027b40">12.2. AUCTeX&#xa0;&#xa0;&#xa0;<span class="tag"><span class="LaTeX">LaTeX</span></span></a>
+<ul>
+<li><a href="#orgcc4aef4">12.2.1. Use BibLaTeX</a></li>
+</ul>
+</li>
+<li><a href="#org25a40fa">12.3. Flyspell</a></li>
+<li><a href="#org893c3be">12.4. PDF Tools</a></li>
+<li><a href="#orgb1c2e90">12.5. Single Space at the End of Sentences</a></li>
+</ul>
+</li>
+<li><a href="#org9efac7e">13. Shells</a>
+<ul>
+<li><a href="#org6f02f51">13.1. Eshell</a>
+<ul>
+<li><a href="#orgac02876">13.1.1. Eshell Aliases</a></li>
+<li><a href="#org88c2b27">13.1.2. Eshell Visual Commands</a></li>
+</ul>
+</li>
+<li><a href="#orgd6a94fa">13.2. Eshell Git Prompt</a>
+<ul>
+<li><a href="#orgd19c5ac">13.2.1. Set the Eshell prompt on load</a></li>
+</ul>
+</li>
+<li><a href="#orgdfbe54b">13.3. Eshell Toggle</a></li>
+<li><a href="#org9e48b06">13.4. PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org26aa421">14. Theme and Appearance</a>
+<ul>
+<li><a href="#orgc4b53b9">14.1. All the Icons</a></li>
+<li><a href="#orga82a17b">14.2. All the Icons Dired</a></li>
+<li><a href="#orge5743e8">14.3. All the Icons Ibuffer</a></li>
+<li><a href="#orgae74ca3">14.4. All the Icons Completion</a></li>
+<li><a href="#orgdaadce0">14.5. Centaur Tabs</a></li>
+<li><a href="#org39cd781">14.6. Display Time</a></li>
+<li><a href="#org8d07548">14.7. Doom Themes</a></li>
+<li><a href="#org2fa438b">14.8. Doom Modeline</a></li>
+<li><a href="#org7959ee1">14.9. Menu Bar, Scroll Bar, and Tool Bar</a></li>
+<li><a href="#orge7a5ee9">14.10. Minions</a></li>
+<li><a href="#orgd669f16">14.11. Mixed Pitch</a></li>
+<li><a href="#orgbe090a6">14.12. Nyan Mode</a></li>
+<li><a href="#org2bdbd07">14.13. Olivetti</a></li>
+<li><a href="#org597c54b">14.14. Org Superstar Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#orgbfd2798">14.15. Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org2cdcff3">15. Other</a>
+<ul>
+<li><a href="#orgaef321e">15.1. BBDB</a></li>
+<li><a href="#org9875c08">15.2. Docker</a></li>
+<li><a href="#org18a37da">15.3. Docker Compose</a></li>
+<li><a href="#org395f161">15.4. Gnuplot</a></li>
+<li><a href="#orge6c0f02">15.5. Ibuffer</a>
+<ul>
+<li><a href="#org4fdfe62">15.5.1. Group Buffers</a></li>
+</ul>
+</li>
+<li><a href="#org092029a">15.6. Ledger</a></li>
+<li><a href="#orgeb4da68">15.7. Multiple Cursors</a></li>
+<li><a href="#orgabf203d">15.8. PlantUML</a>
+<ul>
+<li><a href="#orge049ce3">15.8.1. Install PlantUML Mode</a></li>
+<li><a href="#orge9b7e61">15.8.2. Set Location of PlantUML Binary</a></li>
+</ul>
+</li>
+<li><a href="#org6fd9ff3">15.9. Popper</a>
+<ul>
+<li><a href="#orgc29b439">15.9.1. Popper Buffer Buffers</a></li>
+</ul>
+</li>
+<li><a href="#orga75a012">15.10. Savehist</a></li>
+<li><a href="#org9996fc0">15.11. Which-key</a>
+<ul>
+<li><a href="#org5892070">15.11.1. Activating Which-key</a></li>
+<li><a href="#org5876bae">15.11.2. Which-key Window Location</a></li>
+</ul>
+</li>
+<li><a href="#org5815d08">15.12. YASnippet</a>
+<ul>
+<li><a href="#org05cf7d1">15.12.1. Install YASnippet</a></li>
+<li><a href="#orge5a45d8">15.12.2. Install Snippets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdce8f5e">16. Emacs Desktop</a>
+<ul>
+<li><a href="#orgf5fdabb">16.1. Check for Window Manager</a></li>
+<li><a href="#org14dd981">16.2. App Launcher</a></li>
+<li><a href="#org2330d54">16.3. EXWM</a>
+<ul>
+<li><a href="#org762335f">16.3.1. Battery Mode</a></li>
+<li><a href="#orgf86fe23">16.3.2. Buffer Naming</a></li>
+<li><a href="#orgdf89a5a">16.3.3. Default Workspaces</a></li>
+<li><a href="#orgabb8df1">16.3.4. Keys</a></li>
+<li><a href="#orgdcfb2a4">16.3.5. RandR</a></li>
+<li><a href="#orga87c9db">16.3.6. SystemTray</a></li>
+</ul>
+</li>
+<li><a href="#org4faad25">16.4. Desktop Environment</a>
+<ul>
+<li><a href="#org65aa3c2">16.4.1. Set Audio Mixer Command</a></li>
+</ul>
+</li>
+<li><a href="#org074dcad">16.5. Tap to Click</a></li>
+</ul>
+</li>
+<li><a href="#orgf3de42d">17. Emacs Server</a></li>
+<li><a href="#org0c737a7">18. Custom Functions</a>
+<ul>
+<li><a href="#orgf23167a">18.1. Oh My Eshell</a></li>
+<li><a href="#orgcd800fe">18.2. Rclone Sync</a></li>
+<li><a href="#orgbdaf070">18.3. Sudo Find File</a></li>
+</ul>
+</li>
+<li><a href="#org3361e27">19. Update Org Files on Portable App Startup</a></li>
 </ul>
 </div>
 </div>
@@ -486,8 +490,8 @@ Welcome to my Emacs configuration! This file contains the code along with docume
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the <code>init.el</code> file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to <code>init.el</code>.
 </p>
 
-<div id="outline-container-orgb1ce330" class="outline-2">
-<h2 id="orgb1ce330"><span class="section-number-2">1.</span> Header for init.el</h2>
+<div id="outline-container-org76748ab" class="outline-2">
+<h2 id="org76748ab"><span class="section-number-2">1.</span> Header for <code>init.el</code></h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The following code block will add a header to the <code>init.el</code> file when it is generated on saving:
@@ -515,45 +519,31 @@ The following code block will add a header to the <code>init.el</code> file when
 </div>
 </div>
 
-<div id="outline-container-org9059f1b" class="outline-2">
-<h2 id="org9059f1b"><span class="section-number-2">2.</span> Performance Optimization Start</h2>
+<div id="outline-container-org53e7b33" class="outline-2">
+<h2 id="org53e7b33"><span class="section-number-2">2.</span> Running Emacs as a Portable App</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-In order to slightly reduce the load time for Emacs, the whole <code>init.el</code> file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.See <a href="https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/">this Reddit post</a> for more information.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span>file-name-handler-alist nil<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org7990752" class="outline-2">
-<h2 id="org7990752"><span class="section-number-2">3.</span> Running Emacs as a Portable App</h2>
-<div class="outline-text-2" id="text-3">
 <p>
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs.
 </p>
 </div>
 
-<div id="outline-container-org8e9e4b9" class="outline-3">
-<h3 id="org8e9e4b9"><span class="section-number-3">3.1.</span> Check for Portable Emacs Instance</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-orgc1a9b31" class="outline-3">
+<h3 id="orgc1a9b31"><span class="section-number-3">2.1.</span> Check for Portable Emacs Instance</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 When runemacs.bat is executed, it will set the environment variable <code>EMACS_PORTABLE</code> to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org2b2d023"><span style="color: #1ea8fc;">(</span>eq <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp" id="orge9db418"><span style="color: #1ea8fc;">(</span>eq <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfeeb229" class="outline-3">
-<h3 id="orgfeeb229"><span class="section-number-3">3.2.</span> Set Location of Portable Git</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org9bccbec" class="outline-3">
+<h3 id="org9bccbec"><span class="section-number-3">2.2.</span> Set Location of Portable Git</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git (<a href="https://github.com/sheabunge/GitPortable">sheabunge/GitPortable</a>) for Windows that can be installed on the <a href="https://portableapps.com/">PortableApp</a> platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 </p>
@@ -571,15 +561,15 @@ The following line code will check to see if Emacs is being run as a portable ap
 </div>
 </div>
 
-<div id="outline-container-org5cf0fdc" class="outline-2">
-<h2 id="org5cf0fdc"><span class="section-number-2">4.</span> Custom Set Variables</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org9a4199d" class="outline-2">
+<h2 id="org9a4199d"><span class="section-number-2">3.</span> Custom Set Variables</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of <code>init.el</code>, I set the variables set from Emacs customize to be put into a separate file <a href="./custom.el">./custom.el</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgf3f3ba2">
+<pre class="src src-emacs-lisp" id="org6aea250">
 <span style="color: #546A90;">;; </span><span style="color: #546A90;">Set the location of variables set using Emacs cusmtomize interface</span>
 
 <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> custom-file <span style="color: #7984D1;">"~/.emacs.d/custom.el"</span><span style="color: #1ea8fc;">)</span>
@@ -591,7 +581,7 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org69f1ffb">
+<pre class="src src-emacs-lisp" id="org2669077">
 <span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the file custom.el file containing variables from Emacs customize</span>
 
 <span style="color: #1ea8fc;">(</span>load custom-file<span style="color: #1ea8fc;">)</span>
@@ -600,9 +590,9 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 </div>
 </div>
 
-<div id="outline-container-orgb476d72" class="outline-2">
-<h2 id="orgb476d72"><span class="section-number-2">5.</span> Package Management</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-orge535939" class="outline-2">
+<h2 id="orge535939"><span class="section-number-2">4.</span> Package Management</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 In this section, I have included customization to replace the default Emacs package manager with <a href="https://github.com/raxod502/straight.el">straight.el</a>. Some reasons for making this switch are:
 </p>
@@ -616,12 +606,13 @@ used in <code>use-package</code> statements.</li>
 </ol>
 </div>
 
-<div id="outline-container-org3cfb8e2" class="outline-3">
-<h3 id="org3cfb8e2"><span class="section-number-3">5.1.</span> Straight.el</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-org915323b" class="outline-3">
+<h3 id="org915323b"><span class="section-number-3">4.1.</span> Straight.el</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Instead of using the built-in package manager, use <a href="https://github.com/raxod502/straight.el">straight.el</a> to pull all the packages straight from their repositories.
 </p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
 <span style="color: #546A90;">;; </span><span style="color: #546A90;">Install Straight.el to manage packages</span>
@@ -644,12 +635,14 @@ Instead of using the built-in package manager, use <a href="https://github.com/r
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0f8edf" class="outline-3">
-<h3 id="orgd0f8edf"><span class="section-number-3">5.2.</span> Install use-package</h3>
-<div class="outline-text-3" id="text-5-2">
+
+<div id="outline-container-org22bc544" class="outline-3">
+<h3 id="org22bc544"><span class="section-number-3">4.2.</span> Install use-package</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 Use <code>straight.el</code> to install <code>use-package</code> to manage Emacs packages.
 </p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Set up use-package to manage package loading</span>
 
@@ -661,9 +654,9 @@ Use <code>straight.el</code> to install <code>use-package</code> to manage Emacs
 </div>
 </div>
 
-<div id="outline-container-org7de47a5" class="outline-2">
-<h2 id="org7de47a5"><span class="section-number-2">6.</span> Startup Tools</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgce56abb" class="outline-2">
+<h2 id="orgce56abb"><span class="section-number-2">5.</span> Startup Tools</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 This section contains many of the tools used at Eamcs startup that are helpful when other packages are initialized.
 </p>
@@ -674,9 +667,26 @@ This section contains many of the tools used at Eamcs startup that are helpful w
 </div>
 </div>
 
-<div id="outline-container-org983d13c" class="outline-3">
-<h3 id="org983d13c"><span class="section-number-3">6.1.</span> Benchmark Init</h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-org6449993" class="outline-3">
+<h3 id="org6449993"><span class="section-number-3">5.1.</span> Garbage Collection Magic Hack</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+The Garbage Collection Magic Hack is a tool that will reduce garbage collection of Emacs in order to speed up the operation of Emacs during init. It will also run garbage collection more frequently when Emacs is idle to remove some of the garbage at a time when it will not come at a cost to performance.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">gcmh</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>gcmh-mode 1<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org17d18fb" class="outline-3">
+<h3 id="org17d18fb"><span class="section-number-3">5.2.</span> Benchmark Init</h3>
+<div class="outline-text-3" id="text-5-2">
 <p>
 The <a href="https://github.com/dholm/benchmark-init-el">benchmark init</a> package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
 </p>
@@ -692,9 +702,9 @@ The <a href="https://github.com/dholm/benchmark-init-el">benchmark init</a> pack
 </div>
 </div>
 
-<div id="outline-container-org8aa09ef" class="outline-3">
-<h3 id="org8aa09ef"><span class="section-number-3">6.2.</span> Blackout&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-org3908f01" class="outline-3">
+<h3 id="org3908f01"><span class="section-number-3">5.3.</span> Blackout&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
 <a href="https://github.com/raxod502/blackout">Blackout</a> provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
 </p>
@@ -708,9 +718,9 @@ The <a href="https://github.com/dholm/benchmark-init-el">benchmark init</a> pack
 </div>
 </div>
 
-<div id="outline-container-org3eed000" class="outline-3">
-<h3 id="org3eed000"><span class="section-number-3">6.3.</span> No-littering</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-orgf31ae46" class="outline-3">
+<h3 id="orgf31ae46"><span class="section-number-3">5.4.</span> No-littering</h3>
+<div class="outline-text-3" id="text-5-4">
 <p>
 The <a href="https://github.com/emacscollective/no-littering">no-littering</a> package will put Emacs configuration files for many third-party packages into separate folders under <code>.emacs.d/etc/</code> to help keep the <code>.emacs.d/</code> from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
 </p>
@@ -725,9 +735,9 @@ The <a href="https://github.com/emacscollective/no-littering">no-littering</a> p
 </div>
 </div>
 
-<div id="outline-container-org586387b" class="outline-3">
-<h3 id="org586387b"><span class="section-number-3">6.4.</span> Whicher</h3>
-<div class="outline-text-3" id="text-6-4">
+<div id="outline-container-orgfe39ec0" class="outline-3">
+<h3 id="orgfe39ec0"><span class="section-number-3">5.5.</span> Whicher</h3>
+<div class="outline-text-3" id="text-5-5">
 <p>
 <a href="https://github.com/abo-abo/whicher">Whicher</a> provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time. This needs to be loaded before the rest of init.el so that as init.el is loaded, it can look for missing executables on the host system.
 </p>
@@ -737,17 +747,17 @@ The <a href="https://github.com/emacscollective/no-littering">no-littering</a> p
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>whicher <span style="color: #1ea8fc;">:host</span> github
                      <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/whicher"</span>
                      <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
-  <span style="color: #1ea8fc;">:init</span>
-  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> whicher-report-new-buffer t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>whicher-report-new-buffer t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbdd172b" class="outline-2">
-<h2 id="orgbdd172b"><span class="section-number-2">7.</span> Emacs Options</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-orgbdb12b6" class="outline-2">
+<h2 id="orgbdb12b6"><span class="section-number-2">6.</span> Emacs Options</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 The code below collects customizations for Emacs built-in components.
 </p>
@@ -762,17 +772,17 @@ The code below collects customizations for Emacs built-in components.
 </div>
 </div>
 
-<div id="outline-container-org8c2744f" class="outline-3">
-<h3 id="org8c2744f"><span class="section-number-3">7.1.</span> General Configuration</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-org987bb0d" class="outline-3">
+<h3 id="org987bb0d"><span class="section-number-3">6.1.</span> General Configuration</h3>
+<div class="outline-text-3" id="text-6-1">
 <p>
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 </p>
 </div>
 
-<div id="outline-container-org4b16e46" class="outline-4">
-<h4 id="org4b16e46"><span class="section-number-4">7.1.1.</span> Automatic Time Stamps</h4>
-<div class="outline-text-4" id="text-7-1-1">
+<div id="outline-container-org47b2286" class="outline-4">
+<h4 id="org47b2286"><span class="section-number-4">6.1.1.</span> Automatic Time Stamps</h4>
+<div class="outline-text-4" id="text-6-1-1">
 <p>
 Emacs supports time stamps in any text buffer where <code>Time-stamp: &lt;&gt;</code> can be found in the first eight lines. The <code>time-stamp</code> command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 </p>
@@ -784,9 +794,9 @@ Emacs supports time stamps in any text buffer where <code>Time-stamp: &lt;&gt;</
 </div>
 </div>
 
-<div id="outline-container-org763c2e4" class="outline-4">
-<h4 id="org763c2e4"><span class="section-number-4">7.1.2.</span> Desktop Save Mode</h4>
-<div class="outline-text-4" id="text-7-1-2">
+<div id="outline-container-org0388318" class="outline-4">
+<h4 id="org0388318"><span class="section-number-4">6.1.2.</span> Desktop Save Mode</h4>
+<div class="outline-text-4" id="text-6-1-2">
 <p>
 The following option will cause Emacs to always save the state of Emacs when it was closed. Local buffers, tabs in <code>tab-bar-mode</code>, and window arrangements are all saved if possible. Turning this on makes it much simpler to continue working on the same projects when Emacs is closed and then opened again.
 </p>
@@ -798,30 +808,34 @@ The following option will cause Emacs to always save the state of Emacs when it 
 </div>
 </div>
 
-<div id="outline-container-org5b2c235" class="outline-4">
-<h4 id="org5b2c235"><span class="section-number-4">7.1.3.</span> File Deletion and Backup</h4>
-<div class="outline-text-4" id="text-7-1-3">
+<div id="outline-container-orgeeabb20" class="outline-4">
+<h4 id="orgeeabb20"><span class="section-number-4">6.1.3.</span> File Deletion and Backup</h4>
+<div class="outline-text-4" id="text-6-1-3">
 <p>
 Changing how Emacs deletes files and how it creates backups.
 </p>
 </div>
+
 <ol class="org-ol">
-<li><a id="org9ea16f7"></a>Send Deleted Files to System Trash<br />
-<div class="outline-text-5" id="text-7-1-3-1">
+<li><a id="org75035ef"></a>Send Deleted Files to System Trash<br />
+<div class="outline-text-5" id="text-6-1-3-1">
 <p>
 Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. <i>In order to risk losing files it is a good idea to turn on the option to send all files to the system trash.</i>
 </p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>delete-by-moving-to-trash t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org4f14838"></a>Backup Files with Version Control<br />
-<div class="outline-text-5" id="text-7-1-3-2">
+
+<li><a id="orgfaafac7"></a>Backup Files with Version Control<br />
+<div class="outline-text-5" id="text-6-1-3-2">
 <p>
 Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
 </p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>version-control t<span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>delete-old-versions t<span style="color: #1ea8fc;">)</span>
@@ -832,32 +846,37 @@ Emacs has a built-in version control system in which it will create a series of 
 </li>
 </ol>
 </div>
-<div id="outline-container-orgcbca1b7" class="outline-4">
-<h4 id="orgcbca1b7"><span class="section-number-4">7.1.4.</span> Inhibit Startup Screen</h4>
-<div class="outline-text-4" id="text-7-1-4">
+
+<div id="outline-container-org4d6b387" class="outline-4">
+<h4 id="org4d6b387"><span class="section-number-4">6.1.4.</span> Inhibit Startup Screen</h4>
+<div class="outline-text-4" id="text-6-1-4">
 <p>
 After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
 </p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>inhibit-startup-screen t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orga2f4a83" class="outline-4">
-<h4 id="orga2f4a83"><span class="section-number-4">7.1.5.</span> Register Delay</h4>
-<div class="outline-text-4" id="text-7-1-5">
+
+<div id="outline-container-org80d4f24" class="outline-4">
+<h4 id="org80d4f24"><span class="section-number-4">6.1.5.</span> Register Delay</h4>
+<div class="outline-text-4" id="text-6-1-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>register-preview-delay 0<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org7ca02e8" class="outline-4">
-<h4 id="org7ca02e8"><span class="section-number-4">7.1.6.</span> Shorten "Yes or No" to "Y or N"</h4>
-<div class="outline-text-4" id="text-7-1-6">
+
+<div id="outline-container-org6c067bb" class="outline-4">
+<h4 id="org6c067bb"><span class="section-number-4">6.1.6.</span> Shorten "Yes or No" to "Y or N"</h4>
+<div class="outline-text-4" id="text-6-1-6">
 <p>
-To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
+To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n"
+.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>fset 'yes-or-no-p 'y-or-n-p<span style="color: #1ea8fc;">)</span>
@@ -867,19 +886,20 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 </div>
 </div>
 </div>
-<div id="outline-container-org723ea2b" class="outline-2">
-<h2 id="org723ea2b"><span class="section-number-2">8.</span> Auto-completion</h2>
-<div class="outline-text-2" id="text-8">
+
+<div id="outline-container-org9edc0fa" class="outline-2">
+<h2 id="org9edc0fa"><span class="section-number-2">7.</span> Auto-completion</h2>
+<div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org2558c35" class="outline-3">
-<h3 id="org2558c35"><span class="section-number-3">8.1.</span> Cape</h3>
-<div class="outline-text-3" id="text-8-1">
+<div id="outline-container-orgfca4455" class="outline-3">
+<h3 id="orgfca4455"><span class="section-number-3">7.1.</span> Cape</h3>
+<div class="outline-text-3" id="text-7-1">
 <p>
 <a href="https://github.com/minad/cape">Cape</a> (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgc6e5a3c"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">cape</span>
+<pre class="src src-emacs-lisp" id="org8b66bf7"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">cape</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c p p"</span> . completion-at-point<span style="color: #a7da1e;">)</span>
          <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c p t"</span> . complete-tag<span style="color: #a7da1e;">)</span>
@@ -897,9 +917,9 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 </div>
 </div>
 
-<div id="outline-container-org86c546c" class="outline-4">
-<h4 id="org86c546c"><span class="section-number-4">8.1.1.</span> Cape Completion Functions</h4>
-<div class="outline-text-4" id="text-8-1-1">
+<div id="outline-container-org30c4784" class="outline-4">
+<h4 id="org30c4784"><span class="section-number-4">7.1.1.</span> Cape Completion Functions</h4>
+<div class="outline-text-4" id="text-7-1-1">
 <p>
 Cape provides a number of <code>completion-at-point</code> functions that can be used. Below are the functions that I use that have not been intrusive.
 </p>
@@ -952,9 +972,9 @@ Complete Emacs-lisp symbols:
 </div>
 </div>
 
-<div id="outline-container-orgefae497" class="outline-3">
-<h3 id="orgefae497"><span class="section-number-3">8.2.</span> Consult</h3>
-<div class="outline-text-3" id="text-8-2">
+<div id="outline-container-org25cbe98" class="outline-3">
+<h3 id="org25cbe98"><span class="section-number-3">7.2.</span> Consult</h3>
+<div class="outline-text-3" id="text-7-2">
 <p>
 <a href="https://github.com/minad/consult">Consult</a> provides a number of highly useful commands. The complete list of commands can be found <a href="https://github.com/minad/consult#available-commands">here</a>.
 </p>
@@ -1006,9 +1026,9 @@ Complete Emacs-lisp symbols:
 </div>
 </div>
 
-<div id="outline-container-orga4ee442" class="outline-4">
-<h4 id="orga4ee442"><span class="section-number-4">8.2.1.</span> Use Consult to Select xref Locations</h4>
-<div class="outline-text-4" id="text-8-2-1">
+<div id="outline-container-org201e195" class="outline-4">
+<h4 id="org201e195"><span class="section-number-4">7.2.1.</span> Use Consult to Select xref Locations</h4>
+<div class="outline-text-4" id="text-7-2-1">
 <p>
 Use Consult to search through and select xref locations in buffers
 </p>
@@ -1021,9 +1041,9 @@ Use Consult to search through and select xref locations in buffers
 </div>
 </div>
 
-<div id="outline-container-org85d4fd8" class="outline-4">
-<h4 id="org85d4fd8"><span class="section-number-4">8.2.2.</span> Enhanced <code>completing-read</code> Function</h4>
-<div class="outline-text-4" id="text-8-2-2">
+<div id="outline-container-orgffc33a2" class="outline-4">
+<h4 id="orgffc33a2"><span class="section-number-4">7.2.2.</span> Enhanced <code>completing-read</code> Function</h4>
+<div class="outline-text-4" id="text-7-2-2">
 <p>
 Replace the default Emacs <code>completing-read</code> function with the enhanced <code>consult-completing-read-multiple</code>.
 </p>
@@ -1036,9 +1056,9 @@ Replace the default Emacs <code>completing-read</code> function with the enhance
 </div>
 </div>
 
-<div id="outline-container-org8ac4f10" class="outline-4">
-<h4 id="org8ac4f10"><span class="section-number-4">8.2.3.</span> Change Register Preview to Consult</h4>
-<div class="outline-text-4" id="text-8-2-3">
+<div id="outline-container-orga608f76" class="outline-4">
+<h4 id="orga608f76"><span class="section-number-4">7.2.3.</span> Change Register Preview to Consult</h4>
+<div class="outline-text-4" id="text-7-2-3">
 <p>
 Change the default Emacs <code>register-preview-function</code> to use consult effectively.
 </p>
@@ -1050,9 +1070,9 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 </div>
 </div>
 
-<div id="outline-container-org7365596" class="outline-4">
-<h4 id="org7365596"><span class="section-number-4">8.2.4.</span> Tweak Register Preview Window</h4>
-<div class="outline-text-4" id="text-8-2-4">
+<div id="outline-container-orga22e12c" class="outline-4">
+<h4 id="orga22e12c"><span class="section-number-4">7.2.4.</span> Tweak Register Preview Window</h4>
+<div class="outline-text-4" id="text-7-2-4">
 <p>
 The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
 </p>
@@ -1065,9 +1085,9 @@ The following line makes the register preview window look better by adding sorti
 </div>
 </div>
 
-<div id="outline-container-org0d9e167" class="outline-4">
-<h4 id="org0d9e167"><span class="section-number-4">8.2.5.</span> Set the Narrowing Key</h4>
-<div class="outline-text-4" id="text-8-2-5">
+<div id="outline-container-org23d18e3" class="outline-4">
+<h4 id="org23d18e3"><span class="section-number-4">7.2.5.</span> Set the Narrowing Key</h4>
+<div class="outline-text-4" id="text-7-2-5">
 <p>
 The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be <code>&lt; m</code> to list bookmarks after calling <code>consult-buffer</code>.
 </p>
@@ -1079,9 +1099,9 @@ The narrowing key is pressed before a key used to narrow the results returned fr
 </div>
 </div>
 
-<div id="outline-container-orgd7c97ee" class="outline-4">
-<h4 id="orgd7c97ee"><span class="section-number-4">8.2.6.</span> Set Root Function for Projects</h4>
-<div class="outline-text-4" id="text-8-2-6">
+<div id="outline-container-org8cd1add" class="outline-4">
+<h4 id="org8cd1add"><span class="section-number-4">7.2.6.</span> Set Root Function for Projects</h4>
+<div class="outline-text-4" id="text-7-2-6">
 <p>
 Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
 </p>
@@ -1096,9 +1116,10 @@ Use the built-in project function to find the root of any project. Projectile ca
 </div>
 </div>
 </div>
-<div id="outline-container-orga60f51f" class="outline-3">
-<h3 id="orga60f51f"><span class="section-number-3">8.3.</span> Completion Cycling</h3>
-<div class="outline-text-3" id="text-8-3">
+
+<div id="outline-container-org11d74fb" class="outline-3">
+<h3 id="org11d74fb"><span class="section-number-3">7.3.</span> Completion Cycling</h3>
+<div class="outline-text-3" id="text-7-3">
 <p>
 Cycle through completion candidates by pressing the completion key.
 </p>
@@ -1110,9 +1131,9 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 </div>
 
-<div id="outline-container-orgfc2cdc3" class="outline-3">
-<h3 id="orgfc2cdc3"><span class="section-number-3">8.4.</span> Completion by Pressing Tab</h3>
-<div class="outline-text-3" id="text-8-4">
+<div id="outline-container-orgfa68afc" class="outline-3">
+<h3 id="orgfa68afc"><span class="section-number-3">7.4.</span> Completion by Pressing Tab</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
 <code>&lt;TAB&gt;</code> will indent lines by default. In order to turn <code>&lt;TAB&gt;</code> into a button that activates autocomplete, the <code>tab-always-indent</code> variable must be set to <code>complete</code>. This will cause pressing <code>&lt;TAB&gt;</code> once to indent, and twice will cause it to activate autocomplete.
 </p>
@@ -1124,9 +1145,9 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 </div>
 
-<div id="outline-container-orgcc06c20" class="outline-3">
-<h3 id="orgcc06c20"><span class="section-number-3">8.5.</span> Corfu</h3>
-<div class="outline-text-3" id="text-8-5">
+<div id="outline-container-orgc397df2" class="outline-3">
+<h3 id="orgc397df2"><span class="section-number-3">7.5.</span> Corfu</h3>
+<div class="outline-text-3" id="text-7-5">
 <p>
 <a href="https://github.com/minad/corfu">Corfu</a> for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 </p>
@@ -1151,15 +1172,15 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 </div>
 
-<div id="outline-container-org2b820b9" class="outline-4">
-<h4 id="org2b820b9"><span class="section-number-4">8.5.1.</span> Use TAB for Selecting Candidates</h4>
-<div class="outline-text-4" id="text-8-5-1">
+<div id="outline-container-org8cb37d4" class="outline-4">
+<h4 id="org8cb37d4"><span class="section-number-4">7.5.1.</span> Use TAB for Selecting Candidates</h4>
+<div class="outline-text-4" id="text-7-5-1">
 <p>
 Instead of using M-tab which will switch windows in XFCE&#x2014;my default desktop environment&#x2014;use TAB to cycle between the different possible options.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgf0e95e3"><span style="color: #1ea8fc;">(</span><span style="color: #1ea8fc;">:map</span> corfu-map
+<pre class="src src-emacs-lisp" id="orgcbf11ed"><span style="color: #1ea8fc;">(</span><span style="color: #1ea8fc;">:map</span> corfu-map
       <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"TAB"</span> . corfu-next<span style="color: #ff2afc;">)</span>
       <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">[</span>tab<span style="color: #a7da1e;">]</span> . corfu-next<span style="color: #ff2afc;">)</span>
       <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"S-TAB"</span> . corfu-previous<span style="color: #ff2afc;">)</span>
@@ -1169,9 +1190,9 @@ Instead of using M-tab which will switch windows in XFCE&#x2014;my default deskt
 </div>
 </div>
 
-<div id="outline-container-orgb4c6465" class="outline-4">
-<h4 id="orgb4c6465"><span class="section-number-4">8.5.2.</span> Use Corfu in Eshell</h4>
-<div class="outline-text-4" id="text-8-5-2">
+<div id="outline-container-orgaa4c6df" class="outline-4">
+<h4 id="orgaa4c6df"><span class="section-number-4">7.5.2.</span> Use Corfu in Eshell</h4>
+<div class="outline-text-4" id="text-7-5-2">
 <p>
 Use Corfu to complete commands in Eshell
 </p>
@@ -1196,9 +1217,9 @@ Use Corfu to complete commands in Eshell
 </div>
 </div>
 
-<div id="outline-container-org9bdf6ae" class="outline-4">
-<h4 id="org9bdf6ae"><span class="section-number-4">8.5.3.</span> Corfu-doc</h4>
-<div class="outline-text-4" id="text-8-5-3">
+<div id="outline-container-org6d69ce6" class="outline-4">
+<h4 id="org6d69ce6"><span class="section-number-4">7.5.3.</span> Corfu-doc</h4>
+<div class="outline-text-4" id="text-7-5-3">
 <p>
 Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
 </p>
@@ -1219,9 +1240,9 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
 </div>
 </div>
 
-<div id="outline-container-org254a9c1" class="outline-3">
-<h3 id="org254a9c1"><span class="section-number-3">8.6.</span> Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-8-6">
+<div id="outline-container-org1d73065" class="outline-3">
+<h3 id="org1d73065"><span class="section-number-3">7.6.</span> Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
+<div class="outline-text-3" id="text-7-6">
 <p>
 <a href="https://github.com/oantolin/embark">Embark</a> provides the ability to execute commands on completion options found in the minibuffer.
 </p>
@@ -1242,9 +1263,9 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
 </div>
 </div>
 
-<div id="outline-container-org28a2330" class="outline-4">
-<h4 id="org28a2330"><span class="section-number-4">8.6.1.</span> Embark Mode Line</h4>
-<div class="outline-text-4" id="text-8-6-1">
+<div id="outline-container-org34a44fa" class="outline-4">
+<h4 id="org34a44fa"><span class="section-number-4">7.6.1.</span> Embark Mode Line</h4>
+<div class="outline-text-4" id="text-7-6-1">
 <p>
 Hide the mode line of the Embark live/completions buffers.
 </p>
@@ -1259,9 +1280,9 @@ Hide the mode line of the Embark live/completions buffers.
 </div>
 </div>
 
-<div id="outline-container-orgfbf3dd7" class="outline-4">
-<h4 id="orgfbf3dd7"><span class="section-number-4">8.6.2.</span> Embark Integration with Consult</h4>
-<div class="outline-text-4" id="text-8-6-2">
+<div id="outline-container-org285efe7" class="outline-4">
+<h4 id="org285efe7"><span class="section-number-4">7.6.2.</span> Embark Integration with Consult</h4>
+<div class="outline-text-4" id="text-7-6-2">
 <p>
 Allow use of Embark commands after issuing a Consult command.
 </p>
@@ -1279,9 +1300,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-orgbdcbf3e" class="outline-3">
-<h3 id="orgbdcbf3e"><span class="section-number-3">8.7.</span> Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-8-7">
+<div id="outline-container-org47298e8" class="outline-3">
+<h3 id="org47298e8"><span class="section-number-3">7.7.</span> Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
+<div class="outline-text-3" id="text-7-7">
 <p>
 <a href="https://github.com/oantolin/orderless">Orderless</a> will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if <code>M-x</code> is entered the search results will be the same if searching for a function by using the search key <code>find file</code> or <code>file find</code>. Both entries will return the function <code>find-file</code> as the top result.
 </p>
@@ -1299,9 +1320,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-orgb1158d2" class="outline-3">
-<h3 id="orgb1158d2"><span class="section-number-3">8.8.</span> Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-8-8">
+<div id="outline-container-orgc85b863" class="outline-3">
+<h3 id="orgc85b863"><span class="section-number-3">7.8.</span> Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
+<div class="outline-text-3" id="text-7-8">
 <p>
 <a href="https://github.com/minad/marginalia">Marginalia</a> provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
 </p>
@@ -1319,9 +1340,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-orgdba7cef" class="outline-3">
-<h3 id="orgdba7cef"><span class="section-number-3">8.9.</span> Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-8-9">
+<div id="outline-container-org1162332" class="outline-3">
+<h3 id="org1162332"><span class="section-number-3">7.9.</span> Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
+<div class="outline-text-3" id="text-7-9">
 <p>
 <a href="https://github.com/minad/vertico">Vertico</a> removes the <code>*Completions*</code> buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 </p>
@@ -1341,17 +1362,17 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-org3d8a892" class="outline-2">
-<h2 id="org3d8a892"><span class="section-number-2">9.</span> Coding</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-orgdfaf324" class="outline-2">
+<h2 id="orgdfaf324"><span class="section-number-2">8.</span> Coding</h2>
+<div class="outline-text-2" id="text-8">
 <p>
 The following customizations are used to improve the coding environment in Emacs.
 </p>
 </div>
 
-<div id="outline-container-org89604d5" class="outline-3">
-<h3 id="org89604d5"><span class="section-number-3">9.1.</span> Aggressive Indent</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-orgbe0b43e" class="outline-3">
+<h3 id="orgbe0b43e"><span class="section-number-3">8.1.</span> Aggressive Indent</h3>
+<div class="outline-text-3" id="text-8-1">
 <p>
 <a href="https://github.com/Malabarba/aggressive-indent-mode">Aggressive indent mode</a> will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
 </p>
@@ -1368,9 +1389,9 @@ The following customizations are used to improve the coding environment in Emacs
 </div>
 </div>
 
-<div id="outline-container-org65bd243" class="outline-3">
-<h3 id="org65bd243"><span class="section-number-3">9.2.</span> Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></h3>
-<div class="outline-text-3" id="text-9-2">
+<div id="outline-container-org6c46933" class="outline-3">
+<h3 id="org6c46933"><span class="section-number-3">8.2.</span> Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></h3>
+<div class="outline-text-3" id="text-8-2">
 <p>
 <a href="https://github.com/raxod502/apheleia">Apheleia</a> will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 </p>
@@ -1389,9 +1410,9 @@ The following customizations are used to improve the coding environment in Emacs
 </div>
 </div>
 
-<div id="outline-container-org318e225" class="outline-3">
-<h3 id="org318e225"><span class="section-number-3">9.3.</span> C</h3>
-<div class="outline-text-3" id="text-9-3">
+<div id="outline-container-org2d0f361" class="outline-3">
+<h3 id="org2d0f361"><span class="section-number-3">8.3.</span> C</h3>
+<div class="outline-text-3" id="text-8-3">
 <p>
 I have added <code>.ino</code> files to C mode so that I can have syntax highlighting when I program my Arduino board.
 </p>
@@ -1407,9 +1428,9 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 </div>
 
-<div id="outline-container-orgf98e288" class="outline-3">
-<h3 id="orgf98e288"><span class="section-number-3">9.4.</span> Elpy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="disabled">disabled</span></span></h3>
-<div class="outline-text-3" id="text-9-4">
+<div id="outline-container-orgd7641c7" class="outline-3">
+<h3 id="orgd7641c7"><span class="section-number-3">8.4.</span> Elpy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="disabled">disabled</span></span></h3>
+<div class="outline-text-3" id="text-8-4">
 <p>
 <a href="https://github.com/jorgenschaefer/elpy">Elpy</a> adds powerful features for Python progamming in Emacs.
 </p>
@@ -1432,9 +1453,9 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 </div>
 
-<div id="outline-container-orga25774a" class="outline-4">
-<h4 id="orga25774a"><span class="section-number-4">9.4.1.</span> Use Flycheck for Python Syntax</h4>
-<div class="outline-text-4" id="text-9-4-1">
+<div id="outline-container-org3396cb4" class="outline-4">
+<h4 id="org3396cb4"><span class="section-number-4">8.4.1.</span> Use Flycheck for Python Syntax</h4>
+<div class="outline-text-4" id="text-8-4-1">
 <p>
 Check python syntax while writing with flycheck
 </p>
@@ -1449,9 +1470,9 @@ Check python syntax while writing with flycheck
 </div>
 </div>
 
-<div id="outline-container-orgac3d76b" class="outline-3">
-<h3 id="orgac3d76b"><span class="section-number-3">9.5.</span> Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
-<div class="outline-text-3" id="text-9-5">
+<div id="outline-container-org1ad7833" class="outline-3">
+<h3 id="org1ad7833"><span class="section-number-3">8.5.</span> Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
+<div class="outline-text-3" id="text-8-5">
 <p>
 <a href="https://www.flycheck.org/en/latest/">Flycheck</a> can check programming syntax while typing.
 </p>
@@ -1465,9 +1486,9 @@ Check python syntax while writing with flycheck
 </div>
 </div>
 
-<div id="outline-container-org7fea904" class="outline-3">
-<h3 id="org7fea904"><span class="section-number-3">9.6.</span> Go</h3>
-<div class="outline-text-3" id="text-9-6">
+<div id="outline-container-org43fb568" class="outline-3">
+<h3 id="org43fb568"><span class="section-number-3">8.6.</span> Go</h3>
+<div class="outline-text-3" id="text-8-6">
 <p>
 <a href="https://github.com/dominikh/go-mode.el">Go mode</a> provides a major model for editing Go code.
 </p>
@@ -1481,9 +1502,9 @@ Check python syntax while writing with flycheck
 </div>
 </div>
 
-<div id="outline-container-org404f2f7" class="outline-3">
-<h3 id="org404f2f7"><span class="section-number-3">9.7.</span> Indent Using Spaces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
-<div class="outline-text-3" id="text-9-7">
+<div id="outline-container-org0ef2536" class="outline-3">
+<h3 id="org0ef2536"><span class="section-number-3">8.7.</span> Indent Using Spaces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
+<div class="outline-text-3" id="text-8-7">
 <p>
 Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
 </p>
@@ -1495,9 +1516,9 @@ Indenting with spaces rather than tabs is genrally recommended when working with
 </div>
 </div>
 
-<div id="outline-container-orgc9a54be" class="outline-3">
-<h3 id="orgc9a54be"><span class="section-number-3">9.8.</span> LSP Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testing">testing</span></span></h3>
-<div class="outline-text-3" id="text-9-8">
+<div id="outline-container-org011d0f4" class="outline-3">
+<h3 id="org011d0f4"><span class="section-number-3">8.8.</span> LSP Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testing">testing</span></span></h3>
+<div class="outline-text-3" id="text-8-8">
 <p>
 I am considering replacing elpy with LSP Mode. I will try this out for now but at the moment is seems slow.
 </p>
@@ -1514,9 +1535,9 @@ I am considering replacing elpy with LSP Mode. I will try this out for now but a
 </div>
 </div>
 
-<div id="outline-container-org77c861e" class="outline-3">
-<h3 id="org77c861e"><span class="section-number-3">9.9.</span> Minimap</h3>
-<div class="outline-text-3" id="text-9-9">
+<div id="outline-container-org337ce8b" class="outline-3">
+<h3 id="org337ce8b"><span class="section-number-3">8.9.</span> Minimap</h3>
+<div class="outline-text-3" id="text-8-9">
 <p>
 <a href="https://github.com/dengste/minimap">Minimap</a> shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
 </p>
@@ -1530,9 +1551,9 @@ I am considering replacing elpy with LSP Mode. I will try this out for now but a
 </div>
 </div>
 
-<div id="outline-container-orga16b523" class="outline-3">
-<h3 id="orga16b523"><span class="section-number-3">9.10.</span> Magit</h3>
-<div class="outline-text-3" id="text-9-10">
+<div id="outline-container-org8844d14" class="outline-3">
+<h3 id="org8844d14"><span class="section-number-3">8.10.</span> Magit</h3>
+<div class="outline-text-3" id="text-8-10">
 <p>
 <a href="https://magit.vc/">Magit</a> provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 </p>
@@ -1548,9 +1569,9 @@ I am considering replacing elpy with LSP Mode. I will try this out for now but a
 </div>
 </div>
 
-<div id="outline-container-org03ce7f6" class="outline-3">
-<h3 id="org03ce7f6"><span class="section-number-3">9.11.</span> Number Line Mode</h3>
-<div class="outline-text-3" id="text-9-11">
+<div id="outline-container-org3d8c230" class="outline-3">
+<h3 id="org3d8c230"><span class="section-number-3">8.11.</span> Number Line Mode</h3>
+<div class="outline-text-3" id="text-8-11">
 <p>
 Number lines can be very useful in programming modes. This code below will turn on the built-in <code>display-line-numbers-mode</code> in any major mode that inherits from <code>prog-mode</code>. With wide monitors these days it is less of an issue and it can always toggled off with  <code>display-line-numbers-mode</code> on the fly.
 </p>
@@ -1562,9 +1583,9 @@ Number lines can be very useful in programming modes. This code below will turn 
 </div>
 </div>
 </div>
-<div id="outline-container-org5adb46b" class="outline-3">
-<h3 id="org5adb46b"><span class="section-number-3">9.12.</span> Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
-<div class="outline-text-3" id="text-9-12">
+<div id="outline-container-org375f1b9" class="outline-3">
+<h3 id="org375f1b9"><span class="section-number-3">8.12.</span> Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h3>
+<div class="outline-text-3" id="text-8-12">
 <p>
 Using <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a> provides an interactive tool to automatically generate Numpy style docstrings.
 </p>
@@ -1579,9 +1600,9 @@ Using <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a> provide
 </div>
 </div>
 
-<div id="outline-container-org383d180" class="outline-3">
-<h3 id="org383d180"><span class="section-number-3">9.13.</span> Paren Mode</h3>
-<div class="outline-text-3" id="text-9-13">
+<div id="outline-container-orgafa2e80" class="outline-3">
+<h3 id="orgafa2e80"><span class="section-number-3">8.13.</span> Paren Mode</h3>
+<div class="outline-text-3" id="text-8-13">
 <p>
 Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
 </p>
@@ -1601,9 +1622,9 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 </div>
 
-<div id="outline-container-org01129a1" class="outline-3">
-<h3 id="org01129a1"><span class="section-number-3">9.14.</span> Rainbow Delimiters</h3>
-<div class="outline-text-3" id="text-9-14">
+<div id="outline-container-org81658ad" class="outline-3">
+<h3 id="org81658ad"><span class="section-number-3">8.14.</span> Rainbow Delimiters</h3>
+<div class="outline-text-3" id="text-8-14">
 <p>
 <a href="https://github.com/Fanael/rainbow-delimiters">Rainbow delimiters</a> colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on <code>paren-mode</code> and <code>backward-sexp</code>.
 </p>
@@ -1617,27 +1638,27 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 </div>
 
-<div id="outline-container-orga3e8ff3" class="outline-3">
-<h3 id="orga3e8ff3"><span class="section-number-3">9.15.</span> Show Column Number</h3>
-<div class="outline-text-3" id="text-9-15">
+<div id="outline-container-org3c53d86" class="outline-3">
+<h3 id="org3c53d86"><span class="section-number-3">8.15.</span> Show Column Number</h3>
+<div class="outline-text-3" id="text-8-15">
 <p>
 Many style guides to programming languages recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate <code>column-number-mode</code>. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>column-number-mode 1<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>column-number-mode t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 
 <p>
-A better fix would be to use code formatters to prevent lines from getting too long. For example, <a href="#org65bd243">9.2</a> will run formatters such as Black on Python code to keep code lines from becoming too long.
+A better fix would be to use code formatters to prevent lines from getting too long. For example, <a href="#org6c46933">8.2</a> will run formatters such as Black on Python code to keep code lines from becoming too long.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0c6a7f4" class="outline-3">
-<h3 id="org0c6a7f4"><span class="section-number-3">9.16.</span> Treemacs</h3>
-<div class="outline-text-3" id="text-9-16">
+<div id="outline-container-org0b68289" class="outline-3">
+<h3 id="org0b68289"><span class="section-number-3">8.16.</span> Treemacs</h3>
+<div class="outline-text-3" id="text-8-16">
 <p>
 <a href="https://github.com/Alexander-Miller/treemacs">Treemacs</a> provides a separate Emacs window to browse file directory trees for projects.
 </p>
@@ -1695,13 +1716,13 @@ A better fix would be to use code formatters to prevent lines from getting too l
 </div>
 </div>
 
-<div id="outline-container-orgbb04504" class="outline-2">
-<h2 id="orgbb04504"><span class="section-number-2">10.</span> File Browsing</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-org1016e01" class="outline-2">
+<h2 id="org1016e01"><span class="section-number-2">9.</span> File Browsing</h2>
+<div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-org0091127" class="outline-3">
-<h3 id="org0091127"><span class="section-number-3">10.1.</span> Dired</h3>
-<div class="outline-text-3" id="text-10-1">
+<div id="outline-container-org4ba2215" class="outline-3">
+<h3 id="org4ba2215"><span class="section-number-3">9.1.</span> Dired</h3>
+<div class="outline-text-3" id="text-9-1">
 <p>
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
 </p>
@@ -1717,9 +1738,9 @@ The following customizations make emacs dired mode behave in a similar fashion t
 </div>
 </div>
 
-<div id="outline-container-org0e6c387" class="outline-4">
-<h4 id="org0e6c387"><span class="section-number-4">10.1.1.</span> Move/Rename/Copy Files to Another Pane</h4>
-<div class="outline-text-4" id="text-10-1-1">
+<div id="outline-container-org54097e0" class="outline-4">
+<h4 id="org54097e0"><span class="section-number-4">9.1.1.</span> Move/Rename/Copy Files to Another Pane</h4>
+<div class="outline-text-4" id="text-9-1-1">
 <p>
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
 </p>
@@ -1732,9 +1753,9 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 </div>
 </div>
 
-<div id="outline-container-orge87ec52" class="outline-3">
-<h3 id="orge87ec52"><span class="section-number-3">10.2.</span> Disc Usage</h3>
-<div class="outline-text-3" id="text-10-2">
+<div id="outline-container-orgaef4940" class="outline-3">
+<h3 id="orgaef4940"><span class="section-number-3">9.2.</span> Disc Usage</h3>
+<div class="outline-text-3" id="text-9-2">
 <p>
 Disc usage is a tool that can be used to determine the amount of memory a directory uses in the filesystem.
 </p>
@@ -1748,9 +1769,9 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 </div>
 </div>
 
-<div id="outline-container-orge92cbcd" class="outline-3">
-<h3 id="orge92cbcd"><span class="section-number-3">10.3.</span> Sunrise Commander</h3>
-<div class="outline-text-3" id="text-10-3">
+<div id="outline-container-org38dfe96" class="outline-3">
+<h3 id="org38dfe96"><span class="section-number-3">9.3.</span> Sunrise Commander</h3>
+<div class="outline-text-3" id="text-9-3">
 <p>
 <a href="https://github.com/sunrise-commander/sunrise-commander">Sunrise Commander</a> is a two-pane orthodox file manager similar to Midnight Commander.
 </p>
@@ -1764,9 +1785,9 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 </div>
 </div>
 
-<div id="outline-container-org782b580" class="outline-3">
-<h3 id="org782b580"><span class="section-number-3">10.4.</span> Tramp</h3>
-<div class="outline-text-3" id="text-10-4">
+<div id="outline-container-org53eab60" class="outline-3">
+<h3 id="org53eab60"><span class="section-number-3">9.4.</span> Tramp</h3>
+<div class="outline-text-3" id="text-9-4">
 <p>
 I occasinally use <a href="https://www.gnu.org/software/tramp/">Tramp</a> to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 </p>
@@ -1781,9 +1802,9 @@ I occasinally use <a href="https://www.gnu.org/software/tramp/">Tramp</a> to acc
 </div>
 </div>
 
-<div id="outline-container-orge9ba86b" class="outline-4">
-<h4 id="orge9ba86b"><span class="section-number-4">10.4.1.</span> TRAMP Version</h4>
-<div class="outline-text-4" id="text-10-4-1">
+<div id="outline-container-org3c7db1e" class="outline-4">
+<h4 id="org3c7db1e"><span class="section-number-4">9.4.1.</span> TRAMP Version</h4>
+<div class="outline-text-4" id="text-9-4-1">
 <p>
 The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
 </p>
@@ -1797,13 +1818,13 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
 </div>
 </div>
 
-<div id="outline-container-orgab5dd14" class="outline-2">
-<h2 id="orgab5dd14"><span class="section-number-2">11.</span> Navigation</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-orga818faf" class="outline-2">
+<h2 id="orga818faf"><span class="section-number-2">10.</span> Navigation</h2>
+<div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-org5fc902d" class="outline-3">
-<h3 id="org5fc902d"><span class="section-number-3">11.1.</span> Ace Window&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></h3>
-<div class="outline-text-3" id="text-11-1">
+<div id="outline-container-org480282b" class="outline-3">
+<h3 id="org480282b"><span class="section-number-3">10.1.</span> Ace Window&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disabled">disabled</span></span></h3>
+<div class="outline-text-3" id="text-10-1">
 <p>
 <a href="https://github.com/abo-abo/ace-window">ace-window</a> makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling <code>ace-window</code> and selecting that number will make that window the current active buffer.
 </p>
@@ -1818,9 +1839,9 @@ The latest version of TRAMP throws an error when using sunrise-commander, using 
 </div>
 </div>
 
-<div id="outline-container-orgd14bdf9" class="outline-3">
-<h3 id="orgd14bdf9"><span class="section-number-3">11.2.</span> Winner Mode</h3>
-<div class="outline-text-3" id="text-11-2">
+<div id="outline-container-org3d86e39" class="outline-3">
+<h3 id="org3d86e39"><span class="section-number-3">10.2.</span> Winner Mode</h3>
+<div class="outline-text-3" id="text-10-2">
 <p>
 Winner Mode makes it easy to return to old window configurations in Emacs by simply using the keyboard command <code>C-&lt;left&gt;</code>.
 </p>
@@ -1832,9 +1853,9 @@ Winner Mode makes it easy to return to old window configurations in Emacs by sim
 </div>
 </div>
 
-<div id="outline-container-orge99dfa3" class="outline-3">
-<h3 id="orge99dfa3"><span class="section-number-3">11.3.</span> Winum</h3>
-<div class="outline-text-3" id="text-11-3">
+<div id="outline-container-orgb86df6c" class="outline-3">
+<h3 id="orgb86df6c"><span class="section-number-3">10.3.</span> Winum</h3>
+<div class="outline-text-3" id="text-10-3">
 <p>
 Winum is a package that adds number to the modeline for each window in Emacs. Windows can then easily be switched from one to the next by using the key combination <code>C-x w</code> followed by the number of the correct window.
 </p>
@@ -1844,7 +1865,7 @@ This package is similar to <a href="https://github.com/abo-abo/ace-window">ace-w
 </p>
 
 <ol class="org-ol">
-<li>This package has a key binding that does not conflict with <code>M-o</code> in <a href="#orge92cbcd">10.3</a></li>
+<li>This package has a key binding that does not conflict with <code>M-o</code> in <a href="#org38dfe96">9.3</a></li>
 <li>This package works well with EXWM. Ace Window numbers do not display in EXWM windows that are running X11 applications.</li>
 <li><code>C-x w</code> is similar to the window creation and deletion commands <code>C-x</code> which may make it easier to remember the key binding.</li>
 </ol>
@@ -1862,17 +1883,17 @@ This package is similar to <a href="https://github.com/abo-abo/ace-window">ace-w
 </div>
 </div>
 
-<div id="outline-container-orgc1b3547" class="outline-2">
-<h2 id="orgc1b3547"><span class="section-number-2">12.</span> Organization/Time Management/Notes</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-orge939ee3" class="outline-2">
+<h2 id="orge939ee3"><span class="section-number-2">11.</span> Organization/Time Management/Notes</h2>
+<div class="outline-text-2" id="text-11">
 <p>
 Emacs is a great tool for managing projects, organizing information, calendaring, and note taking. A number of tools and extensions to Emacs make it great for this purpose.
 </p>
 </div>
 
-<div id="outline-container-org3c454ff" class="outline-3">
-<h3 id="org3c454ff"><span class="section-number-3">12.1.</span> Calfw</h3>
-<div class="outline-text-3" id="text-12-1">
+<div id="outline-container-org240d734" class="outline-3">
+<h3 id="org240d734"><span class="section-number-3">11.1.</span> Calfw</h3>
+<div class="outline-text-3" id="text-11-1">
 <p>
 <a href="https://github.com/kiwanami/emacs-calfw">Calfw</a> provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in <code>calfw-org.el</code> where events that span multiple dates show up repeated on the display.
 </p>
@@ -1898,9 +1919,9 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 </div>
 </div>
 
-<div id="outline-container-org33b3cf6" class="outline-4">
-<h4 id="org33b3cf6"><span class="section-number-4">12.1.1.</span> <code>calfw-org</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h4>
-<div class="outline-text-4" id="text-12-1-1">
+<div id="outline-container-org5ab0661" class="outline-4">
+<h4 id="org5ab0661"><span class="section-number-4">11.1.1.</span> <code>calfw-org</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h4>
+<div class="outline-text-4" id="text-11-1-1">
 <p>
 <code>calfw-org.el</code>  displays org-mode events in the <code>calfw</code> calendar. I don't like the long command <code>M-x cfw:open-org-calendar</code> so I have shortened to it to <code>M-x calfworg</code> which is much easier to type and remember.
 </p>
@@ -1919,9 +1940,9 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 </div>
 </div>
 
-<div id="outline-container-org028cd69" class="outline-3">
-<h3 id="org028cd69"><span class="section-number-3">12.2.</span> Deft&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-12-2">
+<div id="outline-container-orged650fa" class="outline-3">
+<h3 id="orged650fa"><span class="section-number-3">11.2.</span> Deft&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-11-2">
 <p>
 <a href="https://github.com/jrblevin/deft">Deft</a> is an Emacs package that makes it easier to make quick notes that can be easily searched later. Deft allows for searching the full text of notes and the search results get narrowed down as you
 </p>
@@ -1945,9 +1966,9 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 </div>
 </div>
 
-<div id="outline-container-orge76b356" class="outline-3">
-<h3 id="orge76b356"><span class="section-number-3">12.3.</span> Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-12-3">
+<div id="outline-container-org8842e84" class="outline-3">
+<h3 id="org8842e84"><span class="section-number-3">11.3.</span> Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-11-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">habitica</span>
   <span style="color: #1ea8fc;">:after</span> org
@@ -1958,9 +1979,9 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 </div>
 </div>
 </div>
-<div id="outline-container-org4d3f419" class="outline-3">
-<h3 id="org4d3f419"><span class="section-number-3">12.4.</span> Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-12-4">
+<div id="outline-container-org931009b" class="outline-3">
+<h3 id="org931009b"><span class="section-number-3">11.4.</span> Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-11-4">
 <p>
 <a href="https://orgmode.org/">Org Mode</a> is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 </p>
@@ -1997,17 +2018,17 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 </div>
 </div>
 
-<div id="outline-container-orga047363" class="outline-4">
-<h4 id="orga047363"><span class="section-number-4">12.4.1.</span> Directories</h4>
-<div class="outline-text-4" id="text-12-4-1">
+<div id="outline-container-org28ce16a" class="outline-4">
+<h4 id="org28ce16a"><span class="section-number-4">11.4.1.</span> Directories</h4>
+<div class="outline-text-4" id="text-11-4-1">
 <p>
 Set up the default directories for Org Mode.
 </p>
 </div>
 
 <ol class="org-ol">
-<li><a id="orgc811bd8"></a>Default Directory<br />
-<div class="outline-text-5" id="text-12-4-1-1">
+<li><a id="org1ccd2f4"></a>Default Directory<br />
+<div class="outline-text-5" id="text-11-4-1-1">
 <p>
 Tell org-mode which directory is the default directory for all org-mode files.
 </p>
@@ -2019,8 +2040,8 @@ Tell org-mode which directory is the default directory for all org-mode files.
 </div>
 </li>
 
-<li><a id="orgae78747"></a>Location of Agenda Files<br />
-<div class="outline-text-5" id="text-12-4-1-2">
+<li><a id="orgf221ee5"></a>Location of Agenda Files<br />
+<div class="outline-text-5" id="text-11-4-1-2">
 <p>
 Tell org-mode in which directory all the agenda files can be found.
 </p>
@@ -2035,13 +2056,13 @@ Tell org-mode in which directory all the agenda files can be found.
 </ol>
 </div>
 
-<div id="outline-container-org364fb72" class="outline-4">
-<h4 id="org364fb72"><span class="section-number-4">12.4.2.</span> Filing Notes</h4>
-<div class="outline-text-4" id="text-12-4-2">
+<div id="outline-container-orgdc8b64c" class="outline-4">
+<h4 id="orgdc8b64c"><span class="section-number-4">11.4.2.</span> Filing Notes</h4>
+<div class="outline-text-4" id="text-11-4-2">
 </div>
 <ol class="org-ol">
-<li><a id="org1f6e927"></a>Default Notes File<br />
-<div class="outline-text-5" id="text-12-4-2-1">
+<li><a id="org14ff089"></a>Default Notes File<br />
+<div class="outline-text-5" id="text-11-4-2-1">
 <p>
 I prefer to have all of my captured notes automatically filed into a file called <code>inbox.org</code>. Changing <code>org-default-notes-file</code> can create this functionality.
 </p>
@@ -2053,10 +2074,10 @@ I prefer to have all of my captured notes automatically filed into a file called
 </div>
 </li>
 
-<li><a id="org8b83ab3"></a>Refile Targets<br />
+<li><a id="orgc5eee86"></a>Refile Targets<br />
 <ol class="org-ol">
-<li><a id="org49892db"></a>Set Org Files for Refiling<br />
-<div class="outline-text-6" id="text-12-4-2-2-1">
+<li><a id="orgb3a1373"></a>Set Org Files for Refiling<br />
+<div class="outline-text-6" id="text-11-4-2-2-1">
 <p>
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
 </p>
@@ -2068,8 +2089,8 @@ In order to refile/move tasks from the inbox to other agenda files and subtrees,
 </div>
 </li>
 
-<li><a id="org40d5183"></a>Allow Refile as Top-level Heading<br />
-<div class="outline-text-6" id="text-12-4-2-2-2">
+<li><a id="orgd61ee63"></a>Allow Refile as Top-level Heading<br />
+<div class="outline-text-6" id="text-11-4-2-2-2">
 <p>
 I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
 </p>
@@ -2095,9 +2116,9 @@ Setting this variable allows for refiling tasks under a new heading on the fly.
 </ol>
 </div>
 
-<div id="outline-container-org367053f" class="outline-4">
-<h4 id="org367053f"><span class="section-number-4">12.4.3.</span> Exporting</h4>
-<div class="outline-text-4" id="text-12-4-3">
+<div id="outline-container-org5024161" class="outline-4">
+<h4 id="org5024161"><span class="section-number-4">11.4.3.</span> Exporting</h4>
+<div class="outline-text-4" id="text-11-4-3">
 <p>
 To remove headers labeled with the <code>:ignore:</code> tag, the following code needs to be implemented:
 </p>
@@ -2110,13 +2131,13 @@ To remove headers labeled with the <code>:ignore:</code> tag, the following code
 </div>
 </div>
 
-<div id="outline-container-org17da56d" class="outline-4">
-<h4 id="org17da56d"><span class="section-number-4">12.4.4.</span> Task Management Customization</h4>
-<div class="outline-text-4" id="text-12-4-4">
+<div id="outline-container-org2a5369a" class="outline-4">
+<h4 id="org2a5369a"><span class="section-number-4">11.4.4.</span> Task Management Customization</h4>
+<div class="outline-text-4" id="text-11-4-4">
 </div>
 <ol class="org-ol">
-<li><a id="org146ae0f"></a>Drawer for State Changes<br />
-<div class="outline-text-5" id="text-12-4-4-1">
+<li><a id="orgc069b1a"></a>Drawer for State Changes<br />
+<div class="outline-text-5" id="text-11-4-4-1">
 <p>
 Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
 </p>
@@ -2128,8 +2149,8 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
 </div>
 </li>
 
-<li><a id="orgabc96c7"></a>Custom TODO Keywords<br />
-<div class="outline-text-5" id="text-12-4-4-2">
+<li><a id="orgfc3a376"></a>Custom TODO Keywords<br />
+<div class="outline-text-5" id="text-11-4-4-2">
 <p>
 Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELLED tasks.
 </p>
@@ -2145,8 +2166,8 @@ Set up the sequence of org-todo task keywords to allow for delegated (WAITING) t
 </div>
 </li>
 
-<li><a id="org0f44ab8"></a>Project Tags<br />
-<div class="outline-text-5" id="text-12-4-4-3">
+<li><a id="orgd5e42ef"></a>Project Tags<br />
+<div class="outline-text-5" id="text-11-4-4-3">
 <p>
 I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
 </p>
@@ -2158,8 +2179,8 @@ I like to mark projects with a tag, however, I do not want my tasks to inherit t
 </div>
 </li>
 
-<li><a id="org4b70021"></a>Stuck Projects<br />
-<div class="outline-text-5" id="text-12-4-4-4">
+<li><a id="orgf6ddce9"></a>Stuck Projects<br />
+<div class="outline-text-5" id="text-11-4-4-4">
 <p>
 Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
 </p>
@@ -2177,9 +2198,9 @@ Stuck projects are projects which are going nowhere and need to be analyzed for 
 </ol>
 </div>
 
-<div id="outline-container-org3a1b079" class="outline-4">
-<h4 id="org3a1b079"><span class="section-number-4">12.4.5.</span> BibLaTeX in Org-mode</h4>
-<div class="outline-text-4" id="text-12-4-5">
+<div id="outline-container-org40c3736" class="outline-4">
+<h4 id="org40c3736"><span class="section-number-4">11.4.5.</span> BibLaTeX in Org-mode</h4>
+<div class="outline-text-4" id="text-11-4-5">
 <p>
 I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the <code>org-latex-pdf-process</code> variable needs to be changed to reflect this.
 </p>
@@ -2195,15 +2216,15 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
 </div>
 </div>
 
-<div id="outline-container-org1427651" class="outline-4">
-<h4 id="org1427651"><span class="section-number-4">12.4.6.</span> Org-babel Languages</h4>
-<div class="outline-text-4" id="text-12-4-6">
+<div id="outline-container-org7f5f8f2" class="outline-4">
+<h4 id="org7f5f8f2"><span class="section-number-4">11.4.6.</span> Org-babel Languages</h4>
+<div class="outline-text-4" id="text-11-4-6">
 <p>
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the <code>org-babel-load-languages</code> list.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org83d3798"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"org"</span>
+<pre class="src src-emacs-lisp" id="orgc744618"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"org"</span>
   <span style="color: #ff2afc;">(</span>add-to-list 'org-src-lang-modes '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"plantuml"</span> . plantuml<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>org-babel-do-load-languages
  'org-babel-load-languages
@@ -2226,17 +2247,17 @@ In order to use active code in org-mode, you must define which programming langu
 </div>
 </div>
 
-<div id="outline-container-orgbff6277" class="outline-4">
-<h4 id="orgbff6277"><span class="section-number-4">12.4.7.</span> Appearance</h4>
-<div class="outline-text-4" id="text-12-4-7">
+<div id="outline-container-org0b58df1" class="outline-4">
+<h4 id="org0b58df1"><span class="section-number-4">11.4.7.</span> Appearance</h4>
+<div class="outline-text-4" id="text-11-4-7">
 <p>
 This section contains modifications to how Org Mode appears in buffers.
 </p>
 </div>
 
 <ol class="org-ol">
-<li><a id="org41eaf40"></a>Hide Emphasis Characters<br />
-<div class="outline-text-5" id="text-12-4-7-1">
+<li><a id="org82f2cec"></a>Hide Emphasis Characters<br />
+<div class="outline-text-5" id="text-11-4-7-1">
 <p>
 Hiding emphasis characters  in Org Mode makes the text easier to read when it is being displayed directly in Emacs. This will make <b>bold</b>, <i>italic</i>, <span class="underline">underlined</span>, <code>code</code>, and <code>verbatim</code> text show up without the <code>*</code>, /, _, ~, and = characters around them. 
 </p>
@@ -2248,8 +2269,8 @@ Hiding emphasis characters  in Org Mode makes the text easier to read when it is
 </div>
 </li>
 
-<li><a id="orgd60bf1f"></a>Word Wrapping<br />
-<div class="outline-text-5" id="text-12-4-7-2">
+<li><a id="orgb36509f"></a>Word Wrapping<br />
+<div class="outline-text-5" id="text-11-4-7-2">
 <p>
 Turning on <code>visual-line-mode</code> allows the text to flow in Org Mode as if working in a word processors.
 </p>
@@ -2261,8 +2282,8 @@ Turning on <code>visual-line-mode</code> allows the text to flow in Org Mode as 
 </div>
 </li>
 
-<li><a id="org2ed9e39"></a>Single Space Between Headline and Tags<br />
-<div class="outline-text-5" id="text-12-4-7-3">
+<li><a id="org38f5bfe"></a>Single Space Between Headline and Tags<br />
+<div class="outline-text-5" id="text-11-4-7-3">
 <p>
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
 </p>
@@ -2274,8 +2295,8 @@ I keep only a single space between the headline because I find it easier to owor
 </div>
 </li>
 
-<li><a id="orgc761ecb"></a>Use "Clean View"<br />
-<div class="outline-text-5" id="text-12-4-7-4">
+<li><a id="org752d150"></a>Use "Clean View"<br />
+<div class="outline-text-5" id="text-11-4-7-4">
 <p>
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
 </p>
@@ -2287,8 +2308,8 @@ Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easi
 </div>
 </li>
 
-<li><a id="org196ec5e"></a>Native Tabs<br />
-<div class="outline-text-5" id="text-12-4-7-5">
+<li><a id="org954ab2e"></a>Native Tabs<br />
+<div class="outline-text-5" id="text-11-4-7-5">
 <p>
 This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
 </p>
@@ -2302,9 +2323,9 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 </ol>
 </div>
 
-<div id="outline-container-org418f5d6" class="outline-4">
-<h4 id="org418f5d6"><span class="section-number-4">12.4.8.</span> Change TODO Keyword Colors</h4>
-<div class="outline-text-4" id="text-12-4-8">
+<div id="outline-container-org2d708d6" class="outline-4">
+<h4 id="org2d708d6"><span class="section-number-4">11.4.8.</span> Change TODO Keyword Colors</h4>
+<div class="outline-text-4" id="text-11-4-8">
 <p>
 Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
 </p>
@@ -2320,15 +2341,15 @@ Change the color of the org-todo keywords to make it easier to see them on a col
 </div>
 </div>
 
-<div id="outline-container-org0e94a48" class="outline-4">
-<h4 id="org0e94a48"><span class="section-number-4">12.4.9.</span> Capturing Ideas</h4>
-<div class="outline-text-4" id="text-12-4-9">
+<div id="outline-container-org43cb00e" class="outline-4">
+<h4 id="org43cb00e"><span class="section-number-4">11.4.9.</span> Capturing Ideas</h4>
+<div class="outline-text-4" id="text-11-4-9">
 <p>
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgaaac508"><span style="color: #1ea8fc;">(</span>org-capture-templates
+<pre class="src src-emacs-lisp" id="org619c438"><span style="color: #1ea8fc;">(</span>org-capture-templates
  '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"p"</span> <span style="color: #7984D1;">"Projects item"</span> entry <span style="color: #df85ff;">(</span>file <span style="color: #7984D1;">"~/Dropbox/gtd/projects.org"</span><span style="color: #df85ff;">)</span>
     <span style="color: #7984D1;">"* %? :project:"</span><span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"s"</span> <span style="color: #7984D1;">"Someday/Maybe item"</span> entry <span style="color: #df85ff;">(</span>file <span style="color: #7984D1;">"~/Dropbox/gtd/someday.org"</span><span style="color: #df85ff;">)</span>
@@ -2343,9 +2364,9 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 </div>
 </div>
 
-<div id="outline-container-orgf929242" class="outline-3">
-<h3 id="orgf929242"><span class="section-number-3">12.5.</span> Org-mind-map</h3>
-<div class="outline-text-3" id="text-12-5">
+<div id="outline-container-org878f7e7" class="outline-3">
+<h3 id="org878f7e7"><span class="section-number-3">11.5.</span> Org-mind-map</h3>
+<div class="outline-text-3" id="text-11-5">
 <p>
 Org-mind-map (<a href="https://github.com/the-ted/org-mind-map">https://github.com/the-ted/org-mind-map</a>) turns any <code>org-mode</code> buffer into a mind map in various output formats.
 </p>
@@ -2364,9 +2385,9 @@ Org-mind-map (<a href="https://github.com/the-ted/org-mind-map">https://github.c
 </div>
 </div>
 
-<div id="outline-container-orga58b5f6" class="outline-3">
-<h3 id="orga58b5f6"><span class="section-number-3">12.6.</span> Org-ref</h3>
-<div class="outline-text-3" id="text-12-6">
+<div id="outline-container-orgd79bd7b" class="outline-3">
+<h3 id="orgd79bd7b"><span class="section-number-3">11.6.</span> Org-ref</h3>
+<div class="outline-text-3" id="text-11-6">
 <p>
 Org-ref (<a href="https://github.com/jkitchin/org-ref">https://github.com/jkitchin/org-ref</a>) is a reference manager in org-mode.
 </p>
@@ -2381,9 +2402,9 @@ Org-ref (<a href="https://github.com/jkitchin/org-ref">https://github.com/jkitch
 </div>
 </div>
 
-<div id="outline-container-orge2d01f6" class="outline-3">
-<h3 id="orge2d01f6"><span class="section-number-3">12.7.</span> Org-roam</h3>
-<div class="outline-text-3" id="text-12-7">
+<div id="outline-container-org605c85b" class="outline-3">
+<h3 id="org605c85b"><span class="section-number-3">11.7.</span> Org-roam</h3>
+<div class="outline-text-3" id="text-11-7">
 <p>
 Org-roam (<a href="https://www.orgroam.com/">https://www.orgroam.com/</a>) adds features to make linking org notes easier and provided a database file to connect all the notes together.
 </p>
@@ -2426,13 +2447,14 @@ Org-roam (<a href="https://www.orgroam.com/">https://www.orgroam.com/</a>) adds 
 </div>
 </div>
 </div>
-<div id="outline-container-org65c996d" class="outline-2">
-<h2 id="org65c996d"><span class="section-number-2">13.</span> Writing/Publishing/Reading</h2>
-<div class="outline-text-2" id="text-13">
+
+<div id="outline-container-orgc03f51f" class="outline-2">
+<h2 id="orgc03f51f"><span class="section-number-2">12.</span> Writing/Publishing/Reading</h2>
+<div class="outline-text-2" id="text-12">
 </div>
-<div id="outline-container-orga2f7d01" class="outline-3">
-<h3 id="orga2f7d01"><span class="section-number-3">13.1.</span> Academic Phrases</h3>
-<div class="outline-text-3" id="text-13-1">
+<div id="outline-container-org417ceb6" class="outline-3">
+<h3 id="org417ceb6"><span class="section-number-3">12.1.</span> Academic Phrases</h3>
+<div class="outline-text-3" id="text-12-1">
 <p>
 <a href="https://github.com/nashamri/academic-phrases">Academic phrases</a> is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function <code>M-x academic-phrases</code> provides a searchable list of these templates for your use.
 </p>
@@ -2446,9 +2468,9 @@ Org-roam (<a href="https://www.orgroam.com/">https://www.orgroam.com/</a>) adds 
 </div>
 </div>
 
-<div id="outline-container-orgd955396" class="outline-3">
-<h3 id="orgd955396"><span class="section-number-3">13.2.</span> AUCTeX&#xa0;&#xa0;&#xa0;<span class="tag"><span class="LaTeX">LaTeX</span></span></h3>
-<div class="outline-text-3" id="text-13-2">
+<div id="outline-container-org2027b40" class="outline-3">
+<h3 id="org2027b40"><span class="section-number-3">12.2.</span> AUCTeX&#xa0;&#xa0;&#xa0;<span class="tag"><span class="LaTeX">LaTeX</span></span></h3>
+<div class="outline-text-3" id="text-12-2">
 <p>
 <a href="https://www.gnu.org/software/auctex/">AUCTeX</a> for writing documents using LaTeX.
 </p>
@@ -2466,9 +2488,9 @@ Org-roam (<a href="https://www.orgroam.com/">https://www.orgroam.com/</a>) adds 
 </div>
 </div>
 
-<div id="outline-container-orgc797e8e" class="outline-4">
-<h4 id="orgc797e8e"><span class="section-number-4">13.2.1.</span> Use BibLaTeX</h4>
-<div class="outline-text-4" id="text-13-2-1">
+<div id="outline-container-orgcc4aef4" class="outline-4">
+<h4 id="orgcc4aef4"><span class="section-number-4">12.2.1.</span> Use BibLaTeX</h4>
+<div class="outline-text-4" id="text-12-2-1">
 <p>
 BibLaTeX has more powerful features than standard BibTeX.
 </p>
@@ -2481,9 +2503,9 @@ BibLaTeX has more powerful features than standard BibTeX.
 </div>
 </div>
 
-<div id="outline-container-org65c116b" class="outline-3">
-<h3 id="org65c116b"><span class="section-number-3">13.3.</span> Flyspell</h3>
-<div class="outline-text-3" id="text-13-3">
+<div id="outline-container-org25a40fa" class="outline-3">
+<h3 id="org25a40fa"><span class="section-number-3">12.3.</span> Flyspell</h3>
+<div class="outline-text-3" id="text-12-3">
 <p>
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
 </p>
@@ -2517,9 +2539,9 @@ In order for this to work in Windows, hunspell must be installed with the proper
 </div>
 </div>
 
-<div id="outline-container-orgdfa82da" class="outline-3">
-<h3 id="orgdfa82da"><span class="section-number-3">13.4.</span> PDF Tools</h3>
-<div class="outline-text-3" id="text-13-4">
+<div id="outline-container-org893c3be" class="outline-3">
+<h3 id="org893c3be"><span class="section-number-3">12.4.</span> PDF Tools</h3>
+<div class="outline-text-3" id="text-12-4">
 <p>
 <a href="https://github.com/politza/pdf-tools">PDF Tools</a> is a faster and more feature-rich than the built in DocView.
 </p>
@@ -2534,9 +2556,10 @@ In order for this to work in Windows, hunspell must be installed with the proper
 </div>
 </div>
 </div>
-<div id="outline-container-org514cb00" class="outline-3">
-<h3 id="org514cb00"><span class="section-number-3">13.5.</span> Single Space at the End of Sentences</h3>
-<div class="outline-text-3" id="text-13-5">
+
+<div id="outline-container-orgb1c2e90" class="outline-3">
+<h3 id="orgb1c2e90"><span class="section-number-3">12.5.</span> Single Space at the End of Sentences</h3>
+<div class="outline-text-3" id="text-12-5">
 <p>
 Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
 </p>
@@ -2549,13 +2572,13 @@ Emacs when navigating expects sentences to end with a double space after a perio
 </div>
 </div>
 
-<div id="outline-container-org5876936" class="outline-2">
-<h2 id="org5876936"><span class="section-number-2">14.</span> Shells</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-org9efac7e" class="outline-2">
+<h2 id="org9efac7e"><span class="section-number-2">13.</span> Shells</h2>
+<div class="outline-text-2" id="text-13">
 </div>
-<div id="outline-container-org0ac7563" class="outline-3">
-<h3 id="org0ac7563"><span class="section-number-3">14.1.</span> Eshell</h3>
-<div class="outline-text-3" id="text-14-1">
+<div id="outline-container-org6f02f51" class="outline-3">
+<h3 id="org6f02f51"><span class="section-number-3">13.1.</span> Eshell</h3>
+<div class="outline-text-3" id="text-13-1">
 <p>
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
 </p>
@@ -2579,15 +2602,15 @@ Eshell is a very powerful lisp-based shell that I have learned to love most beca
 </div>
 </div>
 
-<div id="outline-container-orgf2069ce" class="outline-4">
-<h4 id="orgf2069ce"><span class="section-number-4">14.1.1.</span> Eshell Aliases</h4>
-<div class="outline-text-4" id="text-14-1-1">
+<div id="outline-container-orgac02876" class="outline-4">
+<h4 id="orgac02876"><span class="section-number-4">13.1.1.</span> Eshell Aliases</h4>
+<div class="outline-text-4" id="text-13-1-1">
 <p>
 Below are a list of command-line aliases for use in eshell.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org5a31d3c"><span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"ff"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp" id="org037e3a5"><span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"ff"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"emacs"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"untar"</span> <span style="color: #7984D1;">"tar -zxvf"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"cpv"</span> <span style="color: #7984D1;">"rsync -ah --info=progress2"</span><span style="color: #1ea8fc;">)</span>
@@ -2597,15 +2620,15 @@ Below are a list of command-line aliases for use in eshell.
 </div>
 </div>
 
-<div id="outline-container-org763ad68" class="outline-4">
-<h4 id="org763ad68"><span class="section-number-4">14.1.2.</span> Eshell Visual Commands</h4>
-<div class="outline-text-4" id="text-14-1-2">
+<div id="outline-container-org88c2b27" class="outline-4">
+<h4 id="org88c2b27"><span class="section-number-4">13.1.2.</span> Eshell Visual Commands</h4>
+<div class="outline-text-4" id="text-13-1-2">
 <p>
 Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org0783b53"><span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"htop"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp" id="org9c93f1f"><span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"htop"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ipython"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"rclone"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ssh"</span><span style="color: #1ea8fc;">)</span>
@@ -2617,9 +2640,9 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 </div>
 </div>
 
-<div id="outline-container-orgf745605" class="outline-3">
-<h3 id="orgf745605"><span class="section-number-3">14.2.</span> Eshell Git Prompt</h3>
-<div class="outline-text-3" id="text-14-2">
+<div id="outline-container-orgd6a94fa" class="outline-3">
+<h3 id="orgd6a94fa"><span class="section-number-3">13.2.</span> Eshell Git Prompt</h3>
+<div class="outline-text-3" id="text-13-2">
 <p>
 <a href="https://github.com/xuchunyang/eshell-git-prompt">eshell-git-prompt</a> provides a series of Eshell prompts that provide extra information including the git status of the current project.
 </p>
@@ -2634,9 +2657,9 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 </div>
 </div>
 
-<div id="outline-container-org7d399a1" class="outline-4">
-<h4 id="org7d399a1"><span class="section-number-4">14.2.1.</span> Set the Eshell prompt on load</h4>
-<div class="outline-text-4" id="text-14-2-1">
+<div id="outline-container-orgd19c5ac" class="outline-4">
+<h4 id="orgd19c5ac"><span class="section-number-4">13.2.1.</span> Set the Eshell prompt on load</h4>
+<div class="outline-text-4" id="text-13-2-1">
 <p>
 This method was the only method I have found that loaded the <code>eshell-git-prompt</code> immediately when Eshell was loaded.
 </p>
@@ -2649,9 +2672,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 </div>
-<div id="outline-container-orge196e65" class="outline-3">
-<h3 id="orge196e65"><span class="section-number-3">14.3.</span> Eshell Toggle</h3>
-<div class="outline-text-3" id="text-14-3">
+<div id="outline-container-orgdfbe54b" class="outline-3">
+<h3 id="orgdfbe54b"><span class="section-number-3">13.3.</span> Eshell Toggle</h3>
+<div class="outline-text-3" id="text-13-3">
 <p>
 <a href="https://github.com/4DA/eshell-toggle">eshell-toggle</a> makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
 </p>
@@ -2672,9 +2695,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-orgc6682bf" class="outline-3">
-<h3 id="orgc6682bf"><span class="section-number-3">14.4.</span> PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></h3>
-<div class="outline-text-3" id="text-14-4">
+<div id="outline-container-org9e48b06" class="outline-3">
+<h3 id="org9e48b06"><span class="section-number-3">13.4.</span> PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></h3>
+<div class="outline-text-3" id="text-13-4">
 <p>
 <a href="https://github.com/jschaf/powershell.el">Powershell.el</a> creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
 </p>
@@ -2701,13 +2724,13 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-orgc6e4d03" class="outline-2">
-<h2 id="orgc6e4d03"><span class="section-number-2">15.</span> Theme and Appearance</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-org26aa421" class="outline-2">
+<h2 id="org26aa421"><span class="section-number-2">14.</span> Theme and Appearance</h2>
+<div class="outline-text-2" id="text-14">
 </div>
-<div id="outline-container-orgdd44c9b" class="outline-3">
-<h3 id="orgdd44c9b"><span class="section-number-3">15.1.</span> All the Icons</h3>
-<div class="outline-text-3" id="text-15-1">
+<div id="outline-container-orgc4b53b9" class="outline-3">
+<h3 id="orgc4b53b9"><span class="section-number-3">14.1.</span> All the Icons</h3>
+<div class="outline-text-3" id="text-14-1">
 <p>
 <a href="https://github.com/domtronn/all-the-icons.el">All The Icons</a> adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
 </p>
@@ -2722,9 +2745,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-org5e12997" class="outline-3">
-<h3 id="org5e12997"><span class="section-number-3">15.2.</span> All the Icons Dired</h3>
-<div class="outline-text-3" id="text-15-2">
+<div id="outline-container-orga82a17b" class="outline-3">
+<h3 id="orga82a17b"><span class="section-number-3">14.2.</span> All the Icons Dired</h3>
+<div class="outline-text-3" id="text-14-2">
 <p>
 <a href="https://github.com/jtbm37/all-the-icons-dired">all-the-icons-dired</a> will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
 </p>
@@ -2740,9 +2763,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-org0d30f8f" class="outline-3">
-<h3 id="org0d30f8f"><span class="section-number-3">15.3.</span> All the Icons Ibuffer</h3>
-<div class="outline-text-3" id="text-15-3">
+<div id="outline-container-orge5743e8" class="outline-3">
+<h3 id="orge5743e8"><span class="section-number-3">14.3.</span> All the Icons Ibuffer</h3>
+<div class="outline-text-3" id="text-14-3">
 <p>
 <a href="https://github.com/seagle0128/all-the-icons-ibuffer">all-the-icons-ibuffer</a> adds icons representing different buffer types to Ibuffer mode.
 </p>
@@ -2757,9 +2780,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-org832b12d" class="outline-3">
-<h3 id="org832b12d"><span class="section-number-3">15.4.</span> All the Icons Completion</h3>
-<div class="outline-text-3" id="text-15-4">
+<div id="outline-container-orgae74ca3" class="outline-3">
+<h3 id="orgae74ca3"><span class="section-number-3">14.4.</span> All the Icons Completion</h3>
+<div class="outline-text-3" id="text-14-4">
 <p>
 <a href="https://github.com/iyefrat/all-the-icons-completion">all-the-icons-completion</a> adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with <code>C-x C-f</code> and other similar commands.
 </p>
@@ -2777,9 +2800,9 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 </div>
 
-<div id="outline-container-orgdeb8d42" class="outline-3">
-<h3 id="orgdeb8d42"><span class="section-number-3">15.5.</span> Centaur Tabs</h3>
-<div class="outline-text-3" id="text-15-5">
+<div id="outline-container-orgdaadce0" class="outline-3">
+<h3 id="orgdaadce0"><span class="section-number-3">14.5.</span> Centaur Tabs</h3>
+<div class="outline-text-3" id="text-14-5">
 <p>
 I like having tabs for all of my open buffers. <a href="https://github.com/ema2159/centaur-tabs">Centaur Tabs</a> provides a nicer interface than the built-in <code>tab-line-mode</code>. I rarely use this package, however, as I find the built-in <code>tab-bar-mode</code> plays better with mutli-window setups.
 </p>
@@ -2805,15 +2828,15 @@ This setting can always be toggled off if a "cleaner" Emacs view is desired.
 </p>
 </div>
 </div>
-<div id="outline-container-org1f3bbd9" class="outline-3">
-<h3 id="org1f3bbd9"><span class="section-number-3">15.6.</span> Display Time</h3>
-<div class="outline-text-3" id="text-15-6">
+<div id="outline-container-org39cd781" class="outline-3">
+<h3 id="org39cd781"><span class="section-number-3">14.6.</span> Display Time</h3>
+<div class="outline-text-3" id="text-14-6">
 <p>
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>display-time-mode 1<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>display-time-mode t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 
@@ -2828,9 +2851,9 @@ When I am running Emacs with EXWM as my window manager, I want to be able to see
 </div>
 </div>
 
-<div id="outline-container-org7600f9f" class="outline-3">
-<h3 id="org7600f9f"><span class="section-number-3">15.7.</span> Doom Themes</h3>
-<div class="outline-text-3" id="text-15-7">
+<div id="outline-container-org8d07548" class="outline-3">
+<h3 id="org8d07548"><span class="section-number-3">14.7.</span> Doom Themes</h3>
+<div class="outline-text-3" id="text-14-7">
 <p>
 I have switched to the Doom theme <code>doom-outrun-electric</code> because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
 </p>
@@ -2848,9 +2871,9 @@ I have switched to the Doom theme <code>doom-outrun-electric</code> because I fi
 </div>
 </div>
 
-<div id="outline-container-org5454bf1" class="outline-3">
-<h3 id="org5454bf1"><span class="section-number-3">15.8.</span> Doom Modeline</h3>
-<div class="outline-text-3" id="text-15-8">
+<div id="outline-container-org2fa438b" class="outline-3">
+<h3 id="org2fa438b"><span class="section-number-3">14.8.</span> Doom Modeline</h3>
+<div class="outline-text-3" id="text-14-8">
 <p>
 I like the Doom modeline because it has icons and bright colors.
 </p>
@@ -2866,29 +2889,9 @@ I like the Doom modeline because it has icons and bright colors.
 </div>
 </div>
 
-<div id="outline-container-orgce38a19" class="outline-3">
-<h3 id="orgce38a19"><span class="section-number-3">15.9.</span> Minions</h3>
-<div class="outline-text-3" id="text-15-9">
-<p>
-Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
-</p>
-
-<p>
-Minions is a package that puts all of the minor modes into a menu in the modeline so that all minro modes can be displayed and viewed in this menu. This can be very helpful as it provides access to a list of all the enabled minor modes while consolidating information on the modeline and removes the need for packages such as blackout, delight, dim, and diminish.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">minions</span>
-  <span style="color: #1ea8fc;">:config</span>
-  <span style="color: #ff2afc;">(</span>minions-mode 1<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org11b0552" class="outline-3">
-<h3 id="org11b0552"><span class="section-number-3">15.10.</span> Menu Bar, Scroll Bar, and Tool Bar</h3>
-<div class="outline-text-3" id="text-15-10">
+<div id="outline-container-org7959ee1" class="outline-3">
+<h3 id="org7959ee1"><span class="section-number-3">14.9.</span> Menu Bar, Scroll Bar, and Tool Bar</h3>
+<div class="outline-text-3" id="text-14-9">
 <p>
 Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
 </p>
@@ -2902,9 +2905,41 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
 </div>
 </div>
 
-<div id="outline-container-org9f009eb" class="outline-3">
-<h3 id="org9f009eb"><span class="section-number-3">15.11.</span> Mixed Pitch</h3>
-<div class="outline-text-3" id="text-15-11">
+<div id="outline-container-orge7a5ee9" class="outline-3">
+<h3 id="orge7a5ee9"><span class="section-number-3">14.10.</span> Minions</h3>
+<div class="outline-text-3" id="text-14-10">
+<p>
+Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
+</p>
+
+<p>
+Minions is a package that puts all of the minor modes into a menu in the modeline so that all minro modes can be displayed and viewed in this menu. This can be very helpful as it provides access to a list of all the enabled minor modes while consolidating information on the modeline and removes the need for packages such as blackout, delight, dim, and diminish.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">minions</span>
+  <span style="color: #1ea8fc;">:if</span> <span style="color: #ff2afc;">(</span>not <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">bound-and-true-p</span> doom-modeline-mode<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:defer</span> 4  
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>minions-mode 1<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+Minions mode does not work when <code>doom-modeline-mode</code> is not active. It appears that <code>doom-modeline-mode</code> overwrites the settings changed when <code>doom-modeline-mode</code> is activated. To prevent Minions from slowing down Emacs startup time, the following check can be used to prevent it from being loaded if Doom Modeline is active:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>not <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">bound-and-true-p</span> doom-modeline-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd669f16" class="outline-3">
+<h3 id="orgd669f16"><span class="section-number-3">14.11.</span> Mixed Pitch</h3>
+<div class="outline-text-3" id="text-14-11">
 <p>
 Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
 </p>
@@ -2919,9 +2954,9 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
 </div>
 </div>
 
-<div id="outline-container-org14112c3" class="outline-3">
-<h3 id="org14112c3"><span class="section-number-3">15.12.</span> Nyan Mode</h3>
-<div class="outline-text-3" id="text-15-12">
+<div id="outline-container-orgbe090a6" class="outline-3">
+<h3 id="orgbe090a6"><span class="section-number-3">14.12.</span> Nyan Mode</h3>
+<div class="outline-text-3" id="text-14-12">
 <p>
 <a href="https://github.com/TeMPOraL/nyan-mode">Nyan-mode</a> displays a nyan cat on the mode line that shows progress through a buffer.
 </p>
@@ -2944,9 +2979,9 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
 </div>
 </div>
 
-<div id="outline-container-org8ffe195" class="outline-3">
-<h3 id="org8ffe195"><span class="section-number-3">15.13.</span> Olivetti</h3>
-<div class="outline-text-3" id="text-15-13">
+<div id="outline-container-org2bdbd07" class="outline-3">
+<h3 id="org2bdbd07"><span class="section-number-3">14.13.</span> Olivetti</h3>
+<div class="outline-text-3" id="text-14-13">
 <p>
 Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
 </p>
@@ -2961,9 +2996,9 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
 </div>
 </div>
 
-<div id="outline-container-orgc761c9d" class="outline-3">
-<h3 id="orgc761c9d"><span class="section-number-3">15.14.</span> Org Superstar Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-15-14">
+<div id="outline-container-org597c54b" class="outline-3">
+<h3 id="org597c54b"><span class="section-number-3">14.14.</span> Org Superstar Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-14-14">
 <p>
 Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted bullets. What separates it from Org Bullets is that Org Superstar Mode also can support plain lists and it has the option to format TODO keywords.
 </p>
@@ -2984,9 +3019,9 @@ Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted b
 </div>
 </div>
 
-<div id="outline-container-orgb6eefc4" class="outline-3">
-<h3 id="orgb6eefc4"><span class="section-number-3">15.15.</span> Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-15-15">
+<div id="outline-container-orgbfd2798" class="outline-3">
+<h3 id="orgbfd2798"><span class="section-number-3">14.15.</span> Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-14-15">
 <p>
 The following code will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from <a href="https://github.com/daviwil">@daviwil</a> at <a href="https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look">this link</a>.
 </p>
@@ -3011,13 +3046,13 @@ The following code will change the heading sizes in Org Mode to make it easier t
 </div>
 </div>
 
-<div id="outline-container-orgc09e799" class="outline-2">
-<h2 id="orgc09e799"><span class="section-number-2">16.</span> Other</h2>
-<div class="outline-text-2" id="text-16">
+<div id="outline-container-org2cdcff3" class="outline-2">
+<h2 id="org2cdcff3"><span class="section-number-2">15.</span> Other</h2>
+<div class="outline-text-2" id="text-15">
 </div>
-<div id="outline-container-org85d603a" class="outline-3">
-<h3 id="org85d603a"><span class="section-number-3">16.1.</span> BBDB</h3>
-<div class="outline-text-3" id="text-16-1">
+<div id="outline-container-orgaef321e" class="outline-3">
+<h3 id="orgaef321e"><span class="section-number-3">15.1.</span> BBDB</h3>
+<div class="outline-text-3" id="text-15-1">
 <p>
 The <a href="https://www.jwz.org/bbdb/">Insidious Big Brother DataBase</a>, also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
 </p>
@@ -3043,9 +3078,9 @@ The <a href="https://www.jwz.org/bbdb/">Insidious Big Brother DataBase</a>, also
 </div>
 </div>
 
-<div id="outline-container-org8205d92" class="outline-3">
-<h3 id="org8205d92"><span class="section-number-3">16.2.</span> Docker</h3>
-<div class="outline-text-3" id="text-16-2">
+<div id="outline-container-org9875c08" class="outline-3">
+<h3 id="org9875c08"><span class="section-number-3">15.2.</span> Docker</h3>
+<div class="outline-text-3" id="text-15-2">
 <p>
 <a href="https://github.com/Silex/docker.el">Docker mode</a> is an interface in Emacs to manage Docker containers.
 </p>
@@ -3061,9 +3096,9 @@ The <a href="https://www.jwz.org/bbdb/">Insidious Big Brother DataBase</a>, also
 </div>
 </div>
 
-<div id="outline-container-org1707350" class="outline-3">
-<h3 id="org1707350"><span class="section-number-3">16.3.</span> Docker Compose</h3>
-<div class="outline-text-3" id="text-16-3">
+<div id="outline-container-org18a37da" class="outline-3">
+<h3 id="org18a37da"><span class="section-number-3">15.3.</span> Docker Compose</h3>
+<div class="outline-text-3" id="text-15-3">
 <p>
 <a href="https://github.com/meqif/docker-compose-mode">docker-compose-mode</a> is a major mode for editing Docker Compose files.
 </p>
@@ -3078,9 +3113,9 @@ The <a href="https://www.jwz.org/bbdb/">Insidious Big Brother DataBase</a>, also
 </div>
 </div>
 </div>
-<div id="outline-container-org4113fe2" class="outline-3">
-<h3 id="org4113fe2"><span class="section-number-3">16.4.</span> Gnuplot</h3>
-<div class="outline-text-3" id="text-16-4">
+<div id="outline-container-org395f161" class="outline-3">
+<h3 id="org395f161"><span class="section-number-3">15.4.</span> Gnuplot</h3>
+<div class="outline-text-3" id="text-15-4">
 <p>
 <a href="https://github.com/emacs-gnuplot/gnuplot">Gnuplot</a> mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 </p>
@@ -3096,9 +3131,9 @@ The <a href="https://www.jwz.org/bbdb/">Insidious Big Brother DataBase</a>, also
 </div>
 </div>
 
-<div id="outline-container-org544c294" class="outline-3">
-<h3 id="org544c294"><span class="section-number-3">16.5.</span> Ibuffer</h3>
-<div class="outline-text-3" id="text-16-5">
+<div id="outline-container-orge6c0f02" class="outline-3">
+<h3 id="orge6c0f02"><span class="section-number-3">15.5.</span> Ibuffer</h3>
+<div class="outline-text-3" id="text-15-5">
 <p>
 A better buffer list than the default.
 </p>
@@ -3115,9 +3150,9 @@ A better buffer list than the default.
 </div>
 </div>
 
-<div id="outline-container-orgbad889f" class="outline-4">
-<h4 id="orgbad889f"><span class="section-number-4">16.5.1.</span> Group Buffers</h4>
-<div class="outline-text-4" id="text-16-5-1">
+<div id="outline-container-org4fdfe62" class="outline-4">
+<h4 id="org4fdfe62"><span class="section-number-4">15.5.1.</span> Group Buffers</h4>
+<div class="outline-text-4" id="text-15-5-1">
 <p>
 Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
 </p>
@@ -3173,9 +3208,9 @@ Ibuffer makes it possible to sort buffers in the buffer list into groupings. Thi
 </div>
 </div>
 
-<div id="outline-container-orgad9e833" class="outline-3">
-<h3 id="orgad9e833"><span class="section-number-3">16.6.</span> Ledger</h3>
-<div class="outline-text-3" id="text-16-6">
+<div id="outline-container-org092029a" class="outline-3">
+<h3 id="org092029a"><span class="section-number-3">15.6.</span> Ledger</h3>
+<div class="outline-text-3" id="text-15-6">
 <p>
 To conduct plain-text accounting in Emacs, <a href="https://github.com/ledger/ledger-mode">ledger-mode</a> needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 </p>
@@ -3191,9 +3226,9 @@ To conduct plain-text accounting in Emacs, <a href="https://github.com/ledger/le
 </div>
 </div>
 
-<div id="outline-container-org01fe662" class="outline-3">
-<h3 id="org01fe662"><span class="section-number-3">16.7.</span> Multiple Cursors</h3>
-<div class="outline-text-3" id="text-16-7">
+<div id="outline-container-orgeb4da68" class="outline-3">
+<h3 id="orgeb4da68"><span class="section-number-3">15.7.</span> Multiple Cursors</h3>
+<div class="outline-text-3" id="text-15-7">
 <p>
 <a href="https://github.com/magnars/multiple-cursors.el">multiple-cursors.el</a> allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing <code>C-x C-q</code>.
 </p>
@@ -3211,17 +3246,17 @@ To conduct plain-text accounting in Emacs, <a href="https://github.com/ledger/le
 </div>
 </div>
 
-<div id="outline-container-orge5f67d8" class="outline-3">
-<h3 id="orge5f67d8"><span class="section-number-3">16.8.</span> PlantUML</h3>
-<div class="outline-text-3" id="text-16-8">
+<div id="outline-container-orgabf203d" class="outline-3">
+<h3 id="orgabf203d"><span class="section-number-3">15.8.</span> PlantUML</h3>
+<div class="outline-text-3" id="text-15-8">
 <p>
 <a href="https://plantuml.com/">PlantUML</a> is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
 </p>
 </div>
 
-<div id="outline-container-org6984d09" class="outline-4">
-<h4 id="org6984d09"><span class="section-number-4">16.8.1.</span> Install PlantUML Mode</h4>
-<div class="outline-text-4" id="text-16-8-1">
+<div id="outline-container-orge049ce3" class="outline-4">
+<h4 id="orge049ce3"><span class="section-number-4">15.8.1.</span> Install PlantUML Mode</h4>
+<div class="outline-text-4" id="text-15-8-1">
 <p>
 <a href="https://github.com/skuro/plantuml-mode">PlantUML mode</a> is not installed by default, so we need <code>use-package</code> to download and install it.
 </p>
@@ -3236,9 +3271,9 @@ To conduct plain-text accounting in Emacs, <a href="https://github.com/ledger/le
 </div>
 </div>
 
-<div id="outline-container-orge8f2220" class="outline-4">
-<h4 id="orge8f2220"><span class="section-number-4">16.8.2.</span> Set Location of PlantUML Binary</h4>
-<div class="outline-text-4" id="text-16-8-2">
+<div id="outline-container-orge9b7e61" class="outline-4">
+<h4 id="orge9b7e61"><span class="section-number-4">15.8.2.</span> Set Location of PlantUML Binary</h4>
+<div class="outline-text-4" id="text-15-8-2">
 <p>
 When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
 </p>
@@ -3251,9 +3286,9 @@ When Emacs is run as a portable app on a USB drive, Emacs needs to know the loca
 </div>
 </div>
 
-<div id="outline-container-orgda581ba" class="outline-3">
-<h3 id="orgda581ba"><span class="section-number-3">16.9.</span> Popper</h3>
-<div class="outline-text-3" id="text-16-9">
+<div id="outline-container-org6fd9ff3" class="outline-3">
+<h3 id="org6fd9ff3"><span class="section-number-3">15.9.</span> Popper</h3>
+<div class="outline-text-3" id="text-15-9">
 <p>
 <a href="https://github.com/karthink/popper">Popper</a> lets a user define any window as a short-term pop up window.
 </p>
@@ -3279,9 +3314,9 @@ When Emacs is run as a portable app on a USB drive, Emacs needs to know the loca
 </div>
 </div>
 
-<div id="outline-container-orga985253" class="outline-4">
-<h4 id="orga985253"><span class="section-number-4">16.9.1.</span> Popper Buffer Buffers</h4>
-<div class="outline-text-4" id="text-16-9-1">
+<div id="outline-container-orgc29b439" class="outline-4">
+<h4 id="orgc29b439"><span class="section-number-4">15.9.1.</span> Popper Buffer Buffers</h4>
+<div class="outline-text-4" id="text-15-9-1">
 <p>
 For each buffer that will become a popper pop up buffer, it must be defined below:
 </p>
@@ -3301,11 +3336,11 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 </div>
 </div>
 
-<div id="outline-container-org55b3d45" class="outline-3">
-<h3 id="org55b3d45"><span class="section-number-3">16.10.</span> Savehist</h3>
-<div class="outline-text-3" id="text-16-10">
+<div id="outline-container-orga75a012" class="outline-3">
+<h3 id="orga75a012"><span class="section-number-3">15.10.</span> Savehist</h3>
+<div class="outline-text-3" id="text-15-10">
 <p>
-Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in <a href="#orgdba7cef">8.9</a>.
+Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in <a href="#org1162332">7.9</a>.
 </p>
 
 <div class="org-src-container">
@@ -3318,9 +3353,9 @@ Savehist will save the selections from completion history between Emacs sessions
 </div>
 </div>
 
-<div id="outline-container-org41977e9" class="outline-3">
-<h3 id="org41977e9"><span class="section-number-3">16.11.</span> Which-key</h3>
-<div class="outline-text-3" id="text-16-11">
+<div id="outline-container-org9996fc0" class="outline-3">
+<h3 id="org9996fc0"><span class="section-number-3">15.11.</span> Which-key</h3>
+<div class="outline-text-3" id="text-15-11">
 <p>
 <a href="https://github.com/justbur/emacs-which-key">Which-key</a> provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 </p>
@@ -3338,17 +3373,17 @@ Savehist will save the selections from completion history between Emacs sessions
 </div>
 </div>
 
-<div id="outline-container-org6d82241" class="outline-4">
-<h4 id="org6d82241"><span class="section-number-4">16.11.1.</span> Activating Which-key</h4>
-<div class="outline-text-4" id="text-16-11-1">
+<div id="outline-container-org5892070" class="outline-4">
+<h4 id="org5892070"><span class="section-number-4">15.11.1.</span> Activating Which-key</h4>
+<div class="outline-text-4" id="text-15-11-1">
 <p>
 How to start which-key
 </p>
 </div>
 
 <ol class="org-ol">
-<li><a id="org196ce73"></a>C-h During Key Combination Entry<br />
-<div class="outline-text-5" id="text-16-11-1-1">
+<li><a id="org9f48d06"></a>C-h During Key Combination Entry<br />
+<div class="outline-text-5" id="text-15-11-1-1">
 <p>
 Type C-h during any key combination to pop-up which key
 </p>
@@ -3360,8 +3395,8 @@ Type C-h during any key combination to pop-up which key
 </div>
 </li>
 
-<li><a id="org949f932"></a>Press &lt;f4&gt; in Any Mode<br />
-<div class="outline-text-5" id="text-16-11-1-2">
+<li><a id="orged1bd06"></a>Press &lt;f4&gt; in Any Mode<br />
+<div class="outline-text-5" id="text-15-11-1-2">
 <p>
 Use the &lt;f4&gt; key in any major mode to see the key bindings
 </p>
@@ -3375,9 +3410,9 @@ Use the &lt;f4&gt; key in any major mode to see the key bindings
 </ol>
 </div>
 
-<div id="outline-container-org7e6f3df" class="outline-4">
-<h4 id="org7e6f3df"><span class="section-number-4">16.11.2.</span> Which-key Window Location</h4>
-<div class="outline-text-4" id="text-16-11-2">
+<div id="outline-container-org5876bae" class="outline-4">
+<h4 id="org5876bae"><span class="section-number-4">15.11.2.</span> Which-key Window Location</h4>
+<div class="outline-text-4" id="text-15-11-2">
 <p>
 Set up which-key to use the side window preferably
 </p>
@@ -3390,17 +3425,17 @@ Set up which-key to use the side window preferably
 </div>
 </div>
 
-<div id="outline-container-orge9f6d83" class="outline-3">
-<h3 id="orge9f6d83"><span class="section-number-3">16.12.</span> YASnippet</h3>
-<div class="outline-text-3" id="text-16-12">
+<div id="outline-container-org5815d08" class="outline-3">
+<h3 id="org5815d08"><span class="section-number-3">15.12.</span> YASnippet</h3>
+<div class="outline-text-3" id="text-15-12">
 <p>
 YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
 </p>
 </div>
 
-<div id="outline-container-orgde63c20" class="outline-4">
-<h4 id="orgde63c20"><span class="section-number-4">16.12.1.</span> Install YASnippet</h4>
-<div class="outline-text-4" id="text-16-12-1">
+<div id="outline-container-org05cf7d1" class="outline-4">
+<h4 id="org05cf7d1"><span class="section-number-4">15.12.1.</span> Install YASnippet</h4>
+<div class="outline-text-4" id="text-15-12-1">
 <p>
 <a href="https://github.com/joaotavora/yasnippet">YASnippet</a> takes a small bit of text or an abbreviation and expands it into a template once the <code>&lt;TAB&gt;</code> key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the <code>#+begin_src emacs-lisp :tangle yes</code> blocks in this Org-mode file such as the one below.
 </p>
@@ -3416,9 +3451,9 @@ YASnippet is a system that povides easy access to many templates that can be ins
 </div>
 </div>
 
-<div id="outline-container-org46bf40a" class="outline-4">
-<h4 id="org46bf40a"><span class="section-number-4">16.12.2.</span> Install Snippets</h4>
-<div class="outline-text-4" id="text-16-12-2">
+<div id="outline-container-orge5a45d8" class="outline-4">
+<h4 id="orge5a45d8"><span class="section-number-4">15.12.2.</span> Install Snippets</h4>
+<div class="outline-text-4" id="text-15-12-2">
 <p>
 The package <a href="https://github.com/AndreaCrotti/yasnippet-snippets">YASnippet Snippets</a> loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
 </p>
@@ -3434,17 +3469,17 @@ The package <a href="https://github.com/AndreaCrotti/yasnippet-snippets">YASnipp
 </div>
 </div>
 
-<div id="outline-container-org3dddd31" class="outline-2">
-<h2 id="org3dddd31"><span class="section-number-2">17.</span> Emacs Desktop</h2>
-<div class="outline-text-2" id="text-17">
+<div id="outline-container-orgdce8f5e" class="outline-2">
+<h2 id="orgdce8f5e"><span class="section-number-2">16.</span> Emacs Desktop</h2>
+<div class="outline-text-2" id="text-16">
 <p>
 When there is no window manager running, Emacs can run as a window manger using EXWM. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
 </p>
 </div>
 
-<div id="outline-container-orge0758d8" class="outline-3">
-<h3 id="orge0758d8"><span class="section-number-3">17.1.</span> Check for Window Manager</h3>
-<div class="outline-text-3" id="text-17-1">
+<div id="outline-container-orgf5fdabb" class="outline-3">
+<h3 id="orgf5fdabb"><span class="section-number-3">16.1.</span> Check for Window Manager</h3>
+<div class="outline-text-3" id="text-16-1">
 <p>
 I generally only want to use EXWM when I do not have another window manger in place. The following check will use <code>wmctrl -m</code> to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling <code>echo $?</code> immediately afterward with <code>shell-command-to-string</code> will return the exit code appended to the end of the output from <code>wmctrl -m</code>. As we only care about the status of the exit code, we can call on the <code>substring</code> function to get just the exit code and not the whole output of the command.
 </p>
@@ -3466,9 +3501,9 @@ There is also a check for the X window system as calling GUI programs from EXWM 
 </div>
 </div>
 
-<div id="outline-container-org98e0799" class="outline-3">
-<h3 id="org98e0799"><span class="section-number-3">17.2.</span> App Launcher</h3>
-<div class="outline-text-3" id="text-17-2">
+<div id="outline-container-org14dd981" class="outline-3">
+<h3 id="org14dd981"><span class="section-number-3">16.2.</span> App Launcher</h3>
+<div class="outline-text-3" id="text-16-2">
 <p>
 Use <code>app-launcher</code> to launch Linux applications in EXWM.
 </p>
@@ -3477,17 +3512,16 @@ Use <code>app-launcher</code> to launch Linux applications in EXWM.
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">app-launcher</span>
   <span style="color: #1ea8fc;">:straight</span> '<span style="color: #ff2afc;">(</span>app-launcher <span style="color: #1ea8fc;">:host</span> github
                            <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"SebastienWae/app-launcher"</span>
-                           <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+                           <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>app-launcher<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-
-
-<div id="outline-container-org66dbbef" class="outline-3">
-<h3 id="org66dbbef"><span class="section-number-3">17.3.</span> EXWM</h3>
-<div class="outline-text-3" id="text-17-3">
+<div id="outline-container-org2330d54" class="outline-3">
+<h3 id="org2330d54"><span class="section-number-3">16.3.</span> EXWM</h3>
+<div class="outline-text-3" id="text-16-3">
 <p>
 To use EXWM, the EXWM package can be pulled from using <code>straight.el</code>.
 </p>
@@ -3501,47 +3535,45 @@ To use EXWM, the EXWM package can be pulled from using <code>straight.el</code>.
   &lt;&lt;exwm_custom&gt;&gt;
   <span style="color: #1ea8fc;">:config</span>
   &lt;&lt;exwm_config&gt;&gt;    
-  <span style="color: #ff2afc;">(</span>exwm-enable<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span>display-battery-mode t<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>executable-find <span style="color: #7984D1;">"nm-applet"</span><span style="color: #a7da1e;">)</span>
-    <span style="color: #a7da1e;">(</span>start-process-shell-command <span style="color: #7984D1;">"nm-applet"</span> nil <span style="color: #7984D1;">"nm-applet"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-enable<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgba29774" class="outline-4">
-<h4 id="orgba29774"><span class="section-number-4">17.3.1.</span> RandR</h4>
-<div class="outline-text-4" id="text-17-3-1">
+<div id="outline-container-org762335f" class="outline-4">
+<h4 id="org762335f"><span class="section-number-4">16.3.1.</span> Battery Mode</h4>
+<div class="outline-text-4" id="text-16-3-1">
 <p>
-For multi-screen displays, <code>exwm-randr</code> must be enabled.
+When running EXWM as the only window manager, turning on <code>display-battery-mode</code> will make it so the battery power on a laptop or portable device can be monitored.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-randr</span><span style="color: #1ea8fc;">)</span>
-<span style="color: #1ea8fc;">(</span>exwm-randr-enable<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>display-battery-mode t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc32ac88" class="outline-4">
-<h4 id="orgc32ac88"><span class="section-number-4">17.3.2.</span> SystemTray</h4>
-<div class="outline-text-4" id="text-17-3-2">
+<div id="outline-container-orgf86fe23" class="outline-4">
+<h4 id="orgf86fe23"><span class="section-number-4">16.3.2.</span> Buffer Naming</h4>
+<div class="outline-text-4" id="text-16-3-2">
 <p>
-Make sure to turn on the system tray in EXWM so that there is access to tray icons for things such as the <code>nm-applet</code> which controls access to the wifi connection without having to use the command line tools.
+To name buffers based on the application that was launched to create them, the following code must be used:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-systemtray</span><span style="color: #1ea8fc;">)</span>
-<span style="color: #1ea8fc;">(</span>exwm-systemtray-enable<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-hook
+ 'exwm-update-class-hook <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span><span style="color: #a7da1e;">()</span>
+                           <span style="color: #a7da1e;">(</span>exwm-workspace-rename-buffer
+                            exwm-class-name<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5b09b64" class="outline-4">
-<h4 id="org5b09b64"><span class="section-number-4">17.3.3.</span> Default Workspaces</h4>
-<div class="outline-text-4" id="text-17-3-3">
+<div id="outline-container-orgdf89a5a" class="outline-4">
+<h4 id="orgdf89a5a"><span class="section-number-4">16.3.3.</span> Default Workspaces</h4>
+<div class="outline-text-4" id="text-16-3-3">
 <p>
 With only a single monitor at the moment I only see the need for a single workspace as I can switch between tasks by switching buffers. This number should be increased with more monitors, however, as each workspace can display in a separate monitor and switching can then be done easily with the keyboard.
 </p>
@@ -3553,17 +3585,17 @@ With only a single monitor at the moment I only see the need for a single worksp
 </div>
 </div>
 
-<div id="outline-container-org698b600" class="outline-4">
-<h4 id="org698b600"><span class="section-number-4">17.3.4.</span> Keys</h4>
-<div class="outline-text-4" id="text-17-3-4">
+<div id="outline-container-orgabb8df1" class="outline-4">
+<h4 id="orgabb8df1"><span class="section-number-4">16.3.4.</span> Keys</h4>
+<div class="outline-text-4" id="text-16-3-4">
 <p>
 It is extremely helpful to set up special keybindings for use in EXWM due to the fact that X11 applications won't see keyboard commands that are first intercepted by Emacs.
 </p>
 </div>
 
 <ol class="org-ol">
-<li><a id="org26bd18d"></a>Global Keys<br />
-<div class="outline-text-5" id="text-17-3-4-1">
+<li><a id="org1aa88a1"></a>Global Keys<br />
+<div class="outline-text-5" id="text-16-3-4-1">
 <p>
 These key bindings will always work, regardless of whether the current buffer is in <code>char-mode</code> or <code>line-mode</code>. Since these keybindings always work, it is best to use a prefix key such as the <code>super</code> key.
 </p>
@@ -3582,10 +3614,10 @@ These key bindings will always work, regardless of whether the current buffer is
 </div>
 
 <ol class="org-ol">
-<li><a id="org411e90f"></a>Launching Programs<br />
-<div class="outline-text-6" id="text-17-3-4-1-1">
+<li><a id="org8e686f7"></a>Launching Programs<br />
+<div class="outline-text-6" id="text-16-3-4-1-1">
 <p>
-The following command can be used to launch programs in EWXM by using the command <code>s-e</code>. This will call the <code>app-launcher-run-app</code> function from the <a href="#org98e0799">17.2</a> package.
+The following command can be used to launch programs in EWXM by using the command <code>s-e</code>. This will call the <code>app-launcher-run-app</code> function from the <a href="#org14dd981">16.2</a> package.
 </p>
 
 <div class="org-src-container">
@@ -3595,8 +3627,8 @@ The following command can be used to launch programs in EWXM by using the comman
 </div>
 </li>
 
-<li><a id="orgcce1361"></a>Moving<br />
-<div class="outline-text-6" id="text-17-3-4-1-2">
+<li><a id="orgb30fbe4"></a>Moving<br />
+<div class="outline-text-6" id="text-16-3-4-1-2">
 <p>
 To have a universal command to switch between windows in EXWM, the super key and the arrow keys can be used to move about the windows directionally. Ace Window Mode doesn't work with X11 application windows, so it is convenient to have these keys set up.
 </p>
@@ -3620,8 +3652,8 @@ The following command can also be used to select a workspace if multiple workspa
 </div>
 </li>
 
-<li><a id="org71e5dca"></a>Switching Between <code>char-mode</code> and <code>line-mode</code><br />
-<div class="outline-text-6" id="text-17-3-4-1-3">
+<li><a id="orgc30547c"></a>Switching Between <code>char-mode</code> and <code>line-mode</code><br />
+<div class="outline-text-6" id="text-16-3-4-1-3">
 <p>
 When using EXWM, opening an X11 application will load in <code>line-mode</code> by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that <code>C-c</code> will act as an Emacs prefix command. Pressing <code>C-c C-k</code> will switch to <code>char-mode</code> and <code>C-c</code> will then do the usual copy command. Pressing <code>s-r</code> retruns back to <code>line-mode</code>.
 </p>
@@ -3635,8 +3667,8 @@ When using EXWM, opening an X11 application will load in <code>line-mode</code> 
 </ol>
 </li>
 
-<li><a id="org2adce71"></a><code>input-send-next-key</code><br />
-<div class="outline-text-5" id="text-17-3-4-2">
+<li><a id="orgd0717bf"></a><code>input-send-next-key</code><br />
+<div class="outline-text-5" id="text-16-3-4-2">
 <p>
 Any keys that Emacs recognizes as a prefix key, will not be passed to any underlying X11 applications running in an Emacs window. If a specific key (i.e. <code>C-c</code> for copy) needs to be sent to the X11 application, a prefix key can be set as <code>exwm-input-send-next-key</code> and issued before calling the key.
 </p>
@@ -3652,8 +3684,8 @@ For example, to copy and paste from an X11 application running in an Emacs windo
 </div>
 </li>
 
-<li><a id="orgfe3d1a2"></a>Input Prefix<br />
-<div class="outline-text-5" id="text-17-3-4-3">
+<li><a id="org2f3a2cf"></a>Input Prefix<br />
+<div class="outline-text-5" id="text-16-3-4-3">
 <p>
 Setting <code>exwm-input-prefix-keys</code> will cause those keys to be passed directly to Emacs to be processed. These keys will not be passed to any app unless they are proceeded by the <code>exwm-input-send-next-key</code>.
 </p>
@@ -3676,26 +3708,58 @@ Setting <code>exwm-input-prefix-keys</code> will cause those keys to be passed d
 </ol>
 </div>
 
-<div id="outline-container-org0f83b75" class="outline-4">
-<h4 id="org0f83b75"><span class="section-number-4">17.3.5.</span> Buffer Naming</h4>
-<div class="outline-text-4" id="text-17-3-5">
+<div id="outline-container-orgdcfb2a4" class="outline-4">
+<h4 id="orgdcfb2a4"><span class="section-number-4">16.3.5.</span> RandR</h4>
+<div class="outline-text-4" id="text-16-3-5">
 <p>
-To name buffers based on the application that was launched to create them, the following code must be used:
+For multi-screen displays, <code>exwm-randr</code> must be enabled.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-hook 'exwm-update-class-hook <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span><span style="color: #a7da1e;">()</span>
-                                    <span style="color: #a7da1e;">(</span>exwm-workspace-rename-buffer
-                                     exwm-class-name<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-randr</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>exwm-randr-enable<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 </div>
+
+<div id="outline-container-orga87c9db" class="outline-4">
+<h4 id="orga87c9db"><span class="section-number-4">16.3.6.</span> SystemTray</h4>
+<div class="outline-text-4" id="text-16-3-6">
+<p>
+Make sure to turn on the system tray in EXWM so that there is access to tray icons.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-systemtray</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>exwm-systemtray-enable<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
 </div>
 
-<div id="outline-container-orgcc8c4c7" class="outline-3">
-<h3 id="orgcc8c4c7"><span class="section-number-3">17.4.</span> Desktop Environment</h3>
-<div class="outline-text-3" id="text-17-4">
+<ol class="org-ol">
+<li><a id="org468ee0f"></a>Wifi<br />
+<div class="outline-text-5" id="text-16-3-6-1">
+<p>
+To enable an applet in the <code>exwm-system-tray</code>, Emacs can execute the <code>nm-applet</code> if it is installed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"nm-applet"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>executable-find <span style="color: #7984D1;">"nm-applet"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>start-process-shell-command <span style="color: #7984D1;">"nm-applet"</span> nil <span style="color: #7984D1;">"nm-applet"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org4faad25" class="outline-3">
+<h3 id="org4faad25"><span class="section-number-3">16.4.</span> Desktop Environment</h3>
+<div class="outline-text-3" id="text-16-4">
 <p>
 The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 </p>
@@ -3712,15 +3776,33 @@ The desktop environment package makes it so that some of the features that are i
                    <span style="color: #7984D1;">"TLP"</span>
                    <span style="color: #7984D1;">"playerctl"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:after</span> exwm
+  <span style="color: #1ea8fc;">:custom</span>
+  &lt;&lt;amixer&gt;&gt;
   <span style="color: #1ea8fc;">:config</span> <span style="color: #ff2afc;">(</span>desktop-environment-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
+
+<div id="outline-container-org65aa3c2" class="outline-4">
+<h4 id="org65aa3c2"><span class="section-number-4">16.4.1.</span> Set Audio Mixer Command</h4>
+<div class="outline-text-4" id="text-16-4-1">
+<p>
+To use the volume controls with with Desktop Environment mode, the command for amixer may need to be set to find the proper audio channel to set. The device can be set wih the <code>-c</code> option.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>desktop-environment-volume-get-command <span style="color: #7984D1;">"amixer -c 1 get Master"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>desktop-environment-volume-set-command <span style="color: #7984D1;">"amixer -c 1 set Master %s"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>desktop-environment-volume-toggle-command <span style="color: #7984D1;">"amixer -c 1 set Master toggle"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgd5b2d3d" class="outline-3">
-<h3 id="orgd5b2d3d"><span class="section-number-3">17.5.</span> Tap to Click</h3>
-<div class="outline-text-3" id="text-17-5">
+<div id="outline-container-org074dcad" class="outline-3">
+<h3 id="org074dcad"><span class="section-number-3">16.5.</span> Tap to Click</h3>
+<div class="outline-text-3" id="text-16-5">
 <p>
 To ensure that the touchpad allows will take tapping as a click, activate it with the shell command <code>xinput set-promp "SynPS/2 Synaptics Touchpad" "libinput Tapping Enabled" 1</code>. While we are doing this, we might as well tell Whicher that we need <code>xinput</code> installed.
 </p>
@@ -3737,9 +3819,9 @@ To ensure that the touchpad allows will take tapping as a click, activate it wit
 </div>
 </div>
 
-<div id="outline-container-orgc6fddba" class="outline-2">
-<h2 id="orgc6fddba"><span class="section-number-2">18.</span> Emacs Server</h2>
-<div class="outline-text-2" id="text-18">
+<div id="outline-container-orgf3de42d" class="outline-2">
+<h2 id="orgf3de42d"><span class="section-number-2">17.</span> Emacs Server</h2>
+<div class="outline-text-2" id="text-17">
 <p>
 Running Emacs as a server means that if I create a new instance of Emacs with the command <code>emacs</code>, I can then use the command <code>emacsclient -c -n</code> in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 </p>
@@ -3758,9 +3840,9 @@ I have this option run only when I am not executing Emacs as a portable app as i
 </div>
 </div>
 
-<div id="outline-container-orga1488cc" class="outline-2">
-<h2 id="orga1488cc"><span class="section-number-2">19.</span> Custom Functions</h2>
-<div class="outline-text-2" id="text-19">
+<div id="outline-container-org0c737a7" class="outline-2">
+<h2 id="org0c737a7"><span class="section-number-2">18.</span> Custom Functions</h2>
+<div class="outline-text-2" id="text-18">
 <p>
 This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
 </p>
@@ -3771,23 +3853,23 @@ This section contains custom functions that I have either created myself or borr
 </div>
 </div>
 
-<div id="outline-container-orgc1f167d" class="outline-3">
-<h3 id="orgc1f167d"><span class="section-number-3">19.1.</span> Oh My Eshell</h3>
-<div class="outline-text-3" id="text-19-1">
+<div id="outline-container-orgf23167a" class="outline-3">
+<h3 id="orgf23167a"><span class="section-number-3">18.1.</span> Oh My Eshell</h3>
+<div class="outline-text-3" id="text-18-1">
 <p>
 Something I am fiddling around with&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>load-file <span style="color: #7984D1;">"~/.emacs.d/elisp/oh-my-esh.el"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">(load-file "~/.emacs.d/elisp/oh-my-esh.el")</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf23d310" class="outline-3">
-<h3 id="orgf23d310"><span class="section-number-3">19.2.</span> Rclone Sync</h3>
-<div class="outline-text-3" id="text-19-2">
+<div id="outline-container-orgcd800fe" class="outline-3">
+<h3 id="orgcd800fe"><span class="section-number-3">18.2.</span> Rclone Sync</h3>
+<div class="outline-text-3" id="text-18-2">
 <p>
 The following function will execute the rclone command line tool:
 </p>
@@ -3816,9 +3898,9 @@ The following function will execute the rclone command line tool:
 </div>
 </div>
 
-<div id="outline-container-org3d90b94" class="outline-3">
-<h3 id="org3d90b94"><span class="section-number-3">19.3.</span> Sudo Find File</h3>
-<div class="outline-text-3" id="text-19-3">
+<div id="outline-container-orgbdaf070" class="outline-3">
+<h3 id="orgbdaf070"><span class="section-number-3">18.3.</span> Sudo Find File</h3>
+<div class="outline-text-3" id="text-18-3">
 <p>
 This function creates a <code>sudo-find-file</code> command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from <a href="https://karthinks.com/software/fifteen-ways-to-use-embark/">https://karthinks.com/software/fifteen-ways-to-use-embark/</a>.
 </p>
@@ -3842,9 +3924,9 @@ This function creates a <code>sudo-find-file</code> command that can be used to 
 </div>
 </div>
 
-<div id="outline-container-org2957e25" class="outline-2">
-<h2 id="org2957e25"><span class="section-number-2">20.</span> Update Org Files on Portable App Startup</h2>
-<div class="outline-text-2" id="text-20">
+<div id="outline-container-org3361e27" class="outline-2">
+<h2 id="org3361e27"><span class="section-number-2">19.</span> Update Org Files on Portable App Startup</h2>
+<div class="outline-text-2" id="text-19">
 <p>
 When running Emacs as a portable app, I want to pull down the latest versions of my <code>org-agenda-files</code> and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
 </p>
@@ -3870,26 +3952,11 @@ When running Emacs as a portable app, I want to pull down the latest versions of
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5b857f3" class="outline-2">
-<h2 id="org5b857f3"><span class="section-number-2">21.</span> Performance Optimization End</h2>
-<div class="outline-text-2" id="text-21">
-<p>
-Reset the value for Emacs garbage collection from the beginning of the init file and close off the <code>let</code> statement at the beginning of the init file.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> gc-cons-threshold <span style="color: #ff2afc;">(</span>* 2 1000 1000<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
-<span style="color: #e61f44; font-weight: bold;">)</span>
-</pre>
-</div>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-04-13 Wed 23:13&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-04-16 Sat 19:12&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-04-13 Wed 23:14</p>
+<p class="date">Created: 2022-04-17 Sun 21:07</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

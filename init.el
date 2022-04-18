@@ -55,10 +55,6 @@
   :config
   (gcmh-mode 1))
 
-(use-package minions
-  :config
-  (minions-mode 1))
-
 (use-package benchmark-init
   :straight t
   :config
@@ -757,6 +753,12 @@
   :straight t
   :defer 1
   :config (doom-modeline-mode))
+
+(use-package minions
+  :if (not (bound-and-true-p doom-modeline-mode))
+  :defer 4  
+  :config
+  (minions-mode 1))
 
 (use-package mixed-pitch
   :straight t
