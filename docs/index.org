@@ -83,6 +83,14 @@ You can also checkout the files directly on Github if you are not interested in 
 - [[https://github.com/tfree87/.emacs.d/blob/main/init.el][init.el]] :: The standard Emacs init file
 - [[https://github.com/tfree87/.emacs.d/blob/main/runemacs.bat][runemacs.bat]] :: A Windows batch file to set up the environment for running Emacs as a portable application 
 
-* Running Emacs from a Flash Drive
+* Emacs in Different Environments
+
+** Emacs from Flash Drive
 
 If you want to run Emacs as a portable application, see [[file:emacs-portable.html][Emacs as a Portable Application]].
+
+** Emacs in Windows
+
+Emacs can be a very powerful tool in Windows. For some tips on how to [[file:emacs-windows,html][Emacs Windows Customizations]]
+
+** Emacs as a Window Manger

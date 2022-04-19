@@ -52,7 +52,6 @@
 
 (use-package gcmh
   :straight t
-  :disabled t
   :config
   (gcmh-mode 1))
 
@@ -782,7 +781,7 @@
 (use-package olivetti
   :straight t
   :hook
-  (text-mode . olivetti-mode))
+  (org-mode . olivetti-mode))
 
 (use-package org-superstar
   :straight t
@@ -831,6 +830,7 @@
 
 (use-package helpful
   :straight t
+  :disabled ;TODO: 
   :commands
   (helpful-at-point
    helpful-callable

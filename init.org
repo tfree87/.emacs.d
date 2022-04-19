@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-19 17:53:22 thomas>
+#+date: Time-stamp: <2022-04-19 18:44:03 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -156,19 +156,16 @@ This section contains many of the tools used at Emacs startup that are helpful w
 ;; Emacs Startup Tools
 #+end_src
 
-** Garbage Collection Magic Hack :disabled:
+** Garbage Collection Magic Hack
 
 The Garbage Collection Magic Hack is a tool that will reduce garbage collection of Emacs in order to speed up the operation of Emacs during init. It will also run garbage collection more frequently when Emacs is idle to remove some of the garbage at a time when it will not come at a cost to performance.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package gcmh
     :straight t
-    :disabled t
     :config
     (gcmh-mode 1))
 #+end_src
-
-At the moment, gcmh is currently disabled as Emacs hangs with this mode enabled so further work into optimizing this package must be completed before using it fully.
 
 ** Benchmark Init
 
@@ -1690,7 +1687,6 @@ Minions mode does not work when ~doom-modeline-mode~ is not active. It appears t
   (not (bound-and-true-p doom-modeline-mode))
 #+end_src
 
-
 ** Mixed Pitch
 
 Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
@@ -1729,7 +1725,7 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
   (use-package olivetti
     :straight t
     :hook
-    (text-mode . olivetti-mode))
+    (org-mode . olivetti-mode))
 #+end_src
 
 ** Org Superstar Mode :org:
@@ -1828,7 +1824,7 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
       :defer t)
 #+end_src
 
-** Helpful
+** Helpful :disabled:
 
 [[https://github.com/Wilfred/helpful][Helpful]] improves the Emacs help functions by adding new features to the ~*Help*~ buffers such as:
 
@@ -1842,6 +1838,7 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
 #+begin_src emacs-lisp :tangle yes
   (use-package helpful
     :straight t
+    :disabled ;TODO: 
     :commands
     (helpful-at-point
      helpful-callable
