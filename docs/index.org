@@ -36,11 +36,12 @@
 
 * Welcome
 
-Welcome to the Github page for my Emacs configuration. I have created this Github pages site to help provide a place where I can post all of the custom modifications I have made to make Emacs as productive as possible for me. While Emacs has excellent documentation, and I highly recommend reading it, there is so much in the Emacs ecosystem that it doesn't even begin to cover much of the excellent third-party packages that have been released to extend Emacs. This is why I have decided that I would post my own Emacs configuration for anyone else who wants to learn by example. I have certainly found a lot of inspiration in scouring the internet for Emacs configurations created by other users.
+Welcome to the Github page for my Emacs configuration. I have created this Github pages site to provide place where I can post the custom modifications I have made to Emacs. My goal is to make Emacs  as productive as possible. While Emacs has excellent documentation that I highly recommend reading, there is much more in the Emacs ecosystem that the manual doesn't even begin to cover. There are many excellent third-party packages that have been released to extend Emacs. This is why I have decided that I would post my own Emacs configuration for anyone else who wants to learn by example. I have certainly found a lot of inspiration in scouring the internet for Emacs configurations created by other users.
 
 * About My Emacs Setup
 
 I have tried to make an Emacs setup that is flexible for use in multiple contexts. While I prefer to use libre operating systems. I often find that for work I am limited to using a Windows system. As I have learned to rely on the powerful features of Emacs for much of the computing that I do, I have found a way to replicate the functions I love on Emacs as a portable system by running Emacs on a USB flash drive (based on [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][this article]]) alongside the [[https://portableapps.com/][PortableApps]] platform. This allows me to take my Emacs setup everywhere I go. Here are some features of my setup:
+
 1. Portable
    - A file, runemacs.bat, will call the Emacs executable on the USB flash drive and set the home directory to the drive label of the flash drive.
    - Emacs will check to see if it is being called as a portable app and can call on portable libraries such as MikTeX portable and Git portable to restore lost functionality.
@@ -54,7 +55,11 @@ I have tried to make an Emacs setup that is flexible for use in multiple context
      + Windows using Chocolatey to install dependencies
      + Windows as a USB PortableApp with dependencies installed on the USB drive as PortableApps
 4. Emacs Server
-   - Starts an Emacs server so that other Emacs frames can be opened quickly and access the same buffers by running an ~emacsclient~ instance.
+   - Starts an Emacs server on the first launch of an Emacs instance
+   - Emacs frames can be opened quickly and access the same buffers by running an ~emacsclient~ instance.
+5. Window Management with EXWM
+   - If no window manger is detected, EXWM can be used as the window manager
+   - All applications can be opened in Emacs and managed with Emacs commands   
 
 * Browse The Configuration
 
@@ -62,7 +67,7 @@ If you want to browse my Emacs configuration, there are a couple ways to do it.
 
 ** With Documentation/Commentary
 
-I have used Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to ~init.el~.
+I use Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to ~init.el~.
 
 - [[file:early-init.html][early-init.html]] :: A file that is loaded before ~init.el~
 - [[File:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
