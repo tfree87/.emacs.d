@@ -4,7 +4,7 @@
 
 #+title: Emacs Configuration
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-17 22:10:34 thomas>
+#+date: Time-stamp: <2022-04-18 21:45:08 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -76,7 +76,7 @@ Straight.el cannot operate without access to Git. Luckily, there is a portable v
 
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
 
- #+begin_src emacs-lisp :tangle yes :noweb no-export
+ #+begin_src emacs-lisp :tangle yes :noweb yes
    (when <<portable_check>>
      (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
@@ -217,7 +217,7 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
 
 The code below collects customizations for Emacs built-in components.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package emacs
     :custom
     <<emacs_custom>>
@@ -252,7 +252,7 @@ Changing how Emacs deletes files and how it creates backups.
 **** Send Deleted Files to System Trash
 
  Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
- 
+
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (delete-by-moving-to-trash t)
  #+end_src
@@ -260,7 +260,8 @@ Changing how Emacs deletes files and how it creates backups.
 **** Backup Files with Version Control
 
  Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
- 
+
+
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (version-control t)
    (delete-old-versions t)
@@ -285,6 +286,7 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n"
 .
+
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -298,7 +300,7 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
  
 #+name: cape
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package cape
     :straight t
     :bind (("C-c p p" . completion-at-point)
@@ -353,7 +355,7 @@ Complete Emacs-lisp symbols:
 
 [[https://github.com/minad/consult][Consult]] provides a number of highly useful commands. The complete list of commands can be found [[https://github.com/minad/consult#available-commands][here]].
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package consult
     :straight t
     :bind (("C-c h" . consult-history)
@@ -472,7 +474,7 @@ Cycle through completion candidates by pressing the completion key.
 
 [[https://github.com/minad/corfu][Corfu]] for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package corfu
     :straight t
     :hook
@@ -543,7 +545,7 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
 
 [[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package embark
     :straight t
     :bind
@@ -597,7 +599,7 @@ Allow use of Embark commands after issuing a Consult command.
 
 ** Marginalia :minibuffer:
 
-[[https://github.com/minad/marginalia][Marginalia]] provides annotations to items in the minibuffer similar to what is accomplished in Ivy.
+[[https://github.com/minad/marginalia][Marginalia]] generates annotations to items in the minibuffer similar to what is accomplished  with [[https://github.com/Yevgnen/ivy-rich][ivy-rich]].
 
 #+begin_src emacs-lisp :tangle yes
   (use-package marginalia
@@ -870,7 +872,7 @@ A better fix would be to use code formatters to prevent lines from getting too l
 
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package dired
     :straight nil
     :ensure nil
@@ -911,7 +913,7 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 
 I occasinally use [[https://www.gnu.org/software/tramp/][Tramp]] to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package tramp
     :straight <<tramp_version>>
     :defer t
@@ -1045,7 +1047,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 - Publishing LaTeX documents in a simpler and faster way
 - Saving reusable code snippets with documentation that can be executed from within Emacs as how this file was created.
   
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package org
     :defer t
     :init
@@ -1368,7 +1370,7 @@ Org-roam (https://www.orgroam.com/) adds features to make linking org notes easi
 
 [[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using LaTeX.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
     (use-package auctex
       :straight t
       :defer t
@@ -1440,7 +1442,7 @@ Emacs when navigating expects sentences to end with a double space after a perio
 
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package eshell
     :defer t
     :hook
@@ -1548,7 +1550,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 
 [[https://github.com/domtronn/all-the-icons.el][All The Icons]] adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons
     :if (not <<portable_check>>)
     :defer t
@@ -1559,7 +1561,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 
 [[https://github.com/jtbm37/all-the-icons-dired][all-the-icons-dired]] will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-dired
     :if (not <<portable_check>>)
     :straight t
@@ -1571,7 +1573,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 
 [[https://github.com/seagle0128/all-the-icons-ibuffer][all-the-icons-ibuffer]] adds icons representing different buffer types to Ibuffer mode.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-ibuffer
     :if (not <<portable_check>>)
     :straight t
@@ -1582,7 +1584,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 
 [[https://github.com/iyefrat/all-the-icons-completion][all-the-icons-completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-completion
     :if (not <<portable_check>>)
     :straight t
@@ -1728,7 +1730,7 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
 
 Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted bullets. What separates it from Org Bullets is that Org Superstar Mode also can support plain lists and it has the option to format TODO keywords.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
     (use-package org-superstar
       :straight t
       :after org
@@ -1847,14 +1849,13 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
     (global-set-key (kbd "C-c C-d") #'helpful-at-point)
     (global-set-key (kbd "C-h F") #'helpful-function)
     (global-set-key (kbd "C-h C") #'helpful-command))
-
 #+end_src
 
 ** Ibuffer
 
 A better buffer list than the default.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package ibuffer
     :bind
     ("C-x C-b" . ibuffer)
@@ -2004,7 +2005,7 @@ Savehist will save the selections from completion history between Emacs sessions
 ** Which-key
 [[https://github.com/justbur/emacs-which-key][Which-key]] provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package which-key
     :straight t
     :defer 3
@@ -2105,7 +2106,7 @@ Use ~app-launcher~ to launch Linux applications in EXWM.
 
 To use EXWM, the EXWM package can be pulled from using ~straight.el~.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
     :straight t
     :if
@@ -2252,7 +2253,7 @@ To enable an applet in the ~exwm-system-tray~, Emacs can execute the ~nm-applet~
 
 The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package desktop-environment
     :straight t
     :init
@@ -2297,7 +2298,7 @@ Running Emacs as a server means that if I create a new instance of Emacs with th
 
 I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+begin_src emacs-lisp :tangle yes :noweb yes
   ;; Start an Emacs server
   
   (when (not <<portable_check>>)
@@ -2368,7 +2369,8 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
 
 When running Emacs as a portable app, I want to pull down the latest versions of my ~org-agenda-files~ and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
 
-#+begin_src emacs-lisp :tangle yes :noweb no-export
+#+name: test
+#+begin_src emacs-lisp :tangle yes :noweb yes
   ;; Sync Dropbox containing org agenda files on load and close
 
   (when <<portable_check>>
@@ -2386,3 +2388,4 @@ When running Emacs as a portable app, I want to pull down the latest versions of
                                                 rclone-path
                                                 rclone-conf)))))
 #+end_src
+
