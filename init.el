@@ -18,7 +18,7 @@
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
-;; Set the location of variables set using Emacs cusmtomize interface
+;; Set the location of variables set using Emacs customize interface
 
 (setq custom-file "~/.emacs.d/custom.el")
 
@@ -52,6 +52,7 @@
 
 (use-package gcmh
   :straight t
+  :disabled t
   :config
   (gcmh-mode 1))
 
@@ -489,7 +490,7 @@
    '((sequence "TODO(t)"
                "WAITING(w)"
                "|" "DONE(d)"
-               "CANCELLED(c)")))
+               "CANCELED(c)")))
   (org-tags-exclude-from-inheritance '("project"))
   (org-stuck-projects
    '("+project/-MAYBE-DONE"

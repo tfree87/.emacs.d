@@ -3,8 +3,8 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+title: Emacs Configuration
-#+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-18 21:45:08 thomas>
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-04-19 17:53:22 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -88,12 +88,12 @@ In order to keep variables set by the customize interface or set during Emacs at
 #+name: custom-file
 #+begin_src emacs-lisp :tangle yes
 
-  ;; Set the location of variables set using Emacs cusmtomize interface
+  ;; Set the location of variables set using Emacs customize interface
 
   (setq custom-file "~/.emacs.d/custom.el")
 #+end_src
 
-Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refeshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
+Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refreshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
 
 #+name: load-custom
 #+begin_src emacs-lisp :tangle yes
@@ -150,22 +150,25 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
 
 * Startup Tools
 
-This section contains many of the tools used at Eamcs startup that are helpful when other packages are initialized.
+This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
 
 #+begin_src emacs-lisp :tangle yes
 ;; Emacs Startup Tools
 #+end_src
 
-** Garbage Collection Magic Hack
+** Garbage Collection Magic Hack :disabled:
 
 The Garbage Collection Magic Hack is a tool that will reduce garbage collection of Emacs in order to speed up the operation of Emacs during init. It will also run garbage collection more frequently when Emacs is idle to remove some of the garbage at a time when it will not come at a cost to performance.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package gcmh
     :straight t
+    :disabled t
     :config
     (gcmh-mode 1))
 #+end_src
+
+At the moment, gcmh is currently disabled as Emacs hangs with this mode enabled so further work into optimizing this package must be completed before using it fully.
 
 ** Benchmark Init
 
@@ -769,6 +772,7 @@ Number lines can be very useful in programming modes. This code below will turn 
     (when (version<= "26.0.50" emacs-version)
       (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
+
 ** Numpydoc :python:
 
 Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
@@ -868,6 +872,7 @@ A better fix would be to use code formatters to prevent lines from getting too l
 #+end_src
 
 * File Browsing
+
 ** Dired
 
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
@@ -891,7 +896,7 @@ This will cause emacs to default to moving/copying/renaming files from the direc
  
 ** Disc Usage
 
-Disc usage is a tool that can be used to determine the amount of memory a directory uses in the filesystem.
+Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package disk-usage
@@ -1039,6 +1044,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     (habitica-turn-on-highlighting t)
     (habitica-show-streak t))
 #+end_src
+
 ** Org :org:
 
 [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
@@ -1148,14 +1154,14 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
 
 **** Custom TODO Keywords
 
-Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELLED tasks.
+Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELED tasks.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-todo-keywords
    '((sequence "TODO(t)"
                "WAITING(w)"
                "|" "DONE(d)"
-               "CANCELLED(c)")))
+               "CANCELED(c)")))
 #+end_src
 
 **** Project Tags
@@ -1764,6 +1770,7 @@ The following code will change the heading sizes in Org Mode to make it easier t
 #+end_src
 
 * Other
+
 ** BBDB
 
 The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
