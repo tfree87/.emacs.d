@@ -18,7 +18,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq gc-cons-threshold 500000000)
-(setq garbage-collection-messages t)
 
 (setq native-comp-deferred-compilation nil)
 

@@ -4,7 +4,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-04-20 20:18:37 thomas>
+#+date: Time-stamp: <2022-04-20 20:26:53 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -46,7 +46,6 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold 500000000)
-  (setq garbage-collection-messages t)
 #+end_src
 
 * Prevent Unwanted Runtime Compilation
