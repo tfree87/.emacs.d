@@ -15,6 +15,8 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(let ((file-name-handler-alist nil))
+
 (when (eq (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
@@ -49,11 +51,6 @@
 (setq straight-use-package-by-default t)
 
 ;; Emacs Startup Tools
-
-(use-package gcmh
-  :straight t
-  :config
-  (gcmh-mode 1))
 
 (use-package benchmark-init
   :straight t
@@ -408,7 +405,8 @@
   :straight (:type built-in)
   :defer t
   :config
-  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+  (with-eval-after-load 'tramp
+    (setenv "SHELL" "/bin/bash")))
 
 (use-package ace-window
   :straight t
@@ -830,21 +828,14 @@
 
 (use-package helpful
   :straight t
-  :disabled ;TODO: 
-  :commands
-  (helpful-at-point
-   helpful-callable
-   helpful-command
-   helpful-key
-   helpful-variable
-   helpful-key)
-  :config
-  (global-set-key (kbd "C-h f") #'helpful-callable)
-  (global-set-key (kbd "C-h v") #'helpful-variable)
-  (global-set-key (kbd "C-h k") #'helpful-key)
-  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-  (global-set-key (kbd "C-h F") #'helpful-function)
-  (global-set-key (kbd "C-h C") #'helpful-command))
+  :defer t
+  :bind
+  ("C-h f" . #'helpful-callable)
+  ("C-h v" . #'helpful-variable)
+  ("C-h k" . #'helpful-key)
+  ("C-c C-d" . #'helpful-at-point)
+  ("C-h F" . #'helpful-function)
+  ("C-h C" . #'helpful-command))
 
 (use-package ibuffer
   :bind
@@ -1078,3 +1069,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
                                               rclone-local
                                               rclone-path
                                               rclone-conf)))))
+
+(setq gc-cons-threshold 800000)
+)

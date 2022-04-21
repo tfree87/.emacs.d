@@ -4,7 +4,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-03-31 21:12:54 Thomas>
+#+date: Time-stamp: <2022-04-20 20:18:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -41,22 +41,34 @@ The following code block will add a header to the ~early-init.el~ file when it i
 #+end_src
 
 * Decrease Garbage Collection Frequency
+
 Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el.
+
 #+begin_src emacs-lisp :tangle yes
-  (setq gc-cons-threshold most-positive-fixnum)
+  (setq gc-cons-threshold 500000000)
+  (setq garbage-collection-messages t)
 #+end_src
+
 * Prevent Unwanted Runtime Compilation
+
 Prevent extra unnecessary runtime compilation for gccemacs. This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] early-init.el file.
+
 #+begin_src emacs-lisp :tangle yes
   (setq native-comp-deferred-compilation nil)
-#+end_src 
+#+end_src
+
 * Disable Emacs Package Manager
+
 In order to prevent conflicts between ~straight.el~ and the Emacs package manager, ~package-enable-at-startup~ should be set to ~nil~. This came from the [[https://github.com/raxod502/straight.el][straight.el]] installation instructions.
+
 #+begin_src emacs-lisp :tangle yes
   (setq package-enable-at-startup nil)
 #+end_src
+
 * Reduce Redisplay
+
 To reduce slowdowns caused by early redisplays when loading, the following code will reduce the amount of times Emacs redisplays when setting up windows. This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] early-init.el file.
+
 #+begin_src emacs-lisp :tangle yes
   (setq-default inhibit-redisplay t
                 inhibit-message t)
@@ -66,8 +78,11 @@ To reduce slowdowns caused by early redisplays when loading, the following code 
                             inhibit-message nil)
               (redisplay)))
 #+end_src
+
 * Set Environment to UTF-8
+
 Set the default coding system to UTF-8.This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] early-init.el file.
+
 #+begin_src emacs-lisp :tangle yes
   (set-language-environment "UTF-8")
   (setq default-input-method nil)

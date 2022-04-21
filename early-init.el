@@ -17,7 +17,8 @@
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-threshold 500000000)
+(setq garbage-collection-messages t)
 
 (setq native-comp-deferred-compilation nil)
 
