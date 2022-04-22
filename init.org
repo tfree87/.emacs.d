@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-20 20:19:07 thomas>
+#+date: Time-stamp: <2022-04-22 19:47:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1765,6 +1765,20 @@ The following code will change the heading sizes in Org Mode to make it easier t
 #+end_src
 
 * Other
+
+** EMMS
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package emms
+      :straight t
+      :defer t
+      :custom
+      (emms-source-file-default-directory "~/Music/")
+      :config
+      (require 'emms-setup)
+      (emms-all)
+      (emms-default-players))
+#+end_src
 
 ** BBDB
 

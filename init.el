@@ -792,6 +792,16 @@
   :hook
   (org-mode . org-superstar-mode))
 
+(use-package emms
+    :straight t
+    :defer t
+    :custom
+    (emms-source-file-default-directory "~/Music/")
+    :config
+    (require 'emms-setup)
+    (emms-all)
+    (emms-default-players))
+
 (use-package bbdb
   :straight t
   :defer t
