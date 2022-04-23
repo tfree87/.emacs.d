@@ -14,6 +14,8 @@
 #+options: timestamp:t title:t toc:t todo:t |:t
 
 
+This is a startup script that is designed to set up the environment before launching Emacs. This script is intended to be used with Emacs running EXWM as the window manager. This script will startup the audio, blu
+
 * Pulseaudio
 
 Start pulseaudio
@@ -21,7 +23,6 @@ Start pulseaudio
 #+begin_src sh :tangle yes :shebang #!/bin/sh :comments org
 pulseaudio --start &
 #+end_src
-
 
 * Dropbox
 
@@ -33,7 +34,7 @@ dropbox start &
 
 * Emacs EXWM
 
-Launch Emacs in maximized mode and debug he init file
+Launch Emacs in maximized mode and debug the init file
 
 #+begin_src sh :tangle yes :comments org :shebang #!/bin/sh
 exec dbus-launch --exit-with-session emacs -mm --debug-init
