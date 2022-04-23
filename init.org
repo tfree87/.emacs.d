@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-22 19:47:17 thomas>
+#+date: Time-stamp: <2022-04-23 12:09:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1064,7 +1064,8 @@ Emacs is a great tool for managing projects, organizing information, calendaring
     :config
     (add-hook 'org-mode-hook #'turn-on-flyspell)
     <<org_config>>
-    <<babel_languages>>)
+    <<babel_languages>>
+    (fm/org-header-formatting))
 
   (use-package org-contrib
     :straight t
@@ -1746,22 +1747,24 @@ Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted b
 
 ** Org Header Sizes :org:
 
-The following code will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] at [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
+The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] at [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
 
-#+begin_src emacs-lisp :noweb-ref org_config
-  (with-eval-after-load 'org
-    (dolist
-        (face
-         '((org-level-1 . 1.75)
-           (org-level-2 . 1.50)
-           (org-level-3 . 1.25)
-           (org-level-4 . 1.10)
-           (org-level-5 . 1.10)
-           (org-level-6 . 1.10)
-           (org-level-7 . 1.10)
-           (org-level-8 . 1.10)
-           (org-document-title . 2.00)))
-      (set-face-attribute (car face) nil :height (cdr face))))
+#+begin_src emacs-lisp :tangle yes
+  (defun fm/org-header-formatting ()
+    (interactive)
+    (with-eval-after-load 'org
+      (dolist
+          (face
+           '((org-level-1 . 1.75)
+             (org-level-2 . 1.50)
+             (org-level-3 . 1.25)
+             (org-level-4 . 1.10)
+             (org-level-5 . 1.10)
+             (org-level-6 . 1.10)
+             (org-level-7 . 1.10)
+             (org-level-8 . 1.10)
+             (org-document-title . 2.00)))
+        (set-face-attribute (car face) nil :height (cdr face)))))
 #+end_src
 
 * Other
