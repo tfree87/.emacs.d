@@ -1,0 +1,32 @@
+# -*- org-tangle-with-comments: t; -*-
+
+#!/bin/sh
+
+# Set the screen DPI (uncomment this if needed!)
+# xrdb ~/.emacs.d/exwm/Xresources
+
+
+* Pulseaudio
+
+Start pulseaudio
+
+#+begin_src sh :tangle yes :shebang #!/bin/sh :comments org
+pulseaudio --start &
+#+end_src
+
+
+* Dropbox
+
+Launch Dropbox daemon
+
+#+begin_src sh :tangle yes :comments org :shebang #!/bin/sh
+dropbox start &
+#+end_src
+
+* Emacs EXWM
+
+Launch Emacs in maximized mode and debug he init file
+
+#+begin_src sh :tangle yes :comments org :shebang #!/bin/sh
+exec dbus-launch --exit-with-session emacs -mm --debug-init
+#+end_src
