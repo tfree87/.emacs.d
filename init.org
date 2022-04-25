@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-23 12:09:28 thomas>
+#+date: Time-stamp: <2022-04-24 22:44:00 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1747,7 +1747,7 @@ Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted b
 
 ** Org Header Sizes :org:
 
-The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] at [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
+The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
 
 #+begin_src emacs-lisp :tangle yes
   (defun fm/org-header-formatting ()
@@ -2254,12 +2254,23 @@ Make sure to turn on the system tray in EXWM so that there is access to tray ico
 
 **** Wifi
 
-To enable an applet in the ~exwm-system-tray~, Emacs can execute the ~nm-applet~ if it is installed.
+To enable a wifi applet in the ~exwm-system-tray~, Emacs can execute the ~nm-applet~ if it is installed.
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
   (whicher "nm-applet")
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet"))
+
+#+end_src
+
+**** Dropbox
+
+To get Dropbox running with the Dropbox applet, start Dropbox after EXWM has loaded.
+
+#+begin_src emacs-lisp :noweb-ref exwm_config
+  (whicher "dropbox")
+  (when (executable-find "dropbox")
+    (start-process "dropbox" nil "dropbox" "start"))
 
 #+end_src
 

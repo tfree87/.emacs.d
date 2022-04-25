@@ -6,16 +6,9 @@
 
 pulseaudio --start &
 
-# Dropbox
-
-# Launch Dropbox daemon
-
-
-dropbox start &
-
 # Emacs EXWM
 
-# Launch Emacs in maximized mode and debug he init file
+# Launch Emacs in maximized mode and debug the init file
 
 
 exec dbus-launch --exit-with-session emacs -mm --debug-init

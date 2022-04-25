@@ -1002,6 +1002,10 @@
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet"))
   
+  (whicher "dropbox")
+  (when (executable-find "dropbox")
+    (start-process "dropbox" nil "dropbox" "start"))
+  
   (shell-command
    (concat
     (whicher "xinput")

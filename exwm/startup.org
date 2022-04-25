@@ -24,14 +24,6 @@ Start pulseaudio
 pulseaudio --start &
 #+end_src
 
-* Dropbox
-
-Launch Dropbox daemon
-
-#+begin_src sh :tangle yes :comments org :shebang #!/bin/sh
-dropbox start &
-#+end_src
-
 * Emacs EXWM
 
 Launch Emacs in maximized mode and debug the init file
