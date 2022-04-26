@@ -1,0 +1,12 @@
+* Sudo in Windows
+
+If you are a Linux/Unix user and you are used to being able to elevate permissions by using the ~sudo~
+command, you are in luck. There is actually a ~sudo~ tool that can be downloaded for Microsoft Windows if you use the [[https://chocolatey.org/][Chocolatey]] package manger for Windows. Installing this tool means that using shells in Emacs or other tools that rely on the ~sudo~ command may still work.
+
+* Windows Powershell
+
+[[ghttps://github.com/jschaf/powershell.el][Powershell Mode]] for Emacs is a great tool for anyone who wants to use a shell in Windows. Powershell adds the ability to run an interactive Windows Powershell session in Emacs and a major-mode for editing Powershell script files.
+
+* Eshell
+
+The Emacs Eshell is not limited to only be used on Unix and Linux systems. It can also operate in Windows. The beauty of Eshell is that many of the most common commands used in bash shells are rewritten in Emacs Lisp. This means that commands such as 
