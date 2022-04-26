@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-24 22:44:00 thomas>
+#+date: Time-stamp: <2022-04-25 20:17:16 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -28,7 +28,6 @@
 #+latex_header:
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-
 
 
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
@@ -1647,7 +1646,9 @@ I have switched to the Doom theme ~doom-outrun-electric~ because I find the colo
 
 ** Doom Modeline
 
-I like the Doom modeline because it has icons and bright colors.
+The Doom Modeline decorates the modeline with icons and cleans up much of the clutter in the modeline.  An example of the Doom Modeline is below.
+
+[[file:./screenshots/doom-modeline.png][./screenshots/doom-modeline.png]]
 
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
@@ -1676,7 +1677,7 @@ Minions is a package that puts all of the minor modes into a menu in the modelin
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package minions
     :if <<use_minions>>
-    :defer 4  
+    :defer 4
     :config
     (minions-mode 1))
 #+end_src
@@ -1770,6 +1771,8 @@ The following custom function will change the heading sizes in Org Mode to make 
 * Other
 
 ** EMMS
+
+EMMS is a multimedia player for Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package emms
@@ -2106,7 +2109,7 @@ There is also a check for the X window system as calling GUI programs from EXWM 
 
 ** App Launcher
 
-Use ~app-launcher~ to launch Linux applications in EXWM.
+Use App Launcher to launch Linux applications in EXWM. App Launcher will scan for all ~*.desktop~ files in the application directories on Linux and provide a list of candidates that can be filtered with completion.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package app-launcher
@@ -2115,6 +2118,8 @@ Use ~app-launcher~ to launch Linux applications in EXWM.
                              :branch "main")
     :commands (app-launcher))
 #+end_src
+
+*** TODO Create a fork of app-launcher and add support for Windows applications using the Windows start menu shortcuts directory
 
 ** EXWM
 

@@ -16,7 +16,7 @@
 This repository contains the configuration for my personal Emacs setup. Feel free to try it out for yourself or take any bits that you find useful.
 
 #+ATTR_HTML: title="Screenshot of Emacs"
-[[./screenshot.png]]
+[[./screenshots/screenshot.png]]
 
 * Contents of Repository
 This repository contains the following key files and folders:

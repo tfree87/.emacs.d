@@ -742,7 +742,7 @@
 
 (use-package minions
   :if (not (bound-and-true-p doom-modeline-mode))
-  :defer 4  
+  :defer 4
   :config
   (minions-mode 1))
 
