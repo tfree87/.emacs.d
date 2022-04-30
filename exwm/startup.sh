@@ -6,6 +6,13 @@
 
 pulseaudio --start &
 
+
+
+# Launch the pulseaudio system tray app
+
+
+pasystray &
+
 # Emacs EXWM
 
 # Launch Emacs in maximized mode and debug the init file

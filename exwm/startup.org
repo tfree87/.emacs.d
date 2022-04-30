@@ -24,6 +24,12 @@ Start pulseaudio
 pulseaudio --start &
 #+end_src
 
+Launch the pulseaudio system tray app
+
+#+begin_src sh :tangle yes :shebang #!/bin/sh :comments org
+pasystray &
+#+end_src
+
 * Emacs EXWM
 
 Launch Emacs in maximized mode and debug the init file
