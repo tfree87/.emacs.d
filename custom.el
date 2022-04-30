@@ -8,8 +8,7 @@
  '(bbdb-mua-interactive-action '(query . create) nil nil "Customized with use-package bbdb")
  '(custom-safe-themes
    '("da53441eb1a2a6c50217ee685a850c259e9974a8fa60e899d393040b4b8cc922" "da186cce19b5aed3f6a2316845583dbee76aea9255ea0da857d1c058ff003546" "0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1" default))
- '(org-modules
-   '(ol-bbdb ol-bibtex ol-docview ol-doi org-habit))
+ '(org-modules '(ol-bbdb ol-bibtex ol-docview ol-doi org-habit))
  '(safe-local-variable-values
    '((org-use-tag-inheritance)
      (eval add-hook 'after-save-hook
