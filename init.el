@@ -797,14 +797,17 @@
       (set-face-attribute (car face) nil :height (cdr face)))))
 
 (use-package emms
-    :straight t
-    :defer t
-    :custom
-    (emms-source-file-default-directory "~/Music/")
-    :config
-    (require 'emms-setup)
-    (emms-all)
-    (emms-default-players))
+  :straight t
+  :defer t
+  :custom
+  (emms-source-file-default-directory "~/Music/")
+  :config
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players)
+  (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+  (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+  (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause))
 
 (use-package bbdb
   :straight t
