@@ -285,6 +285,11 @@
   :mode ("\\.c\\'"
          "\\.ino\\'"))
 
+(use-package eglot
+  :straight t
+  :hook
+  (python-mode . eglot-ensure))
+
 (use-package elpy
   :straight t
   :defer t
@@ -308,10 +313,12 @@
   :defer t)
 
 (use-package lsp-mode
+  :disabled t
   :hook
   ((python-mode . lsp)))
 
 (use-package lsp-ui
+  :disabled t
   :commands lsp-ui-mode)
 
 (use-package minimap
@@ -1001,37 +1008,17 @@
   (exwm-randr-enable)
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
-  (whicher "nm-applet")
-  (when (executable-find "nm-applet")
-    (start-process-shell-command "nm-applet" nil "nm-applet"))
-  
   (whicher "dropbox")
   (when (executable-find "dropbox")
     (start-process "dropbox" nil "dropbox" "start"))
   
-  (shell-command
-   (concat
-    (whicher "xinput")
-    " set-prop \"SynPS/2 Synaptics TouchPad\""
-    " \"libinput Tapping Enabled\" 1"))    
+  (whicher "nm-applet")
+  (when (executable-find "nm-applet")
+    (start-process-shell-command "nm-applet" nil "nm-applet"))
+  (whicher "pasystray")
+  (when (executable-find "pasystray")
+    (start-process-shell-command "pasystray" nil "pasystray"))    
   (exwm-enable))
-
-(use-package desktop-environment
-  :straight t
-  :init
-  (mapc #'whicher '("brightnessctl"
-                   "amixer"
-                   "scrot"
-                   "slock"
-                   "upower"
-                   "TLP"
-                   "playerctl"))
-  :after exwm
-  :custom
-  (desktop-environment-volume-get-command "amixer -c 1 get Master")
-  (desktop-environment-volume-set-command "amixer -c 1 set Master %s")
-  (desktop-environment-volume-toggle-command "amixer -c 1 set Master toggle")
-  :config (desktop-environment-mode))
 
 ;; Start an Emacs server
 
