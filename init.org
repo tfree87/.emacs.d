@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-25 23:02:17 thomas>
+#+date: Time-stamp: <2022-04-30 20:54:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1770,25 +1770,6 @@ The following custom function will change the heading sizes in Org Mode to make 
 
 * Other
 
-** EMMS
-
-EMMS is a multimedia player for Emacs.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package emms
-    :straight t
-    :defer t
-    :custom
-    (emms-source-file-default-directory "~/Music/")
-    :config
-    (require 'emms-setup)
-    (emms-all)
-    (emms-default-players)
-    (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
-    (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
-    (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause))
-#+end_src
-
 ** BBDB
 
 The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.
@@ -1833,6 +1814,25 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
     :straight t
     :init
     (whicher "docker-compose"))
+#+end_src
+
+** EMMS
+
+EMMS is a multimedia player for Emacs. It is an interface that is used to control other players that operate in the background.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package emms
+    :straight t
+    :defer t
+    :custom
+    (emms-source-file-default-directory "~/Music/")
+    :config
+    (require 'emms-setup)
+    (emms-all)
+    (emms-default-players)
+    (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+    (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+    (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause))
 #+end_src
 
 ** Gnuplot
