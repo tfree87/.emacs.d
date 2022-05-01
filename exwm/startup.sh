@@ -1,4 +1,18 @@
 #!/bin/sh
+# Numlock
+
+# Turn on numlock for number pads
+
+
+numlockx on
+
+# Tap To Click
+
+# Enable tap to click using the laptop touchpad
+
+
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+
 # Pulseaudio
 
 # Start pulseaudio

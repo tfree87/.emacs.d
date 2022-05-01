@@ -21,7 +21,7 @@ This is a startup script that is designed to set up the environment before launc
 
 Turn on numlock for number pads
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src sh :tangle yes :shebang #!/bin/sh :comments org
 numlockx on
 #+end_src
 
@@ -29,7 +29,7 @@ numlockx on
 
 Enable tap to click using the laptop touchpad
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src sh :tangle yes :shebang #!/bin/sh :comments org
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 #+end_src
 
