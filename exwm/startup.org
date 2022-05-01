@@ -16,6 +16,23 @@
 
 This is a startup script that is designed to set up the environment before launching Emacs. This script is intended to be used with Emacs running EXWM as the window manager. This script will startup the audio, blu
 
+
+* Numlock
+
+Turn on numlock for number pads
+
+#+begin_src emacs-lisp :tangle yes
+numlockx on
+#+end_src
+
+* Tap To Click
+
+Enable tap to click using the laptop touchpad
+
+#+begin_src emacs-lisp :tangle yes
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+#+end_src
+
 * Pulseaudio
 
 Start pulseaudio
