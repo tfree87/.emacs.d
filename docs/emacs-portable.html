@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-17 Sun 22:21 -->
+<!-- 2022-05-15 Sun 22:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Running Emacs as a Portable Application</title>
@@ -214,23 +214,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4936da1">1. About</a></li>
-<li><a href="#orge5195ec">2. Why Run Emacs as a Portable App?</a></li>
-<li><a href="#org17b5b5c">3. Process</a></li>
-<li><a href="#org91cc693">4. Access Org Agenda Files from the Cloud</a>
+<li><a href="#orgc0409c8">1. About</a></li>
+<li><a href="#org9d01dc7">2. Why Run Emacs as a Portable App?</a></li>
+<li><a href="#org6fcfd81">3. Process</a></li>
+<li><a href="#org9a28ad6">4. Access Org Agenda Files from the Cloud</a>
 <ul>
-<li><a href="#orgb134313">4.1. Syncing Org Files Automatically</a></li>
+<li><a href="#org3ba4add">4.1. Syncing Org Files Automatically</a></li>
 </ul>
 </li>
-<li><a href="#org9468550">5. Extending Portable Emacs</a></li>
-<li><a href="#org459e489">6. About This Page</a></li>
+<li><a href="#org0a5cfa2">5. Extending Portable Emacs</a></li>
+<li><a href="#org1e8d2b7">6. About This Page</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org4936da1" class="outline-2">
-<h2 id="org4936da1"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-orgc0409c8" class="outline-2">
+<h2 id="orgc0409c8"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>.
@@ -238,8 +238,8 @@ I have created this page to document what I have learned in trying to create an 
 </div>
 </div>
 
-<div id="outline-container-orge5195ec" class="outline-2">
-<h2 id="orge5195ec"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
+<div id="outline-container-org9d01dc7" class="outline-2">
+<h2 id="org9d01dc7"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here are some reasons why I run Emacs as a portable application:
@@ -256,8 +256,8 @@ Here are some reasons why I run Emacs as a portable application:
 </div>
 </div>
 
-<div id="outline-container-org17b5b5c" class="outline-2">
-<h2 id="org17b5b5c"><span class="section-number-2">3.</span> Process</h2>
+<div id="outline-container-org6fcfd81" class="outline-2">
+<h2 id="org6fcfd81"><span class="section-number-2">3.</span> Process</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Here is the process I used to make Emacs run off of a USB flash drive:
@@ -276,14 +276,14 @@ Here is the process I used to make Emacs run off of a USB flash drive:
 <li><p>
 Set Emacs home directory to the flash drive label so files are not saved to the host system.
 </p>
-<pre class="example" id="orgeef5d5e">
+<pre class="example" id="org0cca5fc">
 rem Set the Emacs home directory to the drive label of the flash drive.
 set HOME=%~dp0
 </pre></li>
 <li><p>
 Create an environment variable to tell Emacs it was launched as a portable application. I do this so I can use the same Emacs configuration for all instances of Emacs whether I am running it as a portable application or not. This lets me include code in <code>init.el</code> to check if Emacs was launched as a portable application. If Emacs detects it was launched as a portable application, I can call on different functions to set up Emacs differently.
 </p>
-<pre class="example" id="org384dd44">
+<pre class="example" id="org99211d4">
 rem Set an evironment variable to tell Emacs that it is running portably
 set EMACS_PORTABLE="Y"
 </pre>
@@ -291,16 +291,16 @@ set EMACS_PORTABLE="Y"
 Now, in your <code>init.el</code> configuration file, you can use the following code to check if Emacs was called by executing <code>runemacs.bat</code> in any <code>if</code> or <code>when</code> statement:
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>eq <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>string= <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 <p>
-In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#orgb134313">4.1</a>.
+In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#org3ba4add">4.1</a>.
 </p></li>
 <li><p>
 Call the Emacs executable and launch it.
 </p>
-<pre class="example" id="org024d8c2">
+<pre class="example" id="org3913970">
 rem Find the Emacs executable and execute it.
 "%~dp0/emacs/bin/runemacs.exe" %
 </pre></li>
@@ -310,8 +310,8 @@ rem Find the Emacs executable and execute it.
 </div>
 </div>
 
-<div id="outline-container-org91cc693" class="outline-2">
-<h2 id="org91cc693"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
+<div id="outline-container-org9a28ad6" class="outline-2">
+<h2 id="org9a28ad6"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacos.
@@ -338,8 +338,8 @@ Rclone is single executable (rclone, or rclone.exe on Windows) that you can simp
 </ol>
 </div>
 
-<div id="outline-container-orgb134313" class="outline-3">
-<h3 id="orgb134313"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
+<div id="outline-container-org3ba4add" class="outline-3">
+<h3 id="org3ba4add"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 In order to avoid human error in this process, I have added functions to my <code>init.el</code> file to do this work for me automatically:
@@ -351,16 +351,16 @@ This function will create an Emacs Lisp function in Emacs to run rclone:
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
   <span style="color: #A875FF;">"Sync DEST with SOURCE using rclone.</span>
-<span style="color: #A875FF;">  The path to the rlcone executable can be set with RCLONE-PATH.</span>
-<span style="color: #A875FF;">  The rclone configuration can be set with RCLONE-CONFIG."</span>
+<span style="color: #A875FF;">The path to the rlcone executable can be set with RCLONE-PATH.</span>
+<span style="color: #A875FF;">The rclone configuration can be set with RCLONE-CONFIG."</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">interactive</span><span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span>message
-   <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span>rclone-path <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-path <span style="color: #7984D1;">"rclone"</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span>
-         <span style="color: #A875FF;">(</span>rclone-config <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-config nil<span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span>
-         <span style="color: #A875FF;">(</span>config-option
-          <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> rclone-config
-              <span style="color: #ff2afc;">(</span>concat <span style="color: #7984D1;">" --config "</span> rclone-config<span style="color: #ff2afc;">)</span>
-            <span style="color: #ff2afc;">(</span>nil<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span>rclone-path <span style="color: #A875FF;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-path <span style="color: #7984D1;">"rclone"</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
+        <span style="color: #df85ff;">(</span>rclone-config <span style="color: #A875FF;">(</span><span style="color: #ff2afc; font-weight: bold;">or</span> rclone-config nil<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
+        <span style="color: #df85ff;">(</span>config-option
+         <span style="color: #A875FF;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> rclone-config
+             <span style="color: #1ea8fc;">(</span>concat <span style="color: #7984D1;">" --config "</span> rclone-config<span style="color: #1ea8fc;">)</span>
+           <span style="color: #1ea8fc;">(</span>nil<span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>eshell-command
      <span style="color: #df85ff;">(</span>concat rclone-path
              config-option
              <span style="color: #7984D1;">" -vP sync "</span>
@@ -402,8 +402,8 @@ This will cause Emacs to sync my Org Mode agenda files and anything else in my D
 </div>
 </div>
 
-<div id="outline-container-org9468550" class="outline-2">
-<h2 id="org9468550"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
+<div id="outline-container-org0a5cfa2" class="outline-2">
+<h2 id="org0a5cfa2"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
@@ -447,13 +447,13 @@ In order to be able to make flowcharts and other diagrams with <a href="https://
 </pre>
 </div></dd>
 
-<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org91cc693">above</a>.</dd>
+<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org9a28ad6">above</a>.</dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-org459e489" class="outline-2">
-<h2 id="org459e489"><span class="section-number-2">6.</span> About This Page</h2>
+<div id="outline-container-org1e8d2b7" class="outline-2">
+<h2 id="org1e8d2b7"><span class="section-number-2">6.</span> About This Page</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 This page was written in Emacs Org Mode and exported to HTML using the Org Mode export engine. This wonder "ReadTheOrg" theme along with how to use it can be found <a href="https://github.com/fniessen/org-html-themes">at this link</a>.
@@ -464,7 +464,7 @@ This page was written in Emacs Org Mode and exported to HTML using the Org Mode 
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-04-17 Sun 22:21</p>
+<p class="date">Created: 2022-05-15 Sun 22:10</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

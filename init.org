@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-30 22:12:00 thomas>
+#+date: Time-stamp: <2022-05-15 22:10:23 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -75,7 +75,7 @@ When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTA
 
 #+name: portable_check
 #+begin_src emacs-lisp
-  (eq (getenv "EMACS_PORTABLE") "Y")
+  (string= (getenv "EMACS_PORTABLE") "Y")
  #+end_src
  
 ** Set Location of Portable Git
@@ -2338,18 +2338,18 @@ Something I am fiddling around with...
 The following function will execute the rclone command line tool:
 
 #+begin_src emacs-lisp :tangle yes
-    (defun rclone-sync (source dest &optional rclone-path rclone-config)
+  (defun rclone-sync (source dest &optional rclone-path rclone-config)
     "Sync DEST with SOURCE using rclone.
-    The path to the rlcone executable can be set with RCLONE-PATH.
-    The rclone configuration can be set with RCLONE-CONFIG."
+  The path to the rlcone executable can be set with RCLONE-PATH.
+  The rclone configuration can be set with RCLONE-CONFIG."
     (interactive)
-    (message
-     (let ((rclone-path (or rclone-path "rclone"))
-           (rclone-config (or rclone-config nil))
-           (config-option
-            (if rclone-config
-                (concat " --config " rclone-config)
-              (nil))))
+    (let ((rclone-path (or rclone-path "rclone"))
+          (rclone-config (or rclone-config nil))
+          (config-option
+           (if rclone-config
+               (concat " --config " rclone-config)
+             (nil))))
+      (eshell-command
        (concat rclone-path
                config-option
                " -vP sync "
