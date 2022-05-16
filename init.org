@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-15 22:10:23 Thomas>
+#+date: Time-stamp: <2022-05-15 22:25:02 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2394,8 +2394,8 @@ When running Emacs as a portable app, I want to pull down the latest versions of
                    rclone-path
                    rclone-conf)
       (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync rclone-remote
-                                                rclone-local
+                                   (rclone-sync rclone-local
+                                                rclone-remote
                                                 rclone-path
                                                 rclone-conf)))))
 #+end_src

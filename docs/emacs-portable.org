@@ -135,8 +135,8 @@ I then run rclone when Emacs starts up and add a hook to run when Emacs is close
                    rclone-path
                    rclone-conf)
       (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync rclone-remote
-                                                rclone-local
+                                   (rclone-sync rclone-local
+                                                rclone-remote
                                                 rclone-path
                                                 rclone-conf)))))
 #+end_src

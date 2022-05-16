@@ -1073,8 +1073,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
                  rclone-path
                  rclone-conf)
     (add-hook 'kill-emacs-hook (lambda ()
-                                 (rclone-sync rclone-remote
-                                              rclone-local
+                                 (rclone-sync rclone-local
+                                              rclone-remote
                                               rclone-path
                                               rclone-conf)))))
 

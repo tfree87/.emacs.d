@@ -4022,8 +4022,8 @@ When running Emacs as a portable app, I want to pull down the latest versions of
                  rclone-path
                  rclone-conf<span style="color: #a7da1e;">)</span>
     <span style="color: #a7da1e;">(</span>add-hook 'kill-emacs-hook <span style="color: #df85ff;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #A875FF;">()</span>
-                                 <span style="color: #A875FF;">(</span>rclone-sync rclone-remote
-                                              rclone-local
+                                 <span style="color: #A875FF;">(</span>rclone-sync rclone-local
+                                              rclone-remote
                                               rclone-path
                                               rclone-conf<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
