@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-15 22:25:02 Thomas>
+#+date: Time-stamp: <2022-05-20 19:08:28 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1629,6 +1629,23 @@ I like having tabs for all of my open buffers. [[https://github.com/ema2159/cent
 #+end_src
 
 This setting can always be toggled off if a "cleaner" Emacs view is desired.
+** Custom Faces
+
+To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
+
+#+begin_src emacs-lisp :tangle yes
+  (cond ((eq system-type 'windows-nt)
+         (custom-theme-set-faces
+          'user
+          '(variable-pitch ((t (:family "Times New Roman"))))
+          '(fixed-pitch ((t (:family "Source Code Pro"))))))
+        ((eq system-type 'gnu/linux)
+        (custom-theme-set-faces
+         'user
+         '(variable-pitch ((t (:family "Gentium Book Basic"))))
+         '(fixed-pitch ((t (:family "Source Code Pro")))))))
+#+end_src
+
 ** Display Time
 
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.

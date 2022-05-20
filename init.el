@@ -733,6 +733,17 @@
   :config
   (centaur-tabs-mode t))
 
+(cond ((eq system-type 'windows-nt)
+       (custom-theme-set-faces
+        'user
+        '(variable-pitch ((t (:family "Times New Roman"))))
+        '(fixed-pitch ((t (:family "Source Code Pro"))))))
+      ((eq system-type 'gnu/linux)
+      (custom-theme-set-faces
+       'user
+       '(variable-pitch ((t (:family "Gentium Book Basic"))))
+       '(fixed-pitch ((t (:family "Source Code Pro")))))))
+
 (use-package doom-themes
   :if window-system
   :straight t
