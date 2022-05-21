@@ -418,7 +418,9 @@
 
 (use-package sunrise-commander
   :defer t
-  :straight t)
+  :straight t
+  :config
+  (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
 
 (use-package tramp
   :straight (:type built-in)

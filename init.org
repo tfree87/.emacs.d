@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 18:56:56 thomas>
+#+date: Time-stamp: <2022-05-21 19:01:27 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -921,14 +921,30 @@ Dired colapse will show the full path in a dired buffer for paths that contain o
 
 *** Dired Open
 
-Dired Open adds adds different methods for opening files in Dired.
+Dired Open adds extra hooks to ~dired-find-file~ which search for alternative ways to open files in Dired.
 
-#+begin_src emacs-lisp :tangle yes
-(use-package dired-open
-  :straight t
-  :after dired
-  :config
-  (define-key dired-mode-map (kbd "o") #'dired-open-xdg))
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package dired-open
+    :straight t
+    :after dired
+    :config
+    <<dired_open_config>>)
+#+end_src
+
+**** xdg-open
+
+When opening files in Emacs such as media files, ~xdg-open~ can be used to open the preferred application for that particular file extension. Dired Open has a function ~dired-open-xdg~ that will open the file on the current line in Dired using ~xdg-open~. 
+
+The following line will bind the =o= key to ~dired-open-xdg~:
+
+#+begin_src emacs-lisp :noweb-ref dired_open_config
+  (define-key dired-mode-map (kbd "o") #'dired-open-xdg)
+#+end_src
+
+This can also be configured to work in Sunrise Commander using the ~sr-mode-map~:
+
+#+begin_src emacs-lisp :noweb-ref sr_config
+  (define-key sr-mode-map (kbd "o") #'dired-open-xdg)
 #+end_src
 
 ** Disc Usage
@@ -945,10 +961,12 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 
 [[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package sunrise-commander
     :defer t
-    :straight t)
+    :straight t
+    :config
+    <<sr_config>>)
 #+end_src
 
 ** Tramp
