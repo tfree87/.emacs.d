@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-04-30 22:12:00 thomas>
+#+date: Time-stamp: <2022-05-21 11:55:00 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -686,6 +686,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
   (use-package elpy
     :straight t
     :defer t
+    :disabled t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
     :custom
@@ -834,7 +835,6 @@ A better fix would be to use code formatters to prevent lines from getting too l
     :straight t
     :defer t
     :init
-    (whicher "git")
     (with-eval-after-load 'winum
       (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
     :custom
@@ -2121,6 +2121,10 @@ There is also a check for the X window system as calling GUI programs from EXWM 
            "wmctrl -m ; echo $?")
           -2 -1) "0"))
        (eq window-system 'x))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (whicher "wmctrl")
 #+end_src
 
 ** App Launcher

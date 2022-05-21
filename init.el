@@ -293,6 +293,7 @@
 (use-package elpy
   :straight t
   :defer t
+  :disabled t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :custom
@@ -350,7 +351,6 @@
   :straight t
   :defer t
   :init
-  (whicher "git")
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :custom
@@ -960,6 +960,8 @@
 (use-package yasnippet-snippets
   :straight t
   :defer t)
+
+(whicher "wmctrl")
 
 (use-package app-launcher
   :straight '(app-launcher :host github
