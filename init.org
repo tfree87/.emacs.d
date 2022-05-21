@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 19:01:27 thomas>
+#+date: Time-stamp: <2022-05-21 19:05:01 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -965,8 +965,18 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
   (use-package sunrise-commander
     :defer t
     :straight t
+    :custom
+    <<sr_custom>>
     :config
     <<sr_config>>)
+#+end_src
+
+*** Do Not Lock Windows
+
+Sunrise Commander locks the windows vertically by default. The following line will customize this so that the panes can be resized if wanted.
+
+#+begin_src emacs-lisp :noweb-ref sr_custom
+  (sr-windows-locked nil)
 #+end_src
 
 ** Tramp
