@@ -1084,7 +1084,7 @@
 
 ;; Custom Function Definitions
 
-;; (load-file "~/.emacs.d/elisp/oh-my-esh.el")
+;; (require "~/.emacs.d/elisp/oh-my-esh.el")
 
 (defun rclone-sync (source dest &optional rclone-path rclone-config)
   "Sync DEST with SOURCE using rclone.

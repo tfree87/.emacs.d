@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 19:17:16 thomas>
+#+date: Time-stamp: <2022-05-21 19:18:59 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2502,7 +2502,7 @@ This section contains custom functions that I have either created myself or borr
 Something I am fiddling around with...
 
 #+begin_src emacs-lisp :tangle yes
-  ;; (load-file "~/.emacs.d/elisp/oh-my-esh.el")
+  ;; (require "~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
 
 ** Rclone Sync
