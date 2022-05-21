@@ -17,7 +17,7 @@
 
 (let ((file-name-handler-alist nil))
 
-(when (eq (getenv "EMACS_PORTABLE") "Y")
+(when (string= (getenv "EMACS_PORTABLE") "Y")
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
 ;; Set the location of variables set using Emacs customize interface
@@ -697,23 +697,23 @@
                     (buffer-file-name))))))
 
 (use-package all-the-icons
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :defer t
   :straight t)
 
 (use-package all-the-icons-dired
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
-  :if (not (eq (getenv "EMACS_PORTABLE") "Y"))
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
   :defer 3
   :config
@@ -732,6 +732,27 @@
   (centaur-tabs-style "chamfer")
   :config
   (centaur-tabs-mode t))
+
+(custom-theme-set-faces
+ 'user
+ '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+
+(cond ((eq system-type 'windows-nt)
+       (custom-theme-set-faces
+        'user
+        '(variable-pitch ((t (:family "Times New Roman"))))
+        '(fixed-pitch ((t (:family "Source Code Pro"))))))
+      ((eq system-type 'gnu/linux)
+      (custom-theme-set-faces
+       'user
+       '(variable-pitch ((t (:family "Gentium Book Basic"))))
+       '(fixed-pitch ((t (:family "Source Code Pro")))))))
+
+(custom-theme-set-faces
+ 'user
+ '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
+ '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
+ '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
 
 (use-package doom-themes
   :if window-system
@@ -1043,7 +1064,7 @@
 
 ;; Start an Emacs server
 
-(when (not (eq (getenv "EMACS_PORTABLE") "Y"))
+(when (not (string= (getenv "EMACS_PORTABLE") "Y"))
   (server-start))
 
 ;; Custom Function Definitions
@@ -1051,23 +1072,23 @@
 ;; (load-file "~/.emacs.d/elisp/oh-my-esh.el")
 
 (defun rclone-sync (source dest &optional rclone-path rclone-config)
-"Sync DEST with SOURCE using rclone.
+  "Sync DEST with SOURCE using rclone.
 The path to the rlcone executable can be set with RCLONE-PATH.
 The rclone configuration can be set with RCLONE-CONFIG."
-(interactive)
-(message
- (let ((rclone-path (or rclone-path "rclone"))
-       (rclone-config (or rclone-config nil))
-       (config-option
-        (if rclone-config
-            (concat " --config " rclone-config)
-          (nil))))
-   (concat rclone-path
-           config-option
-           " -vP sync "
-           source
-           " "
-           dest))))
+  (interactive)
+  (let ((rclone-path (or rclone-path "rclone"))
+        (rclone-config (or rclone-config nil))
+        (config-option
+         (if rclone-config
+             (concat " --config " rclone-config)
+           (nil))))
+    (eshell-command
+     (concat rclone-path
+             config-option
+             " -vP sync "
+             source
+             " "
+             dest))))
 
 (whicher "sudo")
 (defun sudo-find-file (file)
@@ -1084,7 +1105,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 ;; Sync Dropbox containing org agenda files on load and close
 
-(when (eq (getenv "EMACS_PORTABLE") "Y")
+(when (string= (getenv "EMACS_PORTABLE") "Y")
   (let ((rclone-remote "dropbox:")
         (rclone-local "~/Dropbox")
         (rclone-path  "~/rclone/rclone.exe")
@@ -1094,8 +1115,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
                  rclone-path
                  rclone-conf)
     (add-hook 'kill-emacs-hook (lambda ()
-                                 (rclone-sync rclone-remote
-                                              rclone-local
+                                 (rclone-sync rclone-local
+                                              rclone-remote
                                               rclone-path
                                               rclone-conf)))))
 

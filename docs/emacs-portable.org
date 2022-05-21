@@ -72,7 +72,7 @@ Here is the process I used to make Emacs run off of a USB flash drive:
      #+end_example
      Now, in your ~init.el~ configuration file, you can use the following code to check if Emacs was called by executing ~runemacs.bat~ in any ~if~ or ~when~ statement:
      #+begin_src emacs-lisp
-       (eq (getenv "EMACS_PORTABLE") "Y")
+       (string= (getenv "EMACS_PORTABLE") "Y")
      #+end_src
      In Emacs, I create my ~init.el~ file from Org Mode in a file called ~init.org~. I use [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb syntax]] to call it with ~<<portable_check>>~ so I can reuse the code easily. For an example see ~<<portable_check>>~ in [[Syncing Org Files Automatically]].
    - Call the Emacs executable and launch it.
@@ -105,16 +105,16 @@ This function will create an Emacs Lisp function in Emacs to run rclone:
 #+begin_src emacs-lisp
   (defun rclone-sync (source dest &optional rclone-path rclone-config)
     "Sync DEST with SOURCE using rclone.
-    The path to the rlcone executable can be set with RCLONE-PATH.
-    The rclone configuration can be set with RCLONE-CONFIG."
+  The path to the rlcone executable can be set with RCLONE-PATH.
+  The rclone configuration can be set with RCLONE-CONFIG."
     (interactive)
-    (message
-     (let ((rclone-path (or rclone-path "rclone"))
-           (rclone-config (or rclone-config nil))
-           (config-option
-            (if rclone-config
-                (concat " --config " rclone-config)
-              (nil))))
+    (let ((rclone-path (or rclone-path "rclone"))
+          (rclone-config (or rclone-config nil))
+          (config-option
+           (if rclone-config
+               (concat " --config " rclone-config)
+             (nil))))
+      (eshell-command
        (concat rclone-path
                config-option
                " -vP sync "
@@ -135,8 +135,8 @@ I then run rclone when Emacs starts up and add a hook to run when Emacs is close
                    rclone-path
                    rclone-conf)
       (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync rclone-remote
-                                                rclone-local
+                                   (rclone-sync rclone-local
+                                                rclone-remote
                                                 rclone-path
                                                 rclone-conf)))))
 #+end_src

@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 13:53:12 thomas>
+#+date: Time-stamp: <2022-05-21 18:38:25 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -75,7 +75,7 @@ When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTA
 
 #+name: portable_check
 #+begin_src emacs-lisp
-  (eq (getenv "EMACS_PORTABLE") "Y")
+  (string= (getenv "EMACS_PORTABLE") "Y")
  #+end_src
  
 ** Set Location of Portable Git
@@ -1629,6 +1629,60 @@ I like having tabs for all of my open buffers. [[https://github.com/ema2159/cent
 #+end_src
 
 This setting can always be toggled off if a "cleaner" Emacs view is desired.
+
+** Custom Faces
+
+This section contains custom set faces.
+
+*** Change Calfw Grid Color
+
+When using Calfw, the default grid color does not show very well when using the Droom theme ~doom-outrun-electric~. The following will change it to a color that will be easier to see.
+
+#+begin_src emacs-lisp
+  (custom-theme-set-faces
+   'user
+    '(cfw:face-grid ((t (:foreground "magenta")))))
+#+end_src
+
+*** Default Font
+
+Change the default font to use Source Code Pro if it is available.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+#+end_src
+
+*** Fixed and Variable Pitch Fonts
+
+To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
+
+#+begin_src emacs-lisp :tangle yes
+  (cond ((eq system-type 'windows-nt)
+         (custom-theme-set-faces
+          'user
+          '(variable-pitch ((t (:family "Times New Roman"))))
+          '(fixed-pitch ((t (:family "Source Code Pro"))))))
+        ((eq system-type 'gnu/linux)
+        (custom-theme-set-faces
+         'user
+         '(variable-pitch ((t (:family "Gentium Book Basic"))))
+         '(fixed-pitch ((t (:family "Source Code Pro")))))))
+#+end_src
+
+*** Sunrise Comnmander Faces
+
+Some of the faces in Sunrise Commander do not appear well in Doom themes. The following configuration changes these fonts to look better with the ~doom-outrun-electric~ theme.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
+   '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
+   '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
+#+end_src
+
 ** Display Time
 
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
@@ -2350,7 +2404,6 @@ The desktop environment package makes it so that some of the features that are i
    #+begin_src emacs-lisp :noweb-ref de_config
      (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
    #+end_src
-
    
 * Emacs Server
 
@@ -2386,18 +2439,18 @@ Something I am fiddling around with...
 The following function will execute the rclone command line tool:
 
 #+begin_src emacs-lisp :tangle yes
-    (defun rclone-sync (source dest &optional rclone-path rclone-config)
+  (defun rclone-sync (source dest &optional rclone-path rclone-config)
     "Sync DEST with SOURCE using rclone.
-    The path to the rlcone executable can be set with RCLONE-PATH.
-    The rclone configuration can be set with RCLONE-CONFIG."
+  The path to the rlcone executable can be set with RCLONE-PATH.
+  The rclone configuration can be set with RCLONE-CONFIG."
     (interactive)
-    (message
-     (let ((rclone-path (or rclone-path "rclone"))
-           (rclone-config (or rclone-config nil))
-           (config-option
-            (if rclone-config
-                (concat " --config " rclone-config)
-              (nil))))
+    (let ((rclone-path (or rclone-path "rclone"))
+          (rclone-config (or rclone-config nil))
+          (config-option
+           (if rclone-config
+               (concat " --config " rclone-config)
+             (nil))))
+      (eshell-command
        (concat rclone-path
                config-option
                " -vP sync "
@@ -2442,8 +2495,8 @@ When running Emacs as a portable app, I want to pull down the latest versions of
                    rclone-path
                    rclone-conf)
       (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync rclone-remote
-                                                rclone-local
+                                   (rclone-sync rclone-local
+                                                rclone-remote
                                                 rclone-path
                                                 rclone-conf)))))
 #+end_src
