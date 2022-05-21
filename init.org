@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 19:05:01 thomas>
+#+date: Time-stamp: <2022-05-21 19:13:27 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -863,10 +863,6 @@ A better fix would be to use code formatters to prevent lines from getting too l
           ("C-x t B"   . treemacs-bookmark)
           ("C-x t C-t" . treemacs-find-file)
           ("C-x t M-t" . treemacs-find-tag)))
-
-  (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :straight t)
 
   (use-package treemacs-all-the-icons
     :after treemacs
