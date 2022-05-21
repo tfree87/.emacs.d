@@ -76,6 +76,7 @@
 
 (use-package emacs
   :custom
+  (bidi-paragraph-direction 'left-to-right)
   (desktop-save-mode t)
   (delete-by-moving-to-trash t)
   (version-control t)
@@ -94,6 +95,8 @@
   (display-time-and-date t)
   :config
   (add-hook 'before-save-hook 'time-stamp)  
+  (if (version<= "27.1" emacs-version)
+      (setq bidi-inhibit-bpa t))
   (fset 'yes-or-no-p 'y-or-n-p)
   (advice-add #'completing-read-multiple
               :override #'consult-completing-read-multiple)

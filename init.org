@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 19:13:27 thomas>
+#+date: Time-stamp: <2022-05-21 19:17:16 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -234,6 +234,23 @@ Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be foun
   (add-hook 'before-save-hook 'time-stamp)  
 #+end_src
 
+***  Bidirectional Editing
+
+Emacs supports bidirectional editing. This is rarely used feature for many and can actually result in slower performance. To improve performance if bidirectional editing it not used, the following can be set:
+
+1. Tell Emacs that text should be read from left to right.
+
+   #+begin_src emacs-lisp :noweb-ref emacs_custom
+     (bidi-paragraph-direction 'left-to-right)
+   #+end_src
+
+2. Turn off bidrectional editing mode.
+
+   #+begin_src emacs-lisp :noweb-ref emacs_config
+     (if (version<= "27.1" emacs-version)
+         (setq bidi-inhibit-bpa t))
+    #+end_src
+    
 *** Desktop Save Mode
 
 The following option will cause Emacs to always save the state of Emacs when it was closed. Local buffers, tabs in ~tab-bar-mode~, and window arrangements are all saved if possible. Turning this on makes it much simpler to continue working on the same projects when Emacs is closed and then opened again.
