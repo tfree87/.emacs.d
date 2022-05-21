@@ -406,6 +406,12 @@
   :hook
   (dired-mode . dired-collapse-mode))
 
+(use-package dired-open
+  :straight t
+  :after dired
+  :config
+  (define-key dired-mode-map (kbd "o") #'dired-open-xdg))
+
 (use-package disk-usage
   :straight t
   :defer t)

@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 18:53:38 thomas>
+#+date: Time-stamp: <2022-05-21 18:56:56 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -917,6 +917,18 @@ Dired colapse will show the full path in a dired buffer for paths that contain o
     :after dired
     :hook
     (dired-mode . dired-collapse-mode))
+#+end_src
+
+*** Dired Open
+
+Dired Open adds adds different methods for opening files in Dired.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package dired-open
+  :straight t
+  :after dired
+  :config
+  (define-key dired-mode-map (kbd "o") #'dired-open-xdg))
 #+end_src
 
 ** Disc Usage
