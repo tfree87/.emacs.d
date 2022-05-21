@@ -1022,6 +1022,25 @@
     (start-process-shell-command "pasystray" nil "pasystray"))    
   (exwm-enable))
 
+(use-package desktop-environment
+  :straight t
+  :after exwm
+  :init
+  (mapc #'whicher '("amixer"
+                    "brightnessctl"
+                    "numlockx"
+                    "scrot"
+                    "slock"
+                    "upower"
+                    "TLP"
+                    "playerctl"))
+  :after exwm
+  :config
+  (desktop-environment-mode)
+  (shell-command "pulseaudio --kill ; pulseaudio --start")
+  (shell-command "numlockx on")
+  (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1"))
+
 ;; Start an Emacs server
 
 (when (not (eq (getenv "EMACS_PORTABLE") "Y"))

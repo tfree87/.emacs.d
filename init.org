@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 11:55:00 thomas>
+#+date: Time-stamp: <2022-05-21 13:53:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2308,6 +2308,50 @@ Use
     (start-process-shell-command "pasystray" nil "pasystray"))
 #+end_src
 
+** Deskop Environment
+
+The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package desktop-environment
+    :straight t
+    :after exwm
+    :init
+    (mapc #'whicher '("amixer"
+                      "brightnessctl"
+                      "numlockx"
+                      "scrot"
+                      "slock"
+                      "upower"
+                      "TLP"
+                      "playerctl"))
+    :after exwm
+    :config
+    (desktop-environment-mode)
+    <<de_config>>)
+#+end_src
+
+*** Set Up Desktop Environment
+
+1. To get sound in EXWM, pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in EXWM if there are multiple desktop enviroments installed on the system.
+
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "pulseaudio --kill ; pulseaudio --start")
+   #+end_src
+
+2. If the numpad is to be used for number, ~numlockx~ must be installed and turned on.
+
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "numlockx on")
+   #+end_src
+
+3. If the system is a laptop, tunring on tap to click can be activated.
+
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
+   #+end_src
+
+   
 * Emacs Server
 
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
