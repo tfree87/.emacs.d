@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-20 19:08:28 Thomas>
+#+date: Time-stamp: <2022-05-20 20:08:28 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1629,7 +1629,33 @@ I like having tabs for all of my open buffers. [[https://github.com/ema2159/cent
 #+end_src
 
 This setting can always be toggled off if a "cleaner" Emacs view is desired.
+
 ** Custom Faces
+
+This section contains custom set faces.
+
+*** Change Calfw Grid Color
+
+When using Calfw, the default grid color does not show very well when using the Droom theme ~doom-outrun-electric~. The following will change it to a color that will be easier to see.
+
+#+begin_src emacs-lisp
+  (custom-theme-set-faces
+   'user
+    '(cfw:face-grid ((t (:foreground "magenta")))))
+#+end_src
+
+
+*** Default Font
+
+Change the default font to use Source Code Pro if it is available.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+#+end_src
+
+*** Fixed and Variable Pitch Fonts
 
 To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
 
@@ -1644,6 +1670,18 @@ To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fi
          'user
          '(variable-pitch ((t (:family "Gentium Book Basic"))))
          '(fixed-pitch ((t (:family "Source Code Pro")))))))
+#+end_src
+
+*** Sunrise Comnmander Faces
+
+Some of the faces in Sunrise Commander do not appear well in Doom themes. The following configuration changes these fonts to look better with the ~doom-outrun-electric~ theme.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
+   '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
+   '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
 #+end_src
 
 ** Display Time

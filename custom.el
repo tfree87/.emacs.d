@@ -20,9 +20,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal))))
- '(cfw:face-grid ((t (:foreground "magenta"))))
- '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
- '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
- '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
-
+ )

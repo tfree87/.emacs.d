@@ -733,6 +733,10 @@
   :config
   (centaur-tabs-mode t))
 
+(custom-theme-set-faces
+ 'user
+ '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+
 (cond ((eq system-type 'windows-nt)
        (custom-theme-set-faces
         'user
@@ -743,6 +747,12 @@
        'user
        '(variable-pitch ((t (:family "Gentium Book Basic"))))
        '(fixed-pitch ((t (:family "Source Code Pro")))))))
+
+(custom-theme-set-faces
+ 'user
+ '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
+ '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
+ '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
 
 (use-package doom-themes
   :if window-system
