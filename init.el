@@ -400,6 +400,12 @@
   :custom
   (dired-dwim-target t))
 
+(use-package dired-collapse
+  :straight t
+  :after dired
+  :hook
+  (dired-mode . dired-collapse-mode))
+
 (use-package disk-usage
   :straight t
   :defer t)

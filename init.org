@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 18:38:25 thomas>
+#+date: Time-stamp: <2022-05-21 18:53:38 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -880,6 +880,8 @@ A better fix would be to use code formatters to prevent lines from getting too l
 
 * File Browsing
 
+This section contains packages and customizations that are used to improve the browing of system files and directories in Emacs.
+
 ** Dired
 
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
@@ -901,6 +903,22 @@ This will cause emacs to default to moving/copying/renaming files from the direc
    (dired-dwim-target t)
  #+end_src
  
+** Dired Hacks
+
+Dired Hacks is a series of modifications to add features to Dired.
+
+*** Dird Collapse
+
+Dired colapse will show the full path in a dired buffer for paths that contain only a single file.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dired-collapse
+    :straight t
+    :after dired
+    :hook
+    (dired-mode . dired-collapse-mode))
+#+end_src
+
 ** Disc Usage
 
 Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
