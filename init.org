@@ -1,8 +1,8 @@
-: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 07:12:14 thomas>
+#+date: Time-stamp: <2022-05-24 18:12:54 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -699,35 +699,6 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     (python-mode . eglot-ensure))
 #+end_src
 
-** Elpy :python:disabled:
-
-[[https://github.com/jorgenschaefer/elpy][Elpy]] adds powerful features for Python progamming in Emacs.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package elpy
-    :straight t
-    :defer t
-    :disabled t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
-    :custom
-    (elpy-rpc-python-command (whicher "python3"))
-    (python-shell-interpreter (whicher "ipython3"))
-    (python-shell-interpreter-args "-i --simple-prompt")
-    :config
-    <<elpy_config>>) 
-#+end_src
-
-*** Use Flycheck for Python Syntax
-
-Check python syntax while writing with flycheck
-
-#+begin_src emacs-lisp :noweb-ref elpy_config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-#+end_src
-
 ** Flycheck :python:
 
 [[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
@@ -755,21 +726,6 @@ Indenting with spaces rather than tabs is genrally recommended when working with
 
 #+begin_src emacs-lisp :noweb-ref emacs_config
 (setq-default indent-tabs-mode nil)
-#+end_src
-
-** LSP Mode :testing:disabled:
-
-I am considering replacing elpy with LSP Mode. I will try this out for now but at the moment is seems slow.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package lsp-mode
-    :disabled t
-    :hook
-    ((python-mode . lsp)))
-
-  (use-package lsp-ui
-    :disabled t
-    :commands lsp-ui-mode)
 #+end_src
 
 ** Minimap
@@ -2597,19 +2553,11 @@ When running Emacs as a portable app, I want to pull down the latest versions of
   ;; Sync Dropbox containing org agenda files on load and close
 
   (when <<portable_check>>
-    (let ((rclone-remote "dropbox:")
-          (rclone-local "~/Dropbox")
-          (rclone-path  "~/rclone/rclone.exe")
-          (rclone-conf "~/rclone/rclone.conf"))
-      (rclone-sync rclone-remote
-                   rclone-local
-                   rclone-path
-                   rclone-conf)
-      (add-hook 'kill-emacs-hook (lambda ()
-                                   (rclone-sync rclone-local
-                                                rclone-remote
-                                                rclone-path
-                                                rclone-conf)))))
+    (setq rclone-path "~/rclone/rclone.conf")
+    (rclone-run-remote-to-local "sync" "~/Dropbox" "dropbox:")
+    (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"
+                                                           "~/Dropbox"
+                                                           "dropbox:")))
 #+end_src
 
 * Performance Optimization End

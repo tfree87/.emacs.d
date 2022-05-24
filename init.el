@@ -295,37 +295,14 @@
   :hook
   (python-mode . eglot-ensure))
 
-(use-package elpy
-  :straight t
-  :defer t
-  :disabled t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :custom
-  (elpy-rpc-python-command (whicher "python3"))
-  (python-shell-interpreter (whicher "ipython3"))
-  (python-shell-interpreter-args "-i --simple-prompt")
-  :config
-  (when (load "flycheck" t t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode)))
-
 (use-package flycheck
   :straight t
-  :defer t)
+  :hook
+  (prog-mode . flycheck-mode))
 
 (use-package go-mode
   :straight t
   :defer t)
-
-(use-package lsp-mode
-  :disabled t
-  :hook
-  ((python-mode . lsp)))
-
-(use-package lsp-ui
-  :disabled t
-  :commands lsp-ui-mode)
 
 (use-package minimap
   :straight t
@@ -1142,19 +1119,11 @@ The rclone configuration can be set with RCLONE-CONFIG."
 ;; Sync Dropbox containing org agenda files on load and close
 
 (when (string= (getenv "EMACS_PORTABLE") "Y")
-  (let ((rclone-remote "dropbox:")
-        (rclone-local "~/Dropbox")
-        (rclone-path  "~/rclone/rclone.exe")
-        (rclone-conf "~/rclone/rclone.conf"))
-    (rclone-sync rclone-remote
-                 rclone-local
-                 rclone-path
-                 rclone-conf)
-    (add-hook 'kill-emacs-hook (lambda ()
-                                 (rclone-sync rclone-local
-                                              rclone-remote
-                                              rclone-path
-                                              rclone-conf)))))
+  (setq rclone-path "~/rclone/rclone.conf")
+  (rclone-run-remote-to-local "sync" "~/Dropbox" "dropbox:")
+  (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"
+                                                         "~/Dropbox"
+                                                         "dropbox:")))
 
 (setq gc-cons-threshold 800000)
 )
