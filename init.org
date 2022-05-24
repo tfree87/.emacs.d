@@ -1,8 +1,8 @@
-# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-21 19:21:04 thomas>
+#+date: Time-stamp: <2022-05-24 07:12:14 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -226,6 +226,13 @@ The code below collects customizations for Emacs built-in components.
 
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 
+*** Ring Bell Function
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (ring-bell-function #'ignore)
+  (visible-bell t)
+#+end_src
+
 *** Automatic Time Stamps
 
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
@@ -306,9 +313,6 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 #+end_src
 
 * Auto-completion
-
-
-
 ** Cape
 
  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
@@ -731,7 +735,8 @@ Check python syntax while writing with flycheck
 #+begin_src emacs-lisp :tangle yes
   (use-package flycheck
     :straight t
-    :defer t)
+    :hook
+    (prog-mode . flycheck-mode))
 #+end_src
 
 ** Go
@@ -1529,6 +1534,7 @@ Since [[https://pandoc.org/][Pandoc]] can be installed on both Linux and in Wind
 #+begin_src emacs-lisp :noweb-ref markdown_init
   (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
 #+end_src
+
 ** PDF Tools
 
 [[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
@@ -2534,7 +2540,14 @@ Something I am fiddling around with...
 
 ** Rclone Sync
 
-The following function will execute the rclone command line tool:
+#+begin_src emacs-lisp :tangle yes
+  (use-package rclone-tools
+    :straight (rclone-tools :host github
+                            :repo "tfree87/emacs-rclone-tools"
+                            :branch "main"))
+#+end_src
+
+The following function will execute the rclone command line tool
 
 #+begin_src emacs-lisp :tangle yes
   (defun rclone-sync (source dest &optional rclone-path rclone-config)

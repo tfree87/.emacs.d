@@ -76,6 +76,8 @@
 
 (use-package emacs
   :custom
+  (ring-bell-function #'ignore)
+  (visible-bell t)
   (bidi-paragraph-direction 'left-to-right)
   (desktop-save-mode t)
   (delete-by-moving-to-trash t)
@@ -1099,6 +1101,11 @@
 ;; Custom Function Definitions
 
 ;; (require "~/.emacs.d/elisp/oh-my-esh.el")
+
+(use-package rclone-tools
+  :straight (rclone-tools :host github
+                          :repo "tfree87/emacs-rclone-tools"
+                          :branch "main"))
 
 (defun rclone-sync (source dest &optional rclone-path rclone-config)
   "Sync DEST with SOURCE using rclone.
