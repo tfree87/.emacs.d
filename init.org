@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 18:12:54 thomas>
+#+date: Time-stamp: <2022-05-24 18:21:02 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -852,7 +852,7 @@ A better fix would be to use code formatters to prevent lines from getting too l
     :straight t)
 #+end_src
 
-* File Browsing
+* File Management
 
 This section contains packages and customizations that are used to improve the browing of system files and directories in Emacs.
 
@@ -929,6 +929,41 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
   (use-package disk-usage
     :straight t
     :defer t)
+#+end_src
+
+** Rclone Tools
+
+Rclone tools is a package that used the Emacs ~completing-read~ function to simplify running the ~rclone~ program from within Emacs and make it simpler to create scripts using Emacs lisp.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rclone-tools
+    :straight (rclone-tools :host github
+                            :repo "tfree87/emacs-rclone-tools"
+                            :branch "main")
+    :init (whicher "rclone"))
+#+end_src
+
+The following function will execute the rclone command line tool
+
+#+begin_src emacs-lisp :tangle yes
+  (defun rclone-sync (source dest &optional rclone-path rclone-config)
+    "Sync DEST with SOURCE using rclone.
+  The path to the rlcone executable can be set with RCLONE-PATH.
+  The rclone configuration can be set with RCLONE-CONFIG."
+    (interactive)
+    (let ((rclone-path (or rclone-path "rclone"))
+          (rclone-config (or rclone-config nil))
+          (config-option
+           (if rclone-config
+               (concat " --config " rclone-config)
+             (nil))))
+      (eshell-command
+       (concat rclone-path
+               config-option
+               " -vP sync "
+               source
+               " "
+               dest))))
 #+end_src
 
 ** Sunrise Commander
@@ -2492,38 +2527,6 @@ Something I am fiddling around with...
 
 #+begin_src emacs-lisp :tangle yes
   ;; (require "~/.emacs.d/elisp/oh-my-esh.el")
-#+end_src
-
-** Rclone Sync
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package rclone-tools
-    :straight (rclone-tools :host github
-                            :repo "tfree87/emacs-rclone-tools"
-                            :branch "main"))
-#+end_src
-
-The following function will execute the rclone command line tool
-
-#+begin_src emacs-lisp :tangle yes
-  (defun rclone-sync (source dest &optional rclone-path rclone-config)
-    "Sync DEST with SOURCE using rclone.
-  The path to the rlcone executable can be set with RCLONE-PATH.
-  The rclone configuration can be set with RCLONE-CONFIG."
-    (interactive)
-    (let ((rclone-path (or rclone-path "rclone"))
-          (rclone-config (or rclone-config nil))
-          (config-option
-           (if rclone-config
-               (concat " --config " rclone-config)
-             (nil))))
-      (eshell-command
-       (concat rclone-path
-               config-option
-               " -vP sync "
-               source
-               " "
-               dest))))
 #+end_src
 
 ** Sudo Find File
