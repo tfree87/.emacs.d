@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 18:21:02 thomas>
+#+date: Time-stamp: <2022-05-24 19:11:38 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1633,6 +1633,18 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
     ("M-s-`" . eshell-toggle))
 #+end_src
 
+** Oh My Esh
+
+Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package oh-my-esh
+    :straight (oh-my-esh :repo "tfree87/ohmyesh"
+                         :branch "main"
+                         :host github)
+    :after eshell)
+#+end_src
+
 ** PowerShell :Windows:
 
 [[https://github.com/jschaf/powershell.el][Powershell.el]] creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
@@ -2519,14 +2531,6 @@ This section contains custom functions that I have either created myself or borr
 
 #+begin_src emacs-lisp :tangle yes
 ;; Custom Function Definitions
-#+end_src
-
-** Oh My Eshell
-
-Something I am fiddling around with...
-
-#+begin_src emacs-lisp :tangle yes
-  ;; (require "~/.emacs.d/elisp/oh-my-esh.el")
 #+end_src
 
 ** Sudo Find File

@@ -713,6 +713,12 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :bind
   ("M-s-`" . eshell-toggle))
 
+(use-package oh-my-esh
+  :straight (oh-my-esh :repo "tfree87/ohmyesh"
+                       :branch "main"
+                       :host github)
+  :after eshell)
+
 (use-package powershell
   :if (eq system-type 'windows-nt)
   :defer t
@@ -1101,8 +1107,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (server-start))
 
 ;; Custom Function Definitions
-
-;; (require "~/.emacs.d/elisp/oh-my-esh.el")
 
 (whicher "sudo")
 (defun sudo-find-file (file)
