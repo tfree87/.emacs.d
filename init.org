@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 21:14:06 thomas>
+#+date: Time-stamp: <2022-05-24 21:20:53 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1995,7 +1995,7 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
 
 ** Docker
 
-[[https://github.com/Silex/docker.el][Docker mode]] is an interface in Emacs to manage Docker containers.
+[[https://github.com/Silex/docker.el][Docker Mode]] is an interface in Emacs to manage Docker containers.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
@@ -2327,7 +2327,7 @@ Use App Launcher to launch Linux applications in EXWM. App Launcher will scan fo
 
 ** EXWM
 
-To use EXWM, the EXWM package can be pulled from using ~straight.el~.
+EXWM stands for the "Emacs X11 Window Manager". With this package, Emacs can run X11 programs in windows and frames and controlled with Emacs window commands. To use EXWM, the EXWM package can be pulled from using ~straight.el~.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
@@ -2466,8 +2466,7 @@ Make sure to turn on the system tray in EXWM so that there is access to tray ico
 To get Dropbox running with the Dropbox applet, start Dropbox after EXWM has loaded.
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
-  (whicher "dropbox")
-  (when (executable-find "dropbox")
+  (when (executable-find (whicher "dropbox"))
     (start-process "dropbox" nil "dropbox" "start"))
 
 #+end_src
@@ -2484,7 +2483,7 @@ To enable a wifi applet in the ~exwm-system-tray~, Emacs can execute the ~nm-app
 
 **** Pasystray
 
-Use 
+Use ~pasystray~ for controlling volume graphically in EXWM.
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
   (whicher "pasystray")
@@ -2492,7 +2491,7 @@ Use
     (start-process-shell-command "pasystray" nil "pasystray"))
 #+end_src
 
-** Deskop Environment
+** Desktop Environment
 
 The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
