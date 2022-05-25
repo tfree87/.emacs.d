@@ -752,9 +752,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
             (lambda ()
               (set (make-local-variable 'compile-command)
                    (format
-                    (whicher
                      "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
-                    (buffer-file-name))))))
+                    (buffer-file-name)))))
 
 (use-package all-the-icons
   :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
@@ -1043,8 +1042,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :straight t
   :defer t)
 
-(whicher "wmctrl")
-
 (use-package app-launcher
   :straight '(app-launcher :host github
                            :repo "SebastienWae/app-launcher"
@@ -1058,7 +1055,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
         (string=
          (substring
           (shell-command-to-string
-           "wmctrl -m ; echo $?")
+           (whicher "wmctrl -m ; echo $?"))
           -2 -1) "0"))
        (eq window-system 'x))
   :custom

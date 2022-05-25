@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 21:00:29 thomas>
+#+date: Time-stamp: <2022-05-24 21:07:58 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1689,9 +1689,8 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
               (lambda ()
                 (set (make-local-variable 'compile-command)
                      (format
-                      (whicher
                        "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
-                      (buffer-file-name))))))
+                      (buffer-file-name)))))
 #+end_src
 
 * Theme and Appearance
@@ -2307,13 +2306,9 @@ There is also a check for the X window system as calling GUI programs from EXWM 
         (string=
          (substring
           (shell-command-to-string
-           "wmctrl -m ; echo $?")
+           (whicher "wmctrl -m ; echo $?"))
           -2 -1) "0"))
        (eq window-system 'x))
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
-  (whicher "wmctrl")
 #+end_src
 
 ** App Launcher
