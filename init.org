@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-05-24 20:49:13 thomas>
+#+date: Time-stamp: <2022-05-24 21:00:29 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -920,13 +920,21 @@ Dired Open adds extra hooks to ~dired-find-file~ which search for alternative wa
   (use-package dired-open
     :straight t
     :after dired
+    :init
+    <<dired_open_init>>
     :config
     <<dired_open_config>>)
 #+end_src
 
 **** xdg-open
 
-When opening files in Emacs such as media files, ~xdg-open~ can be used to open the preferred application for that particular file extension. Dired Open has a function ~dired-open-xdg~ that will open the file on the current line in Dired using ~xdg-open~. 
+When opening files in Emacs such as media files, ~xdg-open~ can be used to open the preferred application for that particular file extension. Dired Open has a function ~dired-open-xdg~ that will open the file on the current line in Dired using ~xdg-open~.
+
+First, ~whicher~ can be used to see if ~xdg-open~ is installed on the system.
+
+#+begin_src emacs-lisp :noweb-ref dired_open_init
+  (whicher "xdg-open")
+#+end_src
 
 The following line will bind the =o= key to ~dired-open-xdg~:
 

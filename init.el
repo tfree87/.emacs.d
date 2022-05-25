@@ -406,6 +406,8 @@
 (use-package dired-open
   :straight t
   :after dired
+  :init
+  (whicher "xdg-open")
   :config
   (define-key dired-mode-map (kbd "o") #'dired-open-xdg))
 
