@@ -734,10 +734,10 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :bind
   ("M-s-`" . eshell-toggle))
 
-(use-package oh-my-esh
-  :straight (oh-my-esh :repo "tfree87/OhMyEshell"
-                       :branch "main"
-                       :host github)
+(use-package oh-my-eshell
+  :straight (oh-my-eshell :repo "tfree87/OhMyEshell"
+                          :branch "main"
+                          :host github)
   :after eshell)
 
 (use-package powershell
