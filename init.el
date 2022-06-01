@@ -786,7 +786,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
       ((eq system-type 'gnu/linux)
       (custom-theme-set-faces
        'user
-       '(variable-pitch ((t (:family "Gentium Book Basic"))))
+       '(variable-pitch ((t (:family "Source Serif Pro"))))
        '(fixed-pitch ((t (:family "Source Code Pro")))))))
 
 (custom-theme-set-faces

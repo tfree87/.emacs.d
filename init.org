@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 19:09:01 thomas>
+#+date: Time-stamp: <2022-06-01 19:12:32 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1001,7 +1001,6 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 
 * Navigation
 
-
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
 
 ** Winner Mode
@@ -1754,7 +1753,7 @@ To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fi
         ((eq system-type 'gnu/linux)
         (custom-theme-set-faces
          'user
-         '(variable-pitch ((t (:family "Gentium Book Basic"))))
+         '(variable-pitch ((t (:family "Source Serif Pro"))))
          '(fixed-pitch ((t (:family "Source Code Pro")))))))
 #+end_src
 
