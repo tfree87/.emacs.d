@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 14:33:06 thomas>
+#+date: Time-stamp: <2022-06-01 18:20:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -191,17 +191,8 @@ The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allow
   (use-package benchmark-init
     :straight t
     :config
+    (benchmark-init/activate)
     (add-hook 'after-init-hook #'benchmark-init/deactivate))
-#+end_src
-
-** Blackout :disabled:
-
-[[https://github.com/raxod502/blackout][Blackout]] provides a means to hide mode names from the mode line. After a lot of customization of Emacs, the mode line can get very crowded with minor modes that are always on and it is not necessary to be reminded that they are active. Also, too many minor modes hides my nyan cat :(.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package blackout
-    :disabled t
-    :straight t)
 #+end_src
 
 ** No-littering
@@ -331,6 +322,9 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 #+end_src
 
 * Auto-completion
+
+This section contains configuration to set up autocompletion tools in Emacs.
+
 ** Cape
 
  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
@@ -814,7 +808,7 @@ The following code will always highlight matching parenthesis when coding /immed
 
 ** Show Column Number
 
-Many style guides to programming languages recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
+Many programming language style guides recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (column-number-mode t)
@@ -1016,14 +1010,16 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 
 * Navigation
 
+
+
 ** Ace Window :disabled:
 
-[[https://github.com/abo-abo/ace-window][ace-window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
+[[https://github.com/abo-abo/ace-window][Ace Window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package ace-window
     :straight t
-    :disabled t
+    :if (not <<win_man_check>>)
     :bind ("s-o" . ace-window))
 #+end_src
 

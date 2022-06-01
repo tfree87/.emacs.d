@@ -74,11 +74,8 @@
 (use-package benchmark-init
   :straight t
   :config
+  (benchmark-init/activate)
   (add-hook 'after-init-hook #'benchmark-init/deactivate))
-
-(use-package blackout
-  :disabled t
-  :straight t)
 
 (use-package no-littering
   :straight (no-littering :host github
@@ -449,7 +446,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package ace-window
   :straight t
-  :disabled t
+  :if (not <<win_man_check>>)
   :bind ("s-o" . ace-window))
 
 (use-package winum
