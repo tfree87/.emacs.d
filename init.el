@@ -1089,9 +1089,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (exwm-randr-enable)
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
-  (when (executable-find (whicher "dropbox"))
-    (start-process "dropbox" nil "dropbox" "start"))
-  
   (whicher "nm-applet")
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet"))
