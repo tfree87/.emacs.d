@@ -74,7 +74,6 @@
 (use-package benchmark-init
   :straight t
   :config
-  (benchmark-init/activate)
   (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package blackout
@@ -221,7 +220,7 @@
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
   :init
-  (corfu-global-mode)
+  (global-corfu-mode)
   :config
   ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
@@ -447,13 +446,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (sr-windows-locked nil)
   :config
   (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
-
-(use-package tramp
-  :straight (:type built-in)
-  :defer t
-  :config
-  (with-eval-after-load 'tramp
-    (setenv "SHELL" "/bin/bash")))
 
 (use-package ace-window
   :straight t

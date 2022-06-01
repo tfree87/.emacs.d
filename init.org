@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 11:41:31 thomas>
+#+date: Time-stamp: <2022-06-01 14:33:06 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -191,7 +191,6 @@ The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allow
   (use-package benchmark-init
     :straight t
     :config
-    (benchmark-init/activate)
     (add-hook 'after-init-hook #'benchmark-init/deactivate))
 #+end_src
 
@@ -524,7 +523,7 @@ Cycle through completion candidates by pressing the completion key.
     (corfu-preselect-first nil)
     <<tab-selection>>
     :init
-    (corfu-global-mode)
+    (global-corfu-mode)
     :config
     <<corfu_config>>)
 #+end_src
@@ -1013,27 +1012,6 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 
 #+begin_src emacs-lisp :noweb-ref sr_custom
   (sr-windows-locked nil)
-#+end_src
-
-** Tramp
-
-I occasinally use [[https://www.gnu.org/software/tramp/][Tramp]] to access remote files but it seems to have problems when the default shell is set to zsh. Setting it so bash has fixed this issue for me.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package tramp
-    :straight <<tramp_version>>
-    :defer t
-    :config
-    (with-eval-after-load 'tramp
-      (setenv "SHELL" "/bin/bash")))
-#+end_src
-
-*** TRAMP Version
-
-The latest version of TRAMP throws an error when using sunrise-commander, using the built-in version of tramp fixes this.
-
-#+begin_src emacs-lisp :noweb-ref tramp_version
-  (:type built-in)
 #+end_src
 
 * Navigation
