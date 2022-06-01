@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 19:01:16 thomas>
+#+date: Time-stamp: <2022-06-01 19:09:01 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1002,20 +1002,11 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 * Navigation
 
 
-
-** Ace Window
-
-[[https://github.com/abo-abo/ace-window][Ace Window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package ace-window
-    :straight t
-    :bind ("M-s-o" . ace-window))
-#+end_src
+This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
 
 ** Winner Mode
 
-Winner Mode makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
+[[https://www.emacswiki.org/emacs/WinnerMode][Winner Mode]] makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
 
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (winner-mode t)
@@ -1030,7 +1021,6 @@ This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]]
 1. This package has a key binding that does not conflict with ~M-o~ in [[Sunrise Commander]]
 2. This package works well with EXWM. Ace Window numbers do not display in EXWM windows that are running X11 applications.
 3. ~C-x w~ is similar to the window creation and deletion commands ~C-x~ which may make it easier to remember the key binding.
-
 
 #+begin_src emacs-lisp :tangle yes
   (use-package winum

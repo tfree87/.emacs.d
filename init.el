@@ -442,10 +442,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :config
   (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
 
-(use-package ace-window
-  :straight t
-  :bind ("M-s-o" . ace-window))
-
 (use-package winum
   :straight t
   :defer 3
