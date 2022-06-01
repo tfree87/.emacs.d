@@ -444,8 +444,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package ace-window
   :straight t
-  :if (not <<win_man_check>>)
-  :bind ("s-o" . ace-window))
+  :bind ("M-s-o" . ace-window))
 
 (use-package winum
   :straight t

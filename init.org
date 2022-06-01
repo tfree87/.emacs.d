@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 18:30:09 thomas>
+#+date: Time-stamp: <2022-06-01 19:01:16 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1003,15 +1003,14 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 
 
 
-** Ace Window :disabled:
+** Ace Window
 
 [[https://github.com/abo-abo/ace-window][Ace Window]] makes it really easy to switch between different windows in Emacs. A red number will appear in the upper left-hand corner of each window after calling ~ace-window~ and selecting that number will make that window the current active buffer.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package ace-window
     :straight t
-    :if (not <<win_man_check>>)
-    :bind ("s-o" . ace-window))
+    :bind ("M-s-o" . ace-window))
 #+end_src
 
 ** Winner Mode
