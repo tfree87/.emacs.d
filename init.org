@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 18:20:07 thomas>
+#+date: Time-stamp: <2022-06-01 18:30:09 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -437,15 +437,6 @@ Use Consult to search through and select xref locations in buffers
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
-#+end_src
-
-*** Enhanced ~completing-read~ Function
-
-Replace the default Emacs ~completing-read~ function with the enhanced ~consult-completing-read-multiple~.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (advice-add #'completing-read-multiple
-              :override #'consult-completing-read-multiple)
 #+end_src
 
 *** Change Register Preview to Consult

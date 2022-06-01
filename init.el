@@ -115,8 +115,6 @@
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
   (fset 'yes-or-no-p 'y-or-n-p)
-  (advice-add #'completing-read-multiple
-              :override #'consult-completing-read-multiple)
   (advice-add #'register-preview
               :override #'consult-register-window)
   (setq-default indent-tabs-mode nil)
