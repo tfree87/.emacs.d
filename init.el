@@ -1091,7 +1091,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
                     "upower"
                     "TLP"
                     "playerctl"))
-  :after exwm
   :config
   (desktop-environment-mode)
   (shell-command "pulseaudio --kill ; pulseaudio --start")

@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 19:12:32 thomas>
+#+date: Time-stamp: <2022-06-01 20:14:45 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2436,7 +2436,7 @@ Use ~pasystray~ for controlling volume graphically in EXWM.
 
 ** Desktop Environment
 
-The desktop environment package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
+The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]] package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package desktop-environment
@@ -2451,7 +2451,6 @@ The desktop environment package makes it so that some of the features that are i
                       "upower"
                       "TLP"
                       "playerctl"))
-    :after exwm
     :config
     (desktop-environment-mode)
     <<de_config>>)
@@ -2465,7 +2464,7 @@ The desktop environment package makes it so that some of the features that are i
      (shell-command "pulseaudio --kill ; pulseaudio --start")
    #+end_src
 
-2. If the numpad is to be used for number, ~numlockx~ must be installed and turned on.
+2. If the numpad is to be used for numbers, ~numlockx~ must be installed and turned on.
 
    #+begin_src emacs-lisp :noweb-ref de_config
      (shell-command "numlockx on")
