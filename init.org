@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 20:14:45 thomas>
+#+date: Time-stamp: <2022-06-01 20:19:16 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1018,7 +1018,7 @@ Winum is a package that adds number to the modeline for each window in Emacs. Wi
 This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]] but it has a few advantages:
 
 1. This package has a key binding that does not conflict with ~M-o~ in [[Sunrise Commander]]
-2. This package works well with EXWM. Ace Window numbers do not display in EXWM windows that are running X11 applications.
+2. This package works well with [[https://github.com/ch11ng/exwm][EXWM]]. Ace Window numbers do not display in [[https://github.com/ch11ng/exwm][EXWM]] windows that are running X11 applications.
 3. ~C-x w~ is similar to the window creation and deletion commands ~C-x~ which may make it easier to remember the key binding.
 
 #+begin_src emacs-lisp :tangle yes
@@ -1777,7 +1777,7 @@ This will display the time in the Emacs mode line. This can be very useful if ta
   (display-time-mode t)
 #+end_src
 
-When I am running Emacs with EXWM as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in EXWM and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
+When I am running Emacs with [[https://github.com/ch11ng/exwm][EXWM]] as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in [[https://github.com/ch11ng/exwm][EXWM]] and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (display-time-and-date t)
@@ -2246,13 +2246,13 @@ The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snip
 
 * Emacs Desktop
 
-When there is no window manager running, Emacs can run as a window manger using EXWM. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
+When there is no window manager running, Emacs can run as a window manger using [[https://github.com/ch11ng/exwm][EXWM]]. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
 
 ** Check for Window Manager
 
-I generally only want to use EXWM when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
+I generally only want to use [[https://github.com/ch11ng/exwm][EXWM]] when I do not have another window manger in place. The following check will use ~wmctrl -m~ to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling ~echo $?~ immediately afterward with ~shell-command-to-string~ will return the exit code appended to the end of the output from ~wmctrl -m~. As we only care about the status of the exit code, we can call on the ~substring~ function to get just the exit code and not the whole output of the command.
 
-There is also a check for the X window system as calling GUI programs from EXWM will not work without it.
+There is also a check for the X window system as calling GUI programs from [[https://github.com/ch11ng/exwm][EXWM]] will not work without it.
 
 #+begin_src emacs-lisp :noweb-ref win_man_check
   (and (not
@@ -2266,7 +2266,7 @@ There is also a check for the X window system as calling GUI programs from EXWM 
 
 ** App Launcher
 
-Use App Launcher to launch Linux applications in EXWM. App Launcher will scan for all ~*.desktop~ files in the application directories on Linux and provide a list of candidates that can be filtered with completion.
+Use App Launcher to launch Linux applications in [[https://github.com/ch11ng/exwm][EXWM]]. App Launcher will scan for all ~*.desktop~ files in the application directories on Linux and provide a list of candidates that can be filtered with completion.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package app-launcher
@@ -2280,7 +2280,7 @@ Use App Launcher to launch Linux applications in EXWM. App Launcher will scan fo
 
 ** EXWM
 
-EXWM stands for the "Emacs X11 Window Manager". With this package, Emacs can run X11 programs in windows and frames and controlled with Emacs window commands. To use EXWM, the EXWM package can be pulled from using ~straight.el~.
+[[https://github.com/ch11ng/exwm][EXWM]] stands for the "Emacs X11 Window Manager". With this package, Emacs can run X11 programs in windows and frames and controlled with Emacs window commands. To use [[https://github.com/ch11ng/exwm][EXWM]], the [[https://github.com/ch11ng/exwm][EXWM]] package can be pulled from using ~straight.el~.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
@@ -2296,7 +2296,7 @@ EXWM stands for the "Emacs X11 Window Manager". With this package, Emacs can run
 
 *** Battery Mode
 
-When running EXWM as the only window manager, turning on ~display-battery-mode~ will make it so the battery power on a laptop or portable device can be monitored.
+When running [[https://github.com/ch11ng/exwm][EXWM]] as the only window manager, turning on ~display-battery-mode~ will make it so the battery power on a laptop or portable device can be monitored.
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
   (display-battery-mode t)
@@ -2323,7 +2323,7 @@ With only a single monitor at the moment I only see the need for a single worksp
 
 *** Keys
 
-It is extremely helpful to set up special keybindings for use in EXWM due to the fact that X11 applications won't see keyboard commands that are first intercepted by Emacs.
+It is extremely helpful to set up special keybindings for use in [[https://github.com/ch11ng/exwm][EXWM]] due to the fact that X11 applications won't see keyboard commands that are first intercepted by Emacs.
 
 **** Global Keys
 
@@ -2346,7 +2346,7 @@ The following command can be used to launch programs in EWXM by using the comman
 
 ***** Moving
 
-To have a universal command to switch between windows in EXWM, the super key and the arrow keys can be used to move about the windows directionally. Ace Window Mode doesn't work with X11 application windows, so it is convenient to have these keys set up.
+To have a universal command to switch between windows in [[https://github.com/ch11ng/exwm][EXWM]], the super key and the arrow keys can be used to move about the windows directionally. Ace Window Mode doesn't work with X11 application windows, so it is convenient to have these keys set up.
 
 #+begin_src emacs-lisp :noweb-ref window_switching
   ([s-left] . windmove-left)
@@ -2363,7 +2363,7 @@ The following command can also be used to select a workspace if multiple workspa
 
 ***** Switching Between ~char-mode~ and ~line-mode~
 
-When using EXWM, opening an X11 application will load in ~line-mode~ by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that ~C-c~ will act as an Emacs prefix command. Pressing ~C-c C-k~ will switch to ~char-mode~ and ~C-c~ will then do the usual copy command. Pressing ~s-r~ retruns back to ~line-mode~.
+When using [[https://github.com/ch11ng/exwm][EXWM]], opening an X11 application will load in ~line-mode~ by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that ~C-c~ will act as an Emacs prefix command. Pressing ~C-c C-k~ will switch to ~char-mode~ and ~C-c~ will then do the usual copy command. Pressing ~s-r~ retruns back to ~line-mode~.
 
 #+begin_src emacs-lisp :noweb yes :noweb-ref char_line_switch
   ([?\s-r] . exwm-reset)
@@ -2407,7 +2407,7 @@ For multi-screen displays, ~exwm-randr~ must be enabled.
 
 *** SystemTray
 
-Make sure to turn on the system tray in EXWM so that there is access to tray icons.
+Make sure to turn on the system tray in [[https://github.com/ch11ng/exwm][EXWM]] so that there is access to tray icons.
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
   (require 'exwm-systemtray)
@@ -2426,7 +2426,7 @@ To enable a wifi applet in the ~exwm-system-tray~, Emacs can execute the ~nm-app
 
 **** Pasystray
 
-Use ~pasystray~ for controlling volume graphically in EXWM.
+Use ~pasystray~ for controlling volume graphically in [[https://github.com/ch11ng/exwm][EXWM]].
 
 #+begin_src emacs-lisp :noweb-ref exwm_config
   (whicher "pasystray")
@@ -2436,7 +2436,7 @@ Use ~pasystray~ for controlling volume graphically in EXWM.
 
 ** Desktop Environment
 
-The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]] package makes it so that some of the features that are included in a typical desktop environment system are included in EXWM. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
+The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]] package makes it so that some of the features that are included in a typical desktop environment system are included in [[https://github.com/ch11ng/exwm][EXWM]]. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package desktop-environment
@@ -2458,7 +2458,7 @@ The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]]
 
 *** Set Up Desktop Environment
 
-1. To get sound in EXWM, pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in EXWM if there are multiple desktop enviroments installed on the system.
+1. To get sound in [[https://github.com/ch11ng/exwm][EXWM]], pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in [[https://github.com/ch11ng/exwm][EXWM]] if there are multiple desktop enviroments installed on the system.
 
    #+begin_src emacs-lisp :noweb-ref de_config
      (shell-command "pulseaudio --kill ; pulseaudio --start")
