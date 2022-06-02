@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-01 20:19:16 thomas>
+#+date: Time-stamp: <2022-06-02 12:15:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1910,19 +1910,21 @@ The following custom function will change the heading sizes in Org Mode to make 
     (with-eval-after-load 'org
       (dolist
           (face
-           '((org-level-1 . 1.75)
-             (org-level-2 . 1.50)
-             (org-level-3 . 1.25)
-             (org-level-4 . 1.10)
+           '((org-level-1 . 2.00)
+             (org-level-2 . 1.75)
+             (org-level-3 . 1.50)
+             (org-level-4 . 1.25)
              (org-level-5 . 1.10)
              (org-level-6 . 1.10)
              (org-level-7 . 1.10)
              (org-level-8 . 1.10)
-             (org-document-title . 2.00)))
+             (org-document-title . 2.25)))
         (set-face-attribute (car face) nil :height (cdr face)))))
 #+end_src
 
 * Other
+
+This section contains configuration for packages that do not fit into the other categories.
 
 ** BBDB
 

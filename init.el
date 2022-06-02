@@ -855,15 +855,15 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (with-eval-after-load 'org
     (dolist
         (face
-         '((org-level-1 . 1.75)
-           (org-level-2 . 1.50)
-           (org-level-3 . 1.25)
-           (org-level-4 . 1.10)
+         '((org-level-1 . 2.00)
+           (org-level-2 . 1.75)
+           (org-level-3 . 1.50)
+           (org-level-4 . 1.25)
            (org-level-5 . 1.10)
            (org-level-6 . 1.10)
            (org-level-7 . 1.10)
            (org-level-8 . 1.10)
-           (org-document-title . 2.00)))
+           (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
 
 (use-package bbdb
