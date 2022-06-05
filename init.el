@@ -94,7 +94,7 @@
   (ring-bell-function #'ignore)
   (visible-bell t)
   (bidi-paragraph-direction 'left-to-right)
-  (desktop-save-mode t)
+  ;;(desktop-save-mode t)
   (delete-by-moving-to-trash t)
   (version-control t)
   (delete-old-versions t)
@@ -114,6 +114,7 @@
   (add-hook 'before-save-hook 'time-stamp)
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
+  (recentf-mode 1)
   (fset 'yes-or-no-p 'y-or-n-p)
   (advice-add #'register-preview
               :override #'consult-register-window)
