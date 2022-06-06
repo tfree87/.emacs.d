@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-06 12:54:59 thomas>
+#+date: Time-stamp: <2022-06-06 15:07:18 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1561,7 +1561,6 @@ Eshell is a very powerful lisp-based shell that I have learned to love most beca
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package eshell
     :straight (:type built-in)
-    :esure nil
     :defer t
     :hook
     <<eshell_prompt>>
@@ -1913,6 +1912,12 @@ The following custom function will change the heading sizes in Org Mode to make 
 
 This section contains configuration for packages that do not fit into the other categories.
 
+** Mu4e
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mu4e
+    :defer t)
+#+end_src
 ** BBDB
 
 The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as BBDB, is used to store contact information in Emacs and interfaces with many other Emacs packages such as Gnus and Org-mode.

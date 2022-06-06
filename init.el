@@ -686,7 +686,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package eshell
   :straight (:type built-in)
-  :esure nil
   :defer t
   :hook
   (eshell-load . (lambda ()
@@ -858,6 +857,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
            (org-level-8 . 1.10)
            (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
+
+(use-package mu4e
+  :defer t)
 
 (use-package bbdb
   :straight t
