@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-05 11:11:11 thomas>
+#+date: Time-stamp: <2022-06-06 11:22:35 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -172,9 +172,15 @@ Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
   ;; Set up use-package to manage package loading
 
   (straight-use-package 'use-package)
+#+end_src
+
+Straight can be configured as the default manager for ~use-package~ using the following option:
+
+#+begin_src emacs-lisp :tangle no
   (setq straight-use-package-by-default t)
 #+end_src
 
+However, as I have started using the GUIX System Distribution I have found that it can be beneficial to pick and choose which packages are managed by straight and which are managed by GUIX . Packages that I want to use across Linux and Windows operating systems can be managed by straight, and those that I only use on GUIX or require compiling on the host system (such as EXWM and pdf-tools) can be managed by GUIX.
 * Startup Tools
 
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.

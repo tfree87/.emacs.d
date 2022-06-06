@@ -67,7 +67,6 @@
 ;; Set up use-package to manage package loading
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
 
 ;; Emacs Startup Tools
 
