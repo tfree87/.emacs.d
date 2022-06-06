@@ -299,6 +299,7 @@
 
 (use-package c-mode
   :straight (:type built-in)
+  :ensure nil
   :defer t
   :mode ("\\.c\\'"
          "\\.ino\\'"))
@@ -333,6 +334,8 @@
               ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
+  :straight (:type built-in)
+  :ensure nil
   :defer t
   :custom
   (show-paren-delay 0)
@@ -385,7 +388,7 @@
   :straight t)
 
 (use-package dired
-  :straight nil
+  :straight (:type built-in)
   :ensure nil
   :defer t
   :custom
@@ -474,6 +477,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (defalias 'calfworg 'cfw:open-org-calendar))
 
 (use-package deft
+  :straight t
   :after org
   :defer t
   :bind
@@ -488,6 +492,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (deft-use-filename-as-title t))
 
 (use-package habitica
+  :straight t
   :after org
   :custom
   (habitica-turn-on-highlighting t)
@@ -616,7 +621,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :bind
   (("C-c n f" . org-roam-node-find)
    ("C-c n g" . org-roam-graph)
-   ("C-c n r" . org-roam-node-random)		    
+   ("C-c n r" . org-roam-node-random)
    (:map org-mode-map
          (("C-c n i" . org-roam-node-insert)
           ("C-c n o" . org-id-get-create)
@@ -638,6 +643,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (bibtex-dialect 'biblatex))
 
 (use-package ispell
+  :straight (:type built-in)
+  :ensure nil
   :defer t
   :config
   (if (eq system-type 'windows-nt)
@@ -649,6 +656,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
       (setq ispell-program-name (whicher "hunspell"))))
 
 (use-package flyspell
+  :straight (:type built-in)
+  :ensure nil
   :defer t
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -669,12 +678,15 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 
 (use-package pdf-tools
-  :straight t
+  :straight nil
+  :ensure nil
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-loader-install :no-query))
 
 (use-package eshell
+  :straight (:type built-in)
+  :esure nil
   :defer t
   :hook
   (eshell-load . (lambda ()
@@ -723,11 +735,11 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :after eshell)
 
 (use-package powershell
+  :straight t
   :if (eq system-type 'windows-nt)
   :defer t
   :init
   (whicher "powershell.exe")
-  :straight t
   :config
   ;; Change default compile command for powershell
   (add-hook 'powershell-mode-hook
@@ -738,41 +750,28 @@ The rclone configuration can be set with RCLONE-CONFIG."
                     (buffer-file-name)))))
 
 (use-package all-the-icons
+  :straight t
   :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
-  :defer t
-  :straight t)
+  :defer t)
 
 (use-package all-the-icons-dired
-  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
-  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
-  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :straight t
+  :if (not (string= (getenv "EMACS_PORTABLE") "Y"))
   :defer 3
   :config
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-
-(use-package centaur-tabs
-  :if window-system
-  :straight t
-  :defer t
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward)
-  :custom
-  (centaur-tabs-set-bar 'over)
-  (centaur-tabs-style "chamfer")
-  :config
-  (centaur-tabs-mode t))
 
 (custom-theme-set-faces
  'user
@@ -796,24 +795,18 @@ The rclone configuration can be set with RCLONE-CONFIG."
  '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
 
 (use-package doom-themes
-  :if window-system
   :straight t
+  :if window-system
   :defer 1
   :config
   (load-theme 'doom-outrun-electric t)
   (doom-themes-org-config))
 
 (use-package doom-modeline
-  :if window-system
   :straight t
+  :if window-system
   :defer 1
   :config (doom-modeline-mode))
-
-(use-package minions
-  :if (not (bound-and-true-p doom-modeline-mode))
-  :defer 4
-  :config
-  (minions-mode 1))
 
 (use-package mixed-pitch
   :straight t
@@ -821,8 +814,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (org-mode . mixed-pitch-mode))
 
 (use-package nyan-mode
-  :if window-system
   :straight t
+  :if window-system
   :defer 3
   :init
   ;; Requires mplayer to play the music
@@ -883,14 +876,14 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (bbdb-mua-auto-update-init 'gnus 'message))
 
 (use-package docker
+  :straight t
   :init
   (whicher "docker")
-  :straight t
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
-  :defer t
   :straight t
+  :defer t
   :init
   (whicher "docker-compose"))
 
@@ -908,9 +901,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause))
 
 (use-package gnuplot
+  :straight t
   :init
   (whicher "gnuplot")
-  :straight t
   :defer t)
 
 (use-package helpful
@@ -925,6 +918,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   ("C-h C" . #'helpful-command))
 
 (use-package ibuffer
+  :straight (:type built-in)
+  :ensure nil
   :bind
   ("C-x C-b" . ibuffer)
   :custom
@@ -1000,7 +995,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (popper-echo-mode +1))
 
 (use-package savehist
-  :straight t
+  :straight (:type built-in)
+  :ensure nil
   :init
   (savehist-mode))
 
@@ -1031,7 +1027,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :commands (app-launcher))
 
 (use-package exwm
-  :straight t
+  :straight nil
+  :ensure nil
   :if
   (and (not
         (string=
@@ -1080,7 +1077,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (exwm-enable))
 
 (use-package desktop-environment
-  :straight t
+  :straight nil
+  :ensure nil
   :after exwm
   :init
   (mapc #'whicher '("amixer"

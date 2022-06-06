@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-06 11:22:35 thomas>
+#+date: Time-stamp: <2022-06-06 12:54:59 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -700,6 +700,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
 #+begin_src emacs-lisp :tangle yes
   (use-package c-mode
     :straight (:type built-in)
+    :ensure nil
     :defer t
     :mode ("\\.c\\'"
            "\\.ino\\'"))
@@ -795,6 +796,8 @@ The following code will always highlight matching parenthesis when coding /immed
 
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
+    :straight (:type built-in)
+    :ensure nil
     :defer t
     :custom
     (show-paren-delay 0)
@@ -879,7 +882,7 @@ The following customizations make emacs dired mode behave in a similar fashion t
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package dired
-    :straight nil
+    :straight (:type built-in)
     :ensure nil
     :defer t
     :custom
@@ -1090,6 +1093,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 
 #+begin_src emacs-lisp :tangle yes
   (use-package deft
+    :straight t
     :after org
     :defer t
     :bind
@@ -1108,6 +1112,7 @@ Emacs is a great tool for managing projects, organizing information, calendaring
 
 #+begin_src emacs-lisp :tangle yes
   (use-package habitica
+    :straight t
     :after org
     :custom
     (habitica-turn-on-highlighting t)
@@ -1421,7 +1426,7 @@ Org-roam (https://www.orgroam.com/) adds features to make linking org notes easi
     :bind
     (("C-c n f" . org-roam-node-find)
      ("C-c n g" . org-roam-graph)
-     ("C-c n r" . org-roam-node-random)		    
+     ("C-c n r" . org-roam-node-random)
      (:map org-mode-map
            (("C-c n i" . org-roam-node-insert)
             ("C-c n o" . org-id-get-create)
@@ -1469,10 +1474,12 @@ BibLaTeX has more powerful features than standard BibTeX.
 
 Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
 
-In order for this to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive.
+In order for this to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive. To use hunspell for spell checking, we must first configure the ispell package:
 
 #+begin_src emacs-lisp :tangle yes
   (use-package ispell
+    :straight (:type built-in)
+    :ensure nil
     :defer t
     :config
     (if (eq system-type 'windows-nt)
@@ -1484,8 +1491,12 @@ In order for this to work in Windows, hunspell must be installed with the proper
         (setq ispell-program-name (whicher "hunspell"))))
 #+end_src
 
+Once hunspell is set up as the default spell checker, we can then hook flyspell into our editing modes.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package flyspell
+    :straight (:type built-in)
+    :ensure nil
     :defer t
     :init
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -1522,11 +1533,12 @@ Since [[https://pandoc.org/][Pandoc]] can be installed on both Linux and in Wind
 
 ** PDF Tools
 
-[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView.
+[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView. Currently, I install this package using the GUIX package manager.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
-    :straight t
+    :straight nil
+    :ensure nil
     :magic ("%PDF" . pdf-view-mode)
     :config
     (pdf-loader-install :no-query))
@@ -1540,7 +1552,7 @@ Emacs when navigating expects sentences to end with a double space after a perio
   (sentence-end-double-space nil)
 #+end_src
 
-* Shells
+* Shells and Terminals
 
 ** Eshell
 
@@ -1548,6 +1560,8 @@ Eshell is a very powerful lisp-based shell that I have learned to love most beca
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package eshell
+    :straight (:type built-in)
+    :esure nil
     :defer t
     :hook
     <<eshell_prompt>>
@@ -1592,7 +1606,7 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 
 ** Eshell Git Prompt
 
-[[https://github.com/xuchunyang/eshell-git-prompt][eshell-git-prompt]] provides a series of Eshell prompts that provide extra information including the git status of the current project.
+[[https://github.com/xuchunyang/eshell-git-prompt][Eshell Git Prompt]] provides a series of Eshell prompts that provide extra information including the git status of the current project.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package eshell-git-prompt
@@ -1612,7 +1626,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 #+end_src
 ** Eshell Toggle
 
-[[https://github.com/4DA/eshell-toggle][eshell-toggle]] makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
+[[https://github.com/4DA/eshell-toggle][Eshell Toggle]] makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package eshell-toggle
@@ -1629,7 +1643,7 @@ This method was the only method I have found that loaded the ~eshell-git-prompt~
 
 ** Oh My Esh
 
-Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
+Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package oh-my-eshell
@@ -1645,11 +1659,11 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
 
 #+begin_src emacs-lisp :tangle yes
   (use-package powershell
+    :straight t
     :if (eq system-type 'windows-nt)
     :defer t
     :init
     (whicher "powershell.exe")
-    :straight t
     :config
     ;; Change default compile command for powershell
     (add-hook 'powershell-mode-hook
@@ -1667,9 +1681,9 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons
+    :straight t
     :if (not <<portable_check>>)
-    :defer t
-    :straight t)
+    :defer t)
 #+end_src
 
 ** All the Icons Dired
@@ -1678,8 +1692,8 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-dired
-    :if (not <<portable_check>>)
     :straight t
+    :if (not <<portable_check>>)
     :hook
     (dired-mode . all-the-icons-dired-mode))
  #+end_src
@@ -1690,8 +1704,8 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-ibuffer
-    :if (not <<portable_check>>)
     :straight t
+    :if (not <<portable_check>>)
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
 
@@ -1701,34 +1715,13 @@ Oh My Esh is a pacakge that aims to reproduce some of the plugin functionality t
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-completion
-    :if (not <<portable_check>>)
     :straight t
+    :if (not <<portable_check>>)
     :defer 3
     :config
     (all-the-icons-completion-mode)
     (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
-
-** Centaur Tabs
-
-I like having tabs for all of my open buffers. [[https://github.com/ema2159/centaur-tabs][Centaur Tabs]] provides a nicer interface than the built-in ~tab-line-mode~. I rarely use this package, however, as I find the built-in ~tab-bar-mode~ plays better with mutli-window setups.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package centaur-tabs
-    :if window-system
-    :straight t
-    :defer t
-    :bind
-    ("C-<prior>" . centaur-tabs-backward)
-    ("C-<next>" . centaur-tabs-forward)
-    :custom
-    (centaur-tabs-set-bar 'over)
-    (centaur-tabs-style "chamfer")
-    :config
-    (centaur-tabs-mode t))
-#+end_src
-
-This setting can always be toggled off if a "cleaner" Emacs view is desired.
 
 ** Custom Faces
 
@@ -1803,8 +1796,8 @@ I have switched to the Doom theme ~doom-outrun-electric~ because I find the colo
 
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
-    :if window-system
     :straight t
+    :if window-system
     :defer 1
     :config
     (load-theme 'doom-outrun-electric t)
@@ -1819,8 +1812,8 @@ The Doom Modeline decorates the modeline with icons and cleans up much of the cl
 
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
-    :if window-system
     :straight t
+    :if window-system
     :defer 1
     :config (doom-modeline-mode))
 #+end_src
@@ -1833,26 +1826,6 @@ Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool an
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
-#+end_src
-
-** Minions
-
-Minor mode lighters in Emacs become very cumbersome in the modeline when many minor modes are turned on simultaneously. This happens very often with any highly configured Emacs. With too much information in the modeline and a number of minor modes getting cut off in the display, this feature is no longer helpful for information about the current buffer.
-
-Minions is a package that puts all of the minor modes into a menu in the modeline so that all minro modes can be displayed and viewed in this menu. This can be very helpful as it provides access to a list of all the enabled minor modes while consolidating information on the modeline and removes the need for packages such as blackout, delight, dim, and diminish.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package minions
-    :if <<use_minions>>
-    :defer 4
-    :config
-    (minions-mode 1))
-#+end_src
-
-Minions mode does not work when ~doom-modeline-mode~ is not active. It appears that ~doom-modeline-mode~ overwrites the settings changed when ~doom-modeline-mode~ is activated. To prevent Minions from slowing down Emacs startup time, the following check can be used to prevent it from being loaded if Doom Modeline is active:
-
-#+begin_src emacs-lisp :noweb-ref use_minions
-  (not (bound-and-true-p doom-modeline-mode))
 #+end_src
 
 ** Mixed Pitch
@@ -1872,8 +1845,8 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
 
 #+begin_src emacs-lisp :tangle yes
   (use-package nyan-mode
-    :if window-system
     :straight t
+    :if window-system
     :defer 3
     :init
     ;; Requires mplayer to play the music
@@ -1968,9 +1941,9 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
 
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
+    :straight t
     :init
     (whicher "docker")
-    :straight t
     :bind ("C-c d" . docker))
 #+end_src
 
@@ -1980,8 +1953,8 @@ The [[https://www.jwz.org/bbdb/][Insidious Big Brother DataBase]], also known as
 
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
-    :defer t
     :straight t
+    :defer t
     :init
     (whicher "docker-compose"))
 #+end_src
@@ -2010,11 +1983,11 @@ EMMS is a multimedia player for Emacs. It is an interface that is used to contro
 [[https://github.com/emacs-gnuplot/gnuplot][Gnuplot]] mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
 
 #+begin_src emacs-lisp :tangle yes
-    (use-package gnuplot
-      :init
-      (whicher "gnuplot")
-      :straight t
-      :defer t)
+  (use-package gnuplot
+    :straight t
+    :init
+    (whicher "gnuplot")
+    :defer t)
 #+end_src
 
 ** Helpful
@@ -2047,6 +2020,8 @@ A better buffer list than the default.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package ibuffer
+    :straight (:type built-in)
+    :ensure nil
     :bind
     ("C-x C-b" . ibuffer)
     :custom
@@ -2187,7 +2162,8 @@ Savehist will save the selections from completion history between Emacs sessions
 
 #+begin_src emacs-lisp :tangle yes
   (use-package savehist
-    :straight t
+    :straight (:type built-in)
+    :ensure nil
     :init
     (savehist-mode))
   #+end_src
@@ -2298,9 +2274,12 @@ Use App Launcher to launch Linux applications in [[https://github.com/ch11ng/exw
 
 [[https://github.com/ch11ng/exwm][EXWM]] stands for the "Emacs X11 Window Manager". With this package, Emacs can run X11 programs in windows and frames and controlled with Emacs window commands. To use [[https://github.com/ch11ng/exwm][EXWM]], the [[https://github.com/ch11ng/exwm][EXWM]] package can be pulled from using ~straight.el~.
 
+Currently, I only use EXWM on my GUIX systems to I do not use straight or use-package to manage this package.
+
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
-    :straight t
+    :straight nil
+    :ensure nil
     :if
     <<win_man_check>>
     :custom
@@ -2454,9 +2433,12 @@ Use ~pasystray~ for controlling volume graphically in [[https://github.com/ch11n
 
 The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]] package makes it so that some of the features that are included in a typical desktop environment system are included in [[https://github.com/ch11ng/exwm][EXWM]]. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
 
+Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do not have it managed by straight or use-package but rather by GUIX.
+
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package desktop-environment
-    :straight t
+    :straight nil
+    :ensure nil
     :after exwm
     :init
     (mapc #'whicher '("amixer"
