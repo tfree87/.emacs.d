@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 13:33:13 thomas>
+#+date: Time-stamp: <2022-06-07 15:13:56 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1033,29 +1033,8 @@ This section contains customizations for controlling how to navigate between Ema
                      :repo "tfree87/burly.el"
                      :branch "master")
     :commands (burly-bookmark-frames
-              burly-bookmark-windows
-              burly-open-bookmark
-              burly-open-last-bookmark)
-    :config
-    <<burly_config>>)
-#+end_src
-
-*** Last Opened Bookmark Between Sessions
-
-Burly will not remember the last opened bookmark between sessions. However, if we use Burly in combination with ~savehist-mode~, we can carry over the the most recently opened bookmark between sessions.
-
-#+begin_src emacs-lisp :noweb-ref burly_config
-  (defun fm/burly-savehist-integration ()
-    (when (bound-and-true-p burly-opened-bookmark-name)
-      (setq burly-opened-bookmark-name
-            (substring-no-properties burly-opened-bookmark-name))))
-  (add-to-list 'savehist-additional-variables 'burly-opened-bookmark-name)
-#+end_src
-
-Adding a hook to ~savehist-mode~ will cause it to run our function when savehist saves.
-
-#+begin_src emacs-lisp :noweb-ref savehist_hooks
-  (savehist-save . fm/burly-savehist-integration)
+               burly-bookmark-windows
+               burly-open-bookmark))
 #+end_src
 
 ** Recentf Mode
@@ -2256,9 +2235,7 @@ Savehist will save the selections from completion history between Emacs sessions
   (use-package savehist
     :straight (:type built-in)
     :init
-    (savehist-mode)
-    :hook
-    <<savehist_hooks>>)
+    (savehist-mode))
   #+end_src
   
 ** Which-key

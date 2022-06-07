@@ -452,15 +452,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
                    :repo "tfree87/burly.el"
                    :branch "master")
   :commands (burly-bookmark-frames
-            burly-bookmark-windows
-            burly-open-bookmark
-            burly-open-last-bookmark)
-  :config
-  (defun fm/burly-savehist-integration ()
-    (when (bound-and-true-p burly-opened-bookmark-name)
-      (setq burly-opened-bookmark-name
-            (substring-no-properties burly-opened-bookmark-name))))
-  (add-to-list 'savehist-additional-variables 'burly-opened-bookmark-name))
+             burly-bookmark-windows
+             burly-open-bookmark))
 
 (use-package winum
   :straight t
@@ -1009,9 +1002,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 (use-package savehist
   :straight (:type built-in)
   :init
-  (savehist-mode)
-  :hook
-  (savehist-save . fm/burly-savehist-integration))
+  (savehist-mode))
 
 (use-package which-key
   :straight t
