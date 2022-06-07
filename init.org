@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 12:51:09 thomas>
+#+date: Time-stamp: <2022-06-07 13:26:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1008,6 +1008,14 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 * Navigation and Session
 
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
+
+** Bufler
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package bufler
+    :straight t
+    :bind ("C-x C-b" . bufler))
+#+end_src
 
 ** Burly
 
@@ -2156,67 +2164,6 @@ EMMS is a multimedia player for Emacs. It is an interface that is used to contro
     ("C-c C-d" . #'helpful-at-point)
     ("C-h F" . #'helpful-function)
     ("C-h C" . #'helpful-command))
-#+end_src
-
-** Ibuffer
-
-A better buffer list than the default.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package ibuffer
-    :straight (:type built-in)
-    :bind
-    ("C-x C-b" . ibuffer)
-    :custom
-    <<ibuffer_custom>>
-    :config
-    <<ibuffer_config>>)
-#+end_src
-
-*** Group Buffers
-
-Ibuffer makes it possible to sort buffers in the buffer list into groupings. This makes is a lot faster for me to find a particular buffer that I want to switch to.
-
-1. First we need to start ibuffer with default groupings:
-   
-#+begin_src emacs-lisp :noweb-ref ibuffer_config
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups
-               "default")))
-#+end_src
-
-2. Then we need to define our groups for ibuffer:
-   
-#+begin_src emacs-lisp :noweb-ref ibuffer_custom
-  (ibuffer-saved-filter-groups
-   '(("default"
-      ("Dired" (mode . dired-mode))
-      ("Emacs" (or
-                (name . "^\\*scratch\\*$")            
-                (name . "^\\*Messages\\*$")
-                (name . "^\\*GNU Emacs\\*$")
-                (name . "^\\*Help\\*$")
-                (name . "^\\*Calendar\\*$")
-                (name . "^\\*Calculator\\*$")
-                (name . "^\\*Calc Trail\\*$")
-                (name . "^\\*Completions\\*$")))
-      ("Gnus" (or
-               (mode . message-mode)
-               (mode . bbdb-mode)
-               (mode . mail-mode)
-               (mode . gnus-group-mode)
-               (mode . gnus-summary-mode)
-               (mode . gnus-article-mode)
-               (name . "^\\.bbdb$")
-               (name . "^\\.newsrc-dribble")))
-      ("Org"   (or
-                (mode . org-mode)
-                (name . "^\\*Org Agenda\\*$")))
-      ("Shell"   (or
-                  (mode . eshell)
-                  (mode . term)
-                  (mode . shell))))))
 #+end_src
 
 ** Ledger

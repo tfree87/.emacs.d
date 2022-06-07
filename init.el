@@ -443,6 +443,10 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :config
   (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
 
+(use-package bufler
+  :straight t
+  :bind ("C-x C-b" . bufler))
+
 (use-package burly
   :straight (burly :host github
                    :repo "tfree87/burly.el"
@@ -964,45 +968,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   ("C-c C-d" . #'helpful-at-point)
   ("C-h F" . #'helpful-function)
   ("C-h C" . #'helpful-command))
-
-(use-package ibuffer
-  :straight (:type built-in)
-  :bind
-  ("C-x C-b" . ibuffer)
-  :custom
-  (ibuffer-saved-filter-groups
-   '(("default"
-      ("Dired" (mode . dired-mode))
-      ("Emacs" (or
-                (name . "^\\*scratch\\*$")            
-                (name . "^\\*Messages\\*$")
-                (name . "^\\*GNU Emacs\\*$")
-                (name . "^\\*Help\\*$")
-                (name . "^\\*Calendar\\*$")
-                (name . "^\\*Calculator\\*$")
-                (name . "^\\*Calc Trail\\*$")
-                (name . "^\\*Completions\\*$")))
-      ("Gnus" (or
-               (mode . message-mode)
-               (mode . bbdb-mode)
-               (mode . mail-mode)
-               (mode . gnus-group-mode)
-               (mode . gnus-summary-mode)
-               (mode . gnus-article-mode)
-               (name . "^\\.bbdb$")
-               (name . "^\\.newsrc-dribble")))
-      ("Org"   (or
-                (mode . org-mode)
-                (name . "^\\*Org Agenda\\*$")))
-      ("Shell"   (or
-                  (mode . eshell)
-                  (mode . term)
-                  (mode . shell))))))
-  :config
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups
-               "default"))))
 
 (use-package ledger-mode
   :straight t
