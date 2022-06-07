@@ -113,13 +113,13 @@
   (add-hook 'before-save-hook 'time-stamp)
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
-  (recentf-mode 1)
   (fset 'yes-or-no-p 'y-or-n-p)
   (advice-add #'register-preview
               :override #'consult-register-window)
   (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (recentf-mode 1)
   (winner-mode t)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -335,7 +335,6 @@
 
 (use-package paren
   :straight (:type built-in)
-  :ensure nil
   :defer t
   :custom
   (show-paren-delay 0)
@@ -389,7 +388,6 @@
 
 (use-package dired
   :straight (:type built-in)
-  :ensure nil
   :defer t
   :custom
   (dired-dwim-target t))
@@ -444,6 +442,21 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (sr-windows-locked nil)
   :config
   (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
+
+(use-package burly
+  :straight (burly :host github
+                   :repo "tfree87/burly.el"
+                   :branch "master")
+  :commands (burly-bookmark-frames
+            burly-bookmark-windows
+            burly-open-bookmark
+            burly-open-last-bookmark)
+  :config
+  (defun fm/burly-savehist-integration ()
+    (when (bound-and-true-p burly-opened-bookmark-name)
+      (setq burly-opened-bookmark-name
+            (substring-no-properties burly-opened-bookmark-name))))
+  (add-to-list 'savehist-additional-variables 'burly-opened-bookmark-name))
 
 (use-package winum
   :straight t
@@ -646,7 +659,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package ispell
   :straight (:type built-in)
-  :ensure nil
   :defer t
   :config
   (if (eq system-type 'windows-nt)
@@ -659,7 +671,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package flyspell
   :straight (:type built-in)
-  :ensure nil
   :defer t
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -681,7 +692,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package pdf-tools
   :straight nil
-  :ensure nil
+
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-loader-install :no-query))
@@ -862,9 +873,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package gnus
   :straight (:type built-in)
-  :after mu4e
+  :defer t
   :hook
-  (dired-mode . turn-on-gnus-dired)
+  (dired-mode . turn-on-gnus-dired-mode)
   :custom
   (gnus-icalendar-org-capture-file "~/Dropbox/gtd/inbox.org")
   (gnus-icalendar-org-capture-headline '("Calendar"))
@@ -872,12 +883,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (require 'gnus-icalendar)
   (gnus-icalendar-setup)
   (gnus-icalendar-org-setup))
-
-(use-package org-mime
-  :straight t
-  :commands (org-mime-htmlize
-             org-mime-org-buffer-htmlize
-             org-mime-org-subtree-htmlize))
 
 (use-package mu4e
   :defer t
@@ -898,19 +903,25 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (message-kill-buffer-on-exit t)
   (mu4e-compose-dont-reply-to-self t)
   :config
+  (require 'mu4e-icalendar)
+  (mu4e-icalendar-setup)
   (setq mu4e-org-contacts-file  "~/Dropbox/contacts.org")
    (add-to-list 'mu4e-headers-actions
      '("org-contact-add" . mu4e-action-add-org-contact) t)
    (add-to-list 'mu4e-view-actions
      '("org-contact-add" . mu4e-action-add-org-contact) t)
-  (require 'mu4e-icalendar)
-  (mu4e-icalendar-setup)
   
   (require 'mu4e-speedbar)
   (load "~/.emacs.d/mu4e/mu4e-contexts.el")
   ;; Add option to view emails in browser
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
+
+(use-package org-mime
+  :straight t
+  :commands (org-mime-htmlize
+             org-mime-org-buffer-htmlize
+             org-mime-org-subtree-htmlize))
 
 (use-package docker
   :straight t
@@ -956,7 +967,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package ibuffer
   :straight (:type built-in)
-  :ensure nil
   :bind
   ("C-x C-b" . ibuffer)
   :custom
@@ -1033,9 +1043,10 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package savehist
   :straight (:type built-in)
-  :ensure nil
   :init
-  (savehist-mode))
+  (savehist-mode)
+  :hook
+  (savehist-save . fm/burly-savehist-integration))
 
 (use-package which-key
   :straight t
@@ -1065,7 +1076,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package exwm
   :straight nil
-  :ensure nil
+
   :if
   (and (not
         (string=
@@ -1115,7 +1126,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package desktop-environment
   :straight nil
-  :ensure nil
   :after exwm
   :init
   (mapc #'whicher '("amixer"

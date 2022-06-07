@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 08:48:16 thomas>
+#+date: Time-stamp: <2022-06-07 12:51:09 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -310,14 +310,6 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (inhibit-startup-screen t)
-#+end_src
-
-*** Recentf Mode
-
-Save a list of recent files.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (recentf-mode 1)
 #+end_src
 
 *** Register Delay
@@ -796,7 +788,6 @@ The following code will always highlight matching parenthesis when coding /immed
 #+begin_src emacs-lisp :tangle yes  
   (use-package paren
     :straight (:type built-in)
-    :ensure nil
     :defer t
     :custom
     (show-paren-delay 0)
@@ -882,7 +873,6 @@ The following customizations make emacs dired mode behave in a similar fashion t
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package dired
     :straight (:type built-in)
-    :ensure nil
     :defer t
     :custom
     <<dired_custom>>)
@@ -1015,9 +1005,56 @@ Sunrise Commander locks the windows vertically by default. The following line wi
   (sr-windows-locked nil)
 #+end_src
 
-* Navigation
+* Navigation and Session
 
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
+
+** Burly
+
+[[https://github.com/alphapapa/burly.el][Burly]] is a tool to save buffer, window, and frame configurations among sessions. Although Emacs has Tab Bar Mode and Desktop Mode, Burly has a couple benefits that make it worth adopting for some:
+
+1. Saving the Emacs Desktop automatically opens it on the next session which can slow down Emacs load time especially if you only wish to start a new session without opening any of the old buffers.
+2. Burly allows you save the different sessions with names so you can call up different sessions as you choose.
+3. Loading of Burly can be deferred until you call the Burly commands.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package burly
+    :straight (burly :host github
+                     :repo "tfree87/burly.el"
+                     :branch "master")
+    :commands (burly-bookmark-frames
+              burly-bookmark-windows
+              burly-open-bookmark
+              burly-open-last-bookmark)
+    :config
+    <<burly_config>>)
+#+end_src
+
+*** Last Opened Bookmark Between Sessions
+
+Burly will not remember the last opened bookmark between sessions. However, if we use Burly in combination with ~savehist-mode~, we can carry over the the most recently opened bookmark between sessions.
+
+#+begin_src emacs-lisp :noweb-ref burly_config
+  (defun fm/burly-savehist-integration ()
+    (when (bound-and-true-p burly-opened-bookmark-name)
+      (setq burly-opened-bookmark-name
+            (substring-no-properties burly-opened-bookmark-name))))
+  (add-to-list 'savehist-additional-variables 'burly-opened-bookmark-name)
+#+end_src
+
+Adding a hook to ~savehist-mode~ will cause it to run our function when savehist saves.
+
+#+begin_src emacs-lisp :noweb-ref savehist_hooks
+  (savehist-save . fm/burly-savehist-integration)
+#+end_src
+
+** Recentf Mode
+
+Recentf Mode will save a list of recent files so they can be called easily after restarting Emacs. To access the files, ~M-x recentf-open-files~ can be called to get a list of the recent files in a buffer.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (recentf-mode 1)
+#+end_src
 
 ** Winner Mode
 
@@ -1478,7 +1515,6 @@ In order for this to work in Windows, hunspell must be installed with the proper
 #+begin_src emacs-lisp :tangle yes
   (use-package ispell
     :straight (:type built-in)
-    :ensure nil
     :defer t
     :config
     (if (eq system-type 'windows-nt)
@@ -1495,7 +1531,6 @@ Once hunspell is set up as the default spell checker, we can then hook flyspell 
 #+begin_src emacs-lisp :tangle yes
   (use-package flyspell
     :straight (:type built-in)
-    :ensure nil
     :defer t
     :init
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -1537,7 +1572,7 @@ Since [[https://pandoc.org/][Pandoc]] can be installed on both Linux and in Wind
 #+begin_src emacs-lisp :tangle yes
   (use-package pdf-tools
     :straight nil
-    :ensure nil
+    
     :magic ("%PDF" . pdf-view-mode)
     :config
     (pdf-loader-install :no-query))
@@ -1909,38 +1944,38 @@ The following custom function will change the heading sizes in Org Mode to make 
 
 * Email
 
-This section contains configuration for packages that do not fit into the other categories.
+This section contains the configuration to enable using email in Emacs with the Mu4e mail user agent.
 
-** Set Default Mail User Agent
+** Set Default Mail User Agent :email:
 
-The following will set mu4e as the default mail user agent:
+The following will set Mu4e as the default mail user agent:
 
 #+begin_src emacs-lisp :noweb-ref emacs custom
   (mail-user-agent 'mu4e-user-agent)
 #+end_src
 
-And the code below will set mu4e as the default mail reading command:
+And the code below will set Mu4e as the default mail reading command:
 
 #+begin_src emacs-lisp :noweb-ref emacs_config
 (set-variable 'read-mail-command 'mu4e)
 #+end_src
 
-** Attach Files to Email from Dired
+** Attach Files to Email from Dired :email:
 
-Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with mu4e.
+Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
 
 #+begin_src emacs-lisp :noweb-ref gnus_hooks
-  (dired-mode . turn-on-gnus-dired)
+  (dired-mode . turn-on-gnus-dired-mode)
 #+end_src
 
-** Add Calendar Invites to Org Mode :org:
+** Add Calendar Invites to Org Mode :org:email:
 
-Emacs can add iCalendar invites from email to an Org Mode file and heading of your choice. The functions to add iCalendar invites can be found in ~gnus-icalendar~. These same functions are called from mu4e but they are found in the Gnus package so we must set them up there.
+Emacs can add iCalendar invites from email to an Org Mode file and heading of your choice. The functions to add iCalendar invites can be found in ~gnus-icalendar~. These same functions are called from Mu4e but they are found in the Gnus package so we must set them up there.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package gnus
     :straight (:type built-in)
-    :after mu4e
+    :defer t
     :hook
     <<gnus_hooks>>
     :custom
@@ -1952,38 +1987,7 @@ Emacs can add iCalendar invites from email to an Org Mode file and heading of yo
     (gnus-icalendar-org-setup))
 #+end_src
 
-** Org Contacts
-
-Org-contrib has  library ~org-contacts~ that can be used to store contac information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
-
-First, ~org-contacs~ must be required from the ~org-contrib~ package and the default contacts file must be defined.
-
-#+begin_src emacs-lisp :noweb-ref org_contrib_config
-  (require 'org-contacts)
-  (setq org-contacts-files '("~/Dropbox/contacts.org"))
-#+end_src
-
-Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-headers-actin~ and the ~mu4e-view-actions~ so that the key combination =a o= can be used to add an email address to the file containing our contacts.
-
-#+begin_src emacs-lisp :noweb-ref mu4e_config
- (setq mu4e-org-contacts-file  "~/Dropbox/contacts.org")
-  (add-to-list 'mu4e-headers-actions
-    '("org-contact-add" . mu4e-action-add-org-contact) t)
-  (add-to-list 'mu4e-view-actions
-    '("org-contact-add" . mu4e-action-add-org-contact) t)
-#+end_src
-
-** Org MIME
-
-#+begin_src emacs-lisp :tangle yes
-    (use-package org-mime
-      :straight t
-      :commands (org-mime-htmlize
-                 org-mime-org-buffer-htmlize
-                 org-mime-org-subtree-htmlize))
-#+end_src
-
-** Mu4e
+** Mu4e :email:
 
 Mu4e is a package that used the Mu indexer to search through emails that are saved to the local system in the Maildir format.
 
@@ -2032,13 +2036,48 @@ Tell mu4e to prefer using html email as most email these days are sent in this f
   (mu4e-view-show-images t)
 #+end_src
 
-Add support for accepting iCalendar invites by email with mu4e:
+Add support for accepting iCalendar invites by email with Mu4e:
 
 #+begin_src emacs-lisp :noweb-ref mu4e_config
   (require 'mu4e-icalendar)
   (mu4e-icalendar-setup)
 #+end_src
+** Org Contacts :email:
+
+Org-contrib has  library ~org-contacts~ that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
+
+First, ~org-contacs~ must be required from the ~org-contrib~ package and the default contacts file must be defined.
+
+#+begin_src emacs-lisp :noweb-ref org_contrib_config
+  (require 'org-contacts)
+  (setq org-contacts-files '("~/Dropbox/contacts.org"))
+#+end_src
+
+Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-headers-actin~ and the ~mu4e-view-actions~ so that the key combination =a o= can be used to add an email address to the file containing our contacts.
+
+#+begin_src emacs-lisp :noweb-ref mu4e_config
+ (setq mu4e-org-contacts-file  "~/Dropbox/contacts.org")
+  (add-to-list 'mu4e-headers-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-view-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+#+end_src
+
+** Org MIME :email:
+
+
+
+#+begin_src emacs-lisp :tangle yes
+    (use-package org-mime
+      :straight t
+      :commands (org-mime-htmlize
+                 org-mime-org-buffer-htmlize
+                 org-mime-org-subtree-htmlize))
+#+end_src
+
 * Other
+
+This section contains configuration for packages that do no fit into the other categories.
 
 ** Docker
 
@@ -2126,7 +2165,6 @@ A better buffer list than the default.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package ibuffer
     :straight (:type built-in)
-    :ensure nil
     :bind
     ("C-x C-b" . ibuffer)
     :custom
@@ -2265,12 +2303,13 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 
 Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in [[Vertico]].
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package savehist
     :straight (:type built-in)
-    :ensure nil
     :init
-    (savehist-mode))
+    (savehist-mode)
+    :hook
+    <<savehist_hooks>>)
   #+end_src
   
 ** Which-key
@@ -2384,7 +2423,7 @@ Currently, I only use EXWM on my GUIX systems to I do not use straight or use-pa
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
     :straight nil
-    :ensure nil
+    
     :if
     <<win_man_check>>
     :custom
@@ -2543,7 +2582,6 @@ Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package desktop-environment
     :straight nil
-    :ensure nil
     :after exwm
     :init
     (mapc #'whicher '("amixer"
