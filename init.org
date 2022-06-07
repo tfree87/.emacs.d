@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 13:26:39 thomas>
+#+date: Time-stamp: <2022-06-07 13:33:13 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1010,6 +1010,8 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
 
 ** Bufler
+
+[[https://github.com/alphapapa/bufler.el][Bufler]] provides a buffer switching menu that has some enhanced automatic groupings that make it easier to configure than [[https://www.emacswiki.org/emacs/IbufferMode][Ibuffer]] as it requires less manual work to create buffer groups. It can also sort buffers into groups based on projects using ~project.el~.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package bufler
