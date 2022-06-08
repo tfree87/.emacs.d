@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 19:56:12 thomas>
+#+date: Time-stamp: <2022-06-07 20:06:18 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2066,7 +2066,7 @@ Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-heade
 
 ** Org MIME :email:
 
-
+Org Mime is a tool that can be used to convert an email written in Org Mode format to be converted to HTML before sending so that email readers can render the email in HTML format. It works by having the user write the whole email using Org Mode syntax followed by execution of the command ~org-mime-htmlize~ prior to sending the email.
 
 #+begin_src emacs-lisp :tangle yes
     (use-package org-mime
