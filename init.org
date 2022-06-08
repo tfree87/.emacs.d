@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 15:13:56 thomas>
+#+date: Time-stamp: <2022-06-07 19:56:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1242,6 +1242,10 @@ To remove headers labeled with the ~:ignore:~ tag, the following code needs to b
   (ox-extras-activate '(ignore-headlines))
 #+end_src
 
+#+begin_src emacs-lisp :noweb-ref org_customize
+  (org-export-in-background t)
+#+end_src
+
 *** Task Management Customization
 
 **** Drawer for State Changes
@@ -1410,16 +1414,22 @@ Org-mind-map (https://github.com/the-ted/org-mind-map) turns any ~org-mode~ buff
     (org-mind-map-engine "dot"))
 #+end_src
 
-** Org-ref
-
-Org-ref (https://github.com/jkitchin/org-ref) is a reference manager in org-mode.
+** Bibtex
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package org-ref
+  (use-package citar
     :straight t
-    :defer t
-    :after org)
+    :custom
+    (org-cite-global-bibliography '("~/bib/bib.bib"))
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    (citar-bibliography org-cite-global-bibliography)
+    ;; optional: org-cite-insert is also bound to C-c C-x C-@
+    :bind
+    (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
 #+end_src
+
 
 ** Org-roam
 
@@ -1939,7 +1949,7 @@ This section contains the configuration to enable using email in Emacs with the 
 
 The following will set Mu4e as the default mail user agent:
 
-#+begin_src emacs-lisp :noweb-ref emacs custom
+#+begin_src emacs-lisp :noweb-ref emacs_custom
   (mail-user-agent 'mu4e-user-agent)
 #+end_src
 
@@ -1983,6 +1993,8 @@ Mu4e is a package that used the Mu indexer to search through emails that are sav
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package mu4e
     :defer t
+    :init
+    (load "~/.emacs.d/mu4e/mu4e-contexts.el")
     :custom
     <<mu4e_customize>>
     ;; Update every 5 minutes
@@ -2000,7 +2012,6 @@ Mu4e is a package that used the Mu indexer to search through emails that are sav
     <<mu4e_config>>
     <<mu4e_contexts>>
     (require 'mu4e-speedbar)
-    (load "~/.emacs.d/mu4e/mu4e-contexts.el")
     ;; Add option to view emails in browser
     (add-to-list 'mu4e-view-actions
                  '("ViewInBrowser" . mu4e-action-view-in-browser) t))
@@ -2031,6 +2042,7 @@ Add support for accepting iCalendar invites by email with Mu4e:
   (require 'mu4e-icalendar)
   (mu4e-icalendar-setup)
 #+end_src
+
 ** Org Contacts :email:
 
 Org-contrib has  library ~org-contacts~ that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.

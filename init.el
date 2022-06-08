@@ -109,6 +109,7 @@
   (sentence-end-double-space nil)
   (display-time-mode t)
   (display-time-and-date t)
+  (mail-user-agent 'mu4e-user-agent)
   :config
   (add-hook 'before-save-hook 'time-stamp)
   (if (version<= "27.1" emacs-version)
@@ -526,6 +527,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-allow-creating-parent-nodes (quote confirm))
+  (org-export-in-background t)
   (org-log-into-drawer t)
   (org-todo-keywords
    '((sequence "TODO(t)"
@@ -603,10 +605,17 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :custom
   (org-mind-map-engine "dot"))
 
-(use-package org-ref
+(use-package citar
   :straight t
-  :defer t
-  :after org)
+  :custom
+  (org-cite-global-bibliography '("~/bib/bib.bib"))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  (citar-bibliography org-cite-global-bibliography)
+  ;; optional: org-cite-insert is also bound to C-c C-x C-@
+  :bind
+  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
 
 (use-package org-roam
   :straight t
@@ -883,6 +892,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package mu4e
   :defer t
+  :init
+  (load "~/.emacs.d/mu4e/mu4e-contexts.el")
   :custom
   (mu4e-maildir (expand-file-name "~/Mail"))
   (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
@@ -909,7 +920,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
      '("org-contact-add" . mu4e-action-add-org-contact) t)
   
   (require 'mu4e-speedbar)
-  (load "~/.emacs.d/mu4e/mu4e-contexts.el")
   ;; Add option to view emails in browser
   (add-to-list 'mu4e-view-actions
                '("ViewInBrowser" . mu4e-action-view-in-browser) t))
