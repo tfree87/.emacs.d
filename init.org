@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-10 11:37:35 thomas>
+#+date: Time-stamp: <2022-06-10 16:59:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2609,26 +2609,52 @@ Make sure to turn on the system tray in [[https://github.com/ch11ng/exwm][EXWM]]
   (exwm-systemtray-enable)
 #+end_src
 
-**** Wifi
+*** EXWM Startup Programs
 
-To enable a wifi applet in the ~exwm-system-tray~, Emacs can execute the ~nm-applet~ if it is installed.
+To make EXWM a fully functioning desktop evironment, a few startup programs will need to be run to make it able to function as a replacement to modern desktop environments such as Gnome:
 
-#+begin_src emacs-lisp :noweb-ref exwm_config
+1. To enable a wifi applet in the ~exwm-system-tray~ for easily controlling the wifi, Emacs can execute the ~nm-applet~ if it is installed.
+
+   #+begin_src emacs-lisp :noweb-ref exwm_config
   (whicher "nm-applet")
   (when (executable-find "nm-applet")
     (start-process-shell-command "nm-applet" nil "nm-applet"))
 #+end_src
 
-**** Pasystray
+2. To get sound in [[https://github.com/ch11ng/exwm][EXWM]], pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in [[https://github.com/ch11ng/exwm][EXWM]] if there are multiple desktop enviroments installed on the system.
 
-Use ~pasystray~ for controlling volume graphically in [[https://github.com/ch11ng/exwm][EXWM]].
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "pulseaudio --kill ; pulseaudio --start")
+   #+end_src
 
-#+begin_src emacs-lisp :noweb-ref exwm_config
+3. Use ~pasystray~ for controlling volume graphically in [[https://github.com/ch11ng/exwm][EXWM]].
+
+   #+begin_src emacs-lisp :noweb-ref exwm_config
   (whicher "pasystray")
   (when (executable-find "pasystray")
     (start-process-shell-command "pasystray" nil "pasystray"))
 #+end_src
 
+4. If the numpad is to be used for numbers, ~numlockx~ must be installed and turned on.
+
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "numlockx on")
+   #+end_src
+
+5. If the system is a laptop, tunring on tap to click can be activated.
+
+   #+begin_src emacs-lisp :noweb-ref de_config
+     (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
+   #+end_src
+
+6. Lastly, ~xsettingsd~ can be used to set the theme, and other settings for GTK+ applications.
+
+   #+begin_src emacs-lisp :noweb-ref exwm_config
+  (whicher "xsettingsd")
+  (when (executable-find "xsettingsd")
+    (start-process-shell-command "xsettingsd" nil "xsettingsd"))
+#+end_src
+   
 ** Desktop Environment
 
 The [[https://github.com/DamienCassou/desktop-environment][Desktop Environment]] package makes it so that some of the features that are included in a typical desktop environment system are included in [[https://github.com/ch11ng/exwm][EXWM]]. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
@@ -2652,26 +2678,6 @@ Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do 
     (desktop-environment-mode)
     <<de_config>>)
 #+end_src
-
-*** Set Up Desktop Environment
-
-1. To get sound in [[https://github.com/ch11ng/exwm][EXWM]], pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in [[https://github.com/ch11ng/exwm][EXWM]] if there are multiple desktop enviroments installed on the system.
-
-   #+begin_src emacs-lisp :noweb-ref de_config
-     (shell-command "pulseaudio --kill ; pulseaudio --start")
-   #+end_src
-
-2. If the numpad is to be used for numbers, ~numlockx~ must be installed and turned on.
-
-   #+begin_src emacs-lisp :noweb-ref de_config
-     (shell-command "numlockx on")
-   #+end_src
-
-3. If the system is a laptop, tunring on tap to click can be activated.
-
-   #+begin_src emacs-lisp :noweb-ref de_config
-     (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
-   #+end_src
 
 * Emacs Server
 

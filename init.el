@@ -1129,6 +1129,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (whicher "pasystray")
   (when (executable-find "pasystray")
     (start-process-shell-command "pasystray" nil "pasystray"))
+  (whicher "xsettingsd")
+  (when (executable-find "xsettingsd")
+    (start-process-shell-command "xsettingsd" nil "xsettingsd"))
   (exwm-enable))
 
 (use-package desktop-environment
