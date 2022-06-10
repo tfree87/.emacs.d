@@ -73,7 +73,7 @@
 (use-package benchmark-init
   :straight t
   :config
-  (benchmark-init/activate)
+  ;; (benchmark-init/activate)
   (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package no-littering
@@ -100,9 +100,9 @@
   (vc-make-backup-files t)
   (inhibit-startup-screen t)
   (register-preview-delay 0)
+  (register-preview-function #'consult-register-format)
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
-  (register-preview-function #'consult-register-format)
   (completion-cycle-threshold t)
   (tab-always-indent 'complete)
   (column-number-mode t)
@@ -187,11 +187,26 @@
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi))
   :config
-  (setq consult-narrow-key "<")
   (setq consult-project-root-function
         (lambda ()
           (when-let (project (project-current))
-            (car (project-roots project))))))
+            (car (project-roots project)))))
+  (setq consult-narrow-key "<"))
+
+(use-package consult-notes
+  :straight (:type git :host github :repo "mclear-tools/consult-notes")
+  :commands (consult-notes
+             consult-notes-search-all
+             consult-notes-org-roam-find-node
+             consult-notes-org-roam-find-node-relation)
+  :config
+  (setq consult-notes-data-dirs '(("GTD"  ?g  "~/Dropbox/gtd/")
+                             ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+  (consult-notes-org-roam-mode))
+
+(use-package consult-yasnippet
+  :straight t
+  :commands (consult-yasnippet))
 
 (use-package corfu
   :straight t
@@ -219,12 +234,8 @@
   :init
   (global-corfu-mode)
   :config
-  ;; Silence the pcomplete capf, no errors or messages!
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-  
-  ;; Ensure that pcomplete does not write to the buffer
-  ;; and behaves as a pure `completion-at-point-function'.
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 
 (use-package corfu-doc
   :straight (corfu-doc :host github
@@ -490,6 +501,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 (use-package deft
   :straight t
   :after org
+  :disabled t
   :defer t
   :bind
   ("C-c n d" . deft)
@@ -547,7 +559,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
      "pdflatex -interaction nonstopmode -output-directory %o %f"))
   (org-hide-emphasis-markers t)
   (org-tags-column 0)
-  (org-startup-indented t)
+  ;; (org-startup-indented t)
   (org-src-tab-acts-natively t)
   (org-todo-keyword-faces
    '(("TODO" . org-warning)
@@ -563,6 +575,10 @@ The rclone configuration can be set with RCLONE-CONFIG."
       "* %?\n%^{Scheduled}t\n%x")
      ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+  (org-cite-global-bibliography '("~/bib/bib.bib"))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
   (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
@@ -583,9 +599,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
      (octave . t)
      (plantuml . t)
      (R . t)
+     (scheme . t)
      (sed . t)
-     (shell . t)))
-  (fm/org-header-formatting))
+     (shell . t))))
 
 (use-package org-contrib
   :straight t
@@ -605,20 +621,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :custom
   (org-mind-map-engine "dot"))
 
-(use-package citar
-  :straight t
-  :custom
-  (org-cite-global-bibliography '("~/bib/bib.bib"))
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  (citar-bibliography org-cite-global-bibliography)
-  ;; optional: org-cite-insert is also bound to C-c C-x C-@
-  :bind
-  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
-
 (use-package org-roam
-  :straight t
   :defer t
   :after org
   :init
@@ -663,6 +666,12 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (TeX-master nil)
   (bibtex-dialect 'biblatex))
 
+(use-package citar
+  :straight t
+  :after org
+  :custom
+  (citar-bibliography org-cite-global-bibliography))
+
 (use-package ispell
   :straight (:type built-in)
   :defer t
@@ -697,8 +706,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
 
 (use-package pdf-tools
-  :straight nil
-
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-loader-install :no-query))
@@ -728,6 +735,10 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (eshell-destroy-buffer-when-process-dies t)
   :config
   (setenv "PAGER" "cat"))
+
+(use-package esh-autosuggest
+  :straight t
+  :hook (eshell-mode . esh-autosuggest-mode))
 
 (use-package eshell-git-prompt
   :straight (emacs-git-prompt :host github
@@ -766,6 +777,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
                    (format
                      "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
                     (buffer-file-name)))))
+
+(use-package vterm
+  :defer t)
 
 (use-package all-the-icons
   :straight t
@@ -849,17 +863,27 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :hook
   (org-mode . olivetti-mode))
 
-(use-package org-superstar
+(use-package org-modern
   :straight t
   :after org
   :custom
-  (org-superstar-prettify-item-bullets t)
-  (org-superstar-item-bullet-alist '((?* . ?•)
-                                     (?+ . ?➤)
-                                     (?- . ?•)))
-  :hook
-  (org-mode . org-superstar-mode))
+  (org-auto-align-tags nil)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-special-ctrl-a/e t)
+  (org-insert-heading-respect-content t)
 
+  (org-pretty-entities t)
+  (org-ellipsis "…")
+
+  (org-agenda-tags-column 0)
+  (org-agenda-block-separator ?─)
+  (org-agenda-time-grid
+   '((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+  (org-agenda-current-time-string
+   "⭠ now ─────────────────────────────────────────────────")
+:config
 (defun fm/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."
   (interactive)
@@ -876,6 +900,20 @@ The rclone configuration can be set with RCLONE-CONFIG."
            (org-level-8 . 1.10)
            (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
+(global-org-modern-mode)
+(fm/org-header-formatting))
+
+(use-package org-superstar
+  :straight t
+  :after org
+  :disabled t
+  :custom
+  (org-superstar-prettify-item-bullets t)
+  (org-superstar-item-bullet-alist '((?* . ?•)
+                                     (?+ . ?➤)
+                                     (?- . ?•)))
+  :hook
+  (org-mode . org-superstar-mode))
 
 (use-package gnus
   :straight (:type built-in)
@@ -892,8 +930,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package mu4e
   :defer t
-  :init
-  (load "~/.emacs.d/mu4e/mu4e-contexts.el")
   :custom
   (mu4e-maildir (expand-file-name "~/Mail"))
   (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
@@ -918,7 +954,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
      '("org-contact-add" . mu4e-action-add-org-contact) t)
    (add-to-list 'mu4e-view-actions
      '("org-contact-add" . mu4e-action-add-org-contact) t)
-  
+  (load "~/.emacs.d/mu4e/mu4e-contexts.el")
   (require 'mu4e-speedbar)
   ;; Add option to view emails in browser
   (add-to-list 'mu4e-view-actions
@@ -1041,8 +1077,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :commands (app-launcher))
 
 (use-package exwm
-  :straight nil
-
   :if
   (and (not
         (string=
@@ -1087,7 +1121,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
     (start-process-shell-command "nm-applet" nil "nm-applet"))
   (whicher "pasystray")
   (when (executable-find "pasystray")
-    (start-process-shell-command "pasystray" nil "pasystray"))    
+    (start-process-shell-command "pasystray" nil "pasystray"))
   (exwm-enable))
 
 (use-package desktop-environment
@@ -1109,6 +1143,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1"))
 
 ;; Start an Emacs server
+
 (use-package server
   :straight (:type built-in)
   :config
@@ -1139,6 +1174,97 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"
                                                          "~/Dropbox"
                                                          "dropbox:")))
+
+(use-package meow
+  :straight t
+  :commands (meow-global-mode)
+  :config
+  (defun meow-setup ()
+    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+    (meow-motion-overwrite-define-key
+     '("j" . meow-next)
+     '("k" . meow-prev)
+     '("<escape>" . ignore))
+    (meow-leader-define-key
+     ;; SPC j/k will run the original command in MOTION state.
+     '("j" . "H-j")
+     '("k" . "H-k")
+     ;; Use SPC (0-9) for digit arguments.
+     '("1" . meow-digit-argument)
+     '("2" . meow-digit-argument)
+     '("3" . meow-digit-argument)
+     '("4" . meow-digit-argument)
+     '("5" . meow-digit-argument)
+     '("6" . meow-digit-argument)
+     '("7" . meow-digit-argument)
+     '("8" . meow-digit-argument)
+     '("9" . meow-digit-argument)
+     '("0" . meow-digit-argument)
+     '("/" . meow-keypad-describe-key)
+     '("?" . meow-cheatsheet))
+    (meow-normal-define-key
+     '("0" . meow-expand-0)
+     '("9" . meow-expand-9)
+     '("8" . meow-expand-8)
+     '("7" . meow-expand-7)
+     '("6" . meow-expand-6)
+     '("5" . meow-expand-5)
+     '("4" . meow-expand-4)
+     '("3" . meow-expand-3)
+     '("2" . meow-expand-2)
+     '("1" . meow-expand-1)
+     '("-" . negative-argument)
+     '(";" . meow-reverse)
+     '("," . meow-inner-of-thing)
+     '("." . meow-bounds-of-thing)
+     '("[" . meow-beginning-of-thing)
+     '("]" . meow-end-of-thing)
+     '("a" . meow-append)
+     '("A" . meow-open-below)
+     '("b" . meow-back-word)
+     '("B" . meow-back-symbol)
+     '("c" . meow-change)
+     '("d" . meow-delete)
+     '("D" . meow-backward-delete)
+     '("e" . meow-next-word)
+     '("E" . meow-next-symbol)
+     '("f" . meow-find)
+     '("g" . meow-cancel-selection)
+     '("G" . meow-grab)
+     '("h" . meow-left)
+     '("H" . meow-left-expand)
+     '("i" . meow-insert)
+     '("I" . meow-open-above)
+     '("j" . meow-next)
+     '("J" . meow-next-expand)
+     '("k" . meow-prev)
+     '("K" . meow-prev-expand)
+     '("l" . meow-right)
+     '("L" . meow-right-expand)
+     '("m" . meow-join)
+     '("n" . meow-search)
+     '("o" . meow-block)
+     '("O" . meow-to-block)
+     '("p" . meow-yank)
+     '("q" . meow-quit)
+     '("Q" . meow-goto-line)
+     '("r" . meow-replace)
+     '("R" . meow-swap-grab)
+     '("s" . meow-kill)
+     '("t" . meow-till)
+     '("u" . meow-undo)
+     '("U" . meow-undo-in-selection)
+     '("v" . meow-visit)
+     '("w" . meow-mark-word)
+     '("W" . meow-mark-symbol)
+     '("x" . meow-line)
+     '("X" . meow-goto-line)
+     '("y" . meow-save)
+     '("Y" . meow-sync-grab)
+     '("z" . meow-pop-selection)
+     '("'" . repeat)
+     '("<escape>" . ignore)))
+  (meow-setup))
 
 (setq gc-cons-threshold 800000)
 )
