@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-10 11:03:28 thomas>
+#+date: Time-stamp: <2022-06-10 11:37:35 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -114,7 +114,7 @@ When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTA
   (string= (getenv "EMACS_PORTABLE") "Y")
  #+end_src
  
-** Set Location of Portable Git
+** Set Location of Portable Git :git:
 
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 
@@ -467,6 +467,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-notes
     :straight (:type git :host github :repo "mclear-tools/consult-notes")
+    :after consult
     :commands (consult-notes
                consult-notes-search-all
                consult-notes-org-roam-find-node
@@ -482,7 +483,17 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-yasnippet
     :straight t
+    :after (consult yasnippet)
     :commands (consult-yasnippet))
+#+end_src
+
+*** Consult Flycheck
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package consult-flycheck
+    :straight t
+    :commands (consult-flycheck)
+    :after (consult flycheck))
 #+end_src
 
 *** Set Root Function for Projects
@@ -783,7 +794,7 @@ Indenting with spaces rather than tabs is genrally recommended when working with
     :defer t)
 #+end_src
 
-** Magit
+** Magit :git:
 
 [[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 
@@ -2661,7 +2672,7 @@ Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do 
    #+begin_src emacs-lisp :noweb-ref de_config
      (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
    #+end_src
-   
+
 * Emacs Server
 
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
@@ -2836,3 +2847,4 @@ Add a final comment to indicate the end of the file.
 
   ;;; init.el ends here
 #+end_src
+

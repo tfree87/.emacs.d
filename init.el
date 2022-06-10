@@ -195,6 +195,7 @@
 
 (use-package consult-notes
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
+  :after consult
   :commands (consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node
@@ -206,7 +207,13 @@
 
 (use-package consult-yasnippet
   :straight t
+  :after (consult yasnippet)
   :commands (consult-yasnippet))
+
+(use-package consult-flycheck
+  :straight t
+  :commands (consult-flycheck)
+  :after (consult flycheck))
 
 (use-package corfu
   :straight t
