@@ -1085,13 +1085,12 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package exwm
   :if
-  (and (not
-        (string=
-         (substring
-          (shell-command-to-string
-           (whicher "wmctrl -m ; echo $status"))
-          -2 -1) "0"))
-       (eq window-system 'x))
+  (not
+   (string=
+    (substring
+     (shell-command-to-string
+      (whicher "wmctrl -m ; echo $status"))
+     -2 -1) "0"))
   :custom
   (exwm-workspace-number 1)
   (exwm-input-global-keys

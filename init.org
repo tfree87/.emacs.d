@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-14 11:46:38 thomas>
+#+date: Time-stamp: <2022-06-14 11:48:57 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2449,13 +2449,12 @@ I generally only want to use [[https://github.com/ch11ng/exwm][EXWM]] when I do 
 There is also a check for the X window system as calling GUI programs from [[https://github.com/ch11ng/exwm][EXWM]] will not work without it.
 
 #+begin_src emacs-lisp :noweb-ref win_man_check
-  (and (not
-        (string=
-         (substring
-          (shell-command-to-string
-           (whicher "wmctrl -m ; echo $status"))
-          -2 -1) "0"))
-       (eq window-system 'x))
+  (not
+   (string=
+    (substring
+     (shell-command-to-string
+      (whicher "wmctrl -m ; echo $status"))
+     -2 -1) "0"))
 #+end_src
 
 ** App Launcher
