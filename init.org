@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-14 13:24:37 thomas>
+#+date: Time-stamp: <2022-06-16 14:30:54 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2015,26 +2015,6 @@ Org Modern is a package that prettifies Org Mode buffers.
   <<org_modern_config>>
   (global-org-modern-mode)
   (fm/org-header-formatting))
-#+end_src
-
-** Org Superstar Mode :org:disabled:deprecated:
-
-/This package has been deprecated in favor of [[Org Modern]]./
-
-Org Superstar Mode turns the stars/asterisks in Org Mode into nicely formatted bullets. What separates it from Org Bullets is that Org Superstar Mode also can support plain lists and it has the option to format TODO keywords.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package org-superstar
-    :straight t
-    :after org
-    :disabled t
-    :custom
-    (org-superstar-prettify-item-bullets t)
-    (org-superstar-item-bullet-alist '((?* . ?•)
-                                       (?+ . ?➤)
-                                       (?- . ?•)))
-    :hook
-    (org-mode . org-superstar-mode))
 #+end_src
 
 ** Org Header Sizes :org:

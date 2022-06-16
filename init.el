@@ -910,18 +910,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
 (global-org-modern-mode)
 (fm/org-header-formatting))
 
-(use-package org-superstar
-  :straight t
-  :after org
-  :disabled t
-  :custom
-  (org-superstar-prettify-item-bullets t)
-  (org-superstar-item-bullet-alist '((?* . ?•)
-                                     (?+ . ?➤)
-                                     (?- . ?•)))
-  :hook
-  (org-mode . org-superstar-mode))
-
 (use-package gnus
   :straight (:type built-in)
   :defer t
