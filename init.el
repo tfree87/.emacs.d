@@ -310,7 +310,7 @@
              consult-notes-org-roam-find-node-relation)
   :config
   (setq consult-notes-data-dirs '(("GTD"  ?g  "~/Dropbox/gtd/")
-                             ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
   (consult-notes-org-roam-mode))
 
 (use-package consult-yasnippet

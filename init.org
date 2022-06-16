@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-16 14:48:05 thomas>
+#+date: Time-stamp: <2022-06-16 17:44:29 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -691,7 +691,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
                consult-notes-org-roam-find-node-relation)
     :config
     (setq consult-notes-data-dirs '(("GTD"  ?g  "~/Dropbox/gtd/")
-                               ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+                                    ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
     (consult-notes-org-roam-mode))
 #+end_src
 
@@ -760,7 +760,7 @@ Cycle through completion candidates by pressing the completion key.
 
 ** Completion by Pressing Tab
 
-~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate autocomplete.
+~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate completion.
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (tab-always-indent 'complete)
