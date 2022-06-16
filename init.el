@@ -1131,7 +1131,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (whicher "xsettingsd")
   (when (executable-find "xsettingsd")
     (start-process-shell-command "xsettingsd" nil "xsettingsd"))
-  (exwm-enable))
+  (exwm-init))
 
 (use-package desktop-environment
   :straight nil
@@ -1149,7 +1149,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (desktop-environment-mode)
   (shell-command "pulseaudio --kill ; pulseaudio --start")
   (shell-command "numlockx on")
-  (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1"))
+  (shell-command "xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1")
+  (when (executable-find "flameshot")
+    (start-process-shell-command "flameshot" nil "flameshot")))
 
 ;; Start an Emacs server
 

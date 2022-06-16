@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-14 11:48:57 thomas>
+#+date: Time-stamp: <2022-06-14 13:24:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2485,7 +2485,7 @@ Currently, I only use EXWM on my GUIX systems to I do not use straight or use-pa
     <<exwm_custom>>
     :config
     <<exwm_config>>
-    (exwm-enable))
+    (exwm-init))
 #+end_src
 
 *** Battery Mode
@@ -2678,6 +2678,12 @@ Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do 
     <<de_config>>)
 #+end_src
 
+Instead of using ~scrot~ for screenshots, I prefer to use Flameshot.
+
+#+begin_src emacs-lisp :noweb-ref de_config
+  (when (executable-find "flameshot")
+    (start-process-shell-command "flameshot" nil "flameshot"))
+#+end_src
 * Emacs Server
 
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
