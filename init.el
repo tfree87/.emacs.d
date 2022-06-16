@@ -68,7 +68,7 @@
 
 (straight-use-package 'use-package)
 
-;; Emacs Startup Tools
+;; Startup Tools
 
 (use-package benchmark-init
   :straight t
@@ -100,12 +100,12 @@
   (vc-make-backup-files t)
   (inhibit-startup-screen t)
   (register-preview-delay 0)
+  (column-number-mode t)
   (register-preview-function #'consult-register-format)
   (xref-show-xrefs-function #'consult-xref)
   (xref-show-definitions-function #'consult-xref)
   (completion-cycle-threshold t)
   (tab-always-indent 'complete)
-  (column-number-mode t)
   (sentence-end-double-space nil)
   (display-time-mode t)
   (display-time-and-date t)
@@ -115,17 +115,125 @@
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
   (fset 'yes-or-no-p 'y-or-n-p)
-  (advice-add #'register-preview
-              :override #'consult-register-window)
   (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (advice-add #'register-preview
+              :override #'consult-register-window)
   (recentf-mode 1)
   (winner-mode t)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (toggle-scroll-bar -1)
   (set-variable 'read-mail-command 'mu4e))
+
+;; Coding Configuration
+
+(use-package aggressive-indent
+  :straight t
+  :hook
+  (c-mode . aggressive-indent-mode)
+  (emacs-lisp-mode . aggressive-indent-mode)
+  (go-mode . aggressive-indent-mode))
+
+(use-package apheleia
+  :straight t
+  :hook
+  (prog-mode . apheleia-mode)
+  (tex-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'black apheleia-formatters)
+  '("black" "--experimental-string-processing" "-")))
+
+(use-package c-mode
+  :straight (:type built-in)
+  :defer t
+  :mode ("\\.c\\'"
+         "\\.ino\\'"))
+
+(use-package eglot
+  :straight t
+  :hook
+  (python-mode . eglot-ensure))
+
+(use-package flycheck
+  :straight t
+  :hook
+  (prog-mode . flycheck-mode))
+
+(use-package go-mode
+  :straight t
+  :defer t)
+
+(use-package minimap
+  :straight t
+  :defer t)
+
+(use-package magit
+  :init
+  (whicher "git")
+  :straight t
+  :bind ("C-x g" . magit-status))
+
+(use-package numpydoc
+  :straight t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
+(use-package paren
+  :straight (:type built-in)
+  :defer t
+  :custom
+  (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
+
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package treemacs
+  :straight t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :custom
+  (treemacs-show-hidden-files t)
+  (treemacs-wide-toggle-width 60)
+  (treemacs-width 30)
+  (treemacs-width-is-initially-locked nil)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (treemacs-hide-gitignored-files-mode nil)
+  :config
+  (treemacs-load-theme "all-the-icons")
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-all-the-icons
+  :after treemacs
+  :straight t
+  :config (treemacs-load-theme 'all-the-icons))
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :straight t)
+
+;; Completion Configuration
 
 (use-package cape
   :straight t
@@ -301,109 +409,7 @@
   :init
   (vertico-mode))
 
-(use-package aggressive-indent
-  :straight t
-  :hook
-  (c-mode . aggressive-indent-mode)
-  (emacs-lisp-mode . aggressive-indent-mode)
-  (go-mode . aggressive-indent-mode))
-
-(use-package apheleia
-  :straight t
-  :hook
-  (prog-mode . apheleia-mode)
-  (tex-mode . apheleia-mode)
-  :config
-  (setf (alist-get 'black apheleia-formatters)
-  '("black" "--experimental-string-processing" "-")))
-
-(use-package c-mode
-  :straight (:type built-in)
-  :defer t
-  :mode ("\\.c\\'"
-         "\\.ino\\'"))
-
-(use-package eglot
-  :straight t
-  :hook
-  (python-mode . eglot-ensure))
-
-(use-package flycheck
-  :straight t
-  :hook
-  (prog-mode . flycheck-mode))
-
-(use-package go-mode
-  :straight t
-  :defer t)
-
-(use-package minimap
-  :straight t
-  :defer t)
-
-(use-package magit
-  :init
-  (whicher "git")
-  :straight t
-  :bind ("C-x g" . magit-status))
-
-(use-package numpydoc
-  :straight t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
-
-(use-package paren
-  :straight (:type built-in)
-  :defer t
-  :custom
-  (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
-
-(use-package rainbow-delimiters
-  :straight t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package treemacs
-  :straight t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :custom
-  (treemacs-show-hidden-files t)
-  (treemacs-wide-toggle-width 60)
-  (treemacs-width 30)
-  (treemacs-width-is-initially-locked nil)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode 'always)
-  (treemacs-hide-gitignored-files-mode nil)
-  :config
-  (treemacs-load-theme "all-the-icons")
-  (pcase (cons (not (null (executable-find "git")))
-               (not (null treemacs-python-executable)))
-    (`(t . t)
-     (treemacs-git-mode 'deferred))
-    (`(t . _)
-     (treemacs-git-mode 'simple)))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-(use-package treemacs-all-the-icons
-  :after treemacs
-  :straight t
-  :config (treemacs-load-theme 'all-the-icons))
-
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :straight t)
+;; File Management Configuration
 
 (use-package dired
   :straight (:type built-in)
@@ -462,6 +468,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :config
   (define-key sr-mode-map (kbd "o") #'dired-open-xdg))
 
+;; Navigation and Session Configuration
+
 (use-package bufler
   :straight t
   :bind ("C-x C-b" . bufler))
@@ -479,6 +487,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :defer 3
   :config
   (winum-mode t))
+
+;; Organization/Time Management/Notes Configuration
 
 (use-package calfw
   :straight (emacs-calfw :host github
@@ -660,6 +670,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
+;; Writing/Publishing/Reading Configuation
+
 (use-package academic-phrases
   :straight t
   :defer t)
@@ -716,6 +728,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-loader-install :no-query))
+
+;; Shells and Terminals Configuration
 
 (use-package eshell
   :straight (:type built-in)
@@ -787,6 +801,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package vterm
   :defer t)
+
+;; Theme and Appearance
 
 (use-package all-the-icons
   :straight t
@@ -878,10 +894,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-a/e t)
   (org-insert-heading-respect-content t)
-
   (org-pretty-entities t)
   (org-ellipsis "…")
-
   (org-agenda-tags-column 0)
   (org-agenda-block-separator ?─)
   (org-agenda-time-grid
@@ -909,6 +923,8 @@ The rclone configuration can be set with RCLONE-CONFIG."
       (set-face-attribute (car face) nil :height (cdr face)))))
 (global-org-modern-mode)
 (fm/org-header-formatting))
+
+;; Email Configuration
 
 (use-package gnus
   :straight (:type built-in)
