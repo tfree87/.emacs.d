@@ -71,7 +71,9 @@
 ;; Startup Tools
 
 (use-package benchmark-init
-  :straight t
+  :straight (benchmark-init :host github
+                            :repo "dholm/benchmark-init-el"
+                            :branch "master")
   :config
   ;; (benchmark-init/activate)
   (add-hook 'after-init-hook #'benchmark-init/deactivate))
@@ -137,7 +139,9 @@
   (go-mode . aggressive-indent-mode))
 
 (use-package apheleia
-  :straight t
+  :straight (apheleia :host github
+                      :repo "radian-software/apheleia"
+                      :branch "main")
   :hook
   (prog-mode . apheleia-mode)
   (tex-mode . apheleia-mode)
@@ -325,12 +329,6 @@
 
 (use-package corfu
   :straight t
-  :hook
-  (eshell-mode-hook . (lambda ()
-                        (setq-local corfu-quit-at-boundary t
-                                    corfu-quit-no-match t
-                                    corfu-auto nil)
-                        (corfu-mode)))
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)
@@ -350,7 +348,7 @@
   (global-corfu-mode)
   :config
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 
 (use-package corfu-doc
   :straight (corfu-doc :host github
@@ -686,7 +684,9 @@ The rclone configuration can be set with RCLONE-CONFIG."
   (bibtex-dialect 'biblatex))
 
 (use-package citar
-  :straight t
+  :straight (citar :host github
+                   :repo "emacs-citar/citar"
+                   :branch "main")
   :after org
   :custom
   (citar-bibliography org-cite-global-bibliography))

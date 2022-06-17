@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-16 17:44:29 thomas>
+#+date: Time-stamp: <2022-06-16 20:38:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -213,7 +213,9 @@ The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allow
 
 #+begin_src emacs-lisp :tangle yes
   (use-package benchmark-init
-    :straight t
+    :straight (benchmark-init :host github
+                              :repo "dholm/benchmark-init-el"
+                              :branch "master")
     :config
     ;; (benchmark-init/activate)
     (add-hook 'after-init-hook #'benchmark-init/deactivate))
@@ -372,7 +374,9 @@ The following customizations are used to improve the coding environment in Emacs
 
 #+begin_src emacs-lisp :tangle yes
   (use-package apheleia
-    :straight t
+    :straight (apheleia :host github
+                        :repo "radian-software/apheleia"
+                        :branch "main")
     :hook
     (prog-mode . apheleia-mode)
     (tex-mode . apheleia-mode)
@@ -773,8 +777,6 @@ Cycle through completion candidates by pressing the completion key.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package corfu
     :straight t
-    :hook
-    <<corfu_hooks>>
     :bind
     <<corfu_bind>>
     :custom
@@ -786,7 +788,7 @@ Cycle through completion candidates by pressing the completion key.
     (global-corfu-mode)
     :config
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 #+end_src
 
 *** Use TAB for Selecting Candidates
@@ -800,20 +802,6 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop en
         ([tab] . corfu-next)
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
-#+end_src
-
-*** Use Corfu in Eshell :disabled:
-
-/This customization has been removed from the configuration in favor of using [[Esh Autosuggest]]/.
-
-Use Corfu to complete commands in Eshell
-
-#+begin_src emacs-lisp :noweb-ref corfu_hooks
-  (eshell-mode-hook . (lambda ()
-                        (setq-local corfu-quit-at-boundary t
-                                    corfu-quit-no-match t
-                                    corfu-auto nil)
-                        (corfu-mode)))
 #+end_src
 
 *** Corfu-doc
@@ -1576,7 +1564,9 @@ This section contains customizations for adding citations into documents in Emac
 
 #+begin_src emacs-lisp :tangle yes
   (use-package citar
-    :straight t
+    :straight (citar :host github
+                     :repo "emacs-citar/citar"
+                     :branch "main")
     :after org
     :custom
     (citar-bibliography org-cite-global-bibliography))
