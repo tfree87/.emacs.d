@@ -4,7 +4,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-06-07 10:57:12 thomas>
+#+date: Time-stamp: <2022-06-16 21:08:36 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -19,6 +19,7 @@ This file was written using Emacs Org Mode. This makes navigating and modifying 
 
 * Header for early-init.el
 The following code block will add a header to the ~early-init.el~ file when it is generated on saving.
+
 #+begin_src emacs-lisp :tangle yes
   ;;; early-init.el --- Emacs early init -*- lexical-binding: t -*-
 ;; 
@@ -49,6 +50,11 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold 500000000)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'benchmark-init)
+  (add-hook 'after-init-hook 'benchmark-init/deactivate)
 #+end_src
 
 * Prevent Unwanted Runtime Compilation

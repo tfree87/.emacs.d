@@ -70,13 +70,13 @@
 
 ;; Startup Tools
 
-(use-package benchmark-init
-  :straight (benchmark-init :host github
-                            :repo "dholm/benchmark-init-el"
-                            :branch "master")
-  :config
-  ;; (benchmark-init/activate)
-  (add-hook 'after-init-hook #'benchmark-init/deactivate))
+;;(use-package benchmark-init
+;;  :straight (benchmark-init :host github
+;;                            :repo "dholm/benchmark-init-el"
+;;                            :branch "master")
+;; :config
+;;  (benchmark-init/activate)
+;;  (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package no-littering
   :straight (no-littering :host github

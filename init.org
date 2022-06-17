@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-16 20:38:37 thomas>
+#+date: Time-stamp: <2022-06-16 21:08:40 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -212,13 +212,13 @@ This section contains many of the tools used at Emacs startup that are helpful w
 The [[https://github.com/dholm/benchmark-init-el][benchmark init]] package allows me to track how long each component of my Emacs init takes to load. Normally, a long load time for Emacs would not bother me, however, as I use this same configuration for the portable version of Emacs that I run from a flash drive, decreasing the init time is critical as the thumb drive runs extremely slow in comparison to the native desktop application.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package benchmark-init
-    :straight (benchmark-init :host github
-                              :repo "dholm/benchmark-init-el"
-                              :branch "master")
-    :config
-    ;; (benchmark-init/activate)
-    (add-hook 'after-init-hook #'benchmark-init/deactivate))
+  ;;(use-package benchmark-init
+  ;;  :straight (benchmark-init :host github
+  ;;                            :repo "dholm/benchmark-init-el"
+  ;;                            :branch "master")
+  ;; :config
+  ;;  (benchmark-init/activate)
+  ;;  (add-hook 'after-init-hook #'benchmark-init/deactivate))
 #+end_src
 
 ** No-littering
