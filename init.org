@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-16 21:08:40 thomas>
+#+date: Time-stamp: <2022-06-18 21:21:20 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -204,7 +204,7 @@ However, as I have started using the GUIX System Distribution I have found that 
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
 
 #+begin_src emacs-lisp :tangle yes
-;; Startup Tools
+  ;; Startup Tools
 #+end_src
 
 ** Benchmark Init
@@ -287,7 +287,7 @@ Emacs supports bidirectional editing. This is rarely used feature for many and c
    #+end_src
 
 2. Turn off bidrectional editing mode.
-
+   
    #+begin_src emacs-lisp :noweb-ref emacs_config
      (if (version<= "27.1" emacs-version)
          (setq bidi-inhibit-bpa t))
@@ -2453,12 +2453,13 @@ I generally only want to use [[https://github.com/ch11ng/exwm][EXWM]] when I do 
 There is also a check for the X window system as calling GUI programs from [[https://github.com/ch11ng/exwm][EXWM]] will not work without it.
 
 #+begin_src emacs-lisp :noweb-ref win_man_check
-  (not
-   (string=
-    (substring
-     (shell-command-to-string
-      (whicher "wmctrl -m ; echo $status"))
-     -2 -1) "0"))
+  (and (window-system)
+       (not
+        (string=
+         (substring
+          (shell-command-to-string
+           (whicher "wmctrl -m ; echo $status"))
+          -2 -1) "0")))
 #+end_src
 
 ** App Launcher
