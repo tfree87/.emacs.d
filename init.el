@@ -574,7 +574,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
      "pdflatex -interaction nonstopmode -output-directory %o %f"))
   (org-hide-emphasis-markers t)
   (org-tags-column 0)
-  ;; (org-startup-indented t)
+  (org-startup-indented t)
   (org-src-tab-acts-natively t)
   (org-todo-keyword-faces
    '(("TODO" . org-warning)
@@ -923,6 +923,27 @@ The rclone configuration can be set with RCLONE-CONFIG."
       (set-face-attribute (car face) nil :height (cdr face)))))
 (global-org-modern-mode)
 (fm/org-header-formatting))
+
+(use-package elfeed
+  :straight t
+  :commands elfeed
+  :custom
+  (setq elfeed-feeds
+        '("https://www.sciencedaily.com/rss/all.xml")))
+
+(use-package elfeed-tube
+  :straight (elfeed-tube :host github
+                         :repo "karthink/elfeed-tube"
+                         :branch "master")
+  :after elfeed
+  :config
+  (require 'elfeed-tube-mpv)
+  (elfeed-tube-setup)
+  (elfeed-tube-add-feeds '("https://www.youtube.com/c/inanutshell/"
+                           "https://www.youtube.com/c/veritasium/")))
+
+(use-package mpv
+  :straight t)
 
 ;; Email Configuration
 

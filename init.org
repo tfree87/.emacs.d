@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-18 21:21:20 thomas>
+#+date: Time-stamp: <2022-06-24 14:51:51 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -1414,13 +1414,12 @@ I keep only a single space between the headline because I find it easier to owor
   (org-tags-column 0)
 #+end_src
 
-**** Use "Clean View" :disabled:
-/This feature has been disabled as it conflicts with [[Org Modern]]/.
+**** Use "Clean View"
 
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
-  ;; (org-startup-indented t)
+  (org-startup-indented t)
 #+end_src
 
 **** Native Tabs
@@ -2058,6 +2057,43 @@ The following custom function will change the heading sizes in Org Mode to make 
              (org-level-8 . 1.10)
              (org-document-title . 2.25)))
         (set-face-attribute (car face) nil :height (cdr face)))))
+#+end_src
+
+* Elfeed
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elfeed
+    :straight t
+    :commands elfeed
+    :custom
+    <<elfeed_feeds>>)
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref elfeed_feeds
+  (setq elfeed-feeds
+        '("https://www.sciencedaily.com/rss/all.xml"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elfeed-tube
+    :straight (elfeed-tube :host github
+                           :repo "karthink/elfeed-tube"
+                           :branch "master")
+    :after elfeed
+    :config
+    (require 'elfeed-tube-mpv)
+    (elfeed-tube-setup)
+    <<elfeed_tube_subs>>)
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref elfeed_tube_subs
+  (elfeed-tube-add-feeds '("https://www.youtube.com/c/inanutshell/"
+                           "https://www.youtube.com/c/veritasium/"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mpv
+    :straight t)
 #+end_src
 
 * Email
