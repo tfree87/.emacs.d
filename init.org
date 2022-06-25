@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-24 14:51:51 thomas>
+#+date: Time-stamp: <2022-06-25 11:12:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -2061,6 +2061,8 @@ The following custom function will change the heading sizes in Org Mode to make 
 
 * Elfeed
 
+[[https://github.com/skeeto/elfeed][Elfeed]] is a feed reader for Emacs that has powerful search capabilities and is very fast.
+
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elfeed
     :straight t
@@ -2069,10 +2071,14 @@ The following custom function will change the heading sizes in Org Mode to make 
     <<elfeed_feeds>>)
 #+end_src
 
+All of the feeds in the Elfeed reader are set as a list passed to the ~elfeed-feeds~ variable.
+
 #+begin_src emacs-lisp :noweb-ref elfeed_feeds
   (setq elfeed-feeds
         '("https://www.sciencedaily.com/rss/all.xml"))
 #+end_src
+
+[[https://github.com/karthink/elfeed-tube][Elfeed Tube]] is an extension to Elfeed that adds YouTube channels to the 
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elfeed-tube
@@ -2086,10 +2092,14 @@ The following custom function will change the heading sizes in Org Mode to make 
     <<elfeed_tube_subs>>)
 #+end_src
 
+Add subsriptions to Elfeed Tube using the ~elfeed-tube-add-feeds~ variable.
+
 #+begin_src emacs-lisp :noweb-ref elfeed_tube_subs
   (elfeed-tube-add-feeds '("https://www.youtube.com/c/inanutshell/"
                            "https://www.youtube.com/c/veritasium/"))
 #+end_src
+
+Elfeed Tube requires mpv for watching videos in Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package mpv
