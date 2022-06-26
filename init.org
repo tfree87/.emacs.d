@@ -3,7 +3,7 @@
 #+title: Emacs Configuration
 #+subtitle:
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-25 11:12:39 thomas>
+#+date: Time-stamp: <2022-06-26 09:05:57 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -261,13 +261,6 @@ The code below collects customizations for Emacs built-in components.
 
 This section contains modifications for Emacs that affect the behavior in nearly all buffers.
 
-*** Ring Bell Function
-
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (ring-bell-function #'ignore)
-  (visible-bell t)
-#+end_src
-
 *** Automatic Time Stamps
 
 Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
@@ -299,6 +292,14 @@ The following option will cause Emacs to always save the state of Emacs when it 
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   ;;(desktop-save-mode t)
+#+end_src
+
+*** Display Battery Mode
+
+Display Battery Mode will display the battery charge status in the modeline 
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (display-battery-mode t)
 #+end_src
 
 *** File Deletion and Backup
@@ -336,6 +337,13 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (register-preview-delay 0)
+#+end_src
+
+*** Ring Bell Function
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (ring-bell-function #'ignore)
+  (visible-bell t)
 #+end_src
 
 *** Shorten "Yes or No" to "Y or N"
@@ -2066,6 +2074,7 @@ The following custom function will change the heading sizes in Org Mode to make 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elfeed
     :straight t
+    :defer t
     :commands elfeed
     :custom
     <<elfeed_feeds>>)
@@ -2085,6 +2094,7 @@ All of the feeds in the Elfeed reader are set as a list passed to the ~elfeed-fe
     :straight (elfeed-tube :host github
                            :repo "karthink/elfeed-tube"
                            :branch "master")
+    :defer t
     :after elfeed
     :config
     (require 'elfeed-tube-mpv)
@@ -2539,14 +2549,6 @@ Currently, I only use EXWM on my GUIX systems to I do not use straight or use-pa
     (exwm-init))
 #+end_src
 
-*** Battery Mode
-
-When running [[https://github.com/ch11ng/exwm][EXWM]] as the only window manager, turning on ~display-battery-mode~ will make it so the battery power on a laptop or portable device can be monitored.
-
-#+begin_src emacs-lisp :noweb-ref exwm_config
-  (display-battery-mode t)
-#+end_src
-
 *** Buffer Naming
 
 To name buffers based on the application that was launched to create them, the following code must be used:
@@ -2735,6 +2737,7 @@ Instead of using ~scrot~ for screenshots, I prefer to use Flameshot.
   (when (executable-find "flameshot")
     (start-process-shell-command "flameshot" nil "flameshot"))
 #+end_src
+
 * Emacs Server
 
 Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.

@@ -92,8 +92,6 @@
 
 (use-package emacs
   :custom
-  (ring-bell-function #'ignore)
-  (visible-bell t)
   (bidi-paragraph-direction 'left-to-right)
   ;;(desktop-save-mode t)
   (delete-by-moving-to-trash t)
@@ -102,6 +100,8 @@
   (vc-make-backup-files t)
   (inhibit-startup-screen t)
   (register-preview-delay 0)
+  (ring-bell-function #'ignore)
+  (visible-bell t)
   (column-number-mode t)
   (register-preview-function #'consult-register-format)
   (xref-show-xrefs-function #'consult-xref)
@@ -116,6 +116,7 @@
   (add-hook 'before-save-hook 'time-stamp)
   (if (version<= "27.1" emacs-version)
       (setq bidi-inhibit-bpa t))
+  (display-battery-mode t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (when (version<= "26.0.50" emacs-version)
@@ -926,6 +927,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
 
 (use-package elfeed
   :straight t
+  :defer t
   :commands elfeed
   :custom
   (setq elfeed-feeds
@@ -935,6 +937,7 @@ The rclone configuration can be set with RCLONE-CONFIG."
   :straight (elfeed-tube :host github
                          :repo "karthink/elfeed-tube"
                          :branch "master")
+  :defer t
   :after elfeed
   :config
   (require 'elfeed-tube-mpv)
@@ -1138,7 +1141,6 @@ The rclone configuration can be set with RCLONE-CONFIG."
      ?\C-\M-j
      ?\C-\ ))
   :config
-  (display-battery-mode t)
   (add-hook
    'exwm-update-class-hook (lambda()
                              (exwm-workspace-rename-buffer
