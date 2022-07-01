@@ -1,0 +1,77 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Elfeed Configuration
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-06-28 20:16:34 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: index.html
+#+html_link_up: index.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+* Elfeed
+
+[[https://github.com/skeeto/elfeed][Elfeyed]] is a feed reader for Emacs that has powerful search capabilities and is very fast.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elfeed
+    :straight t
+    :defer t
+    :commands elfeed
+    :custom
+    <<elfeed_feeds>>)
+#+end_src
+
+All of the feeds in the Elfeed reader are set as a list passed to the ~elfeed-feeds~ variable.
+
+#+begin_src emacs-lisp :noweb-ref elfeed_feeds
+  (setq elfeed-feeds
+        '("https://www.sciencedaily.com/rss/all.xml"))
+#+end_src
+
+[[https://github.com/karthink/elfeed-tube][Elfeed Tube]] is an extension to Elfeed that adds YouTube channels to the 
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package elfeed-tube
+    :straight (elfeed-tube :host github
+                           :repo "karthink/elfeed-tube"
+                           :branch "master")
+    :defer t
+    :after elfeed
+    :config
+    (require 'elfeed-tube-mpv)
+    (elfeed-tube-setup)
+    <<elfeed_tube_subs>>)
+#+end_src
+
+Add subsriptions to Elfeed Tube using the ~elfeed-tube-add-feeds~ variable.
+
+#+begin_src emacs-lisp :noweb-ref elfeed_tube_subs
+  (elfeed-tube-add-feeds '("https://www.youtube.com/c/inanutshell/"
+                           "https://www.youtube.com/c/veritasium/"))
+#+end_src
+
+Elfeed Tube requires mpv for watching videos in Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mpv
+    :straight t
+    :defer t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-elfeed)
+#+end_src

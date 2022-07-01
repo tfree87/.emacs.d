@@ -1,0 +1,218 @@
+* Coding
+
+The following customizations are used to improve the coding environment in Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Coding Configuration
+#+end_src
+
+** Aggressive Indent
+
+[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package aggressive-indent
+    :straight t
+    :hook
+    (c-mode . aggressive-indent-mode)
+    (emacs-lisp-mode . aggressive-indent-mode)
+    (go-mode . aggressive-indent-mode))
+#+end_src
+
+** Apheleia :python:go:
+
+[[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package apheleia
+    :straight (apheleia :host github
+                        :repo "radian-software/apheleia"
+                        :branch "main")
+    :hook
+    (prog-mode . apheleia-mode)
+    (tex-mode . apheleia-mode)
+    :config
+    (setf (alist-get 'black apheleia-formatters)
+    '("black" "--experimental-string-processing" "-")))
+#+end_src
+
+** C
+
+I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package c-mode
+    :straight (:type built-in)
+    :defer t
+    :mode ("\\.c\\'"
+           "\\.ino\\'"))
+#+end_src
+
+** Eglot
+
+[[https://github.com/joaotavora/eglot][Eglot]] is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package eglot
+    :straight t
+    :hook
+    (python-mode . eglot-ensure))
+#+end_src
+
+** Flycheck :python:
+
+[[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck
+    :straight t
+    :hook
+    (prog-mode . flycheck-mode))
+#+end_src
+
+** Go
+
+[[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package go-mode
+    :straight t
+    :defer t)
+#+end_src
+
+** Indent Using Spaces :python:
+
+Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+(setq-default indent-tabs-mode nil)
+#+end_src
+
+** Minimap
+
+[[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package minimap
+    :straight t
+    :defer t)
+#+end_src
+
+** Magit :git:
+
+[[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package magit
+    :init
+    (whicher "git")
+    :straight t
+    :bind ("C-x g" . magit-status))
+#+end_src
+
+** Number Line Mode
+
+Number lines can be very useful in programming modes. This code below will turn on the built-in ~display-line-numbers-mode~ in any major mode that inherits from ~prog-mode~. With wide monitors these days it is less of an issue and it can always toggled off with  ~display-line-numbers-mode~ on the fly.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+    (when (version<= "26.0.50" emacs-version)
+      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+#+end_src
+
+** Numpydoc :python:
+
+Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package numpydoc
+    :straight t
+    :bind (:map python-mode-map
+                ("C-c C-n" . numpydoc-generate)))
+#+end_src
+
+** Paren Mode
+
+Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
+
+The following code will always highlight matching parenthesis when coding /immediately/ without delay. A hook was added to defer loading the package until a programming mode:
+
+#+begin_src emacs-lisp :tangle yes  
+  (use-package paren
+    :straight (:type built-in)
+    :defer t
+    :custom
+    (show-paren-delay 0)
+    :hook (prog-mode . show-paren-mode))
+#+end_src
+
+** Rainbow Delimiters
+
+[[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rainbow-delimiters
+    :straight t
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** Show Column Number
+
+Many programming language style guides recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (column-number-mode t)
+#+end_src
+
+A better fix would be to use code formatters to prevent lines from getting too long. For example, [[Apheleia]] will run formatters such as Black on Python code to keep code lines from becoming too long.
+
+** Treemacs
+
+[[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package treemacs
+    :straight t
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :custom
+    (treemacs-show-hidden-files t)
+    (treemacs-wide-toggle-width 60)
+    (treemacs-width 30)
+    (treemacs-width-is-initially-locked nil)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (treemacs-hide-gitignored-files-mode nil)
+    :config
+    (treemacs-load-theme "all-the-icons")
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t d"   . treemacs-select-directory)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-all-the-icons
+    :after treemacs
+    :straight t
+    :config (treemacs-load-theme 'all-the-icons))
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :straight t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-coding)
+#+end_src

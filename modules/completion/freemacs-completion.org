@@ -1,0 +1,346 @@
+* Completion
+
+This section contains configuration to set up completion tools in Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Completion Configuration
+#+end_src
+
+** Cape
+
+ [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
+ 
+#+name: cape
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package cape
+    :straight t
+    :bind (("C-c p p" . completion-at-point)
+           ("C-c p t" . complete-tag)
+           ("C-c p d" . cape-dabbrev)
+           ("C-c p f" . cape-file)
+           ("C-c p k" . cape-keyword)
+           ("C-c p s" . cape-symbol)
+           ("C-c p a" . cape-abbrev)
+           ("C-c p \\" . cape-tex)
+           ("C-c p _" . cape-tex)
+           ("C-c p ^" . cape-tex))
+    :init
+    <<capfs>>)
+#+end_src
+
+*** Cape Completion Functions
+
+Cape provides a number of ~completion-at-point~ functions that can be used. Below are the functions that I use that have not been intrusive.
+
+The following will complete file names in buffers:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-file)
+#+end_src
+
+This will complete items in TeX and LaTeX modes:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+#+end_src
+
+Search other buffers for completion candidates:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+#+end_src
+
+Complete keywords in programming modes:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+#+end_src
+
+Complete Emacs-lisp symbols:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+#+end_src
+
+** Consult
+
+[[https://github.com/minad/consult][Consult]] provides a number of highly useful commands. The complete list of commands can be found [[https://github.com/minad/consult#available-commands][here]].
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package consult
+    :straight t
+    :bind (("C-c h" . consult-history)
+           ("C-c m" . consult-mode-command)
+           ("C-c k" . consult-kmacro)
+           ("C-x M-:" . consult-complex-command)
+           ("C-x b" . consult-buffer)
+           ("C-x 4 b" . consult-buffer-other-window)
+           ("C-x 5 b" . consult-buffer-other-frame)
+           ("C-x r b" . consult-bookmark)
+           ("M-#" . consult-register-load)
+           ("M-'" . consult-register-store)
+           ("C-M-#" . consult-register)
+           ("M-y" . consult-yank-pop)
+           ("<help> a" . consult-apropos)
+           ("M-g e" . consult-compile-error)
+           ("M-g f" . consult-flymake)
+           ("M-g g" . consult-goto-line)
+           ("M-g M-g" . consult-goto-line)
+           ("M-g o" . consult-outline)
+           ("M-g m" . consult-mark)
+           ("M-g k" . consult-global-mark)
+           ("M-g i" . consult-imenu)
+           ("M-g I" . consult-imenu-multi)
+           ("M-s d" . consult-find)
+           ("M-s D" . consult-locate)
+           ("M-s g" . consult-grep)
+           ("M-s G" . consult-git-grep)
+           ("M-s r" . consult-ripgrep)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi)
+           ("M-s m" . consult-multi-occur)
+           ("M-s k" . consult-keep-lines)
+           ("M-s u" . consult-focus-lines)
+           ("M-s e" . consult-isearch-history)
+           :map isearch-mode-map
+           ("M-e" . consult-isearch-history)
+           ("M-s e" . consult-isearch-history)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi))
+    :config
+    <<consult_config>>)
+#+end_src
+
+*** Change Register Preview to Consult
+
+Change the default Emacs ~register-preview-function~ to use consult effectively.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (register-preview-function #'consult-register-format)
+#+end_src
+
+*** Consult Notes
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package consult-notes
+    :straight (:type git :host github :repo "mclear-tools/consult-notes")
+    :after consult
+    :commands (consult-notes
+               consult-notes-search-all
+               consult-notes-org-roam-find-node
+               consult-notes-org-roam-find-node-relation)
+    :config
+    (setq consult-notes-data-dirs '(("GTD"  ?g  "~/Dropbox/gtd/")
+                                    ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+    (consult-notes-org-roam-mode))
+#+end_src
+
+*** Consult YASnippet
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package consult-yasnippet
+    :straight t
+    :after (consult yasnippet)
+    :commands (consult-yasnippet))
+#+end_src
+
+*** Consult Flycheck
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package consult-flycheck
+    :straight t
+    :commands (consult-flycheck)
+    :after (consult flycheck))
+#+end_src
+
+*** Set Root Function for Projects
+
+Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
+
+#+begin_src emacs-lisp :noweb-ref consult_config
+  (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project)))))
+#+end_src
+
+*** Set the Narrowing Key
+
+The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks after calling ~consult-buffer~.
+
+#+begin_src emacs-lisp :noweb-ref consult_config
+  (setq consult-narrow-key "<")
+#+end_src
+
+*** Tweak Register Preview Window
+
+The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (advice-add #'register-preview
+              :override #'consult-register-window)
+#+end_src
+
+*** Use Consult to Select xref Locations
+
+Use Consult to search through and select xref locations in buffers
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref)
+#+end_src
+
+** Completion Cycling
+
+Cycle through completion candidates by pressing the completion key.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (completion-cycle-threshold t)
+#+end_src
+
+** Completion by Pressing Tab
+
+~<TAB>~ will indent lines by default. In order to turn ~<TAB>~ into a button that activates autocomplete, the ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate completion.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (tab-always-indent 'complete)
+#+end_src
+
+** Corfu
+
+[[https://github.com/minad/corfu][Corfu]] for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package corfu
+    :straight t
+    :bind
+    <<corfu_bind>>
+    :custom
+    (corfu-auto t)
+    (corfu-cycle t)
+    (corfu-preselect-first nil)
+    <<tab-selection>>
+    :init
+    (global-corfu-mode)
+    :config
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+#+end_src
+
+*** Use TAB for Selecting Candidates
+
+Instead of using M-tab which will switch windows in XFCE---my default desktop environment---use TAB to cycle between the different possible options.
+
+#+name: tab-selection
+#+begin_src emacs-lisp :noweb-ref corfu_bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+#+end_src
+
+*** Corfu-doc
+
+Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package corfu-doc
+    :straight (corfu-doc :host github
+                         :repo "galeo/corfu-doc"
+                         :branch "main")
+    :hook
+    (corfu-mode . corfu-doc-mode)
+    :config
+    (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
+    (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
+#+end_src
+
+** Embark :minibuffer:
+
+[[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package embark
+    :straight t
+    :bind
+    (("C-." . embark-act)
+     ("C-;" . embark-dwim)
+     ("C-h B" . embark-bindings))
+    :init
+    (setq prefix-help-command #'embark-prefix-help-command)
+    :config
+    <<embark_config>>
+    (define-key embark-file-map (kbd "S") 'sudo-find-file))
+#+end_src
+
+*** Embark Mode Line
+
+Hide the mode line of the Embark live/completions buffers.
+
+#+begin_src emacs-lisp :noweb-ref embark_config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+#+end_src
+
+*** Embark Integration with Consult
+
+Allow use of Embark commands after issuing a Consult command.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package embark-consult
+    :straight t
+    :after (embark consult)
+    :demand t
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
+
+** Orderless :minibuffer:
+
+[[https://github.com/oantolin/orderless][Orderless]] will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package orderless
+    :straight t
+    :defer 3
+    :custom
+    (completion-styles '(orderless))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+** Marginalia :minibuffer:
+
+[[https://github.com/minad/marginalia][Marginalia]] generates annotations to items in the minibuffer similar to what is accomplished  with [[https://github.com/Yevgnen/ivy-rich][ivy-rich]].
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package marginalia
+    :straight t
+    :bind (("M-A" . marginalia-cycle)
+           :map minibuffer-local-map
+           ("M-A" . marginalia-cycle))
+    :init
+    (marginalia-mode))
+#+end_src
+
+** Vertico :minibuffer:
+
+[[https://github.com/minad/vertico][Vertico]] removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package vertico
+    :straight t
+    :demand t
+    :custom
+    (vertico-cycle t)
+    (vertico-resize t)
+    :init
+    (vertico-mode))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-completion)
+#+end_src

@@ -1,0 +1,138 @@
+#+begin_src emacs-lisp :tangle yes
+  ;; Email Configuration
+#+end_src
+
+** Set Default Mail User Agent :email:
+
+The following will set Mu4e as the default mail user agent:
+
+#+begin_src emacs-lisp :tangle yes
+  (setq mail-user-agent 'mu4e-user-agent)
+#+end_src
+
+And the code below will set Mu4e as the default mail reading command:
+
+#+begin_src emacs-lisp :tangle yes
+  (setq read-mail-command 'mu4e)
+#+end_src
+
+** Attach Files to Email from Dired :email:
+
+Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
+
+#+begin_src emacs-lisp :noweb-ref gnus_hooks
+  (dired-mode . turn-on-gnus-dired-mode)
+#+end_src
+
+** Add Calendar Invites to Org Mode :org:email:
+
+Emacs can add iCalendar invites from email to an Org Mode file and heading of your choice. The functions to add iCalendar invites can be found in ~gnus-icalendar~. These same functions are called from Mu4e but they are found in the Gnus package so we must set them up there.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package gnus
+    :straight (:type built-in)
+    :defer t
+    :hook
+    <<gnus_hooks>>
+    :custom
+    (gnus-icalendar-org-capture-file "~/Dropbox/gtd/inbox.org")
+    (gnus-icalendar-org-capture-headline '("Calendar"))
+    :config
+    (require 'gnus-icalendar)
+    (gnus-icalendar-setup)
+    (gnus-icalendar-org-setup))
+#+end_src
+
+** Mu4e :email:guix:
+
+Mu4e is a package that used the Mu indexer to search through emails that are saved to the local system in the Maildir format.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package mu4e
+    :defer t
+    :custom
+    <<mu4e_customize>>
+    ;; Update every 5 minutes
+    (mu4e-update-interval 300)
+    (mu4e-headers-auto-update t)
+    (mu4e-compose-signature-auto-include t)
+    (mu4e-compose-format-flowed t)
+    (mu4e-compose-in-new-frame t)
+    (mu4e-sent-messages-behavior 'delete)
+    (mu4e-attachment-dir  "~/Downloads")
+    (mu4e-change-filenames-when-moving t)
+    (message-kill-buffer-on-exit t)
+    (mu4e-compose-dont-reply-to-self t)
+    :config
+    <<mu4e_config>>
+    (load "~/.emacs.d/mu4e/mu4e-contexts.el")
+    (require 'mu4e-speedbar)
+    ;; Add option to view emails in browser
+    (add-to-list 'mu4e-view-actions
+                 '("ViewInBrowser" . mu4e-action-view-in-browser) t))
+#+end_src
+
+Set the Maildir top-level directory.
+
+#+begin_src emacs-lisp :noweb-ref mu4e_customize
+  (mu4e-maildir (expand-file-name "~/Mail"))
+#+end_src
+
+Tell mu4e to use mbsync to get email from the server and synchronize email back to the fto server. Other programs that may work for this purpose include offlineimap and fetchmail.
+
+#+begin_src emacs-lisp :noweb-ref mu4e_customize
+  (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
+#+end_src
+
+Tell mu4e to prefer using html email as most email these days are sent in this format and tell mu4e to show images inline in the email message buffers.
+
+#+begin_src emacs-lisp :noweb-ref mu4e_customize
+  (mu4e-view-prefer-html t)
+  (mu4e-view-show-images t)
+#+end_src
+
+Add support for accepting iCalendar invites by email with Mu4e:
+
+#+begin_src emacs-lisp :noweb-ref mu4e_config
+  (require 'mu4e-icalendar)
+  (mu4e-icalendar-setup)
+#+end_src
+
+** Org Contacts :email:
+
+Org-contrib has  library ~org-contacts~ that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
+
+First, ~org-contacs~ must be required from the ~org-contrib~ package and the default contacts file must be defined.
+
+#+begin_src emacs-lisp :noweb-ref org_contrib_config
+  (require 'org-contacts)
+  (setq org-contacts-files '("~/Dropbox/contacts.org"))
+#+end_src
+
+Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-headers-actin~ and the ~mu4e-view-actions~ so that the key combination =a o= can be used to add an email address to the file containing our contacts.
+
+#+begin_src emacs-lisp :noweb-ref mu4e_config
+ (setq mu4e-org-contacts-file  "~/Dropbox/contacts.org")
+  (add-to-list 'mu4e-headers-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-view-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+#+end_src
+
+** Org MIME :email:
+
+Org Mime is a tool that can be used to convert an email written in Org Mode format to be converted to HTML before sending so that email readers can render the email in HTML format. It works by having the user write the whole email using Org Mode syntax followed by execution of the command ~org-mime-htmlize~ prior to sending the email.
+
+#+begin_src emacs-lisp :tangle yes
+    (use-package org-mime
+      :straight t
+      :commands (org-mime-htmlize
+                 org-mime-org-buffer-htmlize
+                 org-mime-org-subtree-htmlize))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-email)
+
+  ;; freemacs-email.el ends here
+#+end_src

@@ -1,0 +1,147 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Dired Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-06-29 19:58:21 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: index.html
+#+html_link_up: init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+* Dired
+
+The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package dired
+    :straight (:type built-in)
+    :defer t
+    :custom
+    <<dired_custom>>)
+#+end_src
+
+** Move/Rename/Copy Files to Another Pane
+
+This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
+
+ #+begin_src emacs-lisp :noweb-ref dired_custom
+   (dired-dwim-target t)
+ #+end_src
+ 
+* Dired Hacks
+
+Dired Hacks is a series of modifications to add features to Dired.
+
+** Dired Collapse
+
+Dired colapse will show the full path in a dired buffer for paths that contain only a single file.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dired-collapse
+    :straight t
+    :after dired
+    :hook
+    (dired-mode . dired-collapse-mode))
+#+end_src
+
+** Dired Open
+
+Dired Open adds extra hooks to ~dired-find-file~ which search for alternative ways to open files in Dired.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package dired-open
+    :straight t
+    :after dired
+    :init
+    <<dired_open_init>>
+    :config
+    <<dired_open_config>>)
+#+end_src
+
+** xdg-open
+
+When opening files in Emacs such as media files, ~xdg-open~ can be used to open the preferred application for that particular file extension. Dired Open has a function ~dired-open-xdg~ that will open the file on the current line in Dired using ~xdg-open~.
+
+First, ~whicher~ can be used to see if ~xdg-open~ is installed on the system.
+
+#+begin_src emacs-lisp :noweb-ref dired_open_init
+  (whicher "xdg-open")
+#+end_src
+
+The following line will bind the =o= key to ~dired-open-xdg~:
+
+#+begin_src emacs-lisp :noweb-ref dired_open_config
+  (define-key dired-mode-map (kbd "o") #'dired-open-xdg)
+#+end_src
+
+This can also be configured to work in Sunrise Commander using the ~sr-mode-map~:
+
+#+begin_src emacs-lisp :noweb-ref sr_config
+  (define-key sr-mode-map (kbd "o") #'dired-open-xdg)
+#+end_src
+
+* Disc Usage
+
+Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package disk-usage
+    :straight t
+    :defer t)
+#+end_src
+
+* Rclone Tools
+
+Rclone tools is a package that used the Emacs ~completing-read~ function to simplify running the ~rclone~ program from within Emacs and make it simpler to create scripts using Emacs lisp.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package rclone-tools
+    :straight (rclone-tools :host github
+                            :repo "tfree87/emacs-rclone-tools"
+                            :branch "main")
+    :init (whicher "rclone"))
+#+end_src
+
+The following function will execute the rclone command line tool
+
+#+begin_src emacs-lisp :tangle yes
+  (defun rclone-sync (source dest &optional rclone-path rclone-config)
+    "Sync DEST with SOURCE using rclone.
+  The path to the rlcone executable can be set with RCLONE-PATH.
+  The rclone configuration can be set with RCLONE-CONFIG."
+    (interactive)
+    (let ((rclone-path (or rclone-path "rclone"))
+          (rclone-config (or rclone-config nil))
+          (config-option
+           (if rclone-config
+               (concat " --config " rclone-config)
+             (nil))))
+      (eshell-command
+       (concat rclone-path
+               config-option
+               " -vP sync "
+               source
+               " "
+               dest))))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-dired)
+
+  ;;; freemacs-dired.el ends here
+#+end_src

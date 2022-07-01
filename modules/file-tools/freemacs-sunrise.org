@@ -1,0 +1,51 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Sunrise Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-06-29 20:14:44 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: index.html
+#+html_link_up: init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package sunrise-commander
+    :defer t
+    :straight t
+    :custom
+    <<sr_custom>>
+    :config
+    <<sr_config>>)
+#+end_src
+
+** Do Not Lock Windows
+
+Sunrise Commander locks the windows vertically by default. The following line will customize this so that the panes can be resized if wanted.
+
+#+begin_src emacs-lisp :noweb-ref sr_custom
+  (sr-windows-locked nil)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-sunrise)
+
+  ;;; freemacs-sunrise.el ends here
+#+end_src

@@ -1,0 +1,182 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Emacs Theme
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-06-29 20:11:24 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: index.html
+#+html_link_up: init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+* Custom Faces
+
+This section contains custom set faces.
+
+** Change Calfw Grid Color
+
+When using Calfw, the default grid color does not show very well when using the Droom theme ~doom-outrun-electric~. The following will change it to a color that will be easier to see.
+
+#+begin_src emacs-lisp
+  (custom-theme-set-faces
+   'user
+    '(cfw:face-grid ((t (:foreground "magenta")))))
+#+end_src
+
+** Default Font
+
+Change the default font to use Source Code Pro if it is available.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+#+end_src
+
+** Fixed and Variable Pitch Fonts
+
+To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
+
+#+begin_src emacs-lisp :tangle yes
+  (cond ((eq system-type 'windows-nt)
+         (custom-theme-set-faces
+          'user
+          '(variable-pitch ((t (:family "Times New Roman"))))
+          '(fixed-pitch ((t (:family "Source Code Pro"))))))
+        ((eq system-type 'gnu/linux)
+        (custom-theme-set-faces
+         'user
+         '(variable-pitch ((t (:family "Source Serif Pro"))))
+         '(fixed-pitch ((t (:family "Source Code Pro")))))))
+#+end_src
+
+** Sunrise Comnmander Faces
+
+Some of the faces in Sunrise Commander do not appear well in Doom themes. The following configuration changes these fonts to look better with the ~doom-outrun-electric~ theme.
+
+#+begin_src emacs-lisp :tangle yes
+  (custom-theme-set-faces
+   'user
+   '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
+   '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
+   '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
+#+end_src
+
+* Display Time
+
+This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package time
+    :custom
+    <<time_custom>>
+    :config
+    (display-time-mode t))
+#+end_src
+
+When I am running Emacs with [[https://github.com/ch11ng/exwm][EXWM]] as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in [[https://github.com/ch11ng/exwm][EXWM]] and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
+
+#+begin_src emacs-lisp :noweb-ref time_custom
+  (display-time-and-date t)
+#+end_src
+
+* Doom Themes
+
+I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-themes
+    :straight t
+    :if window-system
+    :defer 1
+    :config
+    (load-theme 'doom-outrun-electric t)
+    (doom-themes-org-config))
+#+end_src
+
+* Doom Modeline
+
+The Doom Modeline decorates the modeline with icons and cleans up much of the clutter in the modeline.  An example of the Doom Modeline is below.
+
+[[file:./screenshots/doom-modeline.png][./screenshots/doom-modeline.png]]
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package doom-modeline
+    :straight t
+    :if window-system
+    :defer 1
+    :config (doom-modeline-mode))
+#+end_src
+
+* Menu Bar, Scroll Bar, and Tool Bar
+
+Turn off the menu bar, scroll bar, and tool bar because it looks so darn cool and I tend to use the keyboard for everything now anyways.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package menu-bar
+    :config
+    (menu-bar-mode -1))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package tool-bar
+    :config
+    (tool-bar-mode -1))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package scroll-bar
+    :config
+    (toggle-scroll-bar -1))
+#+end_src
+
+* Mixed Pitch
+
+Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package mixed-pitch
+    :straight t
+    :hook
+    (org-mode . mixed-pitch-mode))
+#+end_src
+
+* Nyan Mode
+
+[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package nyan-mode
+    :straight t
+    :if window-system
+    :defer 3
+    :init
+    ;; Requires mplayer to play the music
+    (whicher "mplayer")
+    :custom
+    (nyan-wavy-trail t)
+    :config
+    (nyan-mode)
+    (nyan-start-animation))
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-theme)
+
+  ;;; freemacs-theme.el ends here
+#+end_src

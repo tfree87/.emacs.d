@@ -1,0 +1,77 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: All the Icons Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-06-29 20:07:22 thomas>
+#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: index.html
+#+html_link_up: init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+This file sets up the configuration of All the Icons for Emacs.
+
+* All the Icons
+
+[[https://github.com/domtronn/all-the-icons.el][All The Icons]] adds some graphical elements to dired and the minibuffer. I find it makes it easier to see what types of files are being listed and it is just fun too.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package all-the-icons
+    :straight t
+    :defer t)
+#+end_src
+
+* All the Icons Dired
+
+[[https://github.com/jtbm37/all-the-icons-dired][All the Icons Dired]] will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package all-the-icons-dired
+    :straight t
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+ #+end_src
+ 
+* All the Icons Ibuffer
+
+[[https://github.com/seagle0128/all-the-icons-ibuffer][All the Icons Ibuffer]] adds icons representing different buffer types to Ibuffer mode.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package all-the-icons-ibuffer
+    :straight t
+    :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+#+end_src
+
+* All the Icons Completion
+
+[[https://github.com/iyefrat/all-the-icons-completion][All the Icons Completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package all-the-icons-completion
+    :straight t
+    :defer 3
+    :config
+    (all-the-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-alltheicons)
+
+  ;;; freemacs-alltheicons.el ends here
+#+end_src
