@@ -4,7 +4,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-06-16 21:08:36 thomas>
+#+date: Time-stamp: <2022-07-02 19:46:47 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -51,6 +51,10 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 #+begin_src emacs-lisp :tangle yes
   (setq gc-cons-threshold 500000000)
 #+end_src
+
+* Monitor Package Load Times :guix:
+
+The Benchmark Init package will monitor the load times for package loading as Emacs loads and create a report that can be used to check where optimizations can be made to speed up Emacs loading.
 
 #+begin_src emacs-lisp :tangle yes
   (require 'benchmark-init)
