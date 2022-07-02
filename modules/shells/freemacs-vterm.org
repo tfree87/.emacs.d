@@ -1,0 +1,16 @@
+* Vterm :guix:
+
+Vterm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than ~term~ or ~ansi-term~ in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package vterm
+    :defer t)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-vterm)
+
+  ;;; freemacs-vterm.el ends here
+#+end_src

@@ -1,0 +1,51 @@
+* Academic Phrases
+
+[[https://github.com/nashamri/academic-phrases][Academic phrases]] is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function ~M-x academic-phrases~ provides a searchable list of these templates for your use.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package academic-phrases
+    :straight t
+    :defer t)
+#+end_src
+
+* Citar
+
+[[https://github.com/emacs-citar/citar][Citar]] is a citation tool that integrates well with [[Vertico]], [[Embark]], and [[Marginalia]].
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package citar
+    :straight (citar :host github
+                     :repo "emacs-citar/citar"
+                     :branch "main")
+    :after org
+    :custom
+    (citar-bibliography org-cite-global-bibliography))
+#+end_src
+
+Tell Org Cite to use Citar
+
+#+begin_src emacs-lisp :noweb-ref org_cite_custom
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+#+end_src
+
+* Org Cite :org:
+
+Org Cite is a feature to add citation capabilities to Org Mode. The following lines will tell Org Mode to use Citar as the processor for ~org-cite~ and will tell Org Mode where to find the default bibliography file.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package oc
+    :defer t
+    :custom
+    (org-cite-global-bibliography '("~/bib/bib.bib"))
+    <<org_cite_custom>>)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-academic-writing)
+
+  ;;; freemacs-academic-writing.el ends here
+#+end_src

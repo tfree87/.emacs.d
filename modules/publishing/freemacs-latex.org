@@ -1,0 +1,30 @@
+* AUCTeX :LaTeX:
+
+Use [[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using \LaTeX{}.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package auctex
+    :straight t
+    :defer t
+    :custom
+    (TeX-auto-save t)
+    (TeX-parse-self t)
+    (TeX-master nil)
+    <<auctex_custom>>)
+#+end_src
+
+** Use BibLaTeX
+
+BibLaTeX has more powerful features than standard BibTeX.
+
+#+begin_src emacs-lisp :noweb-ref auctex_custom
+(bibtex-dialect 'biblatex)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-latex)
+
+  ;;; freemacs-latex.el ends here
+#+end_src

@@ -1,0 +1,112 @@
+* Eshell
+
+Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package eshell
+    :straight (:type built-in)
+    :defer t
+    :hook
+    <<eshell_prompt>>
+    (eshell-mode . (lambda ()
+                     <<eshell_visual_commands>>
+                     <<eshell_aliases>>))
+    :custom
+    (eshell-error-if-no-glob t)
+    (eshell-hist-ignoredups t)
+    (eshell-save-history-on-exit t)
+    (eshell-destroy-buffer-when-process-dies t)
+    :config
+    (setenv "PAGER" "cat"))
+  #+end_src
+  
+** Eshell Aliases
+
+Below are a list of command-line aliases for use in eshell.
+
+#+name: eshell_aliases
+#+begin_src emacs-lisp :noweb-ref eshell_aliases
+  (eshell/alias "ff" "find-file $1")
+  (eshell/alias "emacs" "find-file $1")
+  (eshell/alias "untar" "tar -zxvf")
+  (eshell/alias "cpv" "rsync -ah --info=progress2")
+  (eshell/alias "ll" "ls -Alh")
+#+end_src
+
+** Eshell Visual Commands
+
+Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
+
+#+name: eshell_visual_commands
+#+begin_src emacs-lisp :noweb-ref eshell_visual_commands
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ipython")
+  (add-to-list 'eshell-visual-commands "rclone")
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "tail")
+  (add-to-list 'eshell-visual-commands "top")
+#+end_src
+
+** Esh Autosuggest
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package esh-autosuggest
+    :straight t
+    :hook (eshell-mode . esh-autosuggest-mode))
+#+end_src
+
+** Eshell Git Prompt
+
+[[https://github.com/xuchunyang/eshell-git-prompt][Eshell Git Prompt]] provides a series of Eshell prompts that provide extra information including the git status of the current project.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package eshell-git-prompt
+    :straight (emacs-git-prompt :host github
+                                :repo "tfree87/eshell-git-prompt"
+                                :branch "master")
+    :defer t)
+#+end_src
+
+*** Set the Eshell prompt on load
+
+This method was the only method I have found that loaded the ~eshell-git-prompt~ immediately when Eshell was loaded.
+
+#+begin_src emacs-lisp :noweb-ref eshell_prompt
+  (eshell-load . (lambda ()
+                        (eshell-git-prompt-use-theme 'multiline2)))
+#+end_src
+
+** Eshell Toggle
+
+[[https://github.com/4DA/eshell-toggle][Eshell Toggle]] makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package eshell-toggle
+    :straight (eshell-toggle :repo "4DA/eshell-toggle"
+                             :host github
+                             :repo "master")
+    :custom
+    (eshell-toggle-size-fraction 3)
+    (eshell-toggle-run-command nil)
+    (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+    :bind
+    ("M-s-`" . eshell-toggle))
+#+end_src
+
+** Oh My Esh
+
+Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package oh-my-eshell
+    :straight (oh-my-eshell :repo "tfree87/OhMyEshell"
+                            :branch "main"
+                            :host github)
+    :after eshell)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-eshell)
+#+end_src

@@ -25,3 +25,5 @@
   ;;(require 'eaf-demo)
   ;;(require 'eaf-vue-demo)
   )
+
+(provide 'freemacs-eaf)

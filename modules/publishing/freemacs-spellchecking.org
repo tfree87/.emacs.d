@@ -1,0 +1,38 @@
+* Ispell
+
+Ispell is the default spell checking tool in Emacs. In order for spellchecking to work in Windows, hunspell must be installed with the proper dictionaries. I have downloaded hunspell from ezwinports and included it in my ~~/.emacs.d/~ directory so that I can also use hunspell when I am using Emacs as a portable app from a USB drive. To use hunspell for spell checking, we must first configure the Ispell package:
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package ispell
+    :straight (:type built-in)
+    :defer t
+    :config
+    (if (eq system-type 'windows-nt)
+        (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
+               (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
+               (setq ispell-local-dictionary "en_US")
+               (setq ispell-local-dictionary-alist
+                     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+      (setq ispell-program-name (whicher "hunspell"))))
+#+end_src
+
+* Flyspell
+
+Flyspell mode can be hooked to various buffer modes so that spell-checking can be done as typing occurs. As you type, a red wavy line will appear under text that it deems to be incorrectly spelled.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package flyspell
+    :straight (:type built-in)
+    :defer t
+    :init
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode))
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-spellchecking)
+
+  ;;; freemacs-spellchecking.el ends here
+#+end_src

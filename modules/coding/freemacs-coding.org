@@ -1,4 +1,3 @@
-* Coding
 
 The following customizations are used to improve the coding environment in Emacs.
 
@@ -6,9 +5,9 @@ The following customizations are used to improve the coding environment in Emacs
   ;; Coding Configuration
 #+end_src
 
-** Aggressive Indent
+* Aggressive Indent
 
-[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
+[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive Indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package aggressive-indent
@@ -19,7 +18,7 @@ The following customizations are used to improve the coding environment in Emacs
     (go-mode . aggressive-indent-mode))
 #+end_src
 
-** Apheleia :python:go:
+* Apheleia :python:go:
 
 [[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 
@@ -36,7 +35,7 @@ The following customizations are used to improve the coding environment in Emacs
     '("black" "--experimental-string-processing" "-")))
 #+end_src
 
-** C
+* C
 
 I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
 
@@ -48,7 +47,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
            "\\.ino\\'"))
 #+end_src
 
-** Eglot
+* Eglot
 
 [[https://github.com/joaotavora/eglot][Eglot]] is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
 
@@ -59,7 +58,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     (python-mode . eglot-ensure))
 #+end_src
 
-** Flycheck :python:
+* Flycheck :python:
 
 [[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
 
@@ -70,7 +69,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     (prog-mode . flycheck-mode))
 #+end_src
 
-** Go
+* Go
 
 [[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
 
@@ -80,15 +79,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     :defer t)
 #+end_src
 
-** Indent Using Spaces :python:
-
-Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-(setq-default indent-tabs-mode nil)
-#+end_src
-
-** Minimap
+* Minimap
 
 [[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
 
@@ -98,7 +89,7 @@ Indenting with spaces rather than tabs is genrally recommended when working with
     :defer t)
 #+end_src
 
-** Magit :git:
+* Magit :git:
 
 [[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 
@@ -110,7 +101,7 @@ Indenting with spaces rather than tabs is genrally recommended when working with
     :bind ("C-x g" . magit-status))
 #+end_src
 
-** Number Line Mode
+* Number Line Mode
 
 Number lines can be very useful in programming modes. This code below will turn on the built-in ~display-line-numbers-mode~ in any major mode that inherits from ~prog-mode~. With wide monitors these days it is less of an issue and it can always toggled off with  ~display-line-numbers-mode~ on the fly.
 
@@ -119,7 +110,7 @@ Number lines can be very useful in programming modes. This code below will turn 
       (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
 
-** Numpydoc :python:
+* Numpydoc :python:
 
 Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
 
@@ -130,7 +121,7 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
 
-** Paren Mode
+* Paren Mode
 
 Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
 
@@ -145,7 +136,7 @@ The following code will always highlight matching parenthesis when coding /immed
     :hook (prog-mode . show-paren-mode))
 #+end_src
 
-** Rainbow Delimiters
+* Rainbow Delimiters
 
 [[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on ~paren-mode~ and ~backward-sexp~.
 
@@ -155,17 +146,7 @@ The following code will always highlight matching parenthesis when coding /immed
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
-** Show Column Number
-
-Many programming language style guides recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
-
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (column-number-mode t)
-#+end_src
-
-A better fix would be to use code formatters to prevent lines from getting too long. For example, [[Apheleia]] will run formatters such as Black on Python code to keep code lines from becoming too long.
-
-** Treemacs
+* Treemacs
 
 [[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
 
@@ -213,6 +194,10 @@ A better fix would be to use code formatters to prevent lines from getting too l
     :straight t)
 #+end_src
 
+* End
+
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-coding)
+
+  ;;; freemacs-coding.el ends here
 #+end_src

@@ -88,27 +88,9 @@
   :custom
   (whicher-report-new-buffer t))
 
-(use-package emacs
-  :custom
-  (bidi-paragraph-direction 'left-to-right)
-  ;;(desktop-save-mode t)
-  (delete-by-moving-to-trash t)
-  (version-control t)
-  (delete-old-versions t)
-  (vc-make-backup-files t)
-  (inhibit-startup-screen t)
-  (register-preview-delay 0)
-  (ring-bell-function #'ignore)
-  (visible-bell t)
-  (sentence-end-double-space nil)
-  :config
-  (add-hook 'before-save-hook 'time-stamp)
-  (if (version<= "27.1" emacs-version)
-      (setq bidi-inhibit-bpa t))
-  (display-battery-mode t)
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (recentf-mode 1)
-  (winner-mode t))
+;; Load Defaults module
+
+(require 'freemacs-defaults)
 
 ;; Load Elfeed newsreader module
 
@@ -160,141 +142,37 @@
 
 ;; Writing/Publishing/Reading Configuation
 
-(use-package academic-phrases
-  :straight t
-  :defer t)
+;; Load Academic Writing module
 
-(use-package auctex
-  :straight t
-  :defer t
-  :custom
-  (TeX-auto-save t)
-  (TeX-parse-self t)
-  (TeX-master nil)
-  (bibtex-dialect 'biblatex))
+(require 'freemacs-academic-writing)
 
-(use-package citar
-  :straight (citar :host github
-                   :repo "emacs-citar/citar"
-                   :branch "main")
-  :after org
-  :custom
-  (citar-bibliography org-cite-global-bibliography))
+;; Load Spellchecking module
 
-(use-package ispell
-  :straight (:type built-in)
-  :defer t
-  :config
-  (if (eq system-type 'windows-nt)
-    (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-           (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-           (setq ispell-local-dictionary "en_US")
-           (setq ispell-local-dictionary-alist
-                 '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-      (setq ispell-program-name (whicher "hunspell"))))
+(require 'freemacs-spellchecking)
 
-(use-package flyspell
-  :straight (:type built-in)
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  (add-hook 'text-mode-hook 'flyspell-mode))
+(require 'freemacs-latex)
 
-(use-package markdown-mode
-  :straight t
-  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
-  :init
-  (whicher "pandoc")
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
-  :config
-  (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
-  (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
-  (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
-  (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
-  (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+(require 'freemacs-markdown)
 
-(use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-loader-install :no-query))
+(require 'freemacs-pdf)
 
 ;; Shells and Terminals Configuration
 
-(use-package eshell
-  :straight (:type built-in)
-  :defer t
-  :hook
-  (eshell-load . (lambda ()
-                        (eshell-git-prompt-use-theme 'multiline2)))
-  (eshell-mode . (lambda ()
-                   (add-to-list 'eshell-visual-commands "htop")
-                   (add-to-list 'eshell-visual-commands "ipython")
-                   (add-to-list 'eshell-visual-commands "rclone")
-                   (add-to-list 'eshell-visual-commands "ssh")
-                   (add-to-list 'eshell-visual-commands "tail")
-                   (add-to-list 'eshell-visual-commands "top")
-                   (eshell/alias "ff" "find-file $1")
-                   (eshell/alias "emacs" "find-file $1")
-                   (eshell/alias "untar" "tar -zxvf")
-                   (eshell/alias "cpv" "rsync -ah --info=progress2")
-                   (eshell/alias "ll" "ls -Alh")))
-  :custom
-  (eshell-error-if-no-glob t)
-  (eshell-hist-ignoredups t)
-  (eshell-save-history-on-exit t)
-  (eshell-destroy-buffer-when-process-dies t)
-  :config
-  (setenv "PAGER" "cat"))
+;;; Load the Eshell module
 
-(use-package esh-autosuggest
-  :straight t
-  :hook (eshell-mode . esh-autosuggest-mode))
+(require 'freemacs-eshell)
 
-(use-package eshell-git-prompt
-  :straight (emacs-git-prompt :host github
-                              :repo "tfree87/eshell-git-prompt"
-                              :branch "master")
-  :defer t)
+;; Load PowerShell module
 
-(use-package eshell-toggle
-  :straight (eshell-toggle :repo "4DA/eshell-toggle"
-                           :host github
-                           :repo "master")
-  :custom
-  (eshell-toggle-size-fraction 3)
-  (eshell-toggle-run-command nil)
-  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
-  :bind
-  ("M-s-`" . eshell-toggle))
+(require 'freemacs-powershell)
 
-(use-package oh-my-eshell
-  :straight (oh-my-eshell :repo "tfree87/OhMyEshell"
-                          :branch "main"
-                          :host github)
-  :after eshell)
-
-(use-package powershell
-  :straight t
-  :if (eq system-type 'windows-nt)
-  :defer t
-  :init
-  (whicher "powershell.exe")
-  :config
-  ;; Change default compile command for powershell
-  (add-hook 'powershell-mode-hook
-            (lambda ()
-              (set (make-local-variable 'compile-command)
-                   (format
-                     "powershell.exe -NoLogo -NonInteractive -Command \"& '%s'\"")
-                    (buffer-file-name)))))
-
-(use-package vterm
-  :defer t)
+(require 'freemacs-vterm)
 
 ;; Load theme module
 
 (require 'freemacs-theme)
+
+;; Load All the Icons module
 
 (require 'freemacs-alltheicons)
 
@@ -313,19 +191,6 @@
   :defer t
   :init
   (whicher "docker-compose"))
-
-(use-package emms
-  :straight t
-  :defer t
-  :custom
-  (emms-source-file-default-directory "~/Music/")
-  :config
-  (require 'emms-setup)
-  (emms-all)
-  (emms-default-players)
-  (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
-  (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
-  (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause))
 
 (use-package gnuplot
   :straight t
@@ -419,16 +284,16 @@
 
 (whicher "sudo")
 (defun sudo-find-file (file)
-    "Open FILE as root."
-    (interactive "FOpen file as root: ")
-    (when (file-writable-p file)
-      (user-error "File is user writeable, aborting sudo"))
-    (find-file (if (file-remote-p file)
-                   (concat "/" (file-remote-p file 'method) ":"
-                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
-                           "|sudo:root@"
-                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-                 (concat "/sudo:root@localhost:" file))))
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+                 (concat "/" (file-remote-p file 'method) ":"
+                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                         "|sudo:root@"
+                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
 
 ;; Sync Dropbox containing org agenda files on load and close
 

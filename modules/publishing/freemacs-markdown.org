@@ -1,0 +1,35 @@
+* Markdown Mode
+
+[[https://jblevins.org/projects/markdown-mode/][Markdown Mode]] for markdown files. While I prefer Org-mode for rich-text editing in Emacs, Github primarily supports markdown so I want to be able to edit and view these files when needed.
+
+#+begin_src emacs-lisp :tangle yes :noweb no-export
+  (use-package markdown-mode
+    :straight t
+    :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
+    :init
+    (whicher "pandoc")
+    <<markdown_init>>
+    :config
+    (bind-key "A-b" (surround-text-with "+*") markdown-mode-map)
+    (bind-key "s-b" (surround-text-with "**") markdown-mode-map)
+    (bind-key "A-i" (surround-text-with "*") markdown-mode-map)
+    (bind-key "s-i" (surround-text-with "*") markdown-mode-map)
+    (bind-key "A-=" (surround-text-with "`") markdown-mode-map)
+    (bind-key "s-=" (surround-text-with "`") markdown-mode-map))
+#+end_src
+
+** Set Markdown Mode to use Pandoc
+
+Since [[https://pandoc.org/][Pandoc]] can be installed on both Linux and in Windows with Chocolatey, set Markdown Mode to use this as the default markdown command.
+
+#+begin_src emacs-lisp :noweb-ref markdown_init
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-markdown)
+
+  ;;; freemacs-markdown.el ends here
+#+end_src

@@ -1,0 +1,24 @@
+* PDF Tools :guix:
+
+[[https://github.com/politza/pdf-tools][PDF Tools]] is a faster and more feature-rich than the built in DocView. Currently, I install this package using the GUIX package manager.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package pdf-tools
+    :magic ("%PDF" . pdf-view-mode)
+    :config
+    (pdf-loader-install :no-query))
+#+end_src
+
+** Single Space at the End of Sentences
+
+Emacs when navigating expects sentences to end with a double space after a period. While this makes documents written in plain text to look more attractive and more readable, this convention is not used much anymore and this will break emacs commands for killing and navigating sentences.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  (sentence-end-double-space nil)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-pdf)
+#+end_src
