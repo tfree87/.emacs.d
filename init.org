@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-02 18:58:37 thomas>
+#+date: Time-stamp: <2022-07-03 09:05:22 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -104,6 +104,8 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 #+end_src
 
 * Load Path
+
+Add the path to the configuration modules to the 
 
 #+begin_src emacs-lisp :tangle yes
   (let ((default-directory "~/.emacs.d/modules/"))
@@ -212,8 +214,10 @@ However, as I have started using the GUIX System Distribution I have found that 
 
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes 
+  ;; --------------------
   ;; Startup Tools
+  ;; --------------------
 #+end_src
 
 ** No-littering
@@ -221,10 +225,9 @@ This section contains many of the tools used at Emacs startup that are helpful w
 The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package no-littering
-    :straight (no-littering :host github
-                            :repo "emacscollective/no-littering"
-                            :branch "master"))
+  ;; Load No-littering module
+
+  (require 'freemacs-no-littering)
 #+end_src
 
 ** Whicher
@@ -232,12 +235,9 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
 [[https://github.com/abo-abo/whicher][Whicher]] provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time. This needs to be loaded before the rest of init.el so that as init.el is loaded, it can look for missing executables on the host system.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package whicher
-    :straight (whicher :host github
-                       :repo "tfree87/whicher"
-                       :branch "master")
-    :custom
-    (whicher-report-new-buffer t))
+  ;; Load Whicher module
+
+  (require 'freemacs-whicher)
 #+end_src
 
 * Defaults

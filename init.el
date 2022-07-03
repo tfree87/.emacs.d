@@ -74,19 +74,17 @@
 
 (straight-use-package 'use-package)
 
+;; --------------------
 ;; Startup Tools
+;; --------------------
 
-(use-package no-littering
-  :straight (no-littering :host github
-                          :repo "emacscollective/no-littering"
-                          :branch "master"))
+;; Load No-littering module
 
-(use-package whicher
-  :straight (whicher :host github
-                     :repo "tfree87/whicher"
-                     :branch "master")
-  :custom
-  (whicher-report-new-buffer t))
+(require 'freemacs-no-littering)
+
+;; Load Whicher module
+
+(require 'freemacs-whicher)
 
 ;; Load Defaults module
 
