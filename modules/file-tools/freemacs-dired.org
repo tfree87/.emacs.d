@@ -2,7 +2,7 @@
 
 #+title: Dired Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-29 19:58:21 thomas>
+#+date: Time-stamp: <2022-07-03 09:48:41 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -113,6 +113,7 @@ Rclone tools is a package that used the Emacs ~completing-read~ function to simp
     :straight (rclone-tools :host github
                             :repo "tfree87/emacs-rclone-tools"
                             :branch "main")
+    :defer t
     :init (whicher "rclone"))
 #+end_src
 

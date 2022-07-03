@@ -26,6 +26,7 @@
   :straight (rclone-tools :host github
                           :repo "tfree87/emacs-rclone-tools"
                           :branch "main")
+  :defer t
   :init (whicher "rclone"))
 
 (defun rclone-sync (source dest &optional rclone-path rclone-config)
