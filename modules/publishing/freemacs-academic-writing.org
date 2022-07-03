@@ -17,12 +17,13 @@
     :straight (citar :host github
                      :repo "emacs-citar/citar"
                      :branch "main")
+    :defer t
     :after org
     :custom
     (citar-bibliography org-cite-global-bibliography))
 #+end_src
 
-Tell Org Cite to use Citar
+Tell Org Cite to use Citar.
 
 #+begin_src emacs-lisp :noweb-ref org_cite_custom
   (org-cite-insert-processor 'citar)

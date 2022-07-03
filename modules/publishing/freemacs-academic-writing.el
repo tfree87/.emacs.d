@@ -6,11 +6,13 @@
   :straight (citar :host github
                    :repo "emacs-citar/citar"
                    :branch "main")
+  :defer t
   :after org
   :custom
   (citar-bibliography org-cite-global-bibliography))
 
 (use-package oc
+  :defer t
   :custom
   (org-cite-global-bibliography '("~/bib/bib.bib"))
   (org-cite-insert-processor 'citar)
