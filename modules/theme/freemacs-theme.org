@@ -2,7 +2,7 @@
 
 #+title: Emacs Theme
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-29 20:11:24 thomas>
+#+date: Time-stamp: <2022-07-03 09:38:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -81,6 +81,7 @@ This will display the time in the Emacs mode line. This can be very useful if ta
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package time
+    :defer 3
     :custom
     <<time_custom>>
     :config

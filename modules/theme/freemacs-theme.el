@@ -20,6 +20,7 @@
  '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
 
 (use-package time
+  :defer 3
   :custom
   (display-time-and-date t)
   :config
