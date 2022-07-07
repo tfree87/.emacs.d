@@ -1,0 +1,74 @@
+#+title: Yet Another Emacs Configuration
+#+date: <2022-03-30 Wed>
+#+author: Thomas Freeman
+#+language: en_US
+#+select_tags: export
+#+exclude_tags: noexport
+
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+Options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil
+
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_equation_reference_format: \eqref{%s}
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+* Welcome
+
+Welcome to the Github page for my Emacs configuration. I have created this Github pages site to provide place where I can post the custom modifications I have made to Emacs. My goal is to make Emacs  as productive as possible. While Emacs has excellent documentation that I highly recommend reading, there is much more in the Emacs ecosystem that the manual doesn't even begin to cover. There are many excellent third-party packages that have been released to extend Emacs. This is why I have decided that I would post my own Emacs configuration for anyone else who wants to learn by example. I have certainly found a lot of inspiration in scouring the internet for Emacs configurations created by other users.
+
+* About My Emacs Setup
+
+I have tried to make an Emacs setup that is flexible for use in multiple contexts. While I prefer to use libre operating systems. I often find that for work I am limited to using a Windows system. As I have learned to rely on the powerful features of Emacs for much of the computing that I do, I have found a way to replicate the functions I love on Emacs as a portable system by running Emacs on a USB flash drive (based on [[https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f][this article]]) alongside the [[https://portableapps.com/][PortableApps]] platform. This allows me to take my Emacs setup everywhere I go. Here are some features of my setup:
+
+1. Emacs Server
+   - Starts an Emacs server on the first launch of an Emacs instance
+   - Emacs frames can be opened quickly and access the same buffers by running an ~emacsclient~ instance.
+2. Fast Loading
+   - Package loading is deferred with use-package when possible
+   - Designed to load quickly on older computers and from a flash drives
+3. Modular
+   - Configuration files are split into modules, with each module as a separate Elisp file
+   - This makes reading the configuration simpler and makes debugging easier
+   - Modules can easily be disabled
+4. Multi-platform
+   - This configuration has been tested on:
+     + GNU GUIX
+     + Linux Mint
+     + Windows using Chocolatey to install dependencies
+     + Windows as a USB PortableApp with dependencies installed on the USB drive as PortableApps
+5. Portable
+   - A file, runemacs.bat, will call the Emacs executable on the USB flash drive and set the home directory to the drive label of the flash drive.
+   - Emacs will check to see if it is being called as a portable app and can call on portable libraries such as MikTeX portable and Git portable to restore lost functionality.
+   - The Emacs configuration can be pulled from Github and uses straight.el to pull install all Emacs packages.
+6. Window Management with EXWM
+   - If no window manger is detected, EXWM can be used as the window manager
+   - All applications can be opened in Emacs and managed with Emacs commands   
+
+* Browse the Configuration
+
+I use Org Mode to program my ~init.el~ file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to ~init.el~.  If you wish to go straight to the raw Elisp files, you can visit the [[https://github.com/tfree87/.emacs.d][Github page]], otherwise the following links will let you peruse through my configuration and read the commentary that accompanies it:
+
+- [[file:early-init.html][early-init.html]] :: A file that is loaded before ~init.el~
+- [[File:init.html][init.html]] :: Browse the code along with my commentary exported to HTML from my ~init.org~ file.
+
+* Emacs in Different Environments
+
+** Emacs from Flash Drive
+
+If you want to run Emacs as a portable application, see [[file:emacs-portable.html][Emacs as a Portable Application]].
+
+** Emacs in Windows
+
+Emacs can be a very powerful tool in Windows. For some tips on how to [[file:emacs-windows,html][Emacs Windows Customizations]]
