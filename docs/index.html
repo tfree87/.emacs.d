@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 14:51 -->
+<!-- 2022-07-07 Thu 15:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Yet Another Emacs Configuration</title>
@@ -27,17 +27,11 @@
 <ul>
 <li><a href="#org8c56220">Welcome</a></li>
 <li><a href="#org1d5fb21">About My Emacs Setup</a></li>
-<li><a href="#org79803db">Browse The Configuration</a>
-<ul>
-<li><a href="#org1c7494b">With Documentation/Commentary</a></li>
-<li><a href="#org369a997">Without Documentation/Commentary</a></li>
-</ul>
-</li>
+<li><a href="#org90d9016">Browse the Configuration</a></li>
 <li><a href="#org0c6f59b">Emacs in Different Environments</a>
 <ul>
 <li><a href="#orge5e95b2">Emacs from Flash Drive</a></li>
 <li><a href="#org90b67d8">Emacs in Windows</a></li>
-<li><a href="#org8383ea2">Emacs as a Window Manger</a></li>
 </ul>
 </li>
 </ul>
@@ -62,30 +56,37 @@ I have tried to make an Emacs setup that is flexible for use in multiple context
 </p>
 
 <ol class="org-ol">
-<li>Portable
+<li>Emacs Server
 <ul class="org-ul">
-<li>A file, runemacs.bat, will call the Emacs executable on the USB flash drive and set the home directory to the drive label of the flash drive.</li>
-<li>Emacs will check to see if it is being called as a portable app and can call on portable libraries such as MikTeX portable and Git portable to restore lost functionality.</li>
-<li>The Emacs configuration can be pulled from Github and uses straight.el to pull install all Emacs packages.</li>
+<li>Starts an Emacs server on the first launch of an Emacs instance</li>
+<li>Emacs frames can be opened quickly and access the same buffers by running an <code>emacsclient</code> instance.</li>
 </ul></li>
 <li>Fast Loading
 <ul class="org-ul">
 <li>Package loading is deferred with use-package when possible</li>
 <li>Designed to load quickly on older computers and from a flash drives</li>
 </ul></li>
+<li>Modular
+<ul class="org-ul">
+<li>Configuration files are split into modules, with each module as a separate Elisp file</li>
+<li>This makes reading the configuration simpler and makes debugging easier</li>
+<li>Modules can easily be disabled</li>
+</ul></li>
 <li>Multi-platform
 <ul class="org-ul">
 <li>This configuration has been tested on:
 <ul class="org-ul">
+<li>GNU GUIX</li>
 <li>Linux Mint</li>
 <li>Windows using Chocolatey to install dependencies</li>
 <li>Windows as a USB PortableApp with dependencies installed on the USB drive as PortableApps</li>
 </ul></li>
 </ul></li>
-<li>Emacs Server
+<li>Portable
 <ul class="org-ul">
-<li>Starts an Emacs server on the first launch of an Emacs instance</li>
-<li>Emacs frames can be opened quickly and access the same buffers by running an <code>emacsclient</code> instance.</li>
+<li>A file, runemacs.bat, will call the Emacs executable on the USB flash drive and set the home directory to the drive label of the flash drive.</li>
+<li>Emacs will check to see if it is being called as a portable app and can call on portable libraries such as MikTeX portable and Git portable to restore lost functionality.</li>
+<li>The Emacs configuration can be pulled from Github and uses straight.el to pull install all Emacs packages.</li>
 </ul></li>
 <li>Window Management with EXWM
 <ul class="org-ul">
@@ -96,46 +97,17 @@ I have tried to make an Emacs setup that is flexible for use in multiple context
 </div>
 </div>
 
-<div id="outline-container-org79803db" class="outline-2">
-<h2 id="org79803db">Browse The Configuration</h2>
-<div class="outline-text-2" id="text-org79803db">
+<div id="outline-container-org90d9016" class="outline-2">
+<h2 id="org90d9016">Browse the Configuration</h2>
+<div class="outline-text-2" id="text-org90d9016">
 <p>
-If you want to browse my Emacs configuration, there are a couple ways to do it.
-</p>
-</div>
-
-<div id="outline-container-org1c7494b" class="outline-3">
-<h3 id="org1c7494b">With Documentation/Commentary</h3>
-<div class="outline-text-3" id="text-org1c7494b">
-<p>
-I use Org Mode to program my <code>init.el</code> file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to <code>init.el</code>.
+I use Org Mode to program my <code>init.el</code> file with my annotations, documentation, explanations, and links to source code and sites where I borrowed my code from. The Org Mode file as source code blocks that are tangled to <code>init.el</code>.  If you wish to go straight to the raw Elisp files, you can visit the <a href="https://github.com/tfree87/.emacs.d">Github page</a>, otherwise the following links will let you peruse through my configuration and read the commentary that accompanies it:
 </p>
 
 <dl class="org-dl">
 <dt><a href="early-init.html">early-init.html</a></dt><dd>A file that is loaded before <code>init.el</code></dd>
 <dt><a href="init.html">init.html</a></dt><dd>Browse the code along with my commentary exported to HTML from my <code>init.org</code> file.</dd>
 </dl>
-
-<p>
-For more information on literate programming in Emacs, take a look at <a href="https://orgmode.org/worg/org-contrib/babel/how-to-use-Org-Babel-for-R.html">this site</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org369a997" class="outline-3">
-<h3 id="org369a997">Without Documentation/Commentary</h3>
-<div class="outline-text-3" id="text-org369a997">
-<p>
-You can also checkout the files directly on Github if you are not interested in sifting through all the extra text and just want to take a look at the raw code.
-</p>
-
-<dl class="org-dl">
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/custom.el">custom.el</a></dt><dd>Customizations set by the Emacs <code>M-x customize</code> interface</dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/early-init.el">early-init.el</a></dt><dd>A file that is loaded before <code>init.el</code></dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/init.el">init.el</a></dt><dd>The standard Emacs init file</dd>
-<dt><a href="https://github.com/tfree87/.emacs.d/blob/main/runemacs.bat">runemacs.bat</a></dt><dd>A Windows batch file to set up the environment for running Emacs as a portable application</dd>
-</dl>
-</div>
 </div>
 </div>
 
@@ -160,16 +132,12 @@ Emacs can be a very powerful tool in Windows. For some tips on how to <a href="e
 </p>
 </div>
 </div>
-
-<div id="outline-container-org8383ea2" class="outline-3">
-<h3 id="org8383ea2">Emacs as a Window Manger</h3>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2022-03-30 Wed 00:00</p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 14:51</p>
+<p class="date">Created: 2022-07-07 Thu 15:06</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

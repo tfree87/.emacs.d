@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 14:51 -->
+<!-- 2022-07-07 Thu 17:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Configuration</title>
@@ -267,7 +267,9 @@ When <a href="runemacs.bat">runemacs.bat</a> is executed, it will set the enviro
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org8e17861"><span style="color: #1ea8fc;">(</span>string= <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">freemacs/isportable-p</span> <span style="color: #ff2afc;">()</span>
+  <span style="color: #A875FF;">"A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."</span>
+  <span style="color: #ff2afc;">(</span>string= <span style="color: #a7da1e;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #a7da1e;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -285,7 +287,7 @@ The following line code will check to see if Emacs is being run as a portable ap
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>string= <span style="color: #a7da1e;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #a7da1e;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #ff2afc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>freemacs/isportable-p<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
@@ -893,22 +895,13 @@ The <a href="modules/help/freemacs-help.html">help module</a> contains configura
 <h2 id="org703ab14">Emacs Server</h2>
 <div class="outline-text-2" id="text-org703ab14">
 <p>
-Running Emacs as a server means that if I create a new instance of Emacs with the command <code>emacs</code>, I can then use the command <code>emacsclient -c -n</code> in order to quickly open a new Emacs buffer that is part of the same Emacs session.
-</p>
-
-<p>
-I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
+Emacs can be run in a server mode where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the <a href="modules/server/freemacs-server.html">server module</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Start an Emacs server</span>
+<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load server module</span>
 
-<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">server</span>
-  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
-  <span style="color: #1ea8fc;">:config</span>
-  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>not <span style="color: #df85ff;">(</span>string= <span style="color: #A875FF;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #A875FF;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
-    <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #df85ff;">(</span>not <span style="color: #A875FF;">(</span>server-running-p<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
-      <span style="color: #df85ff;">(</span>server-start<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-server</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -963,7 +956,7 @@ When running Emacs as a portable app, I want to pull down the latest versions of
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Sync Dropbox containing org agenda files on load and close</span>
 
-<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>string= <span style="color: #a7da1e;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #a7da1e;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #ff2afc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>freemacs/isportable-p<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> rclone-path <span style="color: #7984D1;">"~/rclone/rclone.conf"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>rclone-run-remote-to-local <span style="color: #7984D1;">"sync"</span> <span style="color: #7984D1;">"~/Dropbox"</span> <span style="color: #7984D1;">"dropbox:"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>add-hook 'kill-emacs-hook <span style="color: #a7da1e;">(</span>rclone-run-local-to-remote <span style="color: #7984D1;">"sync"</span>
@@ -1006,9 +999,9 @@ Add a final comment to indicate the end of the file.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 17:01&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 14:51</p>
+<p class="date">Created: 2022-07-07 Thu 17:13</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

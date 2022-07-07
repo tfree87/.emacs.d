@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 14:51 -->
+<!-- 2022-07-07 Thu 17:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Early Init</title>
@@ -29,7 +29,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org78ad1da">Header for early-init.el</a></li>
+<li><a href="#org8d8e4d9">Header</a></li>
 <li><a href="#org2354a07">Decrease Garbage Collection Frequency</a></li>
 <li><a href="#org7f6d391">Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
 <li><a href="#org3fa1bad">Prevent Unwanted Runtime Compilation</a></li>
@@ -48,9 +48,9 @@ This file contains Emacs Lisp code that will run <i>before</i> the Emacs <a href
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the <code>early-init.el</code> file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to <code>early-init.el</code>.
 </p>
 
-<div id="outline-container-org78ad1da" class="outline-2">
-<h2 id="org78ad1da">Header for early-init.el</h2>
-<div class="outline-text-2" id="text-org78ad1da">
+<div id="outline-container-org8d8e4d9" class="outline-2">
+<h2 id="org8d8e4d9">Header</h2>
+<div class="outline-text-2" id="text-org8d8e4d9">
 <p>
 The following code block will add a header to the <code>early-init.el</code> file when it is generated on saving.
 </p>
@@ -149,6 +149,7 @@ To reduce slowdowns caused by early redisplays when loading, the following code 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq-default</span> inhibit-redisplay t
               inhibit-message t<span style="color: #1ea8fc;">)</span>
+
 <span style="color: #1ea8fc;">(</span>add-hook 'window-setup-hook
           <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #a7da1e;">()</span>
             <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq-default</span> inhibit-redisplay nil
@@ -185,9 +186,9 @@ Set the default coding system to UTF-8.This idea came from the <a href="https://
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 16:27&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 14:51</p>
+<p class="date">Created: 2022-07-07 Thu 17:13</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
