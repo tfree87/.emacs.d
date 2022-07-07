@@ -2,13 +2,13 @@
 
 #+title: Ox-publish Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 17:21:25 thomas>
+#+date: Time-stamp: <2022-07-07 18:48:28 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t num:nil
+#+options: html5-fancy:nil tex:t num:nil toc:t
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content

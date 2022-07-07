@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 17:13 -->
+<!-- 2022-07-07 Thu 18:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Configuration</title>
@@ -107,7 +107,11 @@
 <li><a href="#org581f2c4">VTerm</a></li>
 </ul>
 </li>
-<li><a href="#org518efd6">Theme</a></li>
+<li><a href="#org518efd6">Theme</a>
+<ul>
+<li><a href="#orgd2e233c">All the Icons</a></li>
+</ul>
+</li>
 <li><a href="#org2c7d370">Writing/Publishing/Reading</a>
 <ul>
 <li><a href="#orga4f3ec1">Academic Writing</a></li>
@@ -154,7 +158,7 @@ Tags are used in this document to help make navigation of the packages easier an
 <dl class="org-dl">
 <dt>deprecated</dt><dd>This package has been "deprecated" in favor of another package that better integrates with this Emacs configuration or produces a better workflow.</dd>
 <dt>disabled</dt><dd>Any package marked with this tag has been disabled due to it causing issues or the package was deprecated.</dd>
-<dt>guix</dt><dd>Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
+<dt>GUIX</dt><dd>Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
 
 <ol class="org-ol">
 <li>The package requires compilation on the host system (e.g. Pdf Tools and Org-roam). Using the GUIX package manager will manage the compilation automatically. Also, packages that need to be compiled are difficult to run on portable Emacs so they will be left out when Emacs is used as a portable app.</li>
@@ -727,7 +731,7 @@ This section contains configuration options for terminals in Emacs.
 <h3 id="orgbf0e184">PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></h3>
 <div class="outline-text-3" id="text-orgbf0e184">
 <p>
-<a href="https://github.com/jschaf/powershell.el">Powershell.el</a> creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
+<a href="https://github.com/jschaf/powershell.el">Powershell.el</a> can launch an inferior shell that will run the Windows PowerShell tool. It is configured in the <a href="modules/shells/freemacs-powershell.html">PowerShell module</a>.
 </p>
 
 <div class="org-src-container">
@@ -765,12 +769,21 @@ Changes to Emacs appearance and theme can be found in the <a href="modules/theme
 <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-theme</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+
+<div id="outline-container-orgd2e233c" class="outline-3">
+<h3 id="orgd2e233c">All the Icons</h3>
+<div class="outline-text-3" id="text-orgd2e233c">
+<p>
+All the Icons adds icons that can improve the look of the Emacs interface. For more information on the configuration, check out the <a href="modules/theme/freemacs-alltheicons.html">all the icons module</a>.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load All the Icons module</span>
 
 <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-alltheicons</span><span style="color: #1ea8fc;">)</span>
 </pre>
+</div>
 </div>
 </div>
 </div>
@@ -820,6 +833,10 @@ The <a href="modules/publishing/freemacs-academic-writing.html">academic writing
 <div id="outline-container-org09d5da9" class="outline-3">
 <h3 id="org09d5da9">\LaTeX{}</h3>
 <div class="outline-text-3" id="text-org09d5da9">
+<p>
+Configuration for working with \LaTeX documents can be found in the <a href="modules/publishing/freemacs-latex.html">\LaTeX{} module</a>.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the LaTeX module</span>
 
@@ -848,6 +865,10 @@ The <a href="modules/publishing/freemacs-markdown.html">markdown module</a> adds
 <div id="outline-container-org4fbf7d1" class="outline-3">
 <h3 id="org4fbf7d1">Ox-publish</h3>
 <div class="outline-text-3" id="text-org4fbf7d1">
+<p>
+<code>ox-publish.el</code> makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the <a href="modules/publishing/freemacs-ox-publish.html">ox-publish module</a>.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the ox-publish module</span>
 
@@ -895,7 +916,7 @@ The <a href="modules/help/freemacs-help.html">help module</a> contains configura
 <h2 id="org703ab14">Emacs Server</h2>
 <div class="outline-text-2" id="text-org703ab14">
 <p>
-Emacs can be run in a server mode where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the <a href="modules/server/freemacs-server.html">server module</a>.
+Emacs can be run as a server where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the <a href="modules/server/freemacs-server.html">server module</a>.
 </p>
 
 <div class="org-src-container">
@@ -999,9 +1020,9 @@ Add a final comment to indicate the end of the file.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 17:01&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 18:40&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 17:13</p>
+<p class="date">Created: 2022-07-07 Thu 18:42</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

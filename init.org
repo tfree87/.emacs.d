@@ -2,14 +2,14 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 17:21:30 thomas>
+#+date: Time-stamp: <2022-07-07 18:48:34 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t num:nil
+#+options: html5-fancy:nil tex:t 
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content
@@ -34,7 +34,7 @@ Tags are used in this document to help make navigation of the packages easier an
 
 - deprecated :: This package has been "deprecated" in favor of another package that better integrates with this Emacs configuration or produces a better workflow.
 - disabled :: Any package marked with this tag has been disabled due to it causing issues or the package was deprecated.
-- guix :: Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
+- GUIX :: Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
     
   1. The package requires compilation on the host system (e.g. Pdf Tools and Org-roam). Using the GUIX package manager will manage the compilation automatically. Also, packages that need to be compiled are difficult to run on portable Emacs so they will be left out when Emacs is used as a portable app.
   2. The package is only run on a Linux System with GUIX installed or on the GUIX System Distribution so there is no need to have Emacs manage this package.
@@ -404,7 +404,7 @@ This section contains configuration options for terminals in Emacs.
 
 ** PowerShell :Windows:
 
-[[https://github.com/jschaf/powershell.el][Powershell.el]] creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
+[[https://github.com/jschaf/powershell.el][Powershell.el]] can launch an inferior shell that will run the Windows PowerShell tool. It is configured in the [[file:modules/shells/freemacs-powershell.org][PowerShell module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load PowerShell module
@@ -429,6 +429,10 @@ Changes to Emacs appearance and theme can be found in the [[file:modules/theme/f
 
   (require 'freemacs-theme)
 #+end_src
+
+** All the Icons
+
+All the Icons adds icons that can improve the look of the Emacs interface. For more information on the configuration, check out the [[file:modules/theme/freemacs-alltheicons.org][all the icons module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load All the Icons module
@@ -466,7 +470,7 @@ The [[file:modules/publishing/freemacs-academic-writing.org][academic writing mo
 
 ** \LaTeX{}
 
-
+Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load the LaTeX module
@@ -486,7 +490,7 @@ The [[file:modules/publishing/freemacs-markdown.org][markdown module]] adds addi
 
 ** Ox-publish
 
-
+~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load the ox-publish module
@@ -519,7 +523,7 @@ The [[file:modules/help/freemacs-help.org][help module]] contains configuration 
 
 * Emacs Server
 
-Emacs can be run in a server mode where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the [[file:modules/server/freemacs-server.org][server module]].
+Emacs can be run as a server where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the [[file:modules/server/freemacs-server.org][server module]].
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   ;; Load server module
