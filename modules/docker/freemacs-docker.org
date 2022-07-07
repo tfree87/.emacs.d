@@ -2,7 +2,7 @@
 
 #+title: Docker Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:40 thomas>
+#+date: Time-stamp: <2022-07-07 14:21:13 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -22,7 +22,9 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
-* Docker
+This module contains packages and configuration that adds that ability to work with both Docker and Docker files in Emacs.
+
+* Docker Mode
 
 [[https://github.com/Silex/docker.el][Docker Mode]] is an interface in Emacs to manage Docker containers.
 
@@ -47,6 +49,8 @@
 #+end_src
 
 * End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-docker)
