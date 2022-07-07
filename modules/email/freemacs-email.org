@@ -2,7 +2,7 @@
 
 #+title: Email Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:37 thomas>
+#+date: Time-stamp: <2022-07-07 14:18:45 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -22,30 +22,7 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
-
-** Set Default Mail User Agent :email:
-
-The following will set Mu4e as the default mail user agent:
-
-#+begin_src emacs-lisp :tangle yes
-  (setq mail-user-agent 'mu4e-user-agent)
-#+end_src
-
-And the code below will set Mu4e as the default mail reading command:
-
-#+begin_src emacs-lisp :tangle yes
-  (setq read-mail-command 'mu4e)
-#+end_src
-
-** Attach Files to Email from Dired :email:
-
-Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
-
-#+begin_src emacs-lisp :noweb-ref gnus_hooks
-  (dired-mode . turn-on-gnus-dired-mode)
-#+end_src
-
-** Add Calendar Invites to Org Mode :org:email:
+* Gnus
 
 Emacs can add iCalendar invites from email to an Org Mode file and heading of your choice. The functions to add iCalendar invites can be found in ~gnus-icalendar~. These same functions are called from Mu4e but they are found in the Gnus package so we must set them up there.
 
@@ -64,7 +41,16 @@ Emacs can add iCalendar invites from email to an Org Mode file and heading of yo
     (gnus-icalendar-org-setup))
 #+end_src
 
-** Mu4e :email:guix:
+** Attach Files to Email from Dired :guix:
+
+Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
+
+#+begin_src emacs-lisp :noweb-ref gnus_hooks
+  (dired-mode . turn-on-gnus-dired-mode)
+#+end_src
+
+
+* Mu4e guix:
 
 Mu4e is a package that used the Mu indexer to search through emails that are saved to the local system in the Maildir format.
 
@@ -105,7 +91,7 @@ Tell mu4e to use mbsync to get email from the server and synchronize email back 
   (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
 #+end_src
 
-Tell mu4e to prefer using html email as most email these days are sent in this format and tell mu4e to show images inline in the email message buffers.
+Tell mu4e to prefer using HTMxsL email as most email these days are sent in this format and tell Mu4e to show images inline in the email message buffers.
 
 #+begin_src emacs-lisp :noweb-ref mu4e_customize
   (mu4e-view-prefer-html t)
@@ -119,7 +105,21 @@ Add support for accepting iCalendar invites by email with Mu4e:
   (mu4e-icalendar-setup)
 #+end_src
 
-** Org Contacts :email:
+** Set Default Mail User Agent :guix:
+
+The following will set Mu4e as the default mail user agent:
+
+#+begin_src emacs-lisp :noweb-ref mu4e_customize
+  (mail-user-agent mu4e-user-agent)
+#+end_src
+
+And the code below will set Mu4e as the default mail reading command:
+
+#+begin_src emacs-lisp :noweb-ref mu4e_customize
+  (read-mail-command mu4e)
+#+end_src
+
+* Org Contacts
 
 Org-contrib has  library ~org-contacts~ that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
 
@@ -140,7 +140,7 @@ Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-heade
     '("org-contact-add" . mu4e-action-add-org-contact) t)
 #+end_src
 
-** Org MIME :email:
+* Org MIME
 
 Org Mime is a tool that can be used to convert an email written in Org Mode format to be converted to HTML before sending so that email readers can render the email in HTML format. It works by having the user write the whole email using Org Mode syntax followed by execution of the command ~org-mime-htmlize~ prior to sending the email.
 
@@ -151,6 +151,8 @@ Org Mime is a tool that can be used to convert an email written in Org Mode form
                  org-mime-org-buffer-htmlize
                  org-mime-org-subtree-htmlize))
 #+end_src
+
+* End
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-email)

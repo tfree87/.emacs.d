@@ -1,7 +1,3 @@
-(setq mail-user-agent 'mu4e-user-agent)
-
-(setq read-mail-command 'mu4e)
-
 (use-package gnus
   :straight (:type built-in)
   :defer t
@@ -22,6 +18,8 @@
   (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
   (mu4e-view-prefer-html t)
   (mu4e-view-show-images t)
+  (mail-user-agent mu4e-user-agent)
+  (read-mail-command mu4e)
   ;; Update every 5 minutes
   (mu4e-update-interval 300)
   (mu4e-headers-auto-update t)
