@@ -2,7 +2,7 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 14:26:17 thomas>
+#+date: Time-stamp: <2022-07-07 14:27:32 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -23,6 +23,7 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
+Elfeed is a powerful and fast RSS and newsreader for Emacs. This file contains the configuration for Elfeed.
 
 * Elfeed
 
