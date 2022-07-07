@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dired Configuration</title>
@@ -29,20 +29,20 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgdc50781">1. Dired</a>
+<li><a href="#orgdc50781">Dired</a>
 <ul>
-<li><a href="#orgd811e27">1.1. Move/Rename/Copy Files to Another Pane</a></li>
+<li><a href="#orgd811e27">Move/Rename/Copy Files to Another Pane</a></li>
 </ul>
 </li>
-<li><a href="#org34a194d">2. Dired Hacks</a>
+<li><a href="#org34a194d">Dired Hacks</a>
 <ul>
-<li><a href="#org480f636">2.1. Dired Collapse</a></li>
-<li><a href="#org5db8ed7">2.2. Dired Open</a></li>
-<li><a href="#org72347b0">2.3. xdg-open</a></li>
+<li><a href="#org480f636">Dired Collapse</a></li>
+<li><a href="#org5db8ed7">Dired Open</a></li>
+<li><a href="#org72347b0">xdg-open</a></li>
 </ul>
 </li>
-<li><a href="#orgdcc997f">3. Disc Usage</a></li>
-<li><a href="#org4f62749">4. Rclone Tools</a></li>
+<li><a href="#orgdcc997f">Disc Usage</a></li>
+<li><a href="#org4f62749">Rclone Tools</a></li>
 </ul>
 </div>
 </div>
@@ -50,8 +50,8 @@
 
 
 <div id="outline-container-orgdc50781" class="outline-2">
-<h2 id="orgdc50781"><span class="section-number-2">1.</span> Dired</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="orgdc50781">Dired</h2>
+<div class="outline-text-2" id="text-orgdc50781">
 <p>
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
 </p>
@@ -67,8 +67,8 @@ The following customizations make emacs dired mode behave in a similar fashion t
 </div>
 
 <div id="outline-container-orgd811e27" class="outline-3">
-<h3 id="orgd811e27"><span class="section-number-3">1.1.</span> Move/Rename/Copy Files to Another Pane</h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="orgd811e27">Move/Rename/Copy Files to Another Pane</h3>
+<div class="outline-text-3" id="text-orgd811e27">
 <p>
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
 </p>
@@ -82,16 +82,16 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 </div>
 
 <div id="outline-container-org34a194d" class="outline-2">
-<h2 id="org34a194d"><span class="section-number-2">2.</span> Dired Hacks</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org34a194d">Dired Hacks</h2>
+<div class="outline-text-2" id="text-org34a194d">
 <p>
 Dired Hacks is a series of modifications to add features to Dired.
 </p>
 </div>
 
 <div id="outline-container-org480f636" class="outline-3">
-<h3 id="org480f636"><span class="section-number-3">2.1.</span> Dired Collapse</h3>
-<div class="outline-text-3" id="text-2-1">
+<h3 id="org480f636">Dired Collapse</h3>
+<div class="outline-text-3" id="text-org480f636">
 <p>
 Dired colapse will show the full path in a dired buffer for paths that contain only a single file.
 </p>
@@ -108,8 +108,8 @@ Dired colapse will show the full path in a dired buffer for paths that contain o
 </div>
 
 <div id="outline-container-org5db8ed7" class="outline-3">
-<h3 id="org5db8ed7"><span class="section-number-3">2.2.</span> Dired Open</h3>
-<div class="outline-text-3" id="text-2-2">
+<h3 id="org5db8ed7">Dired Open</h3>
+<div class="outline-text-3" id="text-org5db8ed7">
 <p>
 Dired Open adds extra hooks to <code>dired-find-file</code> which search for alternative ways to open files in Dired.
 </p>
@@ -128,8 +128,8 @@ Dired Open adds extra hooks to <code>dired-find-file</code> which search for alt
 </div>
 
 <div id="outline-container-org72347b0" class="outline-3">
-<h3 id="org72347b0"><span class="section-number-3">2.3.</span> xdg-open</h3>
-<div class="outline-text-3" id="text-2-3">
+<h3 id="org72347b0">xdg-open</h3>
+<div class="outline-text-3" id="text-org72347b0">
 <p>
 When opening files in Emacs such as media files, <code>xdg-open</code> can be used to open the preferred application for that particular file extension. Dired Open has a function <code>dired-open-xdg</code> that will open the file on the current line in Dired using <code>xdg-open</code>.
 </p>
@@ -165,8 +165,8 @@ This can also be configured to work in Sunrise Commander using the <code>sr-mode
 </div>
 
 <div id="outline-container-orgdcc997f" class="outline-2">
-<h2 id="orgdcc997f"><span class="section-number-2">3.</span> Disc Usage</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="orgdcc997f">Disc Usage</h2>
+<div class="outline-text-2" id="text-orgdcc997f">
 <p>
 Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
 </p>
@@ -181,8 +181,8 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 </div>
 
 <div id="outline-container-org4f62749" class="outline-2">
-<h2 id="org4f62749"><span class="section-number-2">4.</span> Rclone Tools</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="org4f62749">Rclone Tools</h2>
+<div class="outline-text-2" id="text-org4f62749">
 <p>
 Rclone tools is a package that used the Emacs <code>completing-read</code> function to simplify running the <code>rclone</code> program from within Emacs and make it simpler to create scripts using Emacs lisp.
 </p>
@@ -234,9 +234,9 @@ The following function will execute the rclone command line tool
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

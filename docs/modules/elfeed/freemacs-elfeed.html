@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elfeed Configuration</title>
@@ -30,16 +30,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1d87117">1. Elfeed</a></li>
+<li><a href="#org1d87117">Elfeed</a></li>
+<li><a href="#orgb81f81f">Elfeed Tube</a>
+<ul>
+<li><a href="#orgc524fb4">mpv</a></li>
+</ul>
+</li>
+<li><a href="#org066d2df">End</a></li>
 </ul>
 </div>
 </div>
-
-
+<p>
+Elfeed is a powerful and fast RSS and newsreader for Emacs. This file contains the configuration for Elfeed.
+</p>
 
 <div id="outline-container-org1d87117" class="outline-2">
-<h2 id="org1d87117"><span class="section-number-2">1.</span> Elfeed</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="org1d87117">Elfeed</h2>
+<div class="outline-text-2" id="text-org1d87117">
 <p>
 <a href="https://github.com/skeeto/elfeed">Elfeyed</a> is a feed reader for Emacs that has powerful search capabilities and is very fast.
 </p>
@@ -64,7 +71,12 @@ All of the feeds in the Elfeed reader are set as a list passed to the <code>elfe
       '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"https://www.sciencedaily.com/rss/all.xml"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgb81f81f" class="outline-2">
+<h2 id="orgb81f81f">Elfeed Tube</h2>
+<div class="outline-text-2" id="text-orgb81f81f">
 <p>
 <a href="https://github.com/karthink/elfeed-tube">Elfeed Tube</a> is an extension to Elfeed that adds YouTube channels to the 
 </p>
@@ -93,9 +105,13 @@ Add subsriptions to Elfeed Tube using the <code>elfeed-tube-add-feeds</code> var
                          <span style="color: #7984D1;">"https://www.youtube.com/c/veritasium/"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
 
+<div id="outline-container-orgc524fb4" class="outline-3">
+<h3 id="orgc524fb4">mpv</h3>
+<div class="outline-text-3" id="text-orgc524fb4">
 <p>
-Elfeed Tube requires mpv for watching videos in Emacs.
+Elfeed Tube require mpv for watching videos in Emacs along with the Emacs mpv package.
 </p>
 
 <div class="org-src-container">
@@ -104,6 +120,16 @@ Elfeed Tube requires mpv for watching videos in Emacs.
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org066d2df" class="outline-2">
+<h2 id="org066d2df">End</h2>
+<div class="outline-text-2" id="text-org066d2df">
+<p>
+Tell Emacs what package this file provides.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-elfeed</span><span style="color: #1ea8fc;">)</span>
@@ -113,9 +139,9 @@ Elfeed Tube requires mpv for watching videos in Emacs.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 14:07 -->
+<!-- 2022-07-07 Thu 14:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Configuration</title>
@@ -51,83 +51,83 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org703e699">1. About this Document</a>
+<li><a href="#org703e699">About this Document</a>
 <ul>
-<li><a href="#org6c423d7">1.1. Tags</a></li>
+<li><a href="#org6c423d7">Tags</a></li>
 </ul>
 </li>
-<li><a href="#org1d07173">2. Header for <code>init.el</code></a></li>
-<li><a href="#orgda135a5">3. Performance Optimization Start</a></li>
-<li><a href="#org450a53d">4. Load Path</a></li>
-<li><a href="#orgbf0d505">5. Running Emacs as a Portable App</a>
+<li><a href="#org1d07173">Header for <code>init.el</code></a></li>
+<li><a href="#orgda135a5">Performance Optimization Start</a></li>
+<li><a href="#org450a53d">Load Path</a></li>
+<li><a href="#orgbf0d505">Running Emacs as a Portable App</a>
 <ul>
-<li><a href="#org786d757">5.1. Check for Portable Emacs Instance</a></li>
-<li><a href="#org0e21e0c">5.2. Set Location of Portable Git&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></a></li>
+<li><a href="#org786d757">Check for Portable Emacs Instance</a></li>
+<li><a href="#org0e21e0c">Set Location of Portable Git&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org339e3a1">6. Custom Set Variables</a></li>
-<li><a href="#org470e827">7. Package Management</a>
+<li><a href="#org339e3a1">Custom Set Variables</a></li>
+<li><a href="#org470e827">Package Management</a>
 <ul>
-<li><a href="#org6d45216">7.1. Straight.el</a></li>
-<li><a href="#org09bd9c0">7.2. Install use-package</a></li>
+<li><a href="#org6d45216">Straight.el</a></li>
+<li><a href="#org09bd9c0">Install use-package</a></li>
 </ul>
 </li>
-<li><a href="#orga364025">8. Startup Tools</a>
+<li><a href="#orga364025">Startup Tools</a>
 <ul>
-<li><a href="#orge577850">8.1. No-littering</a></li>
-<li><a href="#orgdc5fab4">8.2. Whicher</a></li>
+<li><a href="#orge577850">No-littering</a></li>
+<li><a href="#orgdc5fab4">Whicher</a></li>
 </ul>
 </li>
-<li><a href="#orge769a81">9. Defaults</a></li>
-<li><a href="#org0ec016c">10. Coding</a></li>
-<li><a href="#orgefa8308">11. Completion</a></li>
-<li><a href="#org517695d">12. Docker</a></li>
-<li><a href="#orgaf64369">13. Editing Tools</a></li>
-<li><a href="#org83153a2">14. Elfeed</a></li>
-<li><a href="#org9569829">15. Email</a></li>
-<li><a href="#org7fc19ac">16. EXWM</a></li>
-<li><a href="#orga1b6029">17. File Management</a>
+<li><a href="#orge769a81">Defaults</a></li>
+<li><a href="#org0ec016c">Coding</a></li>
+<li><a href="#orgefa8308">Completion</a></li>
+<li><a href="#org517695d">Docker</a></li>
+<li><a href="#orgaf64369">Editing Tools</a></li>
+<li><a href="#org83153a2">Elfeed</a></li>
+<li><a href="#org9569829">Email</a></li>
+<li><a href="#org7fc19ac">EXWM</a></li>
+<li><a href="#orga1b6029">File Management</a>
 <ul>
-<li><a href="#org5708507">17.1. Dired</a></li>
-<li><a href="#orgdbce0ee">17.2. Sunrise Commander</a></li>
+<li><a href="#org5708507">Dired</a></li>
+<li><a href="#orgdbce0ee">Sunrise Commander</a></li>
 </ul>
 </li>
-<li><a href="#org11b3671">18. Graphing</a></li>
-<li><a href="#org925b12a">19. Math and Finance</a>
+<li><a href="#org11b3671">Graphing</a></li>
+<li><a href="#org925b12a">Math and Finance</a>
 <ul>
-<li><a href="#org9bcb97b">19.1. Ledger</a></li>
+<li><a href="#org9bcb97b">Ledger</a></li>
 </ul>
 </li>
-<li><a href="#org83badd9">20. Org</a></li>
-<li><a href="#org68b82a7">21. Session</a></li>
-<li><a href="#org9d949eb">22. Shells and Terminals</a>
+<li><a href="#org83badd9">Org</a></li>
+<li><a href="#org68b82a7">Session</a></li>
+<li><a href="#org9d949eb">Shells and Terminals</a>
 <ul>
-<li><a href="#orgc094b4c">22.1. Eshell</a></li>
-<li><a href="#orgbf0e184">22.2. PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></a></li>
-<li><a href="#org581f2c4">22.3. VTerm</a></li>
+<li><a href="#orgc094b4c">Eshell</a></li>
+<li><a href="#orgbf0e184">PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></a></li>
+<li><a href="#org581f2c4">VTerm</a></li>
 </ul>
 </li>
-<li><a href="#org518efd6">23. Theme</a></li>
-<li><a href="#org2c7d370">24. Writing/Publishing/Reading</a>
+<li><a href="#org518efd6">Theme</a></li>
+<li><a href="#org2c7d370">Writing/Publishing/Reading</a>
 <ul>
-<li><a href="#orga4f3ec1">24.1. Academic Writing</a></li>
-<li><a href="#org8a6e81d">24.2. Spellchecking</a></li>
-<li><a href="#org09d5da9">24.3. \LaTeX{}</a></li>
-<li><a href="#org560e0e8">24.4. Markdown</a></li>
-<li><a href="#org4fbf7d1">24.5. Ox-publish</a></li>
-<li><a href="#org1e5ae62">24.6. PDF</a></li>
+<li><a href="#orga4f3ec1">Academic Writing</a></li>
+<li><a href="#org8a6e81d">Spellchecking</a></li>
+<li><a href="#org09d5da9">\LaTeX{}</a></li>
+<li><a href="#org560e0e8">Markdown</a></li>
+<li><a href="#org4fbf7d1">Ox-publish</a></li>
+<li><a href="#org1e5ae62">PDF</a></li>
 </ul>
 </li>
-<li><a href="#org22d3fd7">25. Help</a></li>
-<li><a href="#org703ab14">26. Emacs Server</a></li>
-<li><a href="#org343d0f0">27. Custom Functions</a>
+<li><a href="#org22d3fd7">Help</a></li>
+<li><a href="#org703ab14">Emacs Server</a></li>
+<li><a href="#org343d0f0">Custom Functions</a>
 <ul>
-<li><a href="#org67ae1a8">27.1. Sudo Find File</a></li>
+<li><a href="#org67ae1a8">Sudo Find File</a></li>
 </ul>
 </li>
-<li><a href="#org836913e">28. Update Org Files on Portable App Startup</a></li>
-<li><a href="#org78610db">29. Performance Optimization End</a></li>
-<li><a href="#orgd68a048">30. End</a></li>
+<li><a href="#org836913e">Update Org Files on Portable App Startup</a></li>
+<li><a href="#org78610db">Performance Optimization End</a></li>
+<li><a href="#orgd68a048">End</a></li>
 </ul>
 </div>
 </div>
@@ -137,16 +137,16 @@ Welcome to my Emacs configuration! This file contains the code along with docume
 </p>
 
 <div id="outline-container-org703e699" class="outline-2">
-<h2 id="org703e699"><span class="section-number-2">1.</span> About this Document</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="org703e699">About this Document</h2>
+<div class="outline-text-2" id="text-org703e699">
 <p>
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the <code>init.el</code> file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to <code>init.el</code>.
 </p>
 </div>
 
 <div id="outline-container-org6c423d7" class="outline-3">
-<h3 id="org6c423d7"><span class="section-number-3">1.1.</span> Tags</h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="org6c423d7">Tags</h3>
+<div class="outline-text-3" id="text-org6c423d7">
 <p>
 Tags are used in this document to help make navigation of the packages easier and to provide additional information about piecing together this Emacs configuration. Below are descriptions of the tags and their meanings:
 </p>
@@ -170,8 +170,8 @@ Tags are used in this document to help make navigation of the packages easier an
 </div>
 
 <div id="outline-container-org1d07173" class="outline-2">
-<h2 id="org1d07173"><span class="section-number-2">2.</span> Header for <code>init.el</code></h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org1d07173">Header for <code>init.el</code></h2>
+<div class="outline-text-2" id="text-org1d07173">
 <p>
 The following code block will add a header to the <code>init.el</code> file when it is generated on saving:
 </p>
@@ -221,8 +221,8 @@ The following code block will add a header to the <code>init.el</code> file when
 </div>
 
 <div id="outline-container-orgda135a5" class="outline-2">
-<h2 id="orgda135a5"><span class="section-number-2">3.</span> Performance Optimization Start</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="orgda135a5">Performance Optimization Start</h2>
+<div class="outline-text-2" id="text-orgda135a5">
 <p>
 In order to slightly reduce the load time for Emacs, the whole <code>init.el</code> file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.See <a href="https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/">this Reddit post</a> for more information.
 </p>
@@ -235,8 +235,8 @@ In order to slightly reduce the load time for Emacs, the whole <code>init.el</co
 </div>
 
 <div id="outline-container-org450a53d" class="outline-2">
-<h2 id="org450a53d"><span class="section-number-2">4.</span> Load Path</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="org450a53d">Load Path</h2>
+<div class="outline-text-2" id="text-org450a53d">
 <p>
 Since all of the Emacs configuration is in modules, the <code>modules</code> directory and all of its sub-directories must be added to the Emacs <code>load-path</code>.
 </p>
@@ -252,16 +252,16 @@ Since all of the Emacs configuration is in modules, the <code>modules</code> dir
 </div>
 
 <div id="outline-container-orgbf0d505" class="outline-2">
-<h2 id="orgbf0d505"><span class="section-number-2">5.</span> Running Emacs as a Portable App</h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="orgbf0d505">Running Emacs as a Portable App</h2>
+<div class="outline-text-2" id="text-orgbf0d505">
 <p>
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs.
 </p>
 </div>
 
 <div id="outline-container-org786d757" class="outline-3">
-<h3 id="org786d757"><span class="section-number-3">5.1.</span> Check for Portable Emacs Instance</h3>
-<div class="outline-text-3" id="text-5-1">
+<h3 id="org786d757">Check for Portable Emacs Instance</h3>
+<div class="outline-text-3" id="text-org786d757">
 <p>
 When <a href="runemacs.bat">runemacs.bat</a> is executed, it will set the environment variable <code>EMACS_PORTABLE</code> to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
 </p>
@@ -274,8 +274,8 @@ When <a href="runemacs.bat">runemacs.bat</a> is executed, it will set the enviro
 </div>
 
 <div id="outline-container-org0e21e0c" class="outline-3">
-<h3 id="org0e21e0c"><span class="section-number-3">5.2.</span> Set Location of Portable Git&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></h3>
-<div class="outline-text-3" id="text-5-2">
+<h3 id="org0e21e0c">Set Location of Portable Git&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></h3>
+<div class="outline-text-3" id="text-org0e21e0c">
 <p>
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git (<a href="https://github.com/sheabunge/GitPortable">sheabunge/GitPortable</a>) for Windows that can be installed on the <a href="https://portableapps.com/">PortableApp</a> platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 </p>
@@ -294,8 +294,8 @@ The following line code will check to see if Emacs is being run as a portable ap
 </div>
 
 <div id="outline-container-org339e3a1" class="outline-2">
-<h2 id="org339e3a1"><span class="section-number-2">6.</span> Custom Set Variables</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="org339e3a1">Custom Set Variables</h2>
+<div class="outline-text-2" id="text-org339e3a1">
 <p>
 In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of <code>init.el</code>, I set the variables set from Emacs customize to be put into a separate file <a href="./custom.el">./custom.el</a>.
 </p>
@@ -323,8 +323,8 @@ Once the file location has been set, Emacs needs to load the custom file. This n
 </div>
 
 <div id="outline-container-org470e827" class="outline-2">
-<h2 id="org470e827"><span class="section-number-2">7.</span> Package Management</h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="org470e827">Package Management</h2>
+<div class="outline-text-2" id="text-org470e827">
 <p>
 In this section, I have included customization to replace the default Emacs package manager with <a href="https://github.com/raxod502/straight.el">straight.el</a>. Some reasons for making this switch are:
 </p>
@@ -339,8 +339,8 @@ used in <code>use-package</code> statements.</li>
 </div>
 
 <div id="outline-container-org6d45216" class="outline-3">
-<h3 id="org6d45216"><span class="section-number-3">7.1.</span> Straight.el</h3>
-<div class="outline-text-3" id="text-7-1">
+<h3 id="org6d45216">Straight.el</h3>
+<div class="outline-text-3" id="text-org6d45216">
 <p>
 Instead of using the built-in package manager, use <a href="https://github.com/raxod502/straight.el">straight.el</a> to pull all the packages straight from their repositories.
 </p>
@@ -369,8 +369,8 @@ Instead of using the built-in package manager, use <a href="https://github.com/r
 </div>
 
 <div id="outline-container-org09bd9c0" class="outline-3">
-<h3 id="org09bd9c0"><span class="section-number-3">7.2.</span> Install use-package</h3>
-<div class="outline-text-3" id="text-7-2">
+<h3 id="org09bd9c0">Install use-package</h3>
+<div class="outline-text-3" id="text-org09bd9c0">
 <p>
 Use <code>straight.el</code> to install <code>use-package</code> to manage Emacs packages.
 </p>
@@ -399,16 +399,16 @@ However, as I have started using the GUIX System Distribution I have found that 
 </div>
 
 <div id="outline-container-orga364025" class="outline-2">
-<h2 id="orga364025"><span class="section-number-2">8.</span> Startup Tools</h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="orga364025">Startup Tools</h2>
+<div class="outline-text-2" id="text-orga364025">
 <p>
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
 </p>
 </div>
 
 <div id="outline-container-orge577850" class="outline-3">
-<h3 id="orge577850"><span class="section-number-3">8.1.</span> No-littering</h3>
-<div class="outline-text-3" id="text-8-1">
+<h3 id="orge577850">No-littering</h3>
+<div class="outline-text-3" id="text-orge577850">
 <p>
 The <a href="https://github.com/emacscollective/no-littering">no-littering</a> package will put Emacs configuration files for many third-party packages into separate folders under <code>.emacs.d/etc/</code> to help keep the <code>.emacs.d/</code> from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
 </p>
@@ -423,8 +423,8 @@ The <a href="https://github.com/emacscollective/no-littering">no-littering</a> p
 </div>
 
 <div id="outline-container-orgdc5fab4" class="outline-3">
-<h3 id="orgdc5fab4"><span class="section-number-3">8.2.</span> Whicher</h3>
-<div class="outline-text-3" id="text-8-2">
+<h3 id="orgdc5fab4">Whicher</h3>
+<div class="outline-text-3" id="text-orgdc5fab4">
 <p>
 <a href="https://github.com/abo-abo/whicher">Whicher</a> provides a quick tool to check for missing executable dependencies without much cost to Emacs startup time. This needs to be loaded before the rest of init.el so that as init.el is loaded, it can look for missing executables on the host system.
 </p>
@@ -440,8 +440,8 @@ The <a href="https://github.com/emacscollective/no-littering">no-littering</a> p
 </div>
 
 <div id="outline-container-orge769a81" class="outline-2">
-<h2 id="orge769a81"><span class="section-number-2">9.</span> Defaults</h2>
-<div class="outline-text-2" id="text-9">
+<h2 id="orge769a81">Defaults</h2>
+<div class="outline-text-2" id="text-orge769a81">
 <p>
 Emacs has many default options that can be changed to make Emacs more productive in a modern computing environment. Changes to the default settings of Emacs can be found in the <a href="modules/defaults/freemacs-defaults.html">defaults module</a>.
 </p>
@@ -456,8 +456,8 @@ Emacs has many default options that can be changed to make Emacs more productive
 </div>
 
 <div id="outline-container-org0ec016c" class="outline-2">
-<h2 id="org0ec016c"><span class="section-number-2">10.</span> Coding</h2>
-<div class="outline-text-2" id="text-10">
+<h2 id="org0ec016c">Coding</h2>
+<div class="outline-text-2" id="text-org0ec016c">
 <p>
 Modifications to the coding modes for Emacs are defined in the <a href="modules/coding/freemacs-coding.html">coding module</a>.
 </p>
@@ -472,8 +472,8 @@ Modifications to the coding modes for Emacs are defined in the <a href="modules/
 </div>
 
 <div id="outline-container-orgefa8308" class="outline-2">
-<h2 id="orgefa8308"><span class="section-number-2">11.</span> Completion</h2>
-<div class="outline-text-2" id="text-11">
+<h2 id="orgefa8308">Completion</h2>
+<div class="outline-text-2" id="text-orgefa8308">
 <p>
 While Emacs has built-in completion systems, the combination of the following tools makes Emacs completion very powerful:
 </p>
@@ -501,8 +501,8 @@ The configuration of these elements can be found in the <a href="modules/complet
 </div>
 
 <div id="outline-container-org517695d" class="outline-2">
-<h2 id="org517695d"><span class="section-number-2">12.</span> Docker</h2>
-<div class="outline-text-2" id="text-12">
+<h2 id="org517695d">Docker</h2>
+<div class="outline-text-2" id="text-org517695d">
 <p>
 Tools for working with Docker and Docker files are included in the <a href="modules/docker/freemacs-docker.html">docker module</a>. It configures the following packages:
 </p>
@@ -522,8 +522,8 @@ Tools for working with Docker and Docker files are included in the <a href="modu
 </div>
 
 <div id="outline-container-orgaf64369" class="outline-2">
-<h2 id="orgaf64369"><span class="section-number-2">13.</span> Editing Tools</h2>
-<div class="outline-text-2" id="text-13">
+<h2 id="orgaf64369">Editing Tools</h2>
+<div class="outline-text-2" id="text-orgaf64369">
 <p>
 General editing tools are configured in the Emacs <a href="modules/editing/freemacs-editing.html">editing module</a>. This includes:
 </p>
@@ -543,10 +543,10 @@ General editing tools are configured in the Emacs <a href="modules/editing/freem
 </div>
 
 <div id="outline-container-org83153a2" class="outline-2">
-<h2 id="org83153a2"><span class="section-number-2">14.</span> Elfeed</h2>
-<div class="outline-text-2" id="text-14">
+<h2 id="org83153a2">Elfeed</h2>
+<div class="outline-text-2" id="text-org83153a2">
 <p>
-Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found at <a href="modules/elfeed/freemacs-elfeed.html">elfeed module</a>.
+Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found in the <a href="modules/elfeed/freemacs-elfeed.html">Elfeed module</a>.
 </p>
 
 <div class="org-src-container">
@@ -559,8 +559,8 @@ Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be f
 </div>
 
 <div id="outline-container-org9569829" class="outline-2">
-<h2 id="org9569829"><span class="section-number-2">15.</span> Email</h2>
-<div class="outline-text-2" id="text-15">
+<h2 id="org9569829">Email</h2>
+<div class="outline-text-2" id="text-org9569829">
 <p>
 Email is managed using the Mu4e package that uses the Mu backend to search through emails that are stored using the Maildir format. The configuration can be found at <a href="modules/email/freemacs-email.html">email module</a>.
 </p>
@@ -575,8 +575,8 @@ Email is managed using the Mu4e package that uses the Mu backend to search throu
 </div>
 
 <div id="outline-container-org7fc19ac" class="outline-2">
-<h2 id="org7fc19ac"><span class="section-number-2">16.</span> EXWM</h2>
-<div class="outline-text-2" id="text-16">
+<h2 id="org7fc19ac">EXWM</h2>
+<div class="outline-text-2" id="text-org7fc19ac">
 <p>
 EXWM is a window manager that runs entirely wihtin Emacs. With EXWM, Emacs frames and windows can be used to manage X11 applications. Each X11 application runs in a separate window and can be accessed as a separate buffer using Emacs commands.
 </p>
@@ -591,16 +591,16 @@ EXWM is a window manager that runs entirely wihtin Emacs. With EXWM, Emacs frame
 </div>
 
 <div id="outline-container-orga1b6029" class="outline-2">
-<h2 id="orga1b6029"><span class="section-number-2">17.</span> File Management</h2>
-<div class="outline-text-2" id="text-17">
+<h2 id="orga1b6029">File Management</h2>
+<div class="outline-text-2" id="text-orga1b6029">
 <p>
 This section contains tools for working with the file system from within Emacs.
 </p>
 </div>
 
 <div id="outline-container-org5708507" class="outline-3">
-<h3 id="org5708507"><span class="section-number-3">17.1.</span> Dired</h3>
-<div class="outline-text-3" id="text-17-1">
+<h3 id="org5708507">Dired</h3>
+<div class="outline-text-3" id="text-org5708507">
 <p>
 The <a href="modules/file-tools/freemacs-dired.html">Dired module</a> contains changes and improvements to the Dired (directory editor) package in Emacs.
 </p>
@@ -615,8 +615,8 @@ The <a href="modules/file-tools/freemacs-dired.html">Dired module</a> contains c
 </div>
 
 <div id="outline-container-orgdbce0ee" class="outline-3">
-<h3 id="orgdbce0ee"><span class="section-number-3">17.2.</span> Sunrise Commander</h3>
-<div class="outline-text-3" id="text-17-2">
+<h3 id="orgdbce0ee">Sunrise Commander</h3>
+<div class="outline-text-3" id="text-orgdbce0ee">
 <p>
 <a href="https://github.com/sunrise-commander/sunrise-commander">Sunrise Commander</a> is a two-pane orthodox file manager similar to Midnight Commander. The configuration for Sunrise Commander is in the <a href="modules/file-tools/freemacs-sunrise.html">sunrise module</a>.
 </p>
@@ -632,8 +632,8 @@ The <a href="modules/file-tools/freemacs-dired.html">Dired module</a> contains c
 </div>
 
 <div id="outline-container-org11b3671" class="outline-2">
-<h2 id="org11b3671"><span class="section-number-2">18.</span> Graphing</h2>
-<div class="outline-text-2" id="text-18">
+<h2 id="org11b3671">Graphing</h2>
+<div class="outline-text-2" id="text-org11b3671">
 <p>
 Emacs can be used as an environment to create graphs, plots, and diagrams. Configuration for these are found in the <a href="modules/graphing/freemacs-graphing.html">graphing module</a>.
 </p>
@@ -653,12 +653,12 @@ Emacs can be used as an environment to create graphs, plots, and diagrams. Confi
 </div>
 
 <div id="outline-container-org925b12a" class="outline-2">
-<h2 id="org925b12a"><span class="section-number-2">19.</span> Math and Finance</h2>
-<div class="outline-text-2" id="text-19">
+<h2 id="org925b12a">Math and Finance</h2>
+<div class="outline-text-2" id="text-org925b12a">
 </div>
 <div id="outline-container-org9bcb97b" class="outline-3">
-<h3 id="org9bcb97b"><span class="section-number-3">19.1.</span> Ledger</h3>
-<div class="outline-text-3" id="text-19-1">
+<h3 id="org9bcb97b">Ledger</h3>
+<div class="outline-text-3" id="text-org9bcb97b">
 <p>
 Ledger is a plain-text accounting system that is very fast, powerful and safe. The configuration for ledger in Emacs can be found in the <a href="modules/math/freemacs-ledger.html">ledger module</a>.
 </p>
@@ -674,8 +674,8 @@ Ledger is a plain-text accounting system that is very fast, powerful and safe. T
 </div>
 
 <div id="outline-container-org83badd9" class="outline-2">
-<h2 id="org83badd9"><span class="section-number-2">20.</span> Org</h2>
-<div class="outline-text-2" id="text-20">
+<h2 id="org83badd9">Org</h2>
+<div class="outline-text-2" id="text-org83badd9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the Org Mode module</span>
 
@@ -686,8 +686,8 @@ Ledger is a plain-text accounting system that is very fast, powerful and safe. T
 </div>
 
 <div id="outline-container-org68b82a7" class="outline-2">
-<h2 id="org68b82a7"><span class="section-number-2">21.</span> Session</h2>
-<div class="outline-text-2" id="text-21">
+<h2 id="org68b82a7">Session</h2>
+<div class="outline-text-2" id="text-org68b82a7">
 <p>
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
 </p>
@@ -702,16 +702,16 @@ This section contains customizations for controlling how to navigate between Ema
 </div>
 
 <div id="outline-container-org9d949eb" class="outline-2">
-<h2 id="org9d949eb"><span class="section-number-2">22.</span> Shells and Terminals</h2>
-<div class="outline-text-2" id="text-22">
+<h2 id="org9d949eb">Shells and Terminals</h2>
+<div class="outline-text-2" id="text-org9d949eb">
 <p>
 This section contains configuration options for terminals in Emacs. 
 </p>
 </div>
 
 <div id="outline-container-orgc094b4c" class="outline-3">
-<h3 id="orgc094b4c"><span class="section-number-3">22.1.</span> Eshell</h3>
-<div class="outline-text-3" id="text-22-1">
+<h3 id="orgc094b4c">Eshell</h3>
+<div class="outline-text-3" id="text-orgc094b4c">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the Eshell module</span>
 
@@ -722,8 +722,8 @@ This section contains configuration options for terminals in Emacs.
 </div>
 
 <div id="outline-container-orgbf0e184" class="outline-3">
-<h3 id="orgbf0e184"><span class="section-number-3">22.2.</span> PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></h3>
-<div class="outline-text-3" id="text-22-2">
+<h3 id="orgbf0e184">PowerShell&#xa0;&#xa0;&#xa0;<span class="tag"><span class="Windows">Windows</span></span></h3>
+<div class="outline-text-3" id="text-orgbf0e184">
 <p>
 <a href="https://github.com/jschaf/powershell.el">Powershell.el</a> creates a function that will launch an inferior shell that will run the Windows PowerShell tool.
 </p>
@@ -738,8 +738,8 @@ This section contains configuration options for terminals in Emacs.
 </div>
 
 <div id="outline-container-org581f2c4" class="outline-3">
-<h3 id="org581f2c4"><span class="section-number-3">22.3.</span> VTerm</h3>
-<div class="outline-text-3" id="text-22-3">
+<h3 id="org581f2c4">VTerm</h3>
+<div class="outline-text-3" id="text-org581f2c4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the VTerm module</span>
 
@@ -751,8 +751,8 @@ This section contains configuration options for terminals in Emacs.
 </div>
 
 <div id="outline-container-org518efd6" class="outline-2">
-<h2 id="org518efd6"><span class="section-number-2">23.</span> Theme</h2>
-<div class="outline-text-2" id="text-23">
+<h2 id="org518efd6">Theme</h2>
+<div class="outline-text-2" id="text-org518efd6">
 <p>
 Changes to Emacs appearance and theme can be found in the <a href="modules/theme/freemacs-theme.html">theme module</a>.
 </p>
@@ -774,16 +774,16 @@ Changes to Emacs appearance and theme can be found in the <a href="modules/theme
 </div>
 
 <div id="outline-container-org2c7d370" class="outline-2">
-<h2 id="org2c7d370"><span class="section-number-2">24.</span> Writing/Publishing/Reading</h2>
-<div class="outline-text-2" id="text-24">
+<h2 id="org2c7d370">Writing/Publishing/Reading</h2>
+<div class="outline-text-2" id="text-org2c7d370">
 <p>
 This section contains customizations for Emacs to improve the environment for writing papers, publishing paper and websites, and reading documents.
 </p>
 </div>
 
 <div id="outline-container-orga4f3ec1" class="outline-3">
-<h3 id="orga4f3ec1"><span class="section-number-3">24.1.</span> Academic Writing</h3>
-<div class="outline-text-3" id="text-24-1">
+<h3 id="orga4f3ec1">Academic Writing</h3>
+<div class="outline-text-3" id="text-orga4f3ec1">
 <p>
 The <a href="modules/publishing/freemacs-academic-writing.html">academic writing module</a> contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
 </p>
@@ -804,8 +804,8 @@ The <a href="modules/publishing/freemacs-academic-writing.html">academic writing
 </div>
 
 <div id="outline-container-org8a6e81d" class="outline-3">
-<h3 id="org8a6e81d"><span class="section-number-3">24.2.</span> Spellchecking</h3>
-<div class="outline-text-3" id="text-24-2">
+<h3 id="org8a6e81d">Spellchecking</h3>
+<div class="outline-text-3" id="text-org8a6e81d">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load Spellchecking module</span>
 
@@ -816,8 +816,8 @@ The <a href="modules/publishing/freemacs-academic-writing.html">academic writing
 </div>
 
 <div id="outline-container-org09d5da9" class="outline-3">
-<h3 id="org09d5da9"><span class="section-number-3">24.3.</span> \LaTeX{}</h3>
-<div class="outline-text-3" id="text-24-3">
+<h3 id="org09d5da9">\LaTeX{}</h3>
+<div class="outline-text-3" id="text-org09d5da9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the LaTeX module</span>
 
@@ -828,8 +828,8 @@ The <a href="modules/publishing/freemacs-academic-writing.html">academic writing
 </div>
 
 <div id="outline-container-org560e0e8" class="outline-3">
-<h3 id="org560e0e8"><span class="section-number-3">24.4.</span> Markdown</h3>
-<div class="outline-text-3" id="text-24-4">
+<h3 id="org560e0e8">Markdown</h3>
+<div class="outline-text-3" id="text-org560e0e8">
 <p>
 The <a href="modules/publishing/freemacs-markdown.html">markdown module</a> adds additional features to improve editing markdown files in Emacs.
 </p>
@@ -844,8 +844,8 @@ The <a href="modules/publishing/freemacs-markdown.html">markdown module</a> adds
 </div>
 
 <div id="outline-container-org4fbf7d1" class="outline-3">
-<h3 id="org4fbf7d1"><span class="section-number-3">24.5.</span> Ox-publish</h3>
-<div class="outline-text-3" id="text-24-5">
+<h3 id="org4fbf7d1">Ox-publish</h3>
+<div class="outline-text-3" id="text-org4fbf7d1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the ox-publish module</span>
 
@@ -856,8 +856,8 @@ The <a href="modules/publishing/freemacs-markdown.html">markdown module</a> adds
 </div>
 
 <div id="outline-container-org1e5ae62" class="outline-3">
-<h3 id="org1e5ae62"><span class="section-number-3">24.6.</span> PDF</h3>
-<div class="outline-text-3" id="text-24-6">
+<h3 id="org1e5ae62">PDF</h3>
+<div class="outline-text-3" id="text-org1e5ae62">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Load the pdf module</span>
 
@@ -869,8 +869,8 @@ The <a href="modules/publishing/freemacs-markdown.html">markdown module</a> adds
 </div>
 
 <div id="outline-container-org22d3fd7" class="outline-2">
-<h2 id="org22d3fd7"><span class="section-number-2">25.</span> Help</h2>
-<div class="outline-text-2" id="text-25">
+<h2 id="org22d3fd7">Help</h2>
+<div class="outline-text-2" id="text-org22d3fd7">
 <p>
 The <a href="modules/help/freemacs-help.html">help module</a> contains configuration that adds additional tools for help tools in Emacs:
 </p>
@@ -890,8 +890,8 @@ The <a href="modules/help/freemacs-help.html">help module</a> contains configura
 </div>
 
 <div id="outline-container-org703ab14" class="outline-2">
-<h2 id="org703ab14"><span class="section-number-2">26.</span> Emacs Server</h2>
-<div class="outline-text-2" id="text-26">
+<h2 id="org703ab14">Emacs Server</h2>
+<div class="outline-text-2" id="text-org703ab14">
 <p>
 Running Emacs as a server means that if I create a new instance of Emacs with the command <code>emacs</code>, I can then use the command <code>emacsclient -c -n</code> in order to quickly open a new Emacs buffer that is part of the same Emacs session.
 </p>
@@ -915,8 +915,8 @@ I have this option run only when I am not executing Emacs as a portable app as i
 </div>
 
 <div id="outline-container-org343d0f0" class="outline-2">
-<h2 id="org343d0f0"><span class="section-number-2">27.</span> Custom Functions</h2>
-<div class="outline-text-2" id="text-27">
+<h2 id="org343d0f0">Custom Functions</h2>
+<div class="outline-text-2" id="text-org343d0f0">
 <p>
 This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
 </p>
@@ -928,8 +928,8 @@ This section contains custom functions that I have either created myself or borr
 </div>
 
 <div id="outline-container-org67ae1a8" class="outline-3">
-<h3 id="org67ae1a8"><span class="section-number-3">27.1.</span> Sudo Find File</h3>
-<div class="outline-text-3" id="text-27-1">
+<h3 id="org67ae1a8">Sudo Find File</h3>
+<div class="outline-text-3" id="text-org67ae1a8">
 <p>
 This function creates a <code>sudo-find-file</code> command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from <a href="https://karthinks.com/software/fifteen-ways-to-use-embark/">https://karthinks.com/software/fifteen-ways-to-use-embark/</a>.
 </p>
@@ -954,8 +954,8 @@ This function creates a <code>sudo-find-file</code> command that can be used to 
 </div>
 
 <div id="outline-container-org836913e" class="outline-2">
-<h2 id="org836913e"><span class="section-number-2">28.</span> Update Org Files on Portable App Startup</h2>
-<div class="outline-text-2" id="text-28">
+<h2 id="org836913e">Update Org Files on Portable App Startup</h2>
+<div class="outline-text-2" id="text-org836913e">
 <p>
 When running Emacs as a portable app, I want to pull down the latest versions of my <code>org-agenda-files</code> and other Org Mode files onto my USB flash drive (which has been set as the home directory). I also want to make sure to update the remote location when Emacs is killed so that all of my changes will be synced with the cloud and available for use on other systems.
 </p>
@@ -975,8 +975,8 @@ When running Emacs as a portable app, I want to pull down the latest versions of
 </div>
 
 <div id="outline-container-org78610db" class="outline-2">
-<h2 id="org78610db"><span class="section-number-2">29.</span> Performance Optimization End</h2>
-<div class="outline-text-2" id="text-29">
+<h2 id="org78610db">Performance Optimization End</h2>
+<div class="outline-text-2" id="text-org78610db">
 <p>
 Close off the <code>let</code> statement at the beginning of the init file.
 </p>
@@ -990,8 +990,8 @@ Close off the <code>let</code> statement at the beginning of the init file.
 </div>
 
 <div id="outline-container-orgd68a048" class="outline-2">
-<h2 id="orgd68a048"><span class="section-number-2">30.</span> End</h2>
-<div class="outline-text-2" id="text-30">
+<h2 id="orgd68a048">End</h2>
+<div class="outline-text-2" id="text-orgd68a048">
 <p>
 Add a final comment to indicate the end of the file.
 </p>
@@ -1006,9 +1006,9 @@ Add a final comment to indicate the end of the file.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:07&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 14:07</p>
+<p class="date">Created: 2022-07-07 Thu 14:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

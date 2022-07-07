@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding Configuration</title>
@@ -29,20 +29,20 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga85dbf9">1. Aggressive Indent</a></li>
-<li><a href="#orgbcc529d">2. Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></a></li>
-<li><a href="#org11ef538">3. C</a></li>
-<li><a href="#orgc697837">4. Eglot</a></li>
-<li><a href="#orgf3e95e1">5. Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#org426d07b">6. Go</a></li>
-<li><a href="#org218e25e">7. Minimap</a></li>
-<li><a href="#orgd226207">8. Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></a></li>
-<li><a href="#org8a7efe8">9. Number Line Mode</a></li>
-<li><a href="#org7a90e88">10. Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#org00fb19f">11. Paren Mode</a></li>
-<li><a href="#orga05b74e">12. Rainbow Delimiters</a></li>
-<li><a href="#orgec9a51b">13. Treemacs</a></li>
-<li><a href="#org5b9d709">14. End</a></li>
+<li><a href="#orga85dbf9">Aggressive Indent</a></li>
+<li><a href="#orgbcc529d">Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></a></li>
+<li><a href="#org11ef538">C</a></li>
+<li><a href="#orgc697837">Eglot</a></li>
+<li><a href="#orgf3e95e1">Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
+<li><a href="#org426d07b">Go</a></li>
+<li><a href="#org218e25e">Minimap</a></li>
+<li><a href="#orgd226207">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></a></li>
+<li><a href="#org8a7efe8">Number Line Mode</a></li>
+<li><a href="#org7a90e88">Numpydoc</a></li>
+<li><a href="#org00fb19f">Paren Mode</a></li>
+<li><a href="#orga05b74e">Rainbow Delimiters</a></li>
+<li><a href="#orgec9a51b">Treemacs</a></li>
+<li><a href="#org5b9d709">End</a></li>
 </ul>
 </div>
 </div>
@@ -50,14 +50,9 @@
 The following customizations are used to improve the coding environment in Emacs.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Coding Configuration</span>
-</pre>
-</div>
-
 <div id="outline-container-orga85dbf9" class="outline-2">
-<h2 id="orga85dbf9"><span class="section-number-2">1.</span> Aggressive Indent</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="orga85dbf9">Aggressive Indent</h2>
+<div class="outline-text-2" id="text-orga85dbf9">
 <p>
 <a href="https://github.com/Malabarba/aggressive-indent-mode">Aggressive Indent mode</a> will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
 </p>
@@ -75,8 +70,8 @@ The following customizations are used to improve the coding environment in Emacs
 </div>
 
 <div id="outline-container-orgbcc529d" class="outline-2">
-<h2 id="orgbcc529d"><span class="section-number-2">2.</span> Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="orgbcc529d">Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></h2>
+<div class="outline-text-2" id="text-orgbcc529d">
 <p>
 <a href="https://github.com/raxod502/apheleia">Apheleia</a> will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
 </p>
@@ -98,8 +93,8 @@ The following customizations are used to improve the coding environment in Emacs
 </div>
 
 <div id="outline-container-org11ef538" class="outline-2">
-<h2 id="org11ef538"><span class="section-number-2">3.</span> C</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="org11ef538">C</h2>
+<div class="outline-text-2" id="text-org11ef538">
 <p>
 I have added <code>.ino</code> files to C mode so that I can have syntax highlighting when I program my Arduino board.
 </p>
@@ -116,8 +111,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-orgc697837" class="outline-2">
-<h2 id="orgc697837"><span class="section-number-2">4.</span> Eglot</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="orgc697837">Eglot</h2>
+<div class="outline-text-2" id="text-orgc697837">
 <p>
 <a href="https://github.com/joaotavora/eglot">Eglot</a> is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
 </p>
@@ -133,8 +128,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-orgf3e95e1" class="outline-2">
-<h2 id="orgf3e95e1"><span class="section-number-2">5.</span> Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="orgf3e95e1">Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h2>
+<div class="outline-text-2" id="text-orgf3e95e1">
 <p>
 <a href="https://www.flycheck.org/en/latest/">Flycheck</a> can check programming syntax while typing.
 </p>
@@ -150,8 +145,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-org426d07b" class="outline-2">
-<h2 id="org426d07b"><span class="section-number-2">6.</span> Go</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="org426d07b">Go</h2>
+<div class="outline-text-2" id="text-org426d07b">
 <p>
 <a href="https://github.com/dominikh/go-mode.el">Go mode</a> provides a major model for editing Go code.
 </p>
@@ -166,8 +161,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-org218e25e" class="outline-2">
-<h2 id="org218e25e"><span class="section-number-2">7.</span> Minimap</h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="org218e25e">Minimap</h2>
+<div class="outline-text-2" id="text-org218e25e">
 <p>
 <a href="https://github.com/dengste/minimap">Minimap</a> shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
 </p>
@@ -182,8 +177,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-orgd226207" class="outline-2">
-<h2 id="orgd226207"><span class="section-number-2">8.</span> Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="orgd226207">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></h2>
+<div class="outline-text-2" id="text-orgd226207">
 <p>
 <a href="https://magit.vc/">Magit</a> provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 </p>
@@ -200,8 +195,8 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-org8a7efe8" class="outline-2">
-<h2 id="org8a7efe8"><span class="section-number-2">9.</span> Number Line Mode</h2>
-<div class="outline-text-2" id="text-9">
+<h2 id="org8a7efe8">Number Line Mode</h2>
+<div class="outline-text-2" id="text-org8a7efe8">
 <p>
 Number lines can be very useful in programming modes. This code below will turn on the built-in <code>display-line-numbers-mode</code> in any major mode that inherits from <code>prog-mode</code>. With wide monitors these days it is less of an issue and it can always toggled off with  <code>display-line-numbers-mode</code> on the fly.
 </p>
@@ -215,8 +210,8 @@ Number lines can be very useful in programming modes. This code below will turn 
 </div>
 
 <div id="outline-container-org7a90e88" class="outline-2">
-<h2 id="org7a90e88"><span class="section-number-2">10.</span> Numpydoc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h2>
-<div class="outline-text-2" id="text-10">
+<h2 id="org7a90e88">Numpydoc</h2>
+<div class="outline-text-2" id="text-org7a90e88">
 <p>
 Using <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a> provides an interactive tool to automatically generate Numpy style docstrings.
 </p>
@@ -232,8 +227,8 @@ Using <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a> provide
 </div>
 
 <div id="outline-container-org00fb19f" class="outline-2">
-<h2 id="org00fb19f"><span class="section-number-2">11.</span> Paren Mode</h2>
-<div class="outline-text-2" id="text-11">
+<h2 id="org00fb19f">Paren Mode</h2>
+<div class="outline-text-2" id="text-org00fb19f">
 <p>
 Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
 </p>
@@ -255,8 +250,8 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 
 <div id="outline-container-orga05b74e" class="outline-2">
-<h2 id="orga05b74e"><span class="section-number-2">12.</span> Rainbow Delimiters</h2>
-<div class="outline-text-2" id="text-12">
+<h2 id="orga05b74e">Rainbow Delimiters</h2>
+<div class="outline-text-2" id="text-orga05b74e">
 <p>
 <a href="https://github.com/Fanael/rainbow-delimiters">Rainbow delimiters</a> colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on <code>paren-mode</code> and <code>backward-sexp</code>.
 </p>
@@ -271,8 +266,8 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 
 <div id="outline-container-orgec9a51b" class="outline-2">
-<h2 id="orgec9a51b"><span class="section-number-2">13.</span> Treemacs</h2>
-<div class="outline-text-2" id="text-13">
+<h2 id="orgec9a51b">Treemacs</h2>
+<div class="outline-text-2" id="text-orgec9a51b">
 <p>
 <a href="https://github.com/Alexander-Miller/treemacs">Treemacs</a> provides a separate Emacs window to browse file directory trees for projects.
 </p>
@@ -325,8 +320,12 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 
 <div id="outline-container-org5b9d709" class="outline-2">
-<h2 id="org5b9d709"><span class="section-number-2">14.</span> End</h2>
-<div class="outline-text-2" id="text-14">
+<h2 id="org5b9d709">End</h2>
+<div class="outline-text-2" id="text-org5b9d709">
+<p>
+Tell Emacs what package this file provides.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-coding</span><span style="color: #1ea8fc;">)</span>
 
@@ -337,9 +336,9 @@ The following code will always highlight matching parenthesis when coding <i>imm
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -11,7 +11,7 @@
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t
+#+options: html5-fancy:nil tex:t num:nil
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content

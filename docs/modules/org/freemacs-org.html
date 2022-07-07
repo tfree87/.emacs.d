@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org Mode Configuration</title>
@@ -50,55 +50,55 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1881867">1. Calfw</a>
+<li><a href="#org1881867">Calfw</a>
 <ul>
-<li><a href="#orga724e4c">1.1. Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#orga724e4c">Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgd716684">2. Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#org1fe9a4d">3. Olivetti</a></li>
-<li><a href="#orgff93256">4. Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a>
+<li><a href="#orgd716684">Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org1fe9a4d">Olivetti</a></li>
+<li><a href="#orgff93256">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a>
 <ul>
-<li><a href="#org6786072">4.1. Directories</a>
+<li><a href="#org6786072">Directories</a>
 <ul>
-<li><a href="#org8823c1d">4.1.1. Default Directory</a></li>
-<li><a href="#orgc044546">4.1.2. Location of Agenda Files</a></li>
+<li><a href="#org8823c1d">Default Directory</a></li>
+<li><a href="#orgc044546">Location of Agenda Files</a></li>
 </ul>
 </li>
-<li><a href="#org6438f40">4.2. Filing Notes</a>
+<li><a href="#org6438f40">Filing Notes</a>
 <ul>
-<li><a href="#org7c0d228">4.2.1. Default Notes File</a></li>
-<li><a href="#org17f4a85">4.2.2. Refile Targets</a></li>
+<li><a href="#org7c0d228">Default Notes File</a></li>
+<li><a href="#org17f4a85">Refile Targets</a></li>
 </ul>
 </li>
-<li><a href="#orgce33b64">4.3. Exporting</a></li>
-<li><a href="#org62dd767">4.4. Task Management Customization</a>
+<li><a href="#orgce33b64">Exporting</a></li>
+<li><a href="#org62dd767">Task Management Customization</a>
 <ul>
-<li><a href="#orgcbc4838">4.4.1. Drawer for State Changes</a></li>
-<li><a href="#org9912e81">4.4.2. Custom TODO Keywords</a></li>
-<li><a href="#org64a9afa">4.4.3. Project Tags</a></li>
-<li><a href="#org779ca68">4.4.4. Stuck Projects</a></li>
+<li><a href="#orgcbc4838">Drawer for State Changes</a></li>
+<li><a href="#org9912e81">Custom TODO Keywords</a></li>
+<li><a href="#org64a9afa">Project Tags</a></li>
+<li><a href="#org779ca68">Stuck Projects</a></li>
 </ul>
 </li>
-<li><a href="#orgafbc030">4.5. BibLaTeX in Org-mode</a></li>
-<li><a href="#org39114aa">4.6. Org-babel Languages</a></li>
-<li><a href="#orgdf52216">4.7. Appearance</a>
+<li><a href="#orgafbc030">BibLaTeX in Org-mode</a></li>
+<li><a href="#org39114aa">Org-babel Languages</a></li>
+<li><a href="#orgdf52216">Appearance</a>
 <ul>
-<li><a href="#org09a6de4">4.7.1. Hide Emphasis Characters</a></li>
-<li><a href="#orgaee4cb7">4.7.2. Word Wrapping</a></li>
-<li><a href="#orga68c6a3">4.7.3. Single Space Between Headline and Tags</a></li>
-<li><a href="#org7fe66ec">4.7.4. Use "Clean View"</a></li>
-<li><a href="#orgaa574e5">4.7.5. Native Tabs</a></li>
+<li><a href="#org09a6de4">Hide Emphasis Characters</a></li>
+<li><a href="#orgaee4cb7">Word Wrapping</a></li>
+<li><a href="#orga68c6a3">Single Space Between Headline and Tags</a></li>
+<li><a href="#org7fe66ec">Use "Clean View"</a></li>
+<li><a href="#orgaa574e5">Native Tabs</a></li>
 </ul>
 </li>
-<li><a href="#org3967ec7">4.8. Change TODO Keyword Colors</a></li>
-<li><a href="#orgbbf51a7">4.9. Capturing Ideas</a></li>
+<li><a href="#org3967ec7">Change TODO Keyword Colors</a></li>
+<li><a href="#orgbbf51a7">Capturing Ideas</a></li>
 </ul>
 </li>
-<li><a href="#orgfc6f499">5. Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#org1f46b88">6. Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></a></li>
-<li><a href="#orgb9ea08e">7. Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#orgdb3992c">8. Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#orgfc6f499">Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org1f46b88">Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></a></li>
+<li><a href="#orgb9ea08e">Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#orgdb3992c">Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
 </ul>
 </div>
 </div>
@@ -112,8 +112,8 @@ This file provides the Org Mode configuration for my personal configuration of E
 </div>
 
 <div id="outline-container-org1881867" class="outline-2">
-<h2 id="org1881867"><span class="section-number-2">1.</span> Calfw</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="org1881867">Calfw</h2>
+<div class="outline-text-2" id="text-org1881867">
 <p>
 <a href="https://github.com/kiwanami/emacs-calfw">Calfw</a> provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in <code>calfw-org.el</code> where events that span multiple dates show up repeated on the display.
 </p>
@@ -140,8 +140,8 @@ This file provides the Org Mode configuration for my personal configuration of E
 </div>
 
 <div id="outline-container-orga724e4c" class="outline-3">
-<h3 id="orga724e4c"><span class="section-number-3">1.1.</span> Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="orga724e4c">Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
+<div class="outline-text-3" id="text-orga724e4c">
 <p>
 <code>calfw-org.el</code>  displays org-mode events in the <code>calfw</code> calendar. I don't like the long command <code>M-x cfw:open-org-calendar</code> so I have shortened to it to <code>M-x calfworg</code> which is much easier to type and remember.
 </p>
@@ -161,8 +161,8 @@ This file provides the Org Mode configuration for my personal configuration of E
 </div>
 
 <div id="outline-container-orgd716684" class="outline-2">
-<h2 id="orgd716684"><span class="section-number-2">2.</span> Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="orgd716684">Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-orgd716684">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">habitica</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -176,8 +176,8 @@ This file provides the Org Mode configuration for my personal configuration of E
 </div>
 
 <div id="outline-container-org1fe9a4d" class="outline-2">
-<h2 id="org1fe9a4d"><span class="section-number-2">3.</span> Olivetti</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="org1fe9a4d">Olivetti</h2>
+<div class="outline-text-2" id="text-org1fe9a4d">
 <p>
 Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
 </p>
@@ -193,8 +193,8 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
 </div>
 
 <div id="outline-container-orgff93256" class="outline-2">
-<h2 id="orgff93256"><span class="section-number-2">4.</span> Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="orgff93256">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-orgff93256">
 <p>
 <a href="https://orgmode.org/">Org Mode</a> is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 </p>
@@ -295,16 +295,16 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
 </div>
 
 <div id="outline-container-org6786072" class="outline-3">
-<h3 id="org6786072"><span class="section-number-3">4.1.</span> Directories</h3>
-<div class="outline-text-3" id="text-4-1">
+<h3 id="org6786072">Directories</h3>
+<div class="outline-text-3" id="text-org6786072">
 <p>
 Set up the default directories for Org Mode.
 </p>
 </div>
 
 <div id="outline-container-org8823c1d" class="outline-4">
-<h4 id="org8823c1d"><span class="section-number-4">4.1.1.</span> Default Directory</h4>
-<div class="outline-text-4" id="text-4-1-1">
+<h4 id="org8823c1d">Default Directory</h4>
+<div class="outline-text-4" id="text-org8823c1d">
 <p>
 Tell org-mode which directory is the default directory for all org-mode files.
 </p>
@@ -317,8 +317,8 @@ Tell org-mode which directory is the default directory for all org-mode files.
 </div>
 
 <div id="outline-container-orgc044546" class="outline-4">
-<h4 id="orgc044546"><span class="section-number-4">4.1.2.</span> Location of Agenda Files</h4>
-<div class="outline-text-4" id="text-4-1-2">
+<h4 id="orgc044546">Location of Agenda Files</h4>
+<div class="outline-text-4" id="text-orgc044546">
 <p>
 Tell org-mode in which directory all the agenda files can be found.
 </p>
@@ -333,12 +333,12 @@ Tell org-mode in which directory all the agenda files can be found.
 </div>
 
 <div id="outline-container-org6438f40" class="outline-3">
-<h3 id="org6438f40"><span class="section-number-3">4.2.</span> Filing Notes</h3>
-<div class="outline-text-3" id="text-4-2">
+<h3 id="org6438f40">Filing Notes</h3>
+<div class="outline-text-3" id="text-org6438f40">
 </div>
 <div id="outline-container-org7c0d228" class="outline-4">
-<h4 id="org7c0d228"><span class="section-number-4">4.2.1.</span> Default Notes File</h4>
-<div class="outline-text-4" id="text-4-2-1">
+<h4 id="org7c0d228">Default Notes File</h4>
+<div class="outline-text-4" id="text-org7c0d228">
 <p>
 I prefer to have all of my captured notes automatically filed into a file called <code>inbox.org</code>. Changing <code>org-default-notes-file</code> can create this functionality.
 </p>
@@ -351,12 +351,12 @@ I prefer to have all of my captured notes automatically filed into a file called
 </div>
 
 <div id="outline-container-org17f4a85" class="outline-4">
-<h4 id="org17f4a85"><span class="section-number-4">4.2.2.</span> Refile Targets</h4>
-<div class="outline-text-4" id="text-4-2-2">
+<h4 id="org17f4a85">Refile Targets</h4>
+<div class="outline-text-4" id="text-org17f4a85">
 </div>
-<ol class="org-ol">
+<ul class="org-ul">
 <li><a id="org8c3bd20"></a>Set Org Files for Refiling<br />
-<div class="outline-text-5" id="text-4-2-2-1">
+<div class="outline-text-5" id="text-org8c3bd20">
 <p>
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
 </p>
@@ -369,7 +369,7 @@ In order to refile/move tasks from the inbox to other agenda files and subtrees,
 </li>
 
 <li><a id="orgd9055de"></a>Allow Refile as Top-level Heading<br />
-<div class="outline-text-5" id="text-4-2-2-2">
+<div class="outline-text-5" id="text-orgd9055de">
 <p>
 I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
 </p>
@@ -390,13 +390,13 @@ Setting this variable allows for refiling tasks under a new heading on the fly.
 </div>
 </div>
 </li>
-</ol>
+</ul>
 </div>
 </div>
 
 <div id="outline-container-orgce33b64" class="outline-3">
-<h3 id="orgce33b64"><span class="section-number-3">4.3.</span> Exporting</h3>
-<div class="outline-text-3" id="text-4-3">
+<h3 id="orgce33b64">Exporting</h3>
+<div class="outline-text-3" id="text-orgce33b64">
 <p>
 To remove headers labeled with the <code>:ignore:</code> tag, the following code needs to be implemented:
 </p>
@@ -419,12 +419,12 @@ So that exporting Org Mode buffers doesn't lock up Emacs, the option <code>org-e
 </div>
 
 <div id="outline-container-org62dd767" class="outline-3">
-<h3 id="org62dd767"><span class="section-number-3">4.4.</span> Task Management Customization</h3>
-<div class="outline-text-3" id="text-4-4">
+<h3 id="org62dd767">Task Management Customization</h3>
+<div class="outline-text-3" id="text-org62dd767">
 </div>
 <div id="outline-container-orgcbc4838" class="outline-4">
-<h4 id="orgcbc4838"><span class="section-number-4">4.4.1.</span> Drawer for State Changes</h4>
-<div class="outline-text-4" id="text-4-4-1">
+<h4 id="orgcbc4838">Drawer for State Changes</h4>
+<div class="outline-text-4" id="text-orgcbc4838">
 <p>
 Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
 </p>
@@ -437,8 +437,8 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
 </div>
 
 <div id="outline-container-org9912e81" class="outline-4">
-<h4 id="org9912e81"><span class="section-number-4">4.4.2.</span> Custom TODO Keywords</h4>
-<div class="outline-text-4" id="text-4-4-2">
+<h4 id="org9912e81">Custom TODO Keywords</h4>
+<div class="outline-text-4" id="text-org9912e81">
 <p>
 Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELED tasks.
 </p>
@@ -455,8 +455,8 @@ Set up the sequence of org-todo task keywords to allow for delegated (WAITING) t
 </div>
 
 <div id="outline-container-org64a9afa" class="outline-4">
-<h4 id="org64a9afa"><span class="section-number-4">4.4.3.</span> Project Tags</h4>
-<div class="outline-text-4" id="text-4-4-3">
+<h4 id="org64a9afa">Project Tags</h4>
+<div class="outline-text-4" id="text-org64a9afa">
 <p>
 I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
 </p>
@@ -469,8 +469,8 @@ I like to mark projects with a tag, however, I do not want my tasks to inherit t
 </div>
 
 <div id="outline-container-org779ca68" class="outline-4">
-<h4 id="org779ca68"><span class="section-number-4">4.4.4.</span> Stuck Projects</h4>
-<div class="outline-text-4" id="text-4-4-4">
+<h4 id="org779ca68">Stuck Projects</h4>
+<div class="outline-text-4" id="text-org779ca68">
 <p>
 Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
 </p>
@@ -488,8 +488,8 @@ Stuck projects are projects which are going nowhere and need to be analyzed for 
 </div>
 
 <div id="outline-container-orgafbc030" class="outline-3">
-<h3 id="orgafbc030"><span class="section-number-3">4.5.</span> BibLaTeX in Org-mode</h3>
-<div class="outline-text-3" id="text-4-5">
+<h3 id="orgafbc030">BibLaTeX in Org-mode</h3>
+<div class="outline-text-3" id="text-orgafbc030">
 <p>
 I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the <code>org-latex-pdf-process</code> variable needs to be changed to reflect this.
 </p>
@@ -506,8 +506,8 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
 </div>
 
 <div id="outline-container-org39114aa" class="outline-3">
-<h3 id="org39114aa"><span class="section-number-3">4.6.</span> Org-babel Languages</h3>
-<div class="outline-text-3" id="text-4-6">
+<h3 id="org39114aa">Org-babel Languages</h3>
+<div class="outline-text-3" id="text-org39114aa">
 <p>
 In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the <code>org-babel-load-languages</code> list.
 </p>
@@ -538,16 +538,16 @@ In order to use active code in org-mode, you must define which programming langu
 </div>
 
 <div id="outline-container-orgdf52216" class="outline-3">
-<h3 id="orgdf52216"><span class="section-number-3">4.7.</span> Appearance</h3>
-<div class="outline-text-3" id="text-4-7">
+<h3 id="orgdf52216">Appearance</h3>
+<div class="outline-text-3" id="text-orgdf52216">
 <p>
 This section contains modifications to how Org Mode appears in buffers.
 </p>
 </div>
 
 <div id="outline-container-org09a6de4" class="outline-4">
-<h4 id="org09a6de4"><span class="section-number-4">4.7.1.</span> Hide Emphasis Characters</h4>
-<div class="outline-text-4" id="text-4-7-1">
+<h4 id="org09a6de4">Hide Emphasis Characters</h4>
+<div class="outline-text-4" id="text-org09a6de4">
 <p>
 Hiding emphasis characters  in Org Mode makes the text easier to read when it is being displayed directly in Emacs. This will make <b>bold</b>, <i>italic</i>, <span class="underline">underlined</span>, <code>code</code>, and <code>verbatim</code> text show up without the *,/, _, ~, and = characters around them. 
 </p>
@@ -560,8 +560,8 @@ Hiding emphasis characters  in Org Mode makes the text easier to read when it is
 </div>
 
 <div id="outline-container-orgaee4cb7" class="outline-4">
-<h4 id="orgaee4cb7"><span class="section-number-4">4.7.2.</span> Word Wrapping</h4>
-<div class="outline-text-4" id="text-4-7-2">
+<h4 id="orgaee4cb7">Word Wrapping</h4>
+<div class="outline-text-4" id="text-orgaee4cb7">
 <p>
 Turning on <code>visual-line-mode</code> allows the text to flow in Org Mode as if working in a word processors.
 </p>
@@ -574,8 +574,8 @@ Turning on <code>visual-line-mode</code> allows the text to flow in Org Mode as 
 </div>
 
 <div id="outline-container-orga68c6a3" class="outline-4">
-<h4 id="orga68c6a3"><span class="section-number-4">4.7.3.</span> Single Space Between Headline and Tags</h4>
-<div class="outline-text-4" id="text-4-7-3">
+<h4 id="orga68c6a3">Single Space Between Headline and Tags</h4>
+<div class="outline-text-4" id="text-orga68c6a3">
 <p>
 I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
 </p>
@@ -588,8 +588,8 @@ I keep only a single space between the headline because I find it easier to owor
 </div>
 
 <div id="outline-container-org7fe66ec" class="outline-4">
-<h4 id="org7fe66ec"><span class="section-number-4">4.7.4.</span> Use "Clean View"</h4>
-<div class="outline-text-4" id="text-4-7-4">
+<h4 id="org7fe66ec">Use "Clean View"</h4>
+<div class="outline-text-4" id="text-org7fe66ec">
 <p>
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
 </p>
@@ -602,8 +602,8 @@ Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easi
 </div>
 
 <div id="outline-container-orgaa574e5" class="outline-4">
-<h4 id="orgaa574e5"><span class="section-number-4">4.7.5.</span> Native Tabs</h4>
-<div class="outline-text-4" id="text-4-7-5">
+<h4 id="orgaa574e5">Native Tabs</h4>
+<div class="outline-text-4" id="text-orgaa574e5">
 <p>
 This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
 </p>
@@ -617,8 +617,8 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 </div>
 
 <div id="outline-container-org3967ec7" class="outline-3">
-<h3 id="org3967ec7"><span class="section-number-3">4.8.</span> Change TODO Keyword Colors</h3>
-<div class="outline-text-3" id="text-4-8">
+<h3 id="org3967ec7">Change TODO Keyword Colors</h3>
+<div class="outline-text-3" id="text-org3967ec7">
 <p>
 Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
 </p>
@@ -635,8 +635,8 @@ Change the color of the org-todo keywords to make it easier to see them on a col
 </div>
 
 <div id="outline-container-orgbbf51a7" class="outline-3">
-<h3 id="orgbbf51a7"><span class="section-number-3">4.9.</span> Capturing Ideas</h3>
-<div class="outline-text-3" id="text-4-9">
+<h3 id="orgbbf51a7">Capturing Ideas</h3>
+<div class="outline-text-3" id="text-orgbbf51a7">
 <p>
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 </p>
@@ -658,8 +658,8 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 </div>
 
 <div id="outline-container-orgfc6f499" class="outline-2">
-<h2 id="orgfc6f499"><span class="section-number-2">5.</span> Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="orgfc6f499">Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-orgfc6f499">
 <p>
 <a href="https://github.com/the-ted/org-mind-map">Org-mind-map</a> turns any <code>org-mode</code> buffer into a mind map in various output formats.
 </p>
@@ -679,8 +679,8 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 </div>
 
 <div id="outline-container-org1f46b88" class="outline-2">
-<h2 id="org1f46b88"><span class="section-number-2">6.</span> Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="org1f46b88">Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></h2>
+<div class="outline-text-2" id="text-org1f46b88">
 <p>
 <a href="https://www.orgroam.com/">Org -roam</a> adds features to make linking org notes easier and provided a database file to connect all the notes together.
 </p>
@@ -723,8 +723,8 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 </div>
 
 <div id="outline-container-orgb9ea08e" class="outline-2">
-<h2 id="orgb9ea08e"><span class="section-number-2">7.</span> Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="orgb9ea08e">Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-orgb9ea08e">
 <p>
 Org Modern is a package that prettifies Org Mode buffers.
 </p>
@@ -773,8 +773,8 @@ Org Modern is a package that prettifies Org Mode buffers.
 </div>
 
 <div id="outline-container-orgdb3992c" class="outline-2">
-<h2 id="orgdb3992c"><span class="section-number-2">8.</span> Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="orgdb3992c">Org Header Sizes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-orgdb3992c">
 <p>
 The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from <a href="https://github.com/daviwil">@daviwil</a> from <a href="https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look">this link</a>.
 </p>
@@ -809,9 +809,9 @@ The following custom function will change the heading sizes in Org Mode to make 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

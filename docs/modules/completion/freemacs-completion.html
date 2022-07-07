@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Completion Configuration</title>
@@ -29,65 +29,54 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9ce811b">1. Completion</a>
+<li><a href="#org5182289">Cape</a>
 <ul>
-<li><a href="#org5182289">1.1. Cape</a>
+<li>
 <ul>
-<li><a href="#org8d7cae3">1.1.1. Cape Completion Functions</a></li>
+<li><a href="#org8d7cae3">Cape Completion Functions</a></li>
 </ul>
 </li>
-<li><a href="#org11b503d">1.2. Consult</a>
+</ul>
+</li>
+<li><a href="#org11b503d">Consult</a>
 <ul>
-<li><a href="#org274d50b">1.2.1. Change Register Preview to Consult</a></li>
-<li><a href="#org788ff41">1.2.2. Consult Notes</a></li>
-<li><a href="#org9357956">1.2.3. Consult YASnippet</a></li>
-<li><a href="#org9bc41d5">1.2.4. Consult Flycheck</a></li>
-<li><a href="#org7bd8fce">1.2.5. Set Root Function for Projects</a></li>
-<li><a href="#org215dd40">1.2.6. Set the Narrowing Key</a></li>
-<li><a href="#org5a4263a">1.2.7. Tweak Register Preview Window</a></li>
-<li><a href="#org0b8dc12">1.2.8. Use Consult to Select xref Locations</a></li>
+<li><a href="#org274d50b">Change Register Preview to Consult</a></li>
+<li><a href="#org788ff41">Consult Notes</a></li>
+<li><a href="#org9357956">Consult YASnippet</a></li>
+<li><a href="#org9bc41d5">Consult Flycheck</a></li>
+<li><a href="#org7bd8fce">Set Root Function for Projects</a></li>
+<li><a href="#org215dd40">Set the Narrowing Key</a></li>
+<li><a href="#org5a4263a">Tweak Register Preview Window</a></li>
+<li><a href="#org0b8dc12">Use Consult to Select xref Locations</a></li>
+<li><a href="#org3a6fc9e">Completion Cycling</a></li>
+<li><a href="#orge57e699">Completion by Pressing Tab</a></li>
 </ul>
 </li>
-<li><a href="#org3a6fc9e">1.3. Completion Cycling</a></li>
-<li><a href="#orge57e699">1.4. Completion by Pressing Tab</a></li>
-<li><a href="#org27e8106">1.5. Corfu</a>
+<li><a href="#org27e8106">Corfu</a>
 <ul>
-<li><a href="#org8289af0">1.5.1. Use TAB for Selecting Candidates</a></li>
-<li><a href="#org0593e14">1.5.2. Corfu-doc</a></li>
+<li><a href="#org8289af0">Use TAB for Selecting Candidates</a></li>
+<li><a href="#org0593e14">Corfu-doc</a></li>
 </ul>
 </li>
-<li><a href="#org40239f8">1.6. Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a>
+<li><a href="#org40239f8">Embark</a>
 <ul>
-<li><a href="#orgedff872">1.6.1. Embark Mode Line</a></li>
-<li><a href="#org279a8a0">1.6.2. Embark Integration with Consult</a></li>
+<li><a href="#orgedff872">Embark Mode Line</a></li>
+<li><a href="#org279a8a0">Embark Integration with Consult</a></li>
 </ul>
 </li>
-<li><a href="#org09e475e">1.7. Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-<li><a href="#org1e1c1de">1.8. Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-<li><a href="#org93834ae">1.9. Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></a></li>
-</ul>
-</li>
+<li><a href="#org09e475e">Orderless</a></li>
+<li><a href="#org1e1c1de">Marginalia</a></li>
+<li><a href="#org93834ae">Vertico</a></li>
 </ul>
 </div>
 </div>
-
-
-<div id="outline-container-org9ce811b" class="outline-2">
-<h2 id="org9ce811b"><span class="section-number-2">1.</span> Completion</h2>
-<div class="outline-text-2" id="text-1">
 <p>
 This section contains configuration to set up completion tools in Emacs.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Completion Configuration</span>
-</pre>
-</div>
-</div>
-
-<div id="outline-container-org5182289" class="outline-3">
-<h3 id="org5182289"><span class="section-number-3">1.1.</span> Cape</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org5182289" class="outline-2">
+<h2 id="org5182289">Cape</h2>
+<div class="outline-text-2" id="text-org5182289">
 <p>
 <a href="https://github.com/minad/cape">Cape</a> (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
 </p>
@@ -116,8 +105,8 @@ This section contains configuration to set up completion tools in Emacs.
 </div>
 
 <div id="outline-container-org8d7cae3" class="outline-4">
-<h4 id="org8d7cae3"><span class="section-number-4">1.1.1.</span> Cape Completion Functions</h4>
-<div class="outline-text-4" id="text-1-1-1">
+<h4 id="org8d7cae3">Cape Completion Functions</h4>
+<div class="outline-text-4" id="text-org8d7cae3">
 <p>
 Cape provides a number of <code>completion-at-point</code> functions that can be used. Below are the functions that I use that have not been intrusive.
 </p>
@@ -170,9 +159,9 @@ Complete Emacs-lisp symbols:
 </div>
 </div>
 
-<div id="outline-container-org11b503d" class="outline-3">
-<h3 id="org11b503d"><span class="section-number-3">1.2.</span> Consult</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org11b503d" class="outline-2">
+<h2 id="org11b503d">Consult</h2>
+<div class="outline-text-2" id="text-org11b503d">
 <p>
 <a href="https://github.com/minad/consult">Consult</a> provides a number of highly useful commands. The complete list of commands can be found <a href="https://github.com/minad/consult#available-commands">here</a>.
 </p>
@@ -228,9 +217,9 @@ Complete Emacs-lisp symbols:
 </div>
 </div>
 
-<div id="outline-container-org274d50b" class="outline-4">
-<h4 id="org274d50b"><span class="section-number-4">1.2.1.</span> Change Register Preview to Consult</h4>
-<div class="outline-text-4" id="text-1-2-1">
+<div id="outline-container-org274d50b" class="outline-3">
+<h3 id="org274d50b">Change Register Preview to Consult</h3>
+<div class="outline-text-3" id="text-org274d50b">
 <p>
 Change the default Emacs <code>register-preview-function</code> to use consult effectively.
 </p>
@@ -242,9 +231,9 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 </div>
 </div>
 
-<div id="outline-container-org788ff41" class="outline-4">
-<h4 id="org788ff41"><span class="section-number-4">1.2.2.</span> Consult Notes</h4>
-<div class="outline-text-4" id="text-1-2-2">
+<div id="outline-container-org788ff41" class="outline-3">
+<h3 id="org788ff41">Consult Notes</h3>
+<div class="outline-text-3" id="text-org788ff41">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-notes</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> git <span style="color: #1ea8fc;">:host</span> github <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"mclear-tools/consult-notes"</span><span style="color: #ff2afc;">)</span>
@@ -262,9 +251,9 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 </div>
 </div>
 
-<div id="outline-container-org9357956" class="outline-4">
-<h4 id="org9357956"><span class="section-number-4">1.2.3.</span> Consult YASnippet</h4>
-<div class="outline-text-4" id="text-1-2-3">
+<div id="outline-container-org9357956" class="outline-3">
+<h3 id="org9357956">Consult YASnippet</h3>
+<div class="outline-text-3" id="text-org9357956">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-yasnippet</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -275,9 +264,9 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 </div>
 </div>
 
-<div id="outline-container-org9bc41d5" class="outline-4">
-<h4 id="org9bc41d5"><span class="section-number-4">1.2.4.</span> Consult Flycheck</h4>
-<div class="outline-text-4" id="text-1-2-4">
+<div id="outline-container-org9bc41d5" class="outline-3">
+<h3 id="org9bc41d5">Consult Flycheck</h3>
+<div class="outline-text-3" id="text-org9bc41d5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-flycheck</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -288,9 +277,9 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 </div>
 </div>
 
-<div id="outline-container-org7bd8fce" class="outline-4">
-<h4 id="org7bd8fce"><span class="section-number-4">1.2.5.</span> Set Root Function for Projects</h4>
-<div class="outline-text-4" id="text-1-2-5">
+<div id="outline-container-org7bd8fce" class="outline-3">
+<h3 id="org7bd8fce">Set Root Function for Projects</h3>
+<div class="outline-text-3" id="text-org7bd8fce">
 <p>
 Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
 </p>
@@ -305,9 +294,9 @@ Use the built-in project function to find the root of any project. Projectile ca
 </div>
 </div>
 
-<div id="outline-container-org215dd40" class="outline-4">
-<h4 id="org215dd40"><span class="section-number-4">1.2.6.</span> Set the Narrowing Key</h4>
-<div class="outline-text-4" id="text-1-2-6">
+<div id="outline-container-org215dd40" class="outline-3">
+<h3 id="org215dd40">Set the Narrowing Key</h3>
+<div class="outline-text-3" id="text-org215dd40">
 <p>
 The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be <code>&lt; m</code> to list bookmarks after calling <code>consult-buffer</code>.
 </p>
@@ -319,9 +308,9 @@ The narrowing key is pressed before a key used to narrow the results returned fr
 </div>
 </div>
 
-<div id="outline-container-org5a4263a" class="outline-4">
-<h4 id="org5a4263a"><span class="section-number-4">1.2.7.</span> Tweak Register Preview Window</h4>
-<div class="outline-text-4" id="text-1-2-7">
+<div id="outline-container-org5a4263a" class="outline-3">
+<h3 id="org5a4263a">Tweak Register Preview Window</h3>
+<div class="outline-text-3" id="text-org5a4263a">
 <p>
 The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
 </p>
@@ -334,9 +323,9 @@ The following line makes the register preview window look better by adding sorti
 </div>
 </div>
 
-<div id="outline-container-org0b8dc12" class="outline-4">
-<h4 id="org0b8dc12"><span class="section-number-4">1.2.8.</span> Use Consult to Select xref Locations</h4>
-<div class="outline-text-4" id="text-1-2-8">
+<div id="outline-container-org0b8dc12" class="outline-3">
+<h3 id="org0b8dc12">Use Consult to Select xref Locations</h3>
+<div class="outline-text-3" id="text-org0b8dc12">
 <p>
 Use Consult to search through and select xref locations in buffers
 </p>
@@ -348,11 +337,10 @@ Use Consult to search through and select xref locations in buffers
 </div>
 </div>
 </div>
-</div>
 
 <div id="outline-container-org3a6fc9e" class="outline-3">
-<h3 id="org3a6fc9e"><span class="section-number-3">1.3.</span> Completion Cycling</h3>
-<div class="outline-text-3" id="text-1-3">
+<h3 id="org3a6fc9e">Completion Cycling</h3>
+<div class="outline-text-3" id="text-org3a6fc9e">
 <p>
 Cycle through completion candidates by pressing the completion key.
 </p>
@@ -365,8 +353,8 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 
 <div id="outline-container-orge57e699" class="outline-3">
-<h3 id="orge57e699"><span class="section-number-3">1.4.</span> Completion by Pressing Tab</h3>
-<div class="outline-text-3" id="text-1-4">
+<h3 id="orge57e699">Completion by Pressing Tab</h3>
+<div class="outline-text-3" id="text-orge57e699">
 <p>
 <code>&lt;TAB&gt;</code> will indent lines by default. In order to turn <code>&lt;TAB&gt;</code> into a button that activates autocomplete, the <code>tab-always-indent</code> variable must be set to <code>complete</code>. This will cause pressing <code>&lt;TAB&gt;</code> once to indent, and twice will cause it to activate completion.
 </p>
@@ -377,10 +365,11 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org27e8106" class="outline-3">
-<h3 id="org27e8106"><span class="section-number-3">1.5.</span> Corfu</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-org27e8106" class="outline-2">
+<h2 id="org27e8106">Corfu</h2>
+<div class="outline-text-2" id="text-org27e8106">
 <p>
 <a href="https://github.com/minad/corfu">Corfu</a> for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 </p>
@@ -412,9 +401,9 @@ Cycle through completion candidates by pressing the completion key.
 </div>
 </div>
 
-<div id="outline-container-org8289af0" class="outline-4">
-<h4 id="org8289af0"><span class="section-number-4">1.5.1.</span> Use TAB for Selecting Candidates</h4>
-<div class="outline-text-4" id="text-1-5-1">
+<div id="outline-container-org8289af0" class="outline-3">
+<h3 id="org8289af0">Use TAB for Selecting Candidates</h3>
+<div class="outline-text-3" id="text-org8289af0">
 <p>
 Instead of using M-tab which will switch windows in XFCE&#x2014;my default desktop environment&#x2014;use TAB to cycle between the different possible options.
 </p>
@@ -430,9 +419,9 @@ Instead of using M-tab which will switch windows in XFCE&#x2014;my default deskt
 </div>
 </div>
 
-<div id="outline-container-org0593e14" class="outline-4">
-<h4 id="org0593e14"><span class="section-number-4">1.5.2.</span> Corfu-doc</h4>
-<div class="outline-text-4" id="text-1-5-2">
+<div id="outline-container-org0593e14" class="outline-3">
+<h3 id="org0593e14">Corfu-doc</h3>
+<div class="outline-text-3" id="text-org0593e14">
 <p>
 Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
 </p>
@@ -453,9 +442,9 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
 </div>
 </div>
 
-<div id="outline-container-org40239f8" class="outline-3">
-<h3 id="org40239f8"><span class="section-number-3">1.6.</span> Embark&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-org40239f8" class="outline-2">
+<h2 id="org40239f8">Embark</h2>
+<div class="outline-text-2" id="text-org40239f8">
 <p>
 <a href="https://github.com/oantolin/embark">Embark</a> provides the ability to execute commands on completion options found in the minibuffer.
 </p>
@@ -479,9 +468,9 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
 </div>
 </div>
 
-<div id="outline-container-orgedff872" class="outline-4">
-<h4 id="orgedff872"><span class="section-number-4">1.6.1.</span> Embark Mode Line</h4>
-<div class="outline-text-4" id="text-1-6-1">
+<div id="outline-container-orgedff872" class="outline-3">
+<h3 id="orgedff872">Embark Mode Line</h3>
+<div class="outline-text-3" id="text-orgedff872">
 <p>
 Hide the mode line of the Embark live/completions buffers.
 </p>
@@ -496,9 +485,9 @@ Hide the mode line of the Embark live/completions buffers.
 </div>
 </div>
 
-<div id="outline-container-org279a8a0" class="outline-4">
-<h4 id="org279a8a0"><span class="section-number-4">1.6.2.</span> Embark Integration with Consult</h4>
-<div class="outline-text-4" id="text-1-6-2">
+<div id="outline-container-org279a8a0" class="outline-3">
+<h3 id="org279a8a0">Embark Integration with Consult</h3>
+<div class="outline-text-3" id="text-org279a8a0">
 <p>
 Allow use of Embark commands after issuing a Consult command.
 </p>
@@ -516,9 +505,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-org09e475e" class="outline-3">
-<h3 id="org09e475e"><span class="section-number-3">1.7.</span> Orderless&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-1-7">
+<div id="outline-container-org09e475e" class="outline-2">
+<h2 id="org09e475e">Orderless</h2>
+<div class="outline-text-2" id="text-org09e475e">
 <p>
 <a href="https://github.com/oantolin/orderless">Orderless</a> will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if <code>M-x</code> is entered the search results will be the same if searching for a function by using the search key <code>find file</code> or <code>file find</code>. Both entries will return the function <code>find-file</code> as the top result.
 </p>
@@ -536,9 +525,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-org1e1c1de" class="outline-3">
-<h3 id="org1e1c1de"><span class="section-number-3">1.8.</span> Marginalia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-1-8">
+<div id="outline-container-org1e1c1de" class="outline-2">
+<h2 id="org1e1c1de">Marginalia</h2>
+<div class="outline-text-2" id="text-org1e1c1de">
 <p>
 <a href="https://github.com/minad/marginalia">Marginalia</a> generates annotations to items in the minibuffer similar to what is accomplished  with <a href="https://github.com/Yevgnen/ivy-rich">ivy-rich</a>.
 </p>
@@ -556,9 +545,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 
-<div id="outline-container-org93834ae" class="outline-3">
-<h3 id="org93834ae"><span class="section-number-3">1.9.</span> Vertico&#xa0;&#xa0;&#xa0;<span class="tag"><span class="minibuffer">minibuffer</span></span></h3>
-<div class="outline-text-3" id="text-1-9">
+<div id="outline-container-org93834ae" class="outline-2">
+<h2 id="org93834ae">Vertico</h2>
+<div class="outline-text-2" id="text-org93834ae">
 <p>
 <a href="https://github.com/minad/vertico">Vertico</a> removes the <code>*Completions*</code> buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 </p>
@@ -582,11 +571,10 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 </div>
-</div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

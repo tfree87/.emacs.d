@@ -2,7 +2,7 @@
 
 #+title: Graphing Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:39 thomas>
+#+date: Time-stamp: <2022-07-07 14:46:19 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -10,7 +10,7 @@
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t
+#+options: html5-fancy:nil tex:t num:nil
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content

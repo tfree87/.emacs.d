@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 14:05 -->
+<!-- 2022-07-07 Thu 14:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs Early Init</title>
@@ -29,14 +29,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org78ad1da">1. Header for early-init.el</a></li>
-<li><a href="#org2354a07">2. Decrease Garbage Collection Frequency</a></li>
-<li><a href="#org7f6d391">3. Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
-<li><a href="#org3fa1bad">4. Prevent Unwanted Runtime Compilation</a></li>
-<li><a href="#org88ec151">5. Disable Emacs Package Manager</a></li>
-<li><a href="#orgbb47817">6. Reduce Redisplay</a></li>
-<li><a href="#org0669f19">7. Set Environment to UTF-8</a></li>
-<li><a href="#orgd708cda">8. End</a></li>
+<li><a href="#org78ad1da">Header for early-init.el</a></li>
+<li><a href="#org2354a07">Decrease Garbage Collection Frequency</a></li>
+<li><a href="#org7f6d391">Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
+<li><a href="#org3fa1bad">Prevent Unwanted Runtime Compilation</a></li>
+<li><a href="#org88ec151">Disable Emacs Package Manager</a></li>
+<li><a href="#orgbb47817">Reduce Redisplay</a></li>
+<li><a href="#org0669f19">Set Environment to UTF-8</a></li>
+<li><a href="#orgd708cda">End</a></li>
 </ul>
 </div>
 </div>
@@ -49,8 +49,8 @@ This file was written using Emacs Org Mode. This makes navigating and modifying 
 </p>
 
 <div id="outline-container-org78ad1da" class="outline-2">
-<h2 id="org78ad1da"><span class="section-number-2">1.</span> Header for early-init.el</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="org78ad1da">Header for early-init.el</h2>
+<div class="outline-text-2" id="text-org78ad1da">
 <p>
 The following code block will add a header to the <code>early-init.el</code> file when it is generated on saving.
 </p>
@@ -83,8 +83,8 @@ The following code block will add a header to the <code>early-init.el</code> fil
 </div>
 
 <div id="outline-container-org2354a07" class="outline-2">
-<h2 id="org2354a07"><span class="section-number-2">2.</span> Decrease Garbage Collection Frequency</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org2354a07">Decrease Garbage Collection Frequency</h2>
+<div class="outline-text-2" id="text-org2354a07">
 <p>
 Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from <a href="https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el">https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el</a>.
 </p>
@@ -97,8 +97,8 @@ Emacs collects garbage very fequently slowing down the startup process. Emacs no
 </div>
 
 <div id="outline-container-org7f6d391" class="outline-2">
-<h2 id="org7f6d391"><span class="section-number-2">3.</span> Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="org7f6d391">Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h2>
+<div class="outline-text-2" id="text-org7f6d391">
 <p>
 The Benchmark Init package will monitor the load times for package loading as Emacs loads and create a report that can be used to check where optimizations can be made to speed up Emacs loading.
 </p>
@@ -112,8 +112,8 @@ The Benchmark Init package will monitor the load times for package loading as Em
 </div>
 
 <div id="outline-container-org3fa1bad" class="outline-2">
-<h2 id="org3fa1bad"><span class="section-number-2">4.</span> Prevent Unwanted Runtime Compilation</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="org3fa1bad">Prevent Unwanted Runtime Compilation</h2>
+<div class="outline-text-2" id="text-org3fa1bad">
 <p>
 Prevent extra unnecessary runtime compilation for gccemacs. This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
 </p>
@@ -126,8 +126,8 @@ Prevent extra unnecessary runtime compilation for gccemacs. This idea came from 
 </div>
 
 <div id="outline-container-org88ec151" class="outline-2">
-<h2 id="org88ec151"><span class="section-number-2">5.</span> Disable Emacs Package Manager</h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="org88ec151">Disable Emacs Package Manager</h2>
+<div class="outline-text-2" id="text-org88ec151">
 <p>
 In order to prevent conflicts between <code>straight.el</code> and the Emacs package manager, <code>package-enable-at-startup</code> should be set to <code>nil</code>. This came from the <a href="https://github.com/raxod502/straight.el">straight.el</a> installation instructions.
 </p>
@@ -140,8 +140,8 @@ In order to prevent conflicts between <code>straight.el</code> and the Emacs pac
 </div>
 
 <div id="outline-container-orgbb47817" class="outline-2">
-<h2 id="orgbb47817"><span class="section-number-2">6.</span> Reduce Redisplay</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="orgbb47817">Reduce Redisplay</h2>
+<div class="outline-text-2" id="text-orgbb47817">
 <p>
 To reduce slowdowns caused by early redisplays when loading, the following code will reduce the amount of times Emacs redisplays when setting up windows. This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
 </p>
@@ -160,8 +160,8 @@ To reduce slowdowns caused by early redisplays when loading, the following code 
 </div>
 
 <div id="outline-container-org0669f19" class="outline-2">
-<h2 id="org0669f19"><span class="section-number-2">7.</span> Set Environment to UTF-8</h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="org0669f19">Set Environment to UTF-8</h2>
+<div class="outline-text-2" id="text-org0669f19">
 <p>
 Set the default coding system to UTF-8.This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
 </p>
@@ -175,8 +175,8 @@ Set the default coding system to UTF-8.This idea came from the <a href="https://
 </div>
 
 <div id="outline-container-orgd708cda" class="outline-2">
-<h2 id="orgd708cda"><span class="section-number-2">8.</span> End</h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="orgd708cda">End</h2>
+<div class="outline-text-2" id="text-orgd708cda">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #546A90;">;;; </span><span style="color: #546A90;">early-init.el ends here</span>
 </pre>
@@ -185,9 +185,9 @@ Set the default coding system to UTF-8.This idea came from the <a href="https://
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:42&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 14:05</p>
+<p class="date">Created: 2022-07-07 Thu 14:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 13:20 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ox-publish Configuration</title>
@@ -29,21 +29,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5c25b58">1. HTMLize</a></li>
-<li><a href="#orgc912d68">2. Ox-publish</a>
+<li><a href="#org5c25b58">HTMLize</a></li>
+<li><a href="#orgc912d68">Ox-publish</a>
 <ul>
-<li><a href="#orga371f68">2.1. Projects</a></li>
+<li><a href="#orga371f68">Projects</a></li>
 </ul>
 </li>
-<li><a href="#org6c82275">3. End</a></li>
+<li><a href="#org6c82275">End</a></li>
 </ul>
 </div>
 </div>
 
 
 <div id="outline-container-org5c25b58" class="outline-2">
-<h2 id="org5c25b58"><span class="section-number-2">1.</span> HTMLize</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="org5c25b58">HTMLize</h2>
+<div class="outline-text-2" id="text-org5c25b58">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">htmlize</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -54,24 +54,26 @@
 </div>
 
 <div id="outline-container-orgc912d68" class="outline-2">
-<h2 id="orgc912d68"><span class="section-number-2">2.</span> Ox-publish</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="orgc912d68">Ox-publish</h2>
+<div class="outline-text-2" id="text-orgc912d68">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">ox-publish</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:after</span> org
   <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>add-to-list 'load-path <span style="color: #7984D1;">"~/.emacs.d/publish/"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-ox-publish-projects</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
 
 <div id="outline-container-orga371f68" class="outline-3">
-<h3 id="orga371f68"><span class="section-number-3">2.1.</span> Projects</h3>
-<div class="outline-text-3" id="text-2-1">
+<h3 id="orga371f68">Projects</h3>
+<div class="outline-text-3" id="text-orga371f68">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-ox-publish-projects</span><span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'load-path <span style="color: #7984D1;">"~/.emacs.d/publish/"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-ox-publish-projects</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -79,8 +81,8 @@
 </div>
 
 <div id="outline-container-org6c82275" class="outline-2">
-<h2 id="org6c82275"><span class="section-number-2">3.</span> End</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="org6c82275">End</h2>
+<div class="outline-text-2" id="text-org6c82275">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-ox-publish</span><span style="color: #1ea8fc;">)</span>
 
@@ -91,9 +93,9 @@
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 13:11&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 13:20</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

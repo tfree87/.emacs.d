@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Email Configuration</title>
@@ -29,58 +29,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc14cd91">1. Set Default Mail User Agent&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></a></li>
-<li><a href="#org2d1a805">2. Attach Files to Email from Dired&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></a></li>
-<li><a href="#org2bb35a2">3. Add Calendar Invites to Org Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="email">email</span></span></a></li>
-<li><a href="#org43a40ad">4. Mu4e&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span>&#xa0;<span class="guix">guix</span></span></a></li>
-<li><a href="#org4b258f3">5. Org Contacts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></a></li>
-<li><a href="#org68027ee">6. Org MIME&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></a></li>
+<li><a href="#orgd351be8">Gnus</a>
+<ul>
+<li><a href="#org2d1a805">Attach Files to Email from Dired&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org9dca506">Mu4e guix:</a>
+<ul>
+<li><a href="#orgc14cd91">Set Default Mail User Agent&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org4b258f3">Org Contacts</a></li>
+<li><a href="#org68027ee">Org MIME</a></li>
+<li><a href="#org55c75ad">End</a></li>
 </ul>
 </div>
 </div>
 
 
-
-<div id="outline-container-orgc14cd91" class="outline-2">
-<h2 id="orgc14cd91"><span class="section-number-2">1.</span> Set Default Mail User Agent&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></h2>
-<div class="outline-text-2" id="text-1">
-<p>
-The following will set Mu4e as the default mail user agent:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> mail-user-agent 'mu4e-user-agent<span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-
-<p>
-And the code below will set Mu4e as the default mail reading command:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> read-mail-command 'mu4e<span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org2d1a805" class="outline-2">
-<h2 id="org2d1a805"><span class="section-number-2">2.</span> Attach Files to Email from Dired&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Adding the hook <code>turn-on-gnus-dired</code> to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>dired-mode . turn-on-gnus-dired-mode<span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org2bb35a2" class="outline-2">
-<h2 id="org2bb35a2"><span class="section-number-2">3.</span> Add Calendar Invites to Org Mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="email">email</span></span></h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgd351be8" class="outline-2">
+<h2 id="orgd351be8">Gnus</h2>
+<div class="outline-text-2" id="text-orgd351be8">
 <p>
 Emacs can add iCalendar invites from email to an Org Mode file and heading of your choice. The functions to add iCalendar invites can be found in <code>gnus-icalendar</code>. These same functions are called from Mu4e but they are found in the Gnus package so we must set them up there.
 </p>
@@ -101,11 +70,26 @@ Emacs can add iCalendar invites from email to an Org Mode file and heading of yo
 </pre>
 </div>
 </div>
+
+<div id="outline-container-org2d1a805" class="outline-3">
+<h3 id="org2d1a805">Attach Files to Email from Dired&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h3>
+<div class="outline-text-3" id="text-org2d1a805">
+<p>
+Adding the hook <code>turn-on-gnus-dired</code> to Dired will make it easy to add attachements to email from Dired. Even though the hook is for Gnus, it will work just fine with Mu4e.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>dired-mode . turn-on-gnus-dired-mode<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org43a40ad" class="outline-2">
-<h2 id="org43a40ad"><span class="section-number-2">4.</span> Mu4e&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span>&#xa0;<span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-4">
+
+<div id="outline-container-org9dca506" class="outline-2">
+<h2 id="org9dca506">Mu4e guix:</h2>
+<div class="outline-text-2" id="text-org9dca506">
 <p>
 Mu4e is a package that used the Mu indexer to search through emails that are saved to the local system in the Maildir format.
 </p>
@@ -118,6 +102,8 @@ Mu4e is a package that used the Mu indexer to search through emails that are sav
   <span style="color: #ff2afc;">(</span>mu4e-get-mail-command <span style="color: #7984D1;">"mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-view-prefer-html t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-view-show-images t<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>mail-user-agent mu4e-user-agent<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>read-mail-command mu4e<span style="color: #ff2afc;">)</span>
   <span style="color: #546A90;">;; </span><span style="color: #546A90;">Update every 5 minutes</span>
   <span style="color: #ff2afc;">(</span>mu4e-update-interval 300<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-headers-auto-update t<span style="color: #ff2afc;">)</span>
@@ -164,7 +150,7 @@ Tell mu4e to use mbsync to get email from the server and synchronize email back 
 </div>
 
 <p>
-Tell mu4e to prefer using html email as most email these days are sent in this format and tell mu4e to show images inline in the email message buffers.
+Tell mu4e to prefer using HTMxsL email as most email these days are sent in this format and tell Mu4e to show images inline in the email message buffers.
 </p>
 
 <div class="org-src-container">
@@ -183,11 +169,34 @@ Add support for accepting iCalendar invites by email with Mu4e:
 </pre>
 </div>
 </div>
+
+<div id="outline-container-orgc14cd91" class="outline-3">
+<h3 id="orgc14cd91">Set Default Mail User Agent&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h3>
+<div class="outline-text-3" id="text-orgc14cd91">
+<p>
+The following will set Mu4e as the default mail user agent:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>mail-user-agent mu4e-user-agent<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+And the code below will set Mu4e as the default mail reading command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>read-mail-command mu4e<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org4b258f3" class="outline-2">
-<h2 id="org4b258f3"><span class="section-number-2">5.</span> Org Contacts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="org4b258f3">Org Contacts</h2>
+<div class="outline-text-2" id="text-org4b258f3">
 <p>
 Org-contrib has  library <code>org-contacts</code> that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
 </p>
@@ -218,8 +227,8 @@ Then, we can integrate <code>org-contacts</code> with mu4e by additng it to the 
 </div>
 
 <div id="outline-container-org68027ee" class="outline-2">
-<h2 id="org68027ee"><span class="section-number-2">6.</span> Org MIME&#xa0;&#xa0;&#xa0;<span class="tag"><span class="email">email</span></span></h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="org68027ee">Org MIME</h2>
+<div class="outline-text-2" id="text-org68027ee">
 <p>
 Org Mime is a tool that can be used to convert an email written in Org Mode format to be converted to HTML before sending so that email readers can render the email in HTML format. It works by having the user write the whole email using Org Mode syntax followed by execution of the command <code>org-mime-htmlize</code> prior to sending the email.
 </p>
@@ -232,7 +241,12 @@ Org Mime is a tool that can be used to convert an email written in Org Mode form
              org-mime-org-subtree-htmlize<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org55c75ad" class="outline-2">
+<h2 id="org55c75ad">End</h2>
+<div class="outline-text-2" id="text-org55c75ad">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-email</span><span style="color: #1ea8fc;">)</span>
 
@@ -243,9 +257,9 @@ Org Mime is a tool that can be used to convert an email written in Org Mode form
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:47</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

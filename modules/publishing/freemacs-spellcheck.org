@@ -2,14 +2,14 @@
 
 #+title: Spellcheck Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:38 thomas>
+#+date: Time-stamp: <2022-07-07 14:46:16 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t
+#+options: html5-fancy:nil tex:t num:nil
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content

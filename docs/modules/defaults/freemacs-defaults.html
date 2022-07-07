@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Defaults Configuration</title>
@@ -29,18 +29,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf21b0ad">1. Automatic Time Stamps</a></li>
-<li><a href="#org6582437">2. Bidirectional Editing</a></li>
-<li><a href="#org0a3d3f4">3. Display Battery Mode</a></li>
-<li><a href="#orgb9b0ff6">4. Send Deleted Files to System Trash</a></li>
-<li><a href="#org95efabf">5. Backup Files with Version Control</a></li>
-<li><a href="#orgc2a2aa7">6. Indent Using Spaces</a></li>
-<li><a href="#org09836a6">7. Inhibit Startup Screen</a></li>
-<li><a href="#org5d3f690">8. Register Delay</a></li>
-<li><a href="#orgbe966df">9. Ring Bell Function</a></li>
-<li><a href="#org42f18cb">10. Shorten "Yes or No" to "Y or N"</a></li>
-<li><a href="#org69cf569">11. Show Column Number</a></li>
-<li><a href="#orge211783">12. End</a></li>
+<li><a href="#orgf21b0ad">Automatic Time Stamps</a></li>
+<li><a href="#org6582437">Bidirectional Editing</a></li>
+<li><a href="#org0a3d3f4">Display Battery Mode</a></li>
+<li><a href="#orgb9b0ff6">Send Deleted Files to System Trash</a></li>
+<li><a href="#org95efabf">Backup Files with Version Control</a></li>
+<li><a href="#orgc2a2aa7">Indent Using Spaces</a></li>
+<li><a href="#org09836a6">Inhibit Startup Screen</a></li>
+<li><a href="#org5d3f690">Register Delay</a></li>
+<li><a href="#orgbe966df">Ring Bell Function</a></li>
+<li><a href="#org42f18cb">Shorten "Yes or No" to "Y or N"</a></li>
+<li><a href="#org69cf569">Show Column Number</a></li>
+<li><a href="#orge211783">End</a></li>
 </ul>
 </div>
 </div>
@@ -71,8 +71,8 @@ The code below collects customizations for Emacs built-in components.
 </div>
 
 <div id="outline-container-orgf21b0ad" class="outline-2">
-<h2 id="orgf21b0ad"><span class="section-number-2">1.</span> Automatic Time Stamps</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="orgf21b0ad">Automatic Time Stamps</h2>
+<div class="outline-text-2" id="text-orgf21b0ad">
 <p>
 Emacs supports time stamps in any text buffer where <code>Time-stamp: &lt;&gt;</code> can be found in the first eight lines. The <code>time-stamp</code> command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
 </p>
@@ -85,8 +85,8 @@ Emacs supports time stamps in any text buffer where <code>Time-stamp: &lt;&gt;</
 </div>
 
 <div id="outline-container-org6582437" class="outline-2">
-<h2 id="org6582437"><span class="section-number-2">2.</span> Bidirectional Editing</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org6582437">Bidirectional Editing</h2>
+<div class="outline-text-2" id="text-org6582437">
 <p>
 Emacs supports bidirectional editing. This is rarely used feature for many and can actually result in slower performance. To improve performance if bidirectional editing it not used, the following can be set:
 </p>
@@ -115,8 +115,8 @@ Turn off bidrectional editing mode.
 </div>
 
 <div id="outline-container-org0a3d3f4" class="outline-2">
-<h2 id="org0a3d3f4"><span class="section-number-2">3.</span> Display Battery Mode</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="org0a3d3f4">Display Battery Mode</h2>
+<div class="outline-text-2" id="text-org0a3d3f4">
 <p>
 Display Battery Mode will display the battery charge status in the modeline 
 </p>
@@ -131,8 +131,8 @@ Display Battery Mode will display the battery charge status in the modeline
 </div>
 
 <div id="outline-container-orgb9b0ff6" class="outline-2">
-<h2 id="orgb9b0ff6"><span class="section-number-2">4.</span> Send Deleted Files to System Trash</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="orgb9b0ff6">Send Deleted Files to System Trash</h2>
+<div class="outline-text-2" id="text-orgb9b0ff6">
 <p>
 Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. <i>In order to risk losing files it is a good idea to turn on the option to send all files to the system trash.</i>
 </p>
@@ -145,8 +145,8 @@ Emacs does not send files to the trash by default which is counter-intuitive for
 </div>
 
 <div id="outline-container-org95efabf" class="outline-2">
-<h2 id="org95efabf"><span class="section-number-2">5.</span> Backup Files with Version Control</h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="org95efabf">Backup Files with Version Control</h2>
+<div class="outline-text-2" id="text-org95efabf">
 <p>
 Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
 </p>
@@ -162,8 +162,8 @@ Emacs has a built-in version control system in which it will create a series of 
 </div>
 
 <div id="outline-container-orgc2a2aa7" class="outline-2">
-<h2 id="orgc2a2aa7"><span class="section-number-2">6.</span> Indent Using Spaces</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="orgc2a2aa7">Indent Using Spaces</h2>
+<div class="outline-text-2" id="text-orgc2a2aa7">
 <p>
 Indenting with spaces rather than tabs is genrally recommended when working with code. Especially when writing code in Python.
 </p>
@@ -176,8 +176,8 @@ Indenting with spaces rather than tabs is genrally recommended when working with
 </div>
 
 <div id="outline-container-org09836a6" class="outline-2">
-<h2 id="org09836a6"><span class="section-number-2">7.</span> Inhibit Startup Screen</h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="org09836a6">Inhibit Startup Screen</h2>
+<div class="outline-text-2" id="text-org09836a6">
 <p>
 After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
 </p>
@@ -190,8 +190,8 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 </div>
 
 <div id="outline-container-org5d3f690" class="outline-2">
-<h2 id="org5d3f690"><span class="section-number-2">8.</span> Register Delay</h2>
-<div class="outline-text-2" id="text-8">
+<h2 id="org5d3f690">Register Delay</h2>
+<div class="outline-text-2" id="text-org5d3f690">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>register-preview-delay 0<span style="color: #1ea8fc;">)</span>
 </pre>
@@ -200,8 +200,8 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 </div>
 
 <div id="outline-container-orgbe966df" class="outline-2">
-<h2 id="orgbe966df"><span class="section-number-2">9.</span> Ring Bell Function</h2>
-<div class="outline-text-2" id="text-9">
+<h2 id="orgbe966df">Ring Bell Function</h2>
+<div class="outline-text-2" id="text-orgbe966df">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>ring-bell-function #'ignore<span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>visible-bell t<span style="color: #1ea8fc;">)</span>
@@ -211,8 +211,8 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 </div>
 
 <div id="outline-container-org42f18cb" class="outline-2">
-<h2 id="org42f18cb"><span class="section-number-2">10.</span> Shorten "Yes or No" to "Y or N"</h2>
-<div class="outline-text-2" id="text-10">
+<h2 id="org42f18cb">Shorten "Yes or No" to "Y or N"</h2>
+<div class="outline-text-2" id="text-org42f18cb">
 <p>
 To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n"
 .
@@ -226,8 +226,8 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 </div>
 
 <div id="outline-container-org69cf569" class="outline-2">
-<h2 id="org69cf569"><span class="section-number-2">11.</span> Show Column Number</h2>
-<div class="outline-text-2" id="text-11">
+<h2 id="org69cf569">Show Column Number</h2>
+<div class="outline-text-2" id="text-org69cf569">
 <p>
 Many programming language style guides recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate <code>column-number-mode</code>. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
 </p>
@@ -244,8 +244,8 @@ A better fix would be to use code formatters to prevent lines from getting too l
 </div>
 
 <div id="outline-container-orge211783" class="outline-2">
-<h2 id="orge211783"><span class="section-number-2">12.</span> End</h2>
-<div class="outline-text-2" id="text-12">
+<h2 id="orge211783">End</h2>
+<div class="outline-text-2" id="text-orge211783">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-defaults</span><span style="color: #1ea8fc;">)</span>
 
@@ -256,9 +256,9 @@ A better fix would be to use code formatters to prevent lines from getting too l
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

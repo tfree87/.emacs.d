@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-07 Thu 12:47 -->
+<!-- 2022-07-07 Thu 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Eshell Configuration</title>
@@ -29,21 +29,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf3db3c9">1. Eshell</a>
+<li><a href="#orgf3db3c9">Eshell</a>
 <ul>
-<li><a href="#org05d183c">1.1. Eshell Aliases</a></li>
-<li><a href="#org071c8d4">1.2. Eshell Visual Commands</a></li>
-<li><a href="#org65809ee">1.3. Esh Autosuggest</a></li>
-<li><a href="#org855b3e1">1.4. Eshell Git Prompt</a>
+<li><a href="#org05d183c">Eshell Aliases</a></li>
+<li><a href="#org071c8d4">Eshell Visual Commands</a></li>
+<li><a href="#org65809ee">Esh Autosuggest</a></li>
+<li><a href="#org855b3e1">Eshell Git Prompt</a>
 <ul>
-<li><a href="#orgb842549">1.4.1. Set the Eshell prompt on load</a></li>
+<li><a href="#orgb842549">Set the Eshell prompt on load</a></li>
 </ul>
 </li>
-<li><a href="#orge5ef654">1.5. Eshell Toggle</a></li>
-<li><a href="#org3e00231">1.6. Oh My Esh</a></li>
+<li><a href="#orge5ef654">Eshell Toggle</a></li>
+<li><a href="#org3e00231">Oh My Esh</a></li>
 </ul>
 </li>
-<li><a href="#org77083ec">2. End</a></li>
+<li><a href="#org77083ec">End</a></li>
 </ul>
 </div>
 </div>
@@ -51,8 +51,8 @@
 
 
 <div id="outline-container-orgf3db3c9" class="outline-2">
-<h2 id="orgf3db3c9"><span class="section-number-2">1.</span> Eshell</h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="orgf3db3c9">Eshell</h2>
+<div class="outline-text-2" id="text-orgf3db3c9">
 <p>
 Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
 </p>
@@ -88,8 +88,8 @@ Eshell is a very powerful lisp-based shell that I have learned to love most beca
 </div>
 
 <div id="outline-container-org05d183c" class="outline-3">
-<h3 id="org05d183c"><span class="section-number-3">1.1.</span> Eshell Aliases</h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="org05d183c">Eshell Aliases</h3>
+<div class="outline-text-3" id="text-org05d183c">
 <p>
 Below are a list of command-line aliases for use in eshell.
 </p>
@@ -106,8 +106,8 @@ Below are a list of command-line aliases for use in eshell.
 </div>
 
 <div id="outline-container-org071c8d4" class="outline-3">
-<h3 id="org071c8d4"><span class="section-number-3">1.2.</span> Eshell Visual Commands</h3>
-<div class="outline-text-3" id="text-1-2">
+<h3 id="org071c8d4">Eshell Visual Commands</h3>
+<div class="outline-text-3" id="text-org071c8d4">
 <p>
 Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
 </p>
@@ -125,8 +125,8 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 </div>
 
 <div id="outline-container-org65809ee" class="outline-3">
-<h3 id="org65809ee"><span class="section-number-3">1.3.</span> Esh Autosuggest</h3>
-<div class="outline-text-3" id="text-1-3">
+<h3 id="org65809ee">Esh Autosuggest</h3>
+<div class="outline-text-3" id="text-org65809ee">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">esh-autosuggest</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -137,8 +137,8 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 </div>
 
 <div id="outline-container-org855b3e1" class="outline-3">
-<h3 id="org855b3e1"><span class="section-number-3">1.4.</span> Eshell Git Prompt</h3>
-<div class="outline-text-3" id="text-1-4">
+<h3 id="org855b3e1">Eshell Git Prompt</h3>
+<div class="outline-text-3" id="text-org855b3e1">
 <p>
 <a href="https://github.com/xuchunyang/eshell-git-prompt">Eshell Git Prompt</a> provides a series of Eshell prompts that provide extra information including the git status of the current project.
 </p>
@@ -154,8 +154,8 @@ Many commands when run in eshell turn into a mess as it is not an ansi-term. Any
 </div>
 
 <div id="outline-container-orgb842549" class="outline-4">
-<h4 id="orgb842549"><span class="section-number-4">1.4.1.</span> Set the Eshell prompt on load</h4>
-<div class="outline-text-4" id="text-1-4-1">
+<h4 id="orgb842549">Set the Eshell prompt on load</h4>
+<div class="outline-text-4" id="text-orgb842549">
 <p>
 This method was the only method I have found that loaded the <code>eshell-git-prompt</code> immediately when Eshell was loaded.
 </p>
@@ -170,8 +170,8 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 
 <div id="outline-container-orge5ef654" class="outline-3">
-<h3 id="orge5ef654"><span class="section-number-3">1.5.</span> Eshell Toggle</h3>
-<div class="outline-text-3" id="text-1-5">
+<h3 id="orge5ef654">Eshell Toggle</h3>
+<div class="outline-text-3" id="text-orge5ef654">
 <p>
 <a href="https://github.com/4DA/eshell-toggle">Eshell Toggle</a> makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
 </p>
@@ -193,8 +193,8 @@ This method was the only method I have found that loaded the <code>eshell-git-pr
 </div>
 
 <div id="outline-container-org3e00231" class="outline-3">
-<h3 id="org3e00231"><span class="section-number-3">1.6.</span> Oh My Esh</h3>
-<div class="outline-text-3" id="text-1-6">
+<h3 id="org3e00231">Oh My Esh</h3>
+<div class="outline-text-3" id="text-org3e00231">
 <p>
 Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
 </p>
@@ -212,8 +212,8 @@ Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality 
 </div>
 
 <div id="outline-container-org77083ec" class="outline-2">
-<h2 id="org77083ec"><span class="section-number-2">2.</span> End</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org77083ec">End</h2>
+<div class="outline-text-2" id="text-org77083ec">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-eshell</span><span style="color: #1ea8fc;">)</span>
 </pre>
@@ -222,9 +222,9 @@ Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 14:46&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="date">Created: 2022-07-07 Thu 14:46</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
