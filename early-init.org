@@ -2,8 +2,8 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 16:27:11 thomas>
-#+language: en
+#+date: Time-stamp: <2022-07-07 17:21:30 thomas>
+#+language: en_US
 #+property: header-args :results silent :exports code
 
 #+options: html-link-use-abs-url:nil html-postamble:auto

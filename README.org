@@ -1,7 +1,7 @@
 #+title: Emacs Configuration
 #+date: <2021-10-23 Sat>
 #+author: Thomas Freeman
-#+language: en
+#+language: en_US
 #+select_tags: export
 #+exclude_tags: noexport
 #+creator: Emacs 26.3 (Org mode 9.4.6)

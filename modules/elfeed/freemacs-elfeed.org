@@ -2,11 +2,9 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 14:46:21 thomas>
-#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
-#+language: en
+#+date: Time-stamp: <2022-07-07 17:21:28 thomas>
+#+language: en_US
 #+property: header-args :results silent :exports code
-#+options: tex:t
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t

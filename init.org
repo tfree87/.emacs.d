@@ -2,11 +2,10 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 17:01:57 thomas>
+#+date: Time-stamp: <2022-07-07 17:21:30 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
-#+language: en
+#+language: en_US
 #+property: header-args :results silent :exports code
-#+options: tex:t
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t

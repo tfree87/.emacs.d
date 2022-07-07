@@ -3,7 +3,7 @@
 #+title: Running Emacs as a Portable Application
 #+date: <2022-03-30 Wed>
 #+author: Thomas Freeman
-#+language: en
+#+language: en_US
 #+select_tags: export
 #+exclude_tags: noexport
 #+creator: Emacs 27.1 (Org mode 9.5.2)
