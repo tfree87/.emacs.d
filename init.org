@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 14:07:15 thomas>
+#+date: Time-stamp: <2022-07-07 14:24:51 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -295,7 +295,7 @@ General editing tools are configured in the Emacs [[file:modules/editing/freemac
 
 * Elfeed
 
-Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found at [[file:modules/elfeed/freemacs-elfeed.org][elfeed module]].
+Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found in the [[file:modules/elfeed/freemacs-elfeed.org][Elfeed module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load Elfeed newsreader module

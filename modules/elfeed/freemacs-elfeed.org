@@ -2,7 +2,7 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:37 thomas>
+#+date: Time-stamp: <2022-07-07 14:26:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -44,6 +44,8 @@ All of the feeds in the Elfeed reader are set as a list passed to the ~elfeed-fe
         '("https://www.sciencedaily.com/rss/all.xml"))
 #+end_src
 
+* Elfeed Tube
+
 [[https://github.com/karthink/elfeed-tube][Elfeed Tube]] is an extension to Elfeed that adds YouTube channels to the 
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
@@ -66,13 +68,19 @@ Add subsriptions to Elfeed Tube using the ~elfeed-tube-add-feeds~ variable.
                            "https://www.youtube.com/c/veritasium/"))
 #+end_src
 
-Elfeed Tube requires mpv for watching videos in Emacs.
+** mpv
+
+Elfeed Tube require mpv for watching videos in Emacs along with the Emacs mpv package.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package mpv
     :straight t
     :defer t)
 #+end_src
+
+* End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-elfeed)
