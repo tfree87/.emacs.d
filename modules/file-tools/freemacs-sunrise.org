@@ -2,7 +2,7 @@
 
 #+title: Sunrise Commander Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 14:46:19 thomas>
+#+date: Time-stamp: <2022-07-07 15:24:36 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -22,8 +22,9 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
-
 [[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
+
+
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package sunrise-commander
