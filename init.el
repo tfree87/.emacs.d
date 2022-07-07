@@ -44,7 +44,11 @@
 (let ((default-directory "~/.emacs.d/modules/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(when (string= (getenv "EMACS_PORTABLE") "Y")
+(defun freemacs/isportable-p ()
+  "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
+  (string= (getenv "EMACS_PORTABLE") "Y"))
+
+(when (freemacs/isportable-p)
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
 
 ;; Set the location of variables set using Emacs customize interface
@@ -188,14 +192,9 @@
 
 (require 'freemacs-help)
 
-;; Start an Emacs server
+;; Load server module
 
-(use-package server
-  :straight (:type built-in)
-  :config
-  (when (not (string= (getenv "EMACS_PORTABLE") "Y"))
-    (when (not (server-running-p))
-      (server-start))))
+(require 'freemacs-server)
 
 ;; Custom Function Definitions
 
@@ -214,7 +213,7 @@
 
 ;; Sync Dropbox containing org agenda files on load and close
 
-(when (string= (getenv "EMACS_PORTABLE") "Y")
+(when (freemacs/isportable-p)
   (setq rclone-path "~/rclone/rclone.conf")
   (rclone-run-remote-to-local "sync" "~/Dropbox" "dropbox:")
   (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"

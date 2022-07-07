@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 14:46:23 thomas>
+#+date: Time-stamp: <2022-07-07 17:01:57 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -116,9 +116,10 @@ I like to use Emacs at work and at home to boost my productivity, but I often fi
 
 When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
 
-#+name: portable_check
-#+begin_src emacs-lisp
-  (string= (getenv "EMACS_PORTABLE") "Y")
+#+begin_src emacs-lisp :tangle yes
+  (defun freemacs/isportable-p ()
+    "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
+    (string= (getenv "EMACS_PORTABLE") "Y"))
  #+end_src
  
 ** Set Location of Portable Git :git:
@@ -128,7 +129,7 @@ Straight.el cannot operate without access to Git. Luckily, there is a portable v
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
 
  #+begin_src emacs-lisp :tangle yes :noweb yes
-   (when <<portable_check>>
+   (when (freemacs/isportable-p)
      (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
 
@@ -519,19 +520,12 @@ The [[file:modules/help/freemacs-help.org][help module]] contains configuration 
 
 * Emacs Server
 
-Running Emacs as a server means that if I create a new instance of Emacs with the command ~emacs~, I can then use the command ~emacsclient -c -n~ in order to quickly open a new Emacs buffer that is part of the same Emacs session.
-
-I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it portably.
+Emacs can be run in a server mode where all other instances of Emacs can connect to it and have access to the same buffers. This also greatly increases the load time of new Emacs instances as Emacs does not have to go through the initialization process again. The configuration of the Emacs server can be found in the [[file:modules/server/freemacs-server.org][server module]].
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
-  ;; Start an Emacs server
+  ;; Load server module
 
-  (use-package server
-    :straight (:type built-in)
-    :config
-    (when (not <<portable_check>>)
-      (when (not (server-running-p))
-        (server-start))))
+  (require 'freemacs-server)
 #+end_src
 
 * Custom Functions
@@ -568,7 +562,7 @@ When running Emacs as a portable app, I want to pull down the latest versions of
 #+begin_src emacs-lisp :tangle yes :noweb yes
   ;; Sync Dropbox containing org agenda files on load and close
 
-  (when <<portable_check>>
+  (when (freemacs/isportable-p)
     (setq rclone-path "~/rclone/rclone.conf")
     (rclone-run-remote-to-local "sync" "~/Dropbox" "dropbox:")
     (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"
