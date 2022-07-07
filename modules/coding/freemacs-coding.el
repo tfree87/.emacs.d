@@ -1,5 +1,3 @@
-;; Coding Configuration
-
 (use-package aggressive-indent
   :straight t
   :hook

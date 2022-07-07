@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:38 thomas>
+#+date: Time-stamp: <2022-07-07 14:22:41 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -23,10 +23,6 @@
 
 
 The following customizations are used to improve the coding environment in Emacs.
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Coding Configuration
-#+end_src
 
 * Aggressive Indent
 
@@ -133,7 +129,7 @@ Number lines can be very useful in programming modes. This code below will turn 
       (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 #+end_src
 
-* Numpydoc :python:
+* Numpydoc
 
 Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
 
@@ -218,6 +214,8 @@ The following code will always highlight matching parenthesis when coding /immed
 #+end_src
 
 * End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-coding)
