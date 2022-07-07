@@ -38,6 +38,7 @@
   (org-mode . olivetti-mode))
 
 (use-package org
+  :straight (:type built-in)
   :defer t
   :init
   (whicher "pdflatex")

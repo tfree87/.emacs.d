@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Docker Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Docker Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgbaa6677">1. Docker</a></li>
+<li><a href="#org9043d51">2. Docker Compose</a></li>
+<li><a href="#orgc78f484">3. End</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgbaa6677" class="outline-2">
+<h2 id="orgbaa6677"><span class="section-number-2">1.</span> Docker</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://github.com/Silex/docker.el">Docker Mode</a> is an interface in Emacs to manage Docker containers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">docker</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"docker"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-c d"</span> . docker<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9043d51" class="outline-2">
+<h2 id="org9043d51"><span class="section-number-2">2.</span> Docker Compose</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://github.com/meqif/docker-compose-mode">Docker Compose Mode</a> is a major mode for editing Docker Compose files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">docker-compose-mode</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"docker-compose"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc78f484" class="outline-2">
+<h2 id="orgc78f484"><span class="section-number-2">3.</span> End</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-docker</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-docker.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

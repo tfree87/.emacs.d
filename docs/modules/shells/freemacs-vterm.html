@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vterm Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Vterm Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org62b7e4e">1. Vterm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
+<li><a href="#orge398a2a">2. End</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org62b7e4e" class="outline-2">
+<h2 id="org62b7e4e"><span class="section-number-2">1.</span> Vterm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Vterm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than <code>term</code> or <code>ansi-term</code> in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">vterm</span>
+  <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge398a2a" class="outline-2">
+<h2 id="orge398a2a"><span class="section-number-2">2.</span> End</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-vterm</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-vterm.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

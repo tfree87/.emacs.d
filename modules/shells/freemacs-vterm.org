@@ -1,3 +1,25 @@
+#+title: Vterm Configuration
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-07-07 12:43:35 thomas>
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
 * Vterm :guix:
 
 Vterm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than ~term~ or ~ansi-term~ in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.

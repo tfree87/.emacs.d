@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-03 09:05:22 thomas>
+#+date: Time-stamp: <2022-07-07 13:46:33 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -18,9 +18,9 @@
 #+html_link_home: index.html
 #+html_link_up: index.html
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#-----------------------------------------------------------------------------------------
 
 -----
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
@@ -105,9 +105,11 @@ In order to slightly reduce the load time for Emacs, the whole ~init.el~ file ca
 
 * Load Path
 
-Add the path to the configuration modules to the 
+Since all of the Emacs configuration is in modules, the ~modules~ directory and all of its sub-directories must be added to the Emacs ~load-path~.
 
 #+begin_src emacs-lisp :tangle yes
+  ;; Add modules to Emacs load path
+
   (let ((default-directory "~/.emacs.d/modules/"))
     (normal-top-level-add-subdirs-to-load-path))
 #+end_src
@@ -118,7 +120,7 @@ I like to use Emacs at work and at home to boost my productivity, but I often fi
 
 ** Check for Portable Emacs Instance
 
-When runemacs.bat is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
+When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
 
 #+name: portable_check
 #+begin_src emacs-lisp
@@ -140,7 +142,6 @@ The following line code will check to see if Emacs is being run as a portable ap
 
 In order to keep variables set by the customize interface or set during Emacs at runtime from being placed at the top of ~init.el~, I set the variables set from Emacs customize to be put into a separate file [[./custom.el]].
 
-#+name: custom-file
 #+begin_src emacs-lisp :tangle yes
 
   ;; Set the location of variables set using Emacs customize interface
@@ -150,7 +151,6 @@ In order to keep variables set by the customize interface or set during Emacs at
 
 Once the file location has been set, Emacs needs to load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refreshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
 
-#+name: load-custom
 #+begin_src emacs-lisp :tangle yes
 
   ;; Load the file custom.el file containing variables from Emacs customize
@@ -214,12 +214,6 @@ However, as I have started using the GUIX System Distribution I have found that 
 
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
 
-#+begin_src emacs-lisp :tangle yes 
-  ;; --------------------
-  ;; Startup Tools
-  ;; --------------------
-#+end_src
-
 ** No-littering
 
 The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
@@ -248,26 +242,6 @@ Emacs has many default options that can be changed to make Emacs more productive
   ;; Load Defaults module
 
   (require 'freemacs-defaults)
-#+end_src
-
-* Elfeed
-
-Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found at [[file:modules/elfeed/freemacs-elfeed.org][elfeed module]].
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Load Elfeed newsreader module
-
-  (require 'freemacs-elfeed)
-#+end_src
-
-* Email
-
-Email is managed using the Mu4e package that uses the Mu backend to search through emails that are stored using the Maildir format. The configuration can be found at [[file:modules/email/freemacs-email.org][email module]].
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Load email module
-
-  (require 'freemacs-email)
 #+end_src
 
 * Coding
@@ -299,9 +273,69 @@ The configuration of these elements can be found in the [[file:modules/completio
   (require 'freemacs-completion)
 #+end_src
 
+* Docker
+
+Tools for working with Docker and Docker files are included in the [[file:modules/docker/freemacs-docker.org][docker module]]. It configures the following packages:
+
++ Docker :: Manage Docker containers from within Emacs
++ Docker Compose  :: Edit docker-compose files in Emacs
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load the Docker module
+
+  (require 'freemacs-docker)
+#+end_src
+
+* Editing Tools
+
+General editing tools are configured in the Emacs [[file:modules/editing/freemacs-editing.org][editing module]]. This includes:
+
++ Multiple Cursors :: Edit text in multiple locations in the buffer simulaneously
++ YASnippet :: Insert small predefined templates into Emacs
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load the editing module
+
+  (require 'freemacs-editing)
+#+end_src
+
+* Elfeed
+
+Elfeed is a news and RSS reader for Emacs. The configuration for Elfeed can be found at [[file:modules/elfeed/freemacs-elfeed.org][elfeed module]].
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load Elfeed newsreader module
+
+  (require 'freemacs-elfeed)
+#+end_src
+
+* Email
+
+Email is managed using the Mu4e package that uses the Mu backend to search through emails that are stored using the Maildir format. The configuration can be found at [[file:modules/email/freemacs-email.org][email module]].
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load email module
+
+  (require 'freemacs-email)
+#+end_src
+
+* EXWM
+
+EXWM is a window manager that runs entirely wihtin Emacs. With EXWM, Emacs frames and windows can be used to manage X11 applications. Each X11 application runs in a separate window and can be accessed as a separate buffer using Emacs commands.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load the EXWM module
+
+  (require 'freemacs-exwm)
+#+end_src
+
 * File Management
 
-The [[file:modules/file-tools/freemacs-dired.org][Dired]] module contains changes and improvements to the Dired (directory editor) package in Emacs.
+This section contains tools for working with the file system from within Emacs.
+
+** Dired
+
+The [[file:modules/file-tools/freemacs-dired.org][Dired module]] contains changes and improvements to the Dired (directory editor) package in Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load file tools module
@@ -309,7 +343,9 @@ The [[file:modules/file-tools/freemacs-dired.org][Dired]] module contains change
   (require 'freemacs-dired)
 #+end_src
 
-[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander.
+** Sunrise Commander
+
+[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander. The configuration for Sunrise Commander is in the [[file:modules/file-tools/freemacs-sunrise.org][sunrise module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load sunrise module
@@ -317,74 +353,29 @@ The [[file:modules/file-tools/freemacs-dired.org][Dired]] module contains change
   (require 'freemacs-sunrise)
 #+end_src
 
-* Navigation and Session
+* Graphing
 
-This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
+Emacs can be used as an environment to create graphs, plots, and diagrams. Configuration for these are found in the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Navigation and Session Configuration
-#+end_src
-
-** Bufler
-
-[[https://github.com/alphapapa/bufler.el][Bufler]] provides a buffer switching menu that has some enhanced automatic groupings that make it easier to configure than [[https://www.emacswiki.org/emacs/IbufferMode][Ibuffer]] as it requires less manual work to create buffer groups. It can also sort buffers into groups based on projects using ~project.el~.
++ Gnuplot :: Create plots using Gnuplot in Emacs
++ PlantUML :: Create UML diagrams with PlantUML 
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package bufler
-    :straight t
-    :bind ("C-x C-b" . bufler))
+  ;; Load graphing module
+
+  (require 'freemacs-graphing)
 #+end_src
 
-** Burly
+* Math and Finance
 
-[[https://github.com/alphapapa/burly.el][Burly]] is a tool to save buffer, window, and frame configurations among sessions. Although Emacs has Tab Bar Mode and Desktop Mode, Burly has a couple benefits that make it worth adopting for some:
+** Ledger
 
-1. Saving the Emacs Desktop automatically opens it on the next session which can slow down Emacs load time especially if you only wish to start a new session without opening any of the old buffers.
-2. Burly allows you save the different sessions with names so you can call up different sessions as you choose.
-3. Loading of Burly can be deferred until you call the Burly commands.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package burly
-    :straight (burly :host github
-                     :repo "tfree87/burly.el"
-                     :branch "master")
-    :commands (burly-bookmark-frames
-               burly-bookmark-windows
-               burly-open-bookmark))
-#+end_src
-
-** Recentf Mode
-
-Recentf Mode will save a list of recent files so they can be called easily after restarting Emacs. To access the files, ~M-x recentf-open-files~ can be called to get a list of the recent files in a buffer.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (recentf-mode 1)
-#+end_src
-
-** Winner Mode
-
-[[https://www.emacswiki.org/emacs/WinnerMode][Winner Mode]] makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
-  (winner-mode t)
-#+end_src
-
-** Winum
-
-Winum is a package that adds number to the modeline for each window in Emacs. Windows can then easily be switched from one to the next by using the key combination ~C-x w~ followed by the number of the correct window.
-
-This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]] but it has a few advantages:
-
-1. This package has a key binding that does not conflict with ~M-o~ in [[Sunrise Commander]]
-2. This package works well with [[https://github.com/ch11ng/exwm][EXWM]]. Ace Window numbers do not display in [[https://github.com/ch11ng/exwm][EXWM]] windows that are running X11 applications.
-3. ~C-x w~ is similar to the window creation and deletion commands ~C-x~ which may make it easier to remember the key binding.
+Ledger is a plain-text accounting system that is very fast, powerful and safe. The configuration for ledger in Emacs can be found in the [[file:modules/math/freemacs-ledger.org][ledger module]].
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package winum
-    :straight t
-    :defer 3
-    :config
-    (winum-mode t))
+  ;; Load the Ledger module
+
+  (require 'freemacs-ledger)
 #+end_src
 
 * Org
@@ -395,62 +386,24 @@ This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]]
   (require 'freemacs-org)
 #+end_src
 
-* Writing/Publishing/Reading
+* Session
 
-This section contains customizations for Emacs to improve the environment for writing papers, publishing paper and websites, and reading documents.
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Writing/Publishing/Reading Configuation
-#+end_src
-
-** Academic Writing
+This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Load Academic Writing module
+  ;; Load session module
 
-  (require 'freemacs-academic-writing)
-#+end_src
-
-** Spellchecking
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Load Spellchecking module
-
-  (require 'freemacs-spellchecking)
-#+end_src
-
-** \LaTeX{}
-
-\LaTeX{} configuration can be found in the 
-
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-latex)
-#+end_src
-
-** Markdown
-
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-markdown)
-#+end_src
-
-** PDF
-
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-pdf)
+  (require 'freemacs-session)
 #+end_src
 
 * Shells and Terminals
 
 This section contains configuration options for terminals in Emacs. 
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Shells and Terminals Configuration
-#+end_src
-
 ** Eshell
 
 #+begin_src emacs-lisp :tangle yes
-  ;;; Load the Eshell module
+  ;; Load the Eshell module
 
   (require 'freemacs-eshell)
 #+end_src
@@ -468,6 +421,8 @@ This section contains configuration options for terminals in Emacs.
 ** VTerm
 
 #+begin_src emacs-lisp :tangle yes
+  ;; Load the VTerm module
+
   (require 'freemacs-vterm)
 #+end_src
 
@@ -487,239 +442,85 @@ Changes to Emacs appearance and theme can be found in the [[file:modules/theme/f
   (require 'freemacs-alltheicons)
 #+end_src
 
-* EXWM
+* Writing/Publishing/Reading
 
-EXWM is a window manager that runs entirely wihtin Emacs. With EXWM, Emacs frames and windows can be used to manage X11 applications. Each X11 application runs in a separate window and can be accessed as a separate buffer using Emacs commands.
+This section contains customizations for Emacs to improve the environment for writing papers, publishing paper and websites, and reading documents.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Load the EXWM module
+** Academic Writing
 
-  (require 'freemacs-exwm)
-#+end_src
+The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
 
-* Other
-
-This section contains configuration for packages that do no fit into the other categories.
-
-** Docker
-
-[[https://github.com/Silex/docker.el][Docker Mode]] is an interface in Emacs to manage Docker containers.
++ Academic Phrases :: A package that inserts common template phrases into academic papers
++ Citar :: A citation tool that simplifies adding citations to documents
++ Org Cite :: The built-in Org Mode citation management system
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package docker
-    :straight t
-    :init
-    (whicher "docker")
-    :bind ("C-c d" . docker))
+  ;; Load Academic Writing module
+
+  (require 'freemacs-academic-writing)
 #+end_src
 
-** Docker Compose
+** Spellchecking
 
-[[https://github.com/meqif/docker-compose-mode][Docker Compose Mode]] is a major mode for editing Docker Compose files.
+
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package docker-compose-mode
-    :straight t
-    :defer t
-    :init
-    (whicher "docker-compose"))
+  ;; Load Spellchecking module
+
+  (require 'freemacs-spellcheck)
 #+end_src
 
-** Gnuplot
+** \LaTeX{}
 
-[[https://github.com/emacs-gnuplot/gnuplot][Gnuplot]] mode can be used for editing files that are used to define a plot style and layout and allow for execution of the code in an Emacs buffer.
+
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package gnuplot
-    :straight t
-    :init
-    (whicher "gnuplot")
-    :defer t)
+  ;; Load the LaTeX module
+
+  (require 'freemacs-latex)
 #+end_src
 
-** Helpful
+** Markdown
 
-[[https://github.com/Wilfred/helpful][Helpful]] improves the Emacs help functions by adding new features to the ~*Help*~ buffers such as:
-
-- Links to source code
-- Better formatting of docstrings
-- Lists of callers
-- Keymaps
-- Aliases
-- And more...
+The [[file:modules/publishing/freemacs-markdown.org][markdown module]] adds additional features to improve editing markdown files in Emacs.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package helpful
-    :straight t
-    :defer t
-    :bind
-    ("C-h f" . #'helpful-callable)
-    ("C-h v" . #'helpful-variable)
-    ("C-h k" . #'helpful-key)
-    ("C-c C-d" . #'helpful-at-point)
-    ("C-h F" . #'helpful-function)
-    ("C-h C" . #'helpful-command))
+  ;; Load the markdown module
+
+  (require 'freemacs-markdown)
 #+end_src
 
-** Ledger
+** Ox-publish
 
-To conduct plain-text accounting in Emacs, [[https://github.com/ledger/ledger-mode][ledger-mode]] needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
+
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package ledger-mode
-    :straight t
-    :defer t
-    :init
-    (whicher "ledger"))
+  ;; Load the ox-publish module
+
+  (require 'freemacs-ox-publish)
 #+end_src
 
-** Multiple Cursors
+** PDF
 
-[[https://github.com/magnars/multiple-cursors.el][Multiple Cursors]] allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs Dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
+
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package multiple-cursors
-    :straight t
-    :defer t
-    :bind
-    ("C-S-c C-S-c" . 'mc/edit-lines)
-    ("C->" . 'mc/mark-next-like-this)
-    ("C-<" . 'mc/mark-previous-like-this)
-    ("C-c C-<" . 'mc/mark-all-like-this))
+  ;; Load the pdf module
+
+  (require 'freemacs-pdf)
 #+end_src
 
-** PlantUML
+* Help
 
-[[https://plantuml.com/][PlantUML]] is a language that can interpret code to create flowcharts and UML diagrams. The syntax is similar to programming languages thereby making it fast and easy to create accurate, auto-generated charts that don't require a lot of dragging boxes around as you might with a graphical tool such as LibreOffice Draw.
+The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
 
-*** Install PlantUML Mode
-
-[[https://github.com/skuro/plantuml-mode][PlantUML mode]] is not installed by default, so we need ~use-package~ to download and install it.
++ Helpful :: Adds extra information to Emacs help buffers
++ Which-key :: Shows a list of key bindings in Emacs for the current major mode
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package plantuml-mode
-    :straight t
-    :defer t
-    :after org)
-#+end_src
+  ;; Load the help module
 
-*** Set Location of PlantUML Binary
-
-When Emacs is run as a portable app on a USB drive, Emacs needs to know the location of the PlantUML executable which I place in the .emacs.d directory.
-
-#+begin_src emacs-lisp :noweb-ref org_customize
-  (org-plantuml-jar-path (expand-file-name "~/.emacs.d/plantuml/plantuml.jar"))
-#+end_src
-
-** Popper
-
-[[https://github.com/karthink/popper][Popper]] lets a user define any window as a short-term pop up window.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package popper
-    :straight t
-    :bind (("C-`"   . popper-toggle-latest)
-           ("M-`"   . popper-cycle)
-           ("C-M-`" . popper-toggle-type))
-    :init
-    <<popper_init>>
-    (popper-mode +1)
-    (popper-echo-mode +1))
-#+end_src
-
-*** Popper Buffer Buffers
-
-For each buffer that will become a popper pop up buffer, it must be defined below:
-
-#+begin_src emacs-lisp :noweb-ref popper_init
-  (setq popper-reference-buffers
-          '("\\*Messages\\*"
-            "\\*Embark Actions\\*"
-            "Output\\*$"
-            "\\*Async Shell Command\\*"
-            "\\*Whicher Report\\*"
-            help-mode
-            compilation-mode))
-#+end_src
-
-** Savehist
-
-Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in [[Vertico]].
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package savehist
-    :straight (:type built-in)
-    :init
-    (savehist-mode))
-  #+end_src
-  
-** Which-key
-
-[[https://github.com/justbur/emacs-which-key][Which-key]] provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package which-key
-    :straight t
-    :defer 3
-    :custom
-    <<wk_custom>>
-    :config
-    <<wk_config>>
-    (which-key-mode))
-#+end_src
-
-*** Activating Which-key
-
-How to start which-key
-
-**** C-h During Key Combination Entry
-
-Type C-h during any key combination to pop-up which key
-
-#+begin_src emacs-lisp :noweb-ref wk_custom
-  (which-key-show-early-on-C-h t)
-#+end_src
-
-**** Press <f4> in Any Mode
-
-Use the <f4> key in any major mode to see the key bindings
-
-#+begin_src emacs-lisp :noweb-ref wk_config
-  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
-#+end_src
-
-*** Which-key Window Location
-
-Set up which-key to use the side window preferably
-
-#+begin_src nnemacs-lisp :noweb-ref wk_config
-  (which-key-setup-side-window-right-bottom)
-#+end_src
-
-** YASnippet
-
-YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
-
-*** Install YASnippet
-
-[[https://github.com/joaotavora/yasnippet][YASnippet]] takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package yasnippet
-    :straight t
-    :defer 3
-    :config
-    (yas-global-mode 1))
-#+end_src
-
-*** Install Snippets
-
-The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snippets]] loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package yasnippet-snippets
-    :straight t
-    :defer t)
+  (require 'freemacs-help)
 #+end_src
 
 * Emacs Server

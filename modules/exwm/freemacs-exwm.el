@@ -1,8 +1,8 @@
 (use-package app-launcher
   :straight '(app-launcher :host github
-                           :repo "SebastienWae/app-launcher"
-                           :branch "main")
-  :commands (app-launcher))
+                           :repo "tfree87/app-launcher"
+                           :branch "symlink")
+  :commands (app-launcher-run-app))
 
 (use-package exwm
   :if
@@ -75,3 +75,5 @@
     (start-process-shell-command "flameshot" nil "flameshot")))
 
 (provide 'freemacs-exwm)
+
+;;; freemacs-exwm.el ends here

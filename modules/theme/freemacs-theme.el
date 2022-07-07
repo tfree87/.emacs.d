@@ -41,14 +41,17 @@
   :config (doom-modeline-mode))
 
 (use-package menu-bar
+  :straight (:type built-in)
   :config
   (menu-bar-mode -1))
 
 (use-package tool-bar
+  :straight (:type built-in)
   :config
   (tool-bar-mode -1))
 
 (use-package scroll-bar
+  :straight (:type built-in)
   :config
   (toggle-scroll-bar -1))
 

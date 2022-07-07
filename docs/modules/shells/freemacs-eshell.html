@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eshell Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Eshell Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgf3db3c9">1. Eshell</a>
+<ul>
+<li><a href="#org05d183c">1.1. Eshell Aliases</a></li>
+<li><a href="#org071c8d4">1.2. Eshell Visual Commands</a></li>
+<li><a href="#org65809ee">1.3. Esh Autosuggest</a></li>
+<li><a href="#org855b3e1">1.4. Eshell Git Prompt</a>
+<ul>
+<li><a href="#orgb842549">1.4.1. Set the Eshell prompt on load</a></li>
+</ul>
+</li>
+<li><a href="#orge5ef654">1.5. Eshell Toggle</a></li>
+<li><a href="#org3e00231">1.6. Oh My Esh</a></li>
+</ul>
+</li>
+<li><a href="#org77083ec">2. End</a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgf3db3c9" class="outline-2">
+<h2 id="orgf3db3c9"><span class="section-number-2">1.</span> Eshell</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eshell is a very powerful lisp-based shell that I have learned to love most because you can redirect output directly to Emacs buffers. This feature has made it my default shell and I have switched to it from using mostly Z shell because I send stuff to and from Emacs buffers. This feature really is a game changer.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">eshell</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:hook</span>
+  <span style="color: #ff2afc;">(</span>eshell-load . <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #df85ff;">()</span>
+                        <span style="color: #df85ff;">(</span>eshell-git-prompt-use-theme 'multiline2<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-mode . <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #df85ff;">()</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"htop"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ipython"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"rclone"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ssh"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"tail"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"top"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>eshell/alias <span style="color: #7984D1;">"ff"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>eshell/alias <span style="color: #7984D1;">"emacs"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>eshell/alias <span style="color: #7984D1;">"untar"</span> <span style="color: #7984D1;">"tar -zxvf"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>eshell/alias <span style="color: #7984D1;">"cpv"</span> <span style="color: #7984D1;">"rsync -ah --info=progress2"</span><span style="color: #df85ff;">)</span>
+                   <span style="color: #df85ff;">(</span>eshell/alias <span style="color: #7984D1;">"ll"</span> <span style="color: #7984D1;">"ls -Alh"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>eshell-error-if-no-glob t<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-hist-ignoredups t<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-save-history-on-exit t<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-destroy-buffer-when-process-dies t<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>setenv <span style="color: #7984D1;">"PAGER"</span> <span style="color: #7984D1;">"cat"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org05d183c" class="outline-3">
+<h3 id="org05d183c"><span class="section-number-3">1.1.</span> Eshell Aliases</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Below are a list of command-line aliases for use in eshell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgc683bdd"><span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"ff"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"emacs"</span> <span style="color: #7984D1;">"find-file $1"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"untar"</span> <span style="color: #7984D1;">"tar -zxvf"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"cpv"</span> <span style="color: #7984D1;">"rsync -ah --info=progress2"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>eshell/alias <span style="color: #7984D1;">"ll"</span> <span style="color: #7984D1;">"ls -Alh"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org071c8d4" class="outline-3">
+<h3 id="org071c8d4"><span class="section-number-3">1.2.</span> Eshell Visual Commands</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Many commands when run in eshell turn into a mess as it is not an ansi-term. Any interactive commands that need the full ansi-term to display properly are listed below so that when they are run from the eshell they will open in ansi-tem and display properly.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="orgb64bbdd"><span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"htop"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ipython"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"rclone"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"ssh"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"tail"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>add-to-list 'eshell-visual-commands <span style="color: #7984D1;">"top"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org65809ee" class="outline-3">
+<h3 id="org65809ee"><span class="section-number-3">1.3.</span> Esh Autosuggest</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">esh-autosuggest</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>eshell-mode . esh-autosuggest-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org855b3e1" class="outline-3">
+<h3 id="org855b3e1"><span class="section-number-3">1.4.</span> Eshell Git Prompt</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+<a href="https://github.com/xuchunyang/eshell-git-prompt">Eshell Git Prompt</a> provides a series of Eshell prompts that provide extra information including the git status of the current project.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">eshell-git-prompt</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>emacs-git-prompt <span style="color: #1ea8fc;">:host</span> github
+                              <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/eshell-git-prompt"</span>
+                              <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb842549" class="outline-4">
+<h4 id="orgb842549"><span class="section-number-4">1.4.1.</span> Set the Eshell prompt on load</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+This method was the only method I have found that loaded the <code>eshell-git-prompt</code> immediately when Eshell was loaded.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>eshell-load . <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #a7da1e;">()</span>
+                      <span style="color: #a7da1e;">(</span>eshell-git-prompt-use-theme 'multiline2<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5ef654" class="outline-3">
+<h3 id="orge5ef654"><span class="section-number-3">1.5.</span> Eshell Toggle</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+<a href="https://github.com/4DA/eshell-toggle">Eshell Toggle</a> makes it easy to pull up a temporary Eshell buffer for running commands quickly from the working directory of that buffer.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">eshell-toggle</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>eshell-toggle <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"4DA/eshell-toggle"</span>
+                           <span style="color: #1ea8fc;">:host</span> github
+                           <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>eshell-toggle-size-fraction 3<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-toggle-run-command nil<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>eshell-toggle-init-function #'eshell-toggle-init-eshell<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:bind</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"M-s-`"</span> . eshell-toggle<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3e00231" class="outline-3">
+<h3 id="org3e00231"><span class="section-number-3">1.6.</span> Oh My Esh</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Oh My Esh is my pacakge that aims to reproduce some of the plugin functionality that can be found in the plugins from Oh My Zsh for the Z shell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">oh-my-eshell</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>oh-my-eshell <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/OhMyEshell"</span>
+                          <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span>
+                          <span style="color: #1ea8fc;">:host</span> github<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:after</span> eshell<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org77083ec" class="outline-2">
+<h2 id="org77083ec"><span class="section-number-2">2.</span> End</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-eshell</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

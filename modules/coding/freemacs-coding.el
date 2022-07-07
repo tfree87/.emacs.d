@@ -107,3 +107,5 @@
   :straight t)
 
 (provide 'freemacs-coding)
+
+;;; freemacs-coding.el ends here

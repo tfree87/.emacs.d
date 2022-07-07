@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Academic Phrases Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Academic Phrases Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga7eb406">1. Academic Phrases</a></li>
+<li><a href="#org4ec6195">2. Citar</a></li>
+<li><a href="#org9609633">3. Org Cite&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org476c8f5">4. End</a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orga7eb406" class="outline-2">
+<h2 id="orga7eb406"><span class="section-number-2">1.</span> Academic Phrases</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://github.com/nashamri/academic-phrases">Academic phrases</a> is a package that provides a number of easy-to-use templates for writing academic text if you happen to have writer's block. Calling the function <code>M-x academic-phrases</code> provides a searchable list of these templates for your use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">academic-phrases</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ec6195" class="outline-2">
+<h2 id="org4ec6195"><span class="section-number-2">2.</span> Citar</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://github.com/emacs-citar/citar">Citar</a> is a citation tool that integrates well with Vertico, Embark, and Marginalia.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">citar</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>citar <span style="color: #1ea8fc;">:host</span> github
+                   <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"emacs-citar/citar"</span>
+                   <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:after</span> org
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>citar-bibliography org-cite-global-bibliography<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+Tell Org Cite to use Citar.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-cite-insert-processor 'citar<span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>org-cite-follow-processor 'citar<span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>org-cite-activate-processor 'citar<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9609633" class="outline-2">
+<h2 id="org9609633"><span class="section-number-2">3.</span> Org Cite&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Org Cite is a feature to add citation capabilities to Org Mode. The following lines will tell Org Mode to use Citar as the processor for <code>org-cite</code> and will tell Org Mode where to find the default bibliography file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">oc</span>
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>org-cite-global-bibliography '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"~/bib/bib.bib"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>org-cite-insert-processor 'citar<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>org-cite-follow-processor 'citar<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>org-cite-activate-processor 'citar<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org476c8f5" class="outline-2">
+<h2 id="org476c8f5"><span class="section-number-2">4.</span> End</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-academic-writing</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-academic-writing.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

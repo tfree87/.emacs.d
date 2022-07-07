@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Session Module</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Session Module</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4556ee9">1. Bufler</a></li>
+<li><a href="#orgddb331a">2. Burly</a></li>
+<li><a href="#org7a089d6">3. Recentf Mode</a></li>
+<li><a href="#org4611abd">4. Savehist</a></li>
+<li><a href="#orge27bd37">5. Winner Mode</a></li>
+<li><a href="#orgfcd85e3">6. Winum</a></li>
+<li><a href="#org36b9e4e">7. End</a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org4556ee9" class="outline-2">
+<h2 id="org4556ee9"><span class="section-number-2">1.</span> Bufler</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://github.com/alphapapa/bufler.el">Bufler</a> provides a buffer switching menu that has some enhanced automatic groupings that make it easier to configure than <a href="https://www.emacswiki.org/emacs/IbufferMode">Ibuffer</a> as it requires less manual work to create buffer groups. It can also sort buffers into groups based on projects using <code>project.el</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">bufler</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-x C-b"</span> . bufler<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgddb331a" class="outline-2">
+<h2 id="orgddb331a"><span class="section-number-2">2.</span> Burly</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://github.com/alphapapa/burly.el">Burly</a> is a tool to save buffer, window, and frame configurations among sessions. Although Emacs has Tab Bar Mode and Desktop Mode, Burly has a couple benefits that make it worth adopting for some:
+</p>
+
+<ol class="org-ol">
+<li>Saving the Emacs Desktop automatically opens it on the next session which can slow down Emacs load time especially if you only wish to start a new session without opening any of the old buffers.</li>
+<li>Burly allows you save the different sessions with names so you can call up different sessions as you choose.</li>
+<li>Loading of Burly can be deferred until you call the Burly commands.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">burly</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>burly <span style="color: #1ea8fc;">:host</span> github
+                   <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/burly.el"</span>
+                   <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>burly-bookmark-frames
+             burly-bookmark-windows
+             burly-open-bookmark<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a089d6" class="outline-2">
+<h2 id="org7a089d6"><span class="section-number-2">3.</span> Recentf Mode</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Recentf Mode will save a list of recent files so they can be called easily after restarting Emacs. To access the files, <code>M-x recentf-open-files</code> can be called to get a list of the recent files in a buffer.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">recentf</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>recentf-mode 1<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4611abd" class="outline-2">
+<h2 id="org4611abd"><span class="section-number-2">4.</span> Savehist</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in Vertico.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">savehist</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>savehist-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge27bd37" class="outline-2">
+<h2 id="orge27bd37"><span class="section-number-2">5.</span> Winner Mode</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="https://www.emacswiki.org/emacs/WinnerMode">Winner Mode</a> makes it easy to return to old window configurations in Emacs by simply using the keyboard command <code>C-&lt;left&gt;</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">winner</span>
+  <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>winner-mode t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfcd85e3" class="outline-2">
+<h2 id="orgfcd85e3"><span class="section-number-2">6.</span> Winum</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Winum is a package that adds number to the modeline for each window in Emacs. Windows can then easily be switched from one to the next by using the key combination <code>C-x w</code> followed by the number of the correct window.
+</p>
+
+<p>
+This package is similar to <a href="https://github.com/abo-abo/ace-window">ace-window</a> but it has a few advantages:
+</p>
+
+<ol class="org-ol">
+<li>This package has a key binding that does not conflict with <code>M-o</code> in Sunrise Commander.</li>
+<li>This package works well with <a href="https://github.com/ch11ng/exwm">EXWM</a>. Ace Window numbers do not display in <a href="https://github.com/ch11ng/exwm">EXWM</a> windows that are running X11 applications.</li>
+<li><code>C-x w</code> is similar to the window creation and deletion commands <code>C-x</code> which may make it easier to remember the key binding.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">winum</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> 3
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>winum-mode t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36b9e4e" class="outline-2">
+<h2 id="org36b9e4e"><span class="section-number-2">7.</span> End</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-session</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-session.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

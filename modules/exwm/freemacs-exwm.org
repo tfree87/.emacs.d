@@ -1,10 +1,8 @@
 # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
 
-#+title: Emacs Configuration
-#+subtitle:
+#+title:Emacs Desktop Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-28 20:16:41 thomas>
-#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+date: Time-stamp: <2022-07-07 12:43:39 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -16,12 +14,14 @@
 #+html_container: div
 #+html_content_class: content
 #+keywords: Emacs
-#+html_link_home: index.html
-#+html_link_up: index.html
-#+html_equation_reference_format: \eqref{%s}
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
 
 * Emacs Desktop
 
@@ -50,9 +50,9 @@ Use App Launcher to launch Linux applications in [[https://github.com/ch11ng/exw
 #+begin_src emacs-lisp :tangle yes
   (use-package app-launcher
     :straight '(app-launcher :host github
-                             :repo "SebastienWae/app-launcher"
-                             :branch "main")
-    :commands (app-launcher-run-appx))
+                             :repo "tfree87/app-launcher"
+                             :branch "symlink")
+    :commands (app-launcher-run-app))
 #+end_src
 
 *** TODO Create a fork of app-launcher and add support for Windows applications using the Windows start menu shortcuts directory
@@ -263,8 +263,10 @@ Instead of using ~scrot~ for screenshots, I prefer to use Flameshot.
     (start-process-shell-command "flameshot" nil "flameshot"))
 #+end_src
 
-
+* End
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-exwm)
+
+  ;;; freemacs-exwm.el ends here
 #+end_src

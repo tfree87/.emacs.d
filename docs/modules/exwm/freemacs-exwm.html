@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs Desktop Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Emacs Desktop Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org26301db">1. Emacs Desktop</a>
+<ul>
+<li><a href="#orga0a5789">1.1. Check for Window Manager</a></li>
+<li><a href="#org6f71547">1.2. App Launcher</a>
+<ul>
+<li><a href="#org1c01f7d">1.2.1. <span class="todo TODO">TODO</span> Create a fork of app-launcher and add support for Windows applications using the Windows start menu shortcuts directory</a></li>
+</ul>
+</li>
+<li><a href="#orge9c66b8">1.3. EXWM&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a>
+<ul>
+<li><a href="#org66107d8">1.3.1. Buffer Naming</a></li>
+<li><a href="#orgb9e23c6">1.3.2. Default Workspaces</a></li>
+<li><a href="#orgcd189ef">1.3.3. Keys</a></li>
+<li><a href="#orga0f7b39">1.3.4. RandR</a></li>
+<li><a href="#orgb4bdce4">1.3.5. SystemTray</a></li>
+<li><a href="#org7f75699">1.3.6. EXWM Startup Programs</a></li>
+</ul>
+</li>
+<li><a href="#org353adca">1.4. Desktop Environment</a></li>
+</ul>
+</li>
+<li><a href="#org662b61b">2. End</a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org26301db" class="outline-2">
+<h2 id="org26301db"><span class="section-number-2">1.</span> Emacs Desktop</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+When there is no window manager running, Emacs can run as a window manger using <a href="https://github.com/ch11ng/exwm">EXWM</a>. This makes for a very lean desktop environment where all programs-including X11 applications-are run in Emacs windows and can be controlled by commands that control Emacs windows. Emacs Desktop also adds some extra convenience features.
+</p>
+</div>
+
+<div id="outline-container-orga0a5789" class="outline-3">
+<h3 id="orga0a5789"><span class="section-number-3">1.1.</span> Check for Window Manager</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+I generally only want to use <a href="https://github.com/ch11ng/exwm">EXWM</a> when I do not have another window manger in place. The following check will use <code>wmctrl -m</code> to check if there is an active window manager running. If it finds a window manager running, the exit code will be 0. If not, the exit code will be 1. Calling <code>echo $?</code> immediately afterward with <code>shell-command-to-string</code> will return the exit code appended to the end of the output from <code>wmctrl -m</code>. As we only care about the status of the exit code, we can call on the <code>substring</code> function to get just the exit code and not the whole output of the command.
+</p>
+
+<p>
+There is also a check for the X window system as calling GUI programs from <a href="https://github.com/ch11ng/exwm">EXWM</a> will not work without it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">and</span> <span style="color: #ff2afc;">(</span>window-system<span style="color: #ff2afc;">)</span>
+     <span style="color: #ff2afc;">(</span>not
+      <span style="color: #a7da1e;">(</span>string=
+       <span style="color: #df85ff;">(</span>substring
+        <span style="color: #A875FF;">(</span>shell-command-to-string
+         <span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"wmctrl -m ; echo $status"</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span>
+        -2 -1<span style="color: #df85ff;">)</span> <span style="color: #ffd400;">"0"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6f71547" class="outline-3">
+<h3 id="org6f71547"><span class="section-number-3">1.2.</span> App Launcher</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Use App Launcher to launch Linux applications in <a href="https://github.com/ch11ng/exwm">EXWM</a>. App Launcher will scan for all <code>*.desktop</code> files in the application directories on Linux and provide a list of candidates that can be filtered with completion.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">app-launcher</span>
+  <span style="color: #1ea8fc;">:straight</span> '<span style="color: #ff2afc;">(</span>app-launcher <span style="color: #1ea8fc;">:host</span> github
+                           <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/app-launcher"</span>
+                           <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"symlink"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>app-launcher-run-app<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1c01f7d" class="outline-4">
+<h4 id="org1c01f7d"><span class="section-number-4">1.2.1.</span> <span class="todo TODO">TODO</span> Create a fork of app-launcher and add support for Windows applications using the Windows start menu shortcuts directory</h4>
+</div>
+</div>
+
+<div id="outline-container-orge9c66b8" class="outline-3">
+<h3 id="orge9c66b8"><span class="section-number-3">1.3.</span> EXWM&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<a href="https://github.com/ch11ng/exwm">EXWM</a> stands for the "Emacs X11 Window Manager". With this package, Emacs can run X11 programs in windows and frames and controlled with Emacs window commands. To use <a href="https://github.com/ch11ng/exwm">EXWM</a>, the <a href="https://github.com/ch11ng/exwm">EXWM</a> package can be pulled from using <code>straight.el</code>.
+</p>
+
+<p>
+Currently, I only use EXWM on my GUIX systems to I do not use straight or use-package to manage this package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">exwm</span>
+  <span style="color: #1ea8fc;">:if</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">and</span> <span style="color: #a7da1e;">(</span>window-system<span style="color: #a7da1e;">)</span>
+       <span style="color: #a7da1e;">(</span>not
+        <span style="color: #df85ff;">(</span>string=
+         <span style="color: #A875FF;">(</span>substring
+          <span style="color: #1ea8fc;">(</span>shell-command-to-string
+           <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"wmctrl -m ; echo $status"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+          -2 -1<span style="color: #A875FF;">)</span> <span style="color: #ffd400;">"0"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>exwm-workspace-number 1<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-input-global-keys
+   `<span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>?\s-r<span style="color: #A875FF;">]</span> . exwm-reset<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>s-left<span style="color: #A875FF;">]</span> . windmove-left<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>s-right<span style="color: #A875FF;">]</span> . windmove-right<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>s-up<span style="color: #A875FF;">]</span> . windmove-up<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>s-down<span style="color: #A875FF;">]</span> . windmove-down<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>?\s-w<span style="color: #A875FF;">]</span> . exwm-workspace-switch<span style="color: #df85ff;">)</span>
+     <span style="color: #df85ff;">(</span><span style="color: #A875FF;">[</span>?\s-e<span style="color: #A875FF;">]</span> . app-launcher-run-app<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-input-prefix-keys
+   '<span style="color: #a7da1e;">(</span>?\C-x
+     ?\C-u
+     ?\C-h
+     ?\M-x
+     ?\M-`
+     ?\M-&amp;
+     ?\M-:
+     ?\C-\M-j
+     ?\C-\ <span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>add-hook
+   'exwm-update-class-hook <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span><span style="color: #df85ff;">()</span>
+                             <span style="color: #df85ff;">(</span>exwm-workspace-rename-buffer
+                              exwm-class-name<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>define-key exwm-mode-map <span style="color: #a7da1e;">[</span>?\C-q<span style="color: #a7da1e;">]</span> 'exwm-input-send-next-key<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-randr</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-randr-enable<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-systemtray</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-systemtray-enable<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"nm-applet"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>executable-find <span style="color: #7984D1;">"nm-applet"</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>start-process-shell-command <span style="color: #7984D1;">"nm-applet"</span> nil <span style="color: #7984D1;">"nm-applet"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"pasystray"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>executable-find <span style="color: #7984D1;">"pasystray"</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>start-process-shell-command <span style="color: #7984D1;">"pasystray"</span> nil <span style="color: #7984D1;">"pasystray"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>executable-find <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>start-process-shell-command <span style="color: #7984D1;">"xsettingsd"</span> nil <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>exwm-init<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org66107d8" class="outline-4">
+<h4 id="org66107d8"><span class="section-number-4">1.3.1.</span> Buffer Naming</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+To name buffers based on the application that was launched to create them, the following code must be used:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-hook
+ 'exwm-update-class-hook <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span><span style="color: #a7da1e;">()</span>
+                           <span style="color: #a7da1e;">(</span>exwm-workspace-rename-buffer
+                            exwm-class-name<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb9e23c6" class="outline-4">
+<h4 id="orgb9e23c6"><span class="section-number-4">1.3.2.</span> Default Workspaces</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+With only a single monitor at the moment I only see the need for a single workspace as I can switch between tasks by switching buffers. This number should be increased with more monitors, however, as each workspace can display in a separate monitor and switching can then be done easily with the keyboard.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>exwm-workspace-number 1<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd189ef" class="outline-4">
+<h4 id="orgcd189ef"><span class="section-number-4">1.3.3.</span> Keys</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+It is extremely helpful to set up special keybindings for use in <a href="https://github.com/ch11ng/exwm">EXWM</a> due to the fact that X11 applications won't see keyboard commands that are first intercepted by Emacs.
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org2c4fe0a"></a>Global Keys<br />
+<div class="outline-text-5" id="text-1-3-3-1">
+<p>
+These key bindings will always work, regardless of whether the current buffer is in <code>char-mode</code> or <code>line-mode</code>. Since these keybindings always work, it is best to use a prefix key such as the <code>super</code> key.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>exwm-input-global-keys
+ `<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>?\s-r<span style="color: #df85ff;">]</span> . exwm-reset<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>s-left<span style="color: #df85ff;">]</span> . windmove-left<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>s-right<span style="color: #df85ff;">]</span> . windmove-right<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>s-up<span style="color: #df85ff;">]</span> . windmove-up<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>s-down<span style="color: #df85ff;">]</span> . windmove-down<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>?\s-w<span style="color: #df85ff;">]</span> . exwm-workspace-switch<span style="color: #a7da1e;">)</span>
+   <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>?\s-e<span style="color: #df85ff;">]</span> . app-launcher-run-app<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="orgfc9bce9"></a>Launching Programs<br />
+<div class="outline-text-6" id="text-1-3-3-1-1">
+<p>
+The following command can be used to launch programs in EWXM by using the command <code>s-e</code>. This will call the <code>app-launcher-run-app</code> function from the <a href="#org6f71547">1.2</a> package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>?\s-e<span style="color: #ff2afc;">]</span> . app-launcher-run-app<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org840cb6f"></a>Moving<br />
+<div class="outline-text-6" id="text-1-3-3-1-2">
+<p>
+To have a universal command to switch between windows in <a href="https://github.com/ch11ng/exwm">EXWM</a>, the super key and the arrow keys can be used to move about the windows directionally. Normally, using the super key in a desktop environment such as Gnome or XFCE would open an application launcher but in EXWM it is free for our use.  
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>s-left<span style="color: #ff2afc;">]</span> . windmove-left<span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>s-right<span style="color: #ff2afc;">]</span> . windmove-right<span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>s-up<span style="color: #ff2afc;">]</span> . windmove-up<span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>s-down<span style="color: #ff2afc;">]</span> . windmove-down<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+The following command can also be used to select a workspace if multiple workspaces are created.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>?\s-w<span style="color: #ff2afc;">]</span> . exwm-workspace-switch<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org9296583"></a>Switching Between <code>char-mode</code> and <code>line-mode</code><br />
+<div class="outline-text-6" id="text-1-3-3-1-3">
+<p>
+When using <a href="https://github.com/ch11ng/exwm">EXWM</a>, opening an X11 application will load in <code>line-mode</code> by default. This means that switching to a buffer containing an X11 application such (e.g. Firefox), that <code>C-c</code> will act as an Emacs prefix command. Pressing <code>C-c C-k</code> will switch to <code>char-mode</code> and <code>C-c</code> will then do the usual copy command. Pressing <code>s-r</code> retruns back to <code>line-mode</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc;">[</span>?\s-r<span style="color: #ff2afc;">]</span> . exwm-reset<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</li>
+
+<li><a id="org73bb28e"></a><code>input-send-next-key</code><br />
+<div class="outline-text-5" id="text-1-3-3-2">
+<p>
+Any keys that Emacs recognizes as a prefix key, will not be passed to any underlying X11 applications running in an Emacs window. If a specific key (i.e. <code>C-c</code> for copy) needs to be sent to the X11 application, a prefix key can be set as <code>exwm-input-send-next-key</code> and issued before calling the key.
+</p>
+
+<p>
+For example, to copy and paste from an X11 application running in an Emacs window, one could press <code>C-q C-c</code> to copy text and <code>C-q C-v</code> to paste text.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>define-key exwm-mode-map <span style="color: #ff2afc;">[</span>?\C-q<span style="color: #ff2afc;">]</span> 'exwm-input-send-next-key<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org14c91fd"></a>Input Prefix<br />
+<div class="outline-text-5" id="text-1-3-3-3">
+<p>
+Setting <code>exwm-input-prefix-keys</code> will cause those keys to be passed directly to Emacs to be processed. These keys will not be passed to any app unless they are proceeded by the <code>exwm-input-send-next-key</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>exwm-input-prefix-keys
+ '<span style="color: #ff2afc;">(</span>?\C-x
+   ?\C-u
+   ?\C-h
+   ?\M-x
+   ?\M-`
+   ?\M-&amp;
+   ?\M-:
+   ?\C-\M-j
+   ?\C-\ <span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orga0f7b39" class="outline-4">
+<h4 id="orga0f7b39"><span class="section-number-4">1.3.4.</span> RandR</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<p>
+For multi-screen displays, <code>exwm-randr</code> must be enabled.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-randr</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>exwm-randr-enable<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4bdce4" class="outline-4">
+<h4 id="orgb4bdce4"><span class="section-number-4">1.3.5.</span> SystemTray</h4>
+<div class="outline-text-4" id="text-1-3-5">
+<p>
+Make sure to turn on the system tray in <a href="https://github.com/ch11ng/exwm">EXWM</a> so that there is access to tray icons.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">exwm-systemtray</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span>exwm-systemtray-enable<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f75699" class="outline-4">
+<h4 id="org7f75699"><span class="section-number-4">1.3.6.</span> EXWM Startup Programs</h4>
+<div class="outline-text-4" id="text-1-3-6">
+<p>
+To make EXWM a fully functioning desktop evironment, a few startup programs will need to be run to make it able to function as a replacement to modern desktop environments such as Gnome:
+</p>
+
+<ol class="org-ol">
+<li><p>
+To enable a wifi applet in the <code>exwm-system-tray</code> for easily controlling the wifi, Emacs can execute the <code>nm-applet</code> if it is installed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"nm-applet"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>executable-find <span style="color: #7984D1;">"nm-applet"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>start-process-shell-command <span style="color: #7984D1;">"nm-applet"</span> nil <span style="color: #7984D1;">"nm-applet"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+To get sound in <a href="https://github.com/ch11ng/exwm">EXWM</a>, pulseaudio needs to be running. Killing pulseaudio and restarting seems to be the most effective at ensuring audio in <a href="https://github.com/ch11ng/exwm">EXWM</a> if there are multiple desktop enviroments installed on the system.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>shell-command <span style="color: #7984D1;">"pulseaudio --kill ; pulseaudio --start"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+Use <code>pasystray</code> for controlling volume graphically in <a href="https://github.com/ch11ng/exwm">EXWM</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"pasystray"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>executable-find <span style="color: #7984D1;">"pasystray"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>start-process-shell-command <span style="color: #7984D1;">"pasystray"</span> nil <span style="color: #7984D1;">"pasystray"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+If the numpad is to be used for numbers, <code>numlockx</code> must be installed and turned on.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>shell-command <span style="color: #7984D1;">"numlockx on"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+If the system is a laptop, tunring on tap to click can be activated.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>shell-command <span style="color: #7984D1;">"xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1"</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+Lastly, <code>xsettingsd</code> can be used to set the theme, and other settings for GTK+ applications.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #1ea8fc;">)</span>
+<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>executable-find <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>start-process-shell-command <span style="color: #7984D1;">"xsettingsd"</span> nil <span style="color: #7984D1;">"xsettingsd"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org353adca" class="outline-3">
+<h3 id="org353adca"><span class="section-number-3">1.4.</span> Desktop Environment</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+The <a href="https://github.com/DamienCassou/desktop-environment">Desktop Environment</a> package makes it so that some of the features that are included in a typical desktop environment system are included in <a href="https://github.com/ch11ng/exwm">EXWM</a>. This includes features such as access to media buttons, a screen locker, and adjustable brightness from the keyboard.
+</p>
+
+<p>
+Currently, as I only use the Emacs Desktop Environment on my GUIX Systems, I do not have it managed by straight or use-package but rather by GUIX.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">desktop-environment</span>
+  <span style="color: #1ea8fc;">:straight</span> nil
+  <span style="color: #1ea8fc;">:after</span> exwm
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>mapc #'whicher '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"amixer"</span>
+                    <span style="color: #7984D1;">"brightnessctl"</span>
+                    <span style="color: #7984D1;">"numlockx"</span>
+                    <span style="color: #7984D1;">"scrot"</span>
+                    <span style="color: #7984D1;">"slock"</span>
+                    <span style="color: #7984D1;">"upower"</span>
+                    <span style="color: #7984D1;">"TLP"</span>
+                    <span style="color: #7984D1;">"playerctl"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>desktop-environment-mode<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>shell-command <span style="color: #7984D1;">"pulseaudio --kill ; pulseaudio --start"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>shell-command <span style="color: #7984D1;">"numlockx on"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>shell-command <span style="color: #7984D1;">"xinput set-prop \"SynPS/2 Synaptics TouchPad\" \"libinput Tapping Enabled\" 1"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>executable-find <span style="color: #7984D1;">"flameshot"</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span>start-process-shell-command <span style="color: #7984D1;">"flameshot"</span> nil <span style="color: #7984D1;">"flameshot"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+Instead of using <code>scrot</code> for screenshots, I prefer to use Flameshot.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>executable-find <span style="color: #7984D1;">"flameshot"</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>start-process-shell-command <span style="color: #7984D1;">"flameshot"</span> nil <span style="color: #7984D1;">"flameshot"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org662b61b" class="outline-2">
+<h2 id="org662b61b"><span class="section-number-2">2.</span> End</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-exwm</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-exwm.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

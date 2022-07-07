@@ -2,8 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-06-27 20:30:07 thomas>
-#+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
+#+date: Time-stamp: <2022-07-07 12:43:36 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -15,11 +14,14 @@
 #+html_container: div
 #+html_content_class: content
 #+keywords: Emacs
-#+html_link_home: index.html
-#+html_link_up: index.html
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
 
 This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
 
@@ -96,6 +98,7 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
   
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package org
+    :straight (:type built-in)
     :defer t
     :init
     (whicher "pdflatex")

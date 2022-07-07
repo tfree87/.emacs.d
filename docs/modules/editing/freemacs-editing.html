@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-07-07 Thu 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Editing Configuration</title>
+<meta name="author" content="Thomas Freeman" />
+<meta name="keywords" content="Emacs" />
+<meta name="generator" content="Org Mode" />
+<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../../init.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Editing Configuration</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge7b83d7">1. Multiple Cursors</a></li>
+<li><a href="#org1c6a8cf">2. YASnippet</a>
+<ul>
+<li><a href="#org8bfcb7e">2.1. Install YASnippet</a></li>
+<li><a href="#org370fafa">2.2. Install Snippets</a></li>
+</ul>
+</li>
+<li><a href="#org06aa940">3. End</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orge7b83d7" class="outline-2">
+<h2 id="orge7b83d7"><span class="section-number-2">1.</span> Multiple Cursors</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://github.com/magnars/multiple-cursors.el">Multiple Cursors</a> allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs Dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing <code>C-x C-q</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">multiple-cursors</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:bind</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-S-c C-S-c"</span> . 'mc/edit-lines<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-&gt;"</span> . 'mc/mark-next-like-this<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-&lt;"</span> . 'mc/mark-previous-like-this<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-c C-&lt;"</span> . 'mc/mark-all-like-this<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1c6a8cf" class="outline-2">
+<h2 id="org1c6a8cf"><span class="section-number-2">2.</span> YASnippet</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
+</p>
+</div>
+
+<div id="outline-container-org8bfcb7e" class="outline-3">
+<h3 id="org8bfcb7e"><span class="section-number-3">2.1.</span> Install YASnippet</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="https://github.com/joaotavora/yasnippet">YASnippet</a> takes a small bit of text or an abbreviation and expands it into a template once the <code>&lt;TAB&gt;</code> key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the <code>#+begin_src emacs-lisp :tangle yes</code> blocks in this Org-mode file such as the one below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">yasnippet</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> 3
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>yas-global-mode 1<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org370fafa" class="outline-3">
+<h3 id="org370fafa"><span class="section-number-3">2.2.</span> Install Snippets</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The package <a href="https://github.com/AndreaCrotti/yasnippet-snippets">YASnippet Snippets</a> loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">yasnippet-snippets</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org06aa940" class="outline-2">
+<h2 id="org06aa940"><span class="section-number-2">3.</span> End</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-editing</span><span style="color: #1ea8fc;">)</span>
+
+<span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-editing.el ends here</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 12:43&gt;</span></span></p>
+<p class="author">Author: Thomas Freeman</p>
+<p class="date">Created: 2022-07-07 Thu 12:47</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

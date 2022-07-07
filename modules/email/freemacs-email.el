@@ -1,5 +1,3 @@
-;; Email Configuration
-
 (setq mail-user-agent 'mu4e-user-agent)
 
 (setq read-mail-command 'mu4e)

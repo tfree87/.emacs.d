@@ -39,6 +39,8 @@
 
 (let ((file-name-handler-alist nil))
 
+;; Add modules to Emacs load path
+
 (let ((default-directory "~/.emacs.d/modules/"))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -74,10 +76,6 @@
 
 (straight-use-package 'use-package)
 
-;; --------------------
-;; Startup Tools
-;; --------------------
-
 ;; Load No-littering module
 
 (require 'freemacs-no-littering)
@@ -90,6 +88,22 @@
 
 (require 'freemacs-defaults)
 
+;; Load the coding module
+
+(require 'freemacs-coding)
+
+;; Load the completion module
+
+(require 'freemacs-completion)
+
+;; Load the Docker module
+
+(require 'freemacs-docker)
+
+;; Load the editing module
+
+(require 'freemacs-editing)
+
 ;; Load Elfeed newsreader module
 
 (require 'freemacs-elfeed)
@@ -98,13 +112,9 @@
 
 (require 'freemacs-email)
 
-;; Load the coding module
+;; Load the EXWM module
 
-(require 'freemacs-coding)
-
-;; Load the completion module
-
-(require 'freemacs-completion)
+(require 'freemacs-exwm)
 
 ;; Load file tools module
 
@@ -114,55 +124,31 @@
 
 (require 'freemacs-sunrise)
 
-;; Navigation and Session Configuration
+;; Load graphing module
 
-(use-package bufler
-  :straight t
-  :bind ("C-x C-b" . bufler))
+(require 'freemacs-graphing)
 
-(use-package burly
-  :straight (burly :host github
-                   :repo "tfree87/burly.el"
-                   :branch "master")
-  :commands (burly-bookmark-frames
-             burly-bookmark-windows
-             burly-open-bookmark))
+;; Load the Ledger module
 
-(use-package winum
-  :straight t
-  :defer 3
-  :config
-  (winum-mode t))
+(require 'freemacs-ledger)
 
 ;; Load the Org Mode module
 
 (require 'freemacs-org)
 
-;; Writing/Publishing/Reading Configuation
+;; Load session module
 
-;; Load Academic Writing module
+(require 'freemacs-session)
 
-(require 'freemacs-academic-writing)
-
-;; Load Spellchecking module
-
-(require 'freemacs-spellchecking)
-
-(require 'freemacs-latex)
-
-(require 'freemacs-markdown)
-
-(require 'freemacs-pdf)
-
-;; Shells and Terminals Configuration
-
-;;; Load the Eshell module
+;; Load the Eshell module
 
 (require 'freemacs-eshell)
 
 ;; Load PowerShell module
 
 (require 'freemacs-powershell)
+
+;; Load the VTerm module
 
 (require 'freemacs-vterm)
 
@@ -174,100 +160,33 @@
 
 (require 'freemacs-alltheicons)
 
-;; Load the EXWM module
+;; Load Academic Writing module
 
-(require 'freemacs-exwm)
+(require 'freemacs-academic-writing)
 
-(use-package docker
-  :straight t
-  :init
-  (whicher "docker")
-  :bind ("C-c d" . docker))
+;; Load Spellchecking module
 
-(use-package docker-compose-mode
-  :straight t
-  :defer t
-  :init
-  (whicher "docker-compose"))
+(require 'freemacs-spellcheck)
 
-(use-package gnuplot
-  :straight t
-  :init
-  (whicher "gnuplot")
-  :defer t)
+;; Load the LaTeX module
 
-(use-package helpful
-  :straight t
-  :defer t
-  :bind
-  ("C-h f" . #'helpful-callable)
-  ("C-h v" . #'helpful-variable)
-  ("C-h k" . #'helpful-key)
-  ("C-c C-d" . #'helpful-at-point)
-  ("C-h F" . #'helpful-function)
-  ("C-h C" . #'helpful-command))
+(require 'freemacs-latex)
 
-(use-package ledger-mode
-  :straight t
-  :defer t
-  :init
-  (whicher "ledger"))
+;; Load the markdown module
 
-(use-package multiple-cursors
-  :straight t
-  :defer t
-  :bind
-  ("C-S-c C-S-c" . 'mc/edit-lines)
-  ("C->" . 'mc/mark-next-like-this)
-  ("C-<" . 'mc/mark-previous-like-this)
-  ("C-c C-<" . 'mc/mark-all-like-this))
+(require 'freemacs-markdown)
 
-(use-package plantuml-mode
-  :straight t
-  :defer t
-  :after org)
+;; Load the ox-publish module
 
-(use-package popper
-  :straight t
-  :bind (("C-`"   . popper-toggle-latest)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
-  (setq popper-reference-buffers
-          '("\\*Messages\\*"
-            "\\*Embark Actions\\*"
-            "Output\\*$"
-            "\\*Async Shell Command\\*"
-            "\\*Whicher Report\\*"
-            help-mode
-            compilation-mode))
-  (popper-mode +1)
-  (popper-echo-mode +1))
+(require 'freemacs-ox-publish)
 
-(use-package savehist
-  :straight (:type built-in)
-  :init
-  (savehist-mode))
+;; Load the pdf module
 
-(use-package which-key
-  :straight t
-  :defer 3
-  :custom
-  (which-key-show-early-on-C-h t)
-  :config
-  (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
-  (which-key-setup-side-window-right-bottom)
-  (which-key-mode))
+(require 'freemacs-pdf)
 
-(use-package yasnippet
-  :straight t
-  :defer 3
-  :config
-  (yas-global-mode 1))
+;; Load the help module
 
-(use-package yasnippet-snippets
-  :straight t
-  :defer t)
+(require 'freemacs-help)
 
 ;; Start an Emacs server
 

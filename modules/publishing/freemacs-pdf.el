@@ -4,3 +4,5 @@
   (pdf-loader-install :no-query))
 
 (provide 'freemacs-pdf)
+
+;;; freemacs-pdf.el ends here

@@ -1,0 +1,72 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Editing Configuration
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-07-07 12:43:39 thomas>
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+* Multiple Cursors
+
+[[https://github.com/magnars/multiple-cursors.el][Multiple Cursors]] allows for editing Emacs buffers at multiple locations simultaneously at the same time and has transformed how I use Emacs Dired. I can use it to edit many file names at once in a directory by making any dired buffer editable by pressing =C-x C-q=.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package multiple-cursors
+    :straight t
+    :defer t
+    :bind
+    ("C-S-c C-S-c" . 'mc/edit-lines)
+    ("C->" . 'mc/mark-next-like-this)
+    ("C-<" . 'mc/mark-previous-like-this)
+    ("C-c C-<" . 'mc/mark-all-like-this))
+#+end_src
+
+* YASnippet
+
+YASnippet is a system that povides easy access to many templates that can be inserted into buffers based on their major mode.
+
+** Install YASnippet
+
+[[https://github.com/joaotavora/yasnippet][YASnippet]] takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. This is very useful for typing sections of text that are repeated often such as creating the =#+begin_src emacs-lisp :tangle yes= blocks in this Org-mode file such as the one below.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package yasnippet
+    :straight t
+    :defer 3
+    :config
+    (yas-global-mode 1))
+#+end_src
+
+** Install Snippets
+
+The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snippets]] loads many pre-defined templates for YASnippet. This is very useful as many of the best use cases for YASnippet are already included in this package making reducing the need to create individual custom templates.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package yasnippet-snippets
+    :straight t
+    :defer t)
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-editing)
+
+  ;;; freemacs-editing.el ends here
+#+end_src

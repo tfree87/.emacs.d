@@ -17,7 +17,7 @@
 #+html_content_class: content
 #+description:
 #+keywords:
-#+html_link_home: index.html
+#+html_link_home: ../../index.html
 #+html_link_up: index.html
 #+html_mathjax:
 #+html_equation_reference_format: \eqref{%s}
@@ -26,6 +26,7 @@
 #+subtitle: For Windows
 #+infojs_opt:
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 #+latex_header:
 
 #+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline

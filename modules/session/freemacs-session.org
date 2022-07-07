@@ -1,0 +1,111 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:Session Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2022-07-07 12:43:38 thomas>
+#+language: en
+#+property: header-args :results silent :exports code
+#+options: tex:t
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+
+
+* Bufler
+
+[[https://github.com/alphapapa/bufler.el][Bufler]] provides a buffer switching menu that has some enhanced automatic groupings that make it easier to configure than [[https://www.emacswiki.org/emacs/IbufferMode][Ibuffer]] as it requires less manual work to create buffer groups. It can also sort buffers into groups based on projects using ~project.el~.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package bufler
+    :straight t
+    :bind ("C-x C-b" . bufler))
+#+end_src
+
+* Burly
+
+[[https://github.com/alphapapa/burly.el][Burly]] is a tool to save buffer, window, and frame configurations among sessions. Although Emacs has Tab Bar Mode and Desktop Mode, Burly has a couple benefits that make it worth adopting for some:
+
+1. Saving the Emacs Desktop automatically opens it on the next session which can slow down Emacs load time especially if you only wish to start a new session without opening any of the old buffers.
+2. Burly allows you save the different sessions with names so you can call up different sessions as you choose.
+3. Loading of Burly can be deferred until you call the Burly commands.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package burly
+    :straight (burly :host github
+                     :repo "tfree87/burly.el"
+                     :branch "master")
+    :commands (burly-bookmark-frames
+               burly-bookmark-windows
+               burly-open-bookmark))
+#+end_src
+
+* Recentf Mode
+
+Recentf Mode will save a list of recent files so they can be called easily after restarting Emacs. To access the files, ~M-x recentf-open-files~ can be called to get a list of the recent files in a buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package recentf
+    :straight (:type built-in)
+    :config
+    (recentf-mode 1))
+#+end_src
+
+* Savehist
+
+Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in Vertico.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package savehist
+    :straight (:type built-in)
+    :init
+    (savehist-mode))
+  #+end_src
+
+* Winner Mode
+
+[[https://www.emacswiki.org/emacs/WinnerMode][Winner Mode]] makes it easy to return to old window configurations in Emacs by simply using the keyboard command ~C-<left>~.
+
+#+begin_src emacs-lisp :noweb-ref emacs_config
+  (use-package winner
+    :straight (:type built-in)
+    :config
+    (winner-mode t))
+#+end_src
+
+* Winum
+
+Winum is a package that adds number to the modeline for each window in Emacs. Windows can then easily be switched from one to the next by using the key combination ~C-x w~ followed by the number of the correct window.
+
+This package is similar to [[https://github.com/abo-abo/ace-window][ace-window]] but it has a few advantages:
+
+1. This package has a key binding that does not conflict with ~M-o~ in Sunrise Commander.
+2. This package works well with [[https://github.com/ch11ng/exwm][EXWM]]. Ace Window numbers do not display in [[https://github.com/ch11ng/exwm][EXWM]] windows that are running X11 applications.
+3. ~C-x w~ is similar to the window creation and deletion commands ~C-x~ which may make it easier to remember the key binding.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package winum
+    :straight t
+    :defer 3
+    :config
+    (winum-mode t))
+#+end_src
+
+* End
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-session)
+
+  ;;; freemacs-session.el ends here
+#+end_src
