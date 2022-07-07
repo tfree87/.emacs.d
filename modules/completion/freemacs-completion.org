@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 12:43:34 thomas>
+#+date: Time-stamp: <2022-07-07 14:30:17 thomas>
 #+language: en
 #+property: header-args :results silent :exports code
 #+options: tex:t
@@ -22,15 +22,9 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 
-* Completion
-
 This section contains configuration to set up completion tools in Emacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Completion Configuration
-#+end_src
-
-** Cape
+* Cape
 
  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
  
@@ -86,7 +80,7 @@ Complete Emacs-lisp symbols:
   (add-to-list 'completion-at-point-functions #'cape-symbol)
 #+end_src
 
-** Consult
+* Consult
 
 [[https://github.com/minad/consult][Consult]] provides a number of highly useful commands. The complete list of commands can be found [[https://github.com/minad/consult#available-commands][here]].
 
@@ -135,7 +129,7 @@ Complete Emacs-lisp symbols:
     <<consult_config>>)
 #+end_src
 
-*** Change Register Preview to Consult
+** Change Register Preview to Consult
 
 Change the default Emacs ~register-preview-function~ to use consult effectively.
 
@@ -143,7 +137,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
   (register-preview-function #'consult-register-format)
 #+end_src
 
-*** Consult Notes
+** Consult Notes
 
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-notes
@@ -159,7 +153,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
     (consult-notes-org-roam-mode))
 #+end_src
 
-*** Consult YASnippet
+** Consult YASnippet
 
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-yasnippet
@@ -168,7 +162,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
     :commands (consult-yasnippet))
 #+end_src
 
-*** Consult Flycheck
+** Consult Flycheck
 
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-flycheck
@@ -177,7 +171,7 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
     :after (consult flycheck))
 #+end_src
 
-*** Set Root Function for Projects
+** Set Root Function for Projects
 
 Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
 
@@ -188,7 +182,7 @@ Use the built-in project function to find the root of any project. Projectile ca
             (car (project-roots project)))))
 #+end_src
 
-*** Set the Narrowing Key
+** Set the Narrowing Key
 
 The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be ~< m~ to list bookmarks after calling ~consult-buffer~.
 
@@ -196,7 +190,7 @@ The narrowing key is pressed before a key used to narrow the results returned fr
   (setq consult-narrow-key "<")
 #+end_src
 
-*** Tweak Register Preview Window
+** Tweak Register Preview Window
 
 The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
 
@@ -205,7 +199,7 @@ The following line makes the register preview window look better by adding sorti
               :override #'consult-register-window)
 #+end_src
 
-*** Use Consult to Select xref Locations
+** Use Consult to Select xref Locations
 
 Use Consult to search through and select xref locations in buffers
 
@@ -230,7 +224,7 @@ Cycle through completion candidates by pressing the completion key.
   (tab-always-indent 'complete)
 #+end_src
 
-** Corfu
+* Corfu
 
 [[https://github.com/minad/corfu][Corfu]] for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 
@@ -251,7 +245,7 @@ Cycle through completion candidates by pressing the completion key.
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 #+end_src
 
-*** Use TAB for Selecting Candidates
+** Use TAB for Selecting Candidates
 
 Instead of using M-tab which will switch windows in XFCE---my default desktop environment---use TAB to cycle between the different possible options.
 
@@ -264,7 +258,7 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop en
         ([backtab] . corfu-previous))
 #+end_src
 
-*** Corfu-doc
+** Corfu-doc
 
 Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
 
@@ -280,7 +274,7 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
     (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
 
-** Embark :minibuffer:
+* Embark
 
 [[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
 
@@ -298,7 +292,7 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
     (define-key embark-file-map (kbd "S") 'sudo-find-file))
 #+end_src
 
-*** Embark Mode Line
+** Embark Mode Line
 
 Hide the mode line of the Embark live/completions buffers.
 
@@ -309,7 +303,7 @@ Hide the mode line of the Embark live/completions buffers.
                  (window-parameters (mode-line-format . none))))
 #+end_src
 
-*** Embark Integration with Consult
+** Embark Integration with Consult
 
 Allow use of Embark commands after issuing a Consult command.
 
@@ -322,7 +316,7 @@ Allow use of Embark commands after issuing a Consult command.
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
 
-** Orderless :minibuffer:
+* Orderless
 
 [[https://github.com/oantolin/orderless][Orderless]] will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if ~M-x~ is entered the search results will be the same if searching for a function by using the search key ~find file~ or ~file find~. Both entries will return the function ~find-file~ as the top result.
 
@@ -336,7 +330,7 @@ Allow use of Embark commands after issuing a Consult command.
     (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 
-** Marginalia :minibuffer:
+* Marginalia
 
 [[https://github.com/minad/marginalia][Marginalia]] generates annotations to items in the minibuffer similar to what is accomplished  with [[https://github.com/Yevgnen/ivy-rich][ivy-rich]].
 
@@ -350,7 +344,7 @@ Allow use of Embark commands after issuing a Consult command.
     (marginalia-mode))
 #+end_src
 
-** Vertico :minibuffer:
+* Vertico
 
 [[https://github.com/minad/vertico][Vertico]] removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
 

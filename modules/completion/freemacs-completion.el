@@ -1,5 +1,3 @@
-;; Completion Configuration
-
 (use-package cape
   :straight t
   :bind (("C-c p p" . completion-at-point)
