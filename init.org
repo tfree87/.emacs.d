@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 13:46:33 thomas>
+#+date: Time-stamp: <2022-07-07 14:07:15 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en
 #+property: header-args :results silent :exports code
@@ -35,20 +35,14 @@ Tags are used in this document to help make navigation of the packages easier an
 
 - deprecated :: This package has been "deprecated" in favor of another package that better integrates with this Emacs configuration or produces a better workflow.
 - disabled :: Any package marked with this tag has been disabled due to it causing issues or the package was deprecated.
-- email :: Any package related to email reading and composing is marked with this tag.
-- go ::  Packged used for coding in the Go programming language (golang) are marked with this tag.
 - guix :: Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
     
   1. The package requires compilation on the host system (e.g. Pdf Tools and Org-roam). Using the GUIX package manager will manage the compilation automatically. Also, packages that need to be compiled are difficult to run on portable Emacs so they will be left out when Emacs is used as a portable app.
   2. The package is only run on a Linux System with GUIX installed or on the GUIX System Distribution so there is no need to have Emacs manage this package.
   3. The package relies on another program installed on the host system (e.g. Mu4e requires Mu).
 
-- LaTeX :: Any extensions or additons to \LaTeX{} support in Emacs are marked with this tag.
-- minibuffer :: This tag marks packages that change the behavior of the Emacs minibuffer.
-- org :: Packages that are related to Org Mode are labeled with this tag.
-- python :: Packages used to extend python coding are marked with this tag.
 - testing :: A package or function that is added and is being tested for use is marked with this tag.
-- Window  :: Customizations exclusively for the use on the Windows operating system are marked with this tag.
+- Windows  :: Customizations exclusively for the use on the Windows operating system are marked with this tag.
 
 * Header for ~init.el~
 
@@ -236,7 +230,7 @@ The [[https://github.com/emacscollective/no-littering][no-littering]] package wi
 
 * Defaults
 
-Emacs has many default options that can be changed to make Emacs more productive in a modern computing environment. Changes to the default settings of Emacs can be found in the [[file:modules/defaults/freemacs-defaults.el][defaults module]].
+Emacs has many default options that can be changed to make Emacs more productive in a modern computing environment. Changes to the default settings of Emacs can be found in the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
 
 #+begin_src emacs-lisp :tangle yes
   ;; Load Defaults module
