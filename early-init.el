@@ -30,6 +30,7 @@
 
 (setq-default inhibit-redisplay t
               inhibit-message t)
+
 (add-hook 'window-setup-hook
           (lambda ()
             (setq-default inhibit-redisplay nil
