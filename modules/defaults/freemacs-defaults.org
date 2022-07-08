@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:13:49 thomas>
+#+date: Time-stamp: <2022-07-07 20:54:13 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -63,6 +63,8 @@ Display Battery Mode will display the battery charge status in the modeline
 
 #+begin_src emacs-lisp :tangle yes
   (use-package battery
+    :straight (:type built-in)
+    :defer 3
     :config
     (display-battery-mode t))
 #+end_src

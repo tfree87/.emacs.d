@@ -18,6 +18,8 @@
   (fset 'yes-or-no-p 'y-or-n-p))
 
 (use-package battery
+  :straight (:type built-in)
+  :defer 3
   :config
   (display-battery-mode t))
 
