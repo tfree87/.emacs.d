@@ -2,7 +2,7 @@
 
 #+title: All the Icons Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:19:27 thomas>
+#+date: Time-stamp: <2022-07-07 20:51:57 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -31,7 +31,7 @@ This file sets up the configuration of All the Icons for Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons
     :straight t
-    :defer t)
+    :defer 3)
 #+end_src
 
 * All the Icons Dired
@@ -41,6 +41,7 @@ This file sets up the configuration of All the Icons for Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-dired
     :straight t
+    :after all-the-icons
     :hook
     (dired-mode . all-the-icons-dired-mode))
  #+end_src
@@ -52,6 +53,7 @@ This file sets up the configuration of All the Icons for Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-ibuffer
     :straight t
+    :after all-the-icons
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
 
@@ -62,9 +64,18 @@ This file sets up the configuration of All the Icons for Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-completion
     :straight t
-    :defer 3
+    :after all-the-icons
     :config
     (all-the-icons-completion-mode)
+    <<ati_completion_config>>)
+#+end_src
+
+** Marginalia Setup
+
+Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
+
+#+begin_src emacs-lisp :noweb-ref ati_completion_config
+  (when (boundp 'marginalia-mode)
     (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 

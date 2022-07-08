@@ -1,22 +1,25 @@
 (use-package all-the-icons
   :straight t
-  :defer t)
+  :defer 3)
 
 (use-package all-the-icons-dired
   :straight t
+  :after all-the-icons
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ibuffer
   :straight t
+  :after all-the-icons
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 (use-package all-the-icons-completion
   :straight t
-  :defer 3
+  :after all-the-icons
   :config
   (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+  (when (boundp 'marginalia-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)))
 
 (provide 'freemacs-alltheicons)
 
