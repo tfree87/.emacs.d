@@ -4,3 +4,5 @@
                           :branch "master"))
 
 (provide 'freemacs-no-littering)
+
+;;; freemacs-no-littering ends here

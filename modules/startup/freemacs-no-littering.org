@@ -2,7 +2,7 @@
 
 #+title:No Littering Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 18:48:27 thomas>
+#+date: Time-stamp: <2022-07-07 20:19:00 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -19,7 +19,7 @@
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-
+-----
 
 
 #+begin_src emacs-lisp :tangle yes
@@ -29,6 +29,12 @@
                             :branch "master"))
 #+end_src
 
+* End
+
+Tell Emacs what package this file provides.
+
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-no-littering)
+
+  ;;; freemacs-no-littering ends here
 #+end_src

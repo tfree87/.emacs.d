@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 18:48:29 thomas>
+#+date: Time-stamp: <2022-07-07 20:16:06 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -19,7 +19,7 @@
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-
+-----
 
 
 This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
@@ -415,6 +415,8 @@ Org Modern is a package that prettifies Org Mode buffers.
     (org-ellipsis "…")
     (org-agenda-tags-column 0)
     (org-agenda-block-separator ?─)
+    (org-modern-horizontal-rule
+     "──────────────────────────────────────────────────")
     (org-agenda-time-grid
      '((daily today require-timed)
        (800 1000 1200 1400 1600 1800 2000)

@@ -2,14 +2,14 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 18:48:34 thomas>
+#+date: Time-stamp: <2022-07-07 19:47:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
 
 #+options: html-link-use-abs-url:nil html-postamble:auto
 #+options: html-preamble:t html-scripts:nil html-style:t
-#+options: html5-fancy:nil tex:t 
+#+options: html5-fancy:nil tex:t num:nil 
 #+html_doctype: xhtml-strict
 #+html_container: div
 #+html_content_class: content
@@ -20,8 +20,9 @@
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-
 -----
+
+
 Welcome to my Emacs configuration! This file contains the code along with documentation for customizing my Emacs with all the options that I prefer to use by default.
 
 * About this Document

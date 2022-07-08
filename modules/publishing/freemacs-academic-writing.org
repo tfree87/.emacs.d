@@ -2,7 +2,7 @@
 
 #+title: Academic Phrases Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 18:48:28 thomas>
+#+date: Time-stamp: <2022-07-07 20:16:18 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -19,7 +19,7 @@
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-
+-----
 
 
 * Academic Phrases
