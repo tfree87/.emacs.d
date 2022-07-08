@@ -48,6 +48,7 @@
 
 (use-package numpydoc
   :straight t
+  :defer t
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
 
@@ -97,6 +98,7 @@
 
 (use-package treemacs-magit
   :after (treemacs magit)
+  :defer t
   :straight t)
 
 (provide 'freemacs-coding)

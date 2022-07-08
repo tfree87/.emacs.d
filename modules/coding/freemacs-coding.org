@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-08 08:44:54 thomas>
+#+date: Time-stamp: <2022-07-08 11:12:23 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -136,6 +136,7 @@ Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an inte
 #+begin_src emacs-lisp :tangle yes
   (use-package numpydoc
     :straight t
+    :defer t
     :bind (:map python-mode-map
                 ("C-c C-n" . numpydoc-generate)))
 #+end_src
@@ -205,6 +206,7 @@ The following code will always highlight matching parenthesis when coding /immed
 
   (use-package treemacs-magit
     :after (treemacs magit)
+    :defer t
     :straight t)
 #+end_src
 
