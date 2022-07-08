@@ -2,6 +2,7 @@
   :straight (:type built-in)
   :defer t
   :custom
+  (dired-kill-when-opening-new-dired-buffer t)
   (dired-dwim-target t))
 
 (use-package dired-collapse

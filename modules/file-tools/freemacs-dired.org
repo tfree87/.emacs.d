@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:15:15 thomas>
+#+date: Time-stamp: <2022-07-08 08:53:25 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -32,6 +32,14 @@ The following customizations make emacs dired mode behave in a similar fashion t
     :defer t
     :custom
     <<dired_custom>>)
+#+end_src
+
+** Close Dired Buffers When Another is Opened
+
+When navigating through a series of Dired buffers, all of the old locations that were traversed through are still open as Dired buffers. This can create a lot of open buffers to clean up later. Luckily, there is an option (introduced in Emacs 28) to automatically kill old Dired buffers when a new buffer is opened using the option ~dired-kill-when-opening-new-dired-buffer~
+
+#+begin_src emacs-lisp :noweb-ref dired_custom
+  (dired-kill-when-opening-new-dired-buffer t)
 #+end_src
 
 ** Move/Rename/Copy Files to Another Pane
@@ -140,6 +148,9 @@ The following function will execute the rclone command line tool
                dest))))
 #+end_src
 
+* End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-dired)
