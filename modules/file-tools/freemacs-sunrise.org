@@ -29,9 +29,7 @@
     :defer t
     :straight t
     :custom
-    <<sr_custom>>
-    :config
-    <<sr_config>>)
+    <<sr_custom>>)
 #+end_src
 
 ** Do Not Lock Windows
