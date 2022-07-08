@@ -2,7 +2,7 @@
 
 #+title: \LaTeX{} Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:16:28 thomas>
+#+date: Time-stamp: <2022-07-08 11:02:16 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,7 +22,7 @@
 -----
 
 
-* AUCTeX :LaTeX:
+* AUCTeX
 
 Use [[https://www.gnu.org/software/auctex/][AUCTeX]] for writing documents using \LaTeX{}.
 
