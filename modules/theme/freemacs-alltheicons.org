@@ -2,7 +2,7 @@
 
 #+title: All the Icons Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:51:57 thomas>
+#+date: Time-stamp: <2022-07-08 08:44:15 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,7 +22,7 @@
 -----
 
 
-This file sets up the configuration of All the Icons for Emacs.
+This file configures Emacs to decorate various parts with decorative icons from a few font packages known collectively as All the Icons.
 
 * All the Icons
 
@@ -32,6 +32,28 @@ This file sets up the configuration of All the Icons for Emacs.
   (use-package all-the-icons
     :straight t
     :defer 3)
+#+end_src
+
+* All the Icons Completion
+
+[[https://github.com/iyefrat/all-the-icons-completion][All the Icons Completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package all-the-icons-completion
+    :straight t
+    :after all-the-icons
+    :config
+    (all-the-icons-completion-mode)
+    <<ati_completion_config>>)
+#+end_src
+
+** Marginalia Setup
+
+Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
+
+#+begin_src emacs-lisp :noweb-ref ati_completion_config
+  (when (boundp 'marginalia-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 
 * All the Icons Dired
@@ -57,29 +79,20 @@ This file sets up the configuration of All the Icons for Emacs.
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
 
-* All the Icons Completion
+* All the Icons Treemacs
 
-[[https://github.com/iyefrat/all-the-icons-completion][All the Icons Completion]] adds icons for many Emacs minibuffer completion systems so that files and directories will have icons in the minibuffer when called with ~C-x C-f~ and other similar commands.
+Use All the Icons for Treemacs instead of the default icons included with the package.
 
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package all-the-icons-completion
+#+begin_src emacs-lisp :tangle yes
+  (use-package treemacs-all-the-icons
+    :after treemacs
     :straight t
-    :after all-the-icons
-    :config
-    (all-the-icons-completion-mode)
-    <<ati_completion_config>>)
-#+end_src
-
-** Marginalia Setup
-
-Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
-
-#+begin_src emacs-lisp :noweb-ref ati_completion_config
-  (when (boundp 'marginalia-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+    :config (treemacs-load-theme 'all-the-icons))
 #+end_src
 
 * End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-alltheicons)

@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:13:26 thomas>
+#+date: Time-stamp: <2022-07-08 08:44:54 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -108,7 +108,7 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     :defer t)
 #+end_src
 
-* Magit :git:
+* Magit
 
 [[https://magit.vc/][Magit]] provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
 
@@ -186,7 +186,6 @@ The following code will always highlight matching parenthesis when coding /immed
     (treemacs-fringe-indicator-mode 'always)
     (treemacs-hide-gitignored-files-mode nil)
     :config
-    (treemacs-load-theme "all-the-icons")
     (pcase (cons (not (null (executable-find "git")))
                  (not (null treemacs-python-executable)))
       (`(t . t)
@@ -203,10 +202,6 @@ The following code will always highlight matching parenthesis when coding /immed
           ("C-x t C-t" . treemacs-find-file)
           ("C-x t M-t" . treemacs-find-tag)))
 
-  (use-package treemacs-all-the-icons
-    :after treemacs
-    :straight t
-    :config (treemacs-load-theme 'all-the-icons))
 
   (use-package treemacs-magit
     :after (treemacs magit)
