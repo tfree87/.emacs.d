@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:20 -->
+<!-- 2022-07-08 Fri 09:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dired Configuration</title>
@@ -31,6 +31,7 @@
 <ul>
 <li><a href="#orgdc50781">Dired</a>
 <ul>
+<li><a href="#org67b1411">Close Dired Buffers When Another is Opened</a></li>
 <li><a href="#orgd811e27">Move/Rename/Copy Files to Another Pane</a></li>
 </ul>
 </li>
@@ -43,6 +44,7 @@
 </li>
 <li><a href="#orgdcc997f">Disc Usage</a></li>
 <li><a href="#org4f62749">Rclone Tools</a></li>
+<li><a href="#org73f9539">End</a></li>
 </ul>
 </div>
 </div>
@@ -61,8 +63,23 @@ The following customizations make emacs dired mode behave in a similar fashion t
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>dired-kill-when-opening-new-dired-buffer t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>dired-dwim-target t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
+</div>
+</div>
+
+<div id="outline-container-org67b1411" class="outline-3">
+<h3 id="org67b1411">Close Dired Buffers When Another is Opened</h3>
+<div class="outline-text-3" id="text-org67b1411">
+<p>
+When navigating through a series of Dired buffers, all of the old locations that were traversed through are still open as Dired buffers. This can create a lot of open buffers to clean up later. Luckily, there is an option (introduced in Emacs 28) to automatically kill old Dired buffers when a new buffer is opened using the option <code>dired-kill-when-opening-new-dired-buffer</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>dired-kill-when-opening-new-dired-buffer t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
 </div>
 </div>
 
@@ -222,7 +239,15 @@ The following function will execute the rclone command line tool
              dest<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org73f9539" class="outline-2">
+<h2 id="org73f9539">End</h2>
+<div class="outline-text-2" id="text-org73f9539">
+<p>
+Tell Emacs what package this file provides.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-dired</span><span style="color: #1ea8fc;">)</span>
@@ -234,9 +259,9 @@ The following function will execute the rclone command line tool
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:15&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 08:53&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
+<p class="date">Created: 2022-07-08 Fri 09:10</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

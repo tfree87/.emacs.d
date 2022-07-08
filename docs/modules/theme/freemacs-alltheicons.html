@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:56 -->
+<!-- 2022-07-08 Fri 09:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>All the Icons Module</title>
@@ -30,13 +30,14 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orgc663d1f">All the Icons</a></li>
-<li><a href="#orgfbd62ba">All the Icons Dired</a></li>
-<li><a href="#org878c49c">All the Icons Ibuffer</a></li>
 <li><a href="#org85a1e72">All the Icons Completion</a>
 <ul>
 <li><a href="#org979900c">Marginalia Setup</a></li>
 </ul>
 </li>
+<li><a href="#orgfbd62ba">All the Icons Dired</a></li>
+<li><a href="#org878c49c">All the Icons Ibuffer</a></li>
+<li><a href="#orgcfe18da">All the Icons Treemacs</a></li>
 <li><a href="#org7a5f18f">End</a></li>
 </ul>
 </div>
@@ -45,7 +46,7 @@
 
 
 <p>
-This file sets up the configuration of All the Icons for Emacs.
+This file configures Emacs to decorate various parts with decorative icons from a few font packages known collectively as All the Icons.
 </p>
 
 <div id="outline-container-orgc663d1f" class="outline-2">
@@ -59,41 +60,6 @@ This file sets up the configuration of All the Icons for Emacs.
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> 3<span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgfbd62ba" class="outline-2">
-<h2 id="orgfbd62ba">All the Icons Dired</h2>
-<div class="outline-text-2" id="text-orgfbd62ba">
-<p>
-<a href="https://github.com/jtbm37/all-the-icons-dired">All the Icons Dired</a> will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons-dired</span>
-  <span style="color: #1ea8fc;">:straight</span> t
-  <span style="color: #1ea8fc;">:after</span> all-the-icons
-  <span style="color: #1ea8fc;">:hook</span>
-  <span style="color: #ff2afc;">(</span>dired-mode . all-the-icons-dired-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org878c49c" class="outline-2">
-<h2 id="org878c49c">All the Icons Ibuffer</h2>
-<div class="outline-text-2" id="text-org878c49c">
-<p>
-<a href="https://github.com/seagle0128/all-the-icons-ibuffer">All the Icons Ibuffer</a> adds icons representing different buffer types to Ibuffer mode.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons-ibuffer</span>
-  <span style="color: #1ea8fc;">:straight</span> t
-  <span style="color: #1ea8fc;">:after</span> all-the-icons
-  <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>ibuffer-mode . all-the-icons-ibuffer-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -134,9 +100,65 @@ Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
 </div>
 </div>
 
+<div id="outline-container-orgfbd62ba" class="outline-2">
+<h2 id="orgfbd62ba">All the Icons Dired</h2>
+<div class="outline-text-2" id="text-orgfbd62ba">
+<p>
+<a href="https://github.com/jtbm37/all-the-icons-dired">All the Icons Dired</a> will add file-type icons to Dired while browsing files and directories. I find this very helpful to quickly have visual cues to find the correct files in the Dired buffer.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons-dired</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:after</span> all-the-icons
+  <span style="color: #1ea8fc;">:hook</span>
+  <span style="color: #ff2afc;">(</span>dired-mode . all-the-icons-dired-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org878c49c" class="outline-2">
+<h2 id="org878c49c">All the Icons Ibuffer</h2>
+<div class="outline-text-2" id="text-org878c49c">
+<p>
+<a href="https://github.com/seagle0128/all-the-icons-ibuffer">All the Icons Ibuffer</a> adds icons representing different buffer types to Ibuffer mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons-ibuffer</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:after</span> all-the-icons
+  <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>ibuffer-mode . all-the-icons-ibuffer-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcfe18da" class="outline-2">
+<h2 id="orgcfe18da">All the Icons Treemacs</h2>
+<div class="outline-text-2" id="text-orgcfe18da">
+<p>
+Use All the Icons for Treemacs instead of the default icons included with the package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs-all-the-icons</span>
+  <span style="color: #1ea8fc;">:after</span> treemacs
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:config</span> <span style="color: #ff2afc;">(</span>treemacs-load-theme 'all-the-icons<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org7a5f18f" class="outline-2">
 <h2 id="org7a5f18f">End</h2>
 <div class="outline-text-2" id="text-org7a5f18f">
+<p>
+Tell Emacs what package this file provides.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-alltheicons</span><span style="color: #1ea8fc;">)</span>
 
@@ -147,9 +169,9 @@ Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:51&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 08:44&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:56</p>
+<p class="date">Created: 2022-07-08 Fri 09:10</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

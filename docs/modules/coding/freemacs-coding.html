@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:20 -->
+<!-- 2022-07-08 Fri 09:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding Configuration</title>
@@ -36,7 +36,7 @@
 <li><a href="#orgf3e95e1">Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
 <li><a href="#org426d07b">Go</a></li>
 <li><a href="#org218e25e">Minimap</a></li>
-<li><a href="#orgd226207">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></a></li>
+<li><a href="#orgd226207">Magit</a></li>
 <li><a href="#org8a7efe8">Number Line Mode</a></li>
 <li><a href="#org7a90e88">Numpydoc</a></li>
 <li><a href="#org00fb19f">Paren Mode</a></li>
@@ -180,7 +180,7 @@ I have added <code>.ino</code> files to C mode so that I can have syntax highlig
 </div>
 
 <div id="outline-container-orgd226207" class="outline-2">
-<h2 id="orgd226207">Magit&#xa0;&#xa0;&#xa0;<span class="tag"><span class="git">git</span></span></h2>
+<h2 id="orgd226207">Magit</h2>
 <div class="outline-text-2" id="text-orgd226207">
 <p>
 <a href="https://magit.vc/">Magit</a> provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
@@ -292,7 +292,6 @@ The following code will always highlight matching parenthesis when coding <i>imm
   <span style="color: #ff2afc;">(</span>treemacs-fringe-indicator-mode 'always<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>treemacs-hide-gitignored-files-mode nil<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:config</span>
-  <span style="color: #ff2afc;">(</span>treemacs-load-theme <span style="color: #7984D1;">"all-the-icons"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">pcase</span> <span style="color: #a7da1e;">(</span>cons <span style="color: #df85ff;">(</span>not <span style="color: #A875FF;">(</span>null <span style="color: #1ea8fc;">(</span>executable-find <span style="color: #7984D1;">"git"</span><span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
                <span style="color: #df85ff;">(</span>not <span style="color: #A875FF;">(</span>null treemacs-python-executable<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
     <span style="color: #a7da1e;">(</span>`<span style="color: #df85ff;">(</span>t . t<span style="color: #df85ff;">)</span>
@@ -309,10 +308,6 @@ The following code will always highlight matching parenthesis when coding <i>imm
         <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-x t C-t"</span> . treemacs-find-file<span style="color: #a7da1e;">)</span>
         <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-x t M-t"</span> . treemacs-find-tag<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 
-<span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs-all-the-icons</span>
-  <span style="color: #1ea8fc;">:after</span> treemacs
-  <span style="color: #1ea8fc;">:straight</span> t
-  <span style="color: #1ea8fc;">:config</span> <span style="color: #ff2afc;">(</span>treemacs-load-theme 'all-the-icons<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 
 <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs-magit</span>
   <span style="color: #1ea8fc;">:after</span> <span style="color: #ff2afc;">(</span>treemacs magit<span style="color: #ff2afc;">)</span>
@@ -339,9 +334,9 @@ Tell Emacs what package this file provides.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:13&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 08:44&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
+<p class="date">Created: 2022-07-08 Fri 09:10</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
