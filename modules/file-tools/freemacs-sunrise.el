@@ -2,9 +2,7 @@
   :defer t
   :straight t
   :custom
-  (sr-windows-locked nil)
-  :config
-  )
+  (sr-windows-locked nil))
 
 (provide 'freemacs-sunrise)
 
