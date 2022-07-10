@@ -67,13 +67,14 @@
 (use-package consult-notes
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
   :after consult
+  :custom
+  (consult-notes-sources '(("GTD"  ?g  "~/Dropbox/gtd/")
+                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
   :commands (consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node
              consult-notes-org-roam-find-node-relation)
   :config
-  (setq consult-notes-data-dirs '(("GTD"  ?g  "~/Dropbox/gtd/")
-                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
   (consult-notes-org-roam-mode))
 
 (use-package consult-yasnippet
