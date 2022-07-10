@@ -1,5 +1,6 @@
 (use-package all-the-icons
   :straight t
+  :if (display-graphic-p)
   :defer 3)
 
 (use-package all-the-icons-completion

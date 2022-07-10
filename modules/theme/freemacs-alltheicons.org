@@ -2,7 +2,7 @@
 
 #+title: All the Icons Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-08 08:44:15 thomas>
+#+date: Time-stamp: <2022-07-10 10:42:48 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -31,6 +31,7 @@ This file configures Emacs to decorate various parts with decorative icons from 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons
     :straight t
+    :if (display-graphic-p)
     :defer 3)
 #+end_src
 
