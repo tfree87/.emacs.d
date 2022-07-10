@@ -1,6 +1,8 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
 #+title: PowerShell Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:17:51 thomas>
+#+date: Time-stamp: <2022-07-08 11:24:39 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
