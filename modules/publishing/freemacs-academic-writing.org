@@ -2,7 +2,7 @@
 
 #+title: Academic Phrases Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:16:18 thomas>
+#+date: Time-stamp: <2022-07-10 13:18:58 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -36,15 +36,29 @@
 
 [[https://github.com/emacs-citar/citar][Citar]] is a citation tool that integrates well with Vertico, Embark, and Marginalia.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package citar
     :straight (citar :host github
                      :repo "emacs-citar/citar"
                      :branch "main")
     :defer t
-    :after org
+    :after org oc
     :custom
-    (citar-bibliography org-cite-global-bibliography))
+    (citar-bibliography org-cite-global-bibliography)
+    <<citar_customize>>
+    :config
+    <<citar_config>>)
+#+end_src
+
+If the All the Icons package is installed, use it to add icons to Citar.
+
+#+begin_src emacs-lisp :noweb-ref citar_config
+  (with-eval-after-load "all-the-icons"
+    (setq citar-symbols
+          `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
+            (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
+            (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
+    (setq citar-symbol-separator "  "))
 #+end_src
 
 Tell Org Cite to use Citar.
@@ -55,7 +69,36 @@ Tell Org Cite to use Citar.
   (org-cite-activate-processor 'citar)
 #+end_src
 
-* Org Cite :org:
+Add Citar history to ~savehist-additional-variables~ so that Citar usage history can be saved across sessions.
+
+#+begin_src emacs-lisp :tangle yes
+  (add-to-list 'savehist-additional-variables 'citar-history)
+#+end_src
+
+Tell Citar where to find file associated with citation references.
+
+#+begin_src emacs-lisp :noweb-ref citar_customize
+  (citar-library-paths '("~/bib/files"))
+#+end_src
+
+Tell Citar how to find associated files produced by Zotero (~citar-file-parser-default~) or Mendeley and Calibre (~citar-file-parser-triplet~).
+
+#+begin_src emacs-lisp :noweb-ref citar_config
+  (setq citar-file-parser-functions
+        '(citar-file--parser-default
+          citar-file--parser-triplet))
+#+end_src
+
+** Citar Embark
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package citar-embark
+    :after citart embark
+    :no-require t
+    :config (citar-embark-mode))
+#+End_src
+
+* Org Cite
 
 Org Cite is a feature to add citation capabilities to Org Mode. The following lines will tell Org Mode to use Citar as the processor for ~org-cite~ and will tell Org Mode where to find the default bibliography file.
 
