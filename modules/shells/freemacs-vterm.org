@@ -1,6 +1,8 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
 #+title: Vterm Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:18:02 thomas>
+#+date: Time-stamp: <2022-07-08 11:50:24 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -20,13 +22,27 @@
 -----
 
 
-* Vterm :guix:
+* VTerm
 
-Vterm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than ~term~ or ~ansi-term~ in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
+VTerm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than ~term~ or ~ansi-term~ in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package vterm
+    :straight nil
     :defer t)
+#+end_src
+
+* Multi VTerm
+
+[[https://github.com/suonlight/multi-vterm][Multi VTerm]] is a package that can be used to manage multiple VTerm buffers in Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package multi-vterm
+    :straight nil
+    :defer t
+    :commands (multi-vterm
+               multi-vterm-project
+               multi-vterm-dedicated-toggle))
 #+end_src
 
 * End
