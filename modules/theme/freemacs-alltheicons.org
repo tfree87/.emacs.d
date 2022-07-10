@@ -2,7 +2,7 @@
 
 #+title: All the Icons Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-10 10:42:48 thomas>
+#+date: Time-stamp: <2022-07-10 10:46:42 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -76,7 +76,7 @@ Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package all-the-icons-ibuffer
     :straight t
-    :after all-the-icons
+    :after ibuffer all-the-icons
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 #+end_src
 
@@ -86,7 +86,7 @@ Use All the Icons for Treemacs instead of the default icons included with the pa
 
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs-all-the-icons
-    :after treemacs
+    :after treemacs all-the-icons
     :straight t
     :config (treemacs-load-theme 'all-the-icons))
 #+end_src
