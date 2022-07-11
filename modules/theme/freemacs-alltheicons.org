@@ -2,7 +2,7 @@
 
 #+title: All the Icons Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-10 10:46:42 thomas>
+#+date: Time-stamp: <2022-07-11 18:53:26 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -46,15 +46,6 @@ This file configures Emacs to decorate various parts with decorative icons from 
     :config
     (all-the-icons-completion-mode)
     <<ati_completion_config>>)
-#+end_src
-
-** Marginalia Setup
-
-Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
-
-#+begin_src emacs-lisp :noweb-ref ati_completion_config
-  (when (boundp 'marginalia-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 
 * All the Icons Dired

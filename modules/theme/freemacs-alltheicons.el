@@ -8,8 +8,7 @@
   :after all-the-icons
   :config
   (all-the-icons-completion-mode)
-  (when (boundp 'marginalia-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)))
+  )
 
 (use-package all-the-icons-dired
   :straight t

@@ -155,6 +155,8 @@
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
          ("M-A" . marginalia-cycle))
+  :hook
+  (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
   (marginalia-mode))
 
