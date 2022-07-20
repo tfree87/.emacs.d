@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:16:06 thomas>
+#+date: Time-stamp: <2022-07-19 20:57:47 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -129,7 +129,7 @@ Set up the default directories for Org Mode.
 Tell org-mode which directory is the default directory for all org-mode files.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
-  (org-directory "~/Dropbox/gtd")
+  (org-directory "~/Drive/gtd")
 #+end_src
 
 *** Location of Agenda Files
@@ -138,7 +138,7 @@ Tell org-mode in which directory all the agenda files can be found.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Dropbox/gtd"))
+  (org-agenda-files `("~/Drive/gtd"))
 #+end_src
 
 ** Filing Notes
@@ -335,13 +335,13 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 #+name: org_capture_templates
 #+begin_src emacs-lisp :noweb-ref org_customize
    (org-capture-templates
-    '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+    '(("p" "Projects item" entry (file "~/Drive/gtdprojects.org")
        "* %? :project:")
-      ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+      ("s" "Someday/Maybe item" entry (file "~/Drive/gtdsomeday.org")
        "* %?\n%x")
-      ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+      ("T" "Tickler file item" entry (file "~/Drive/gtdtickler.org")
        "* %?\n%^{Scheduled}t\n%x")
-      ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+      ("t" "To Do Item" entry (file+headline "~/Drive/gtdinbox.org" "Tasks")
        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 
@@ -371,7 +371,7 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
     :init
     (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
     :custom
-    (org-roam-directory (file-truename "~/Dropbox/org-roam"))
+    (org-roam-directory (file-truename "~/Drive/org-roam"))
     :config
     (org-roam-setup)
     :custom
@@ -429,7 +429,7 @@ Org Modern is a package that prettifies Org Mode buffers.
   (freemacs/org-header-formatting))
 #+end_src
 
-* Org Header Sizes :org:
+* Org Header Sizes
 
 The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
 
@@ -452,8 +452,12 @@ The following custom function will change the heading sizes in Org Mode to make 
         (set-face-attribute (car face) nil :height (cdr face)))))
 #+end_src
 
+* End
 
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-org)
+
+  ;;; freemacs-org.el ends here
 #+end_src

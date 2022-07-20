@@ -48,9 +48,9 @@
   ("C-c a" . #'org-agenda)
   ("C-c c" . #'org-capture)
   :custom
-  (org-directory "~/Dropbox/gtd")
+  (org-directory "~/Drive/gtd")
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Dropbox/gtd"))
+  (org-agenda-files `("~/Drive/gtd"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
@@ -84,13 +84,13 @@
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
   (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Dropbox/gtd/projects.org")
+   '(("p" "Projects item" entry (file "~/Drive/gtdprojects.org")
       "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Dropbox/gtd/someday.org")
+     ("s" "Someday/Maybe item" entry (file "~/Drive/gtdsomeday.org")
       "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Dropbox/gtd/tickler.org")
+     ("T" "Tickler file item" entry (file "~/Drive/gtdtickler.org")
       "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Dropbox/gtd/inbox.org" "Tasks")
+     ("t" "To Do Item" entry (file+headline "~/Drive/gtdinbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
@@ -137,7 +137,7 @@
   :init
   (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
-  (org-roam-directory (file-truename "~/Dropbox/org-roam"))
+  (org-roam-directory (file-truename "~/Drive/org-roam"))
   :config
   (org-roam-setup)
   :custom
@@ -204,3 +204,5 @@
 (freemacs/org-header-formatting))
 
 (provide 'freemacs-org)
+
+;;; freemacs-org.el ends here
