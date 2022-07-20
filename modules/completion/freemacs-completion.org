@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-11 19:05:01 thomas>
+#+date: Time-stamp: <2022-07-12 12:21:11 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -139,6 +139,8 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 
 ** Consult Notes
 
+With Consult Notes, users can use Consult to search through note directories specified by the ~consult-notes-sources~ list. Consult will then let you search through these notes with completion frameworks and has good integration with Org Roam.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-notes
     :straight (:type git :host github :repo "mclear-tools/consult-notes")
@@ -156,6 +158,8 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 
 ** Consult YASnippet
 
+If you have a tendency to forget about all of those YASnippet template abbrevs, then Consult YASnippet can be used to search though your YASnippet templates using a completion framework.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-yasnippet
     :straight t
@@ -164,6 +168,8 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 #+end_src
 
 ** Consult Flycheck
+
+Searching through Flycheck errors is very efficient with Consult Flycheck. It will list all of the errors from the current buffer and these can be searched using a completion framework.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-flycheck
@@ -232,6 +238,8 @@ Cycle through completion candidates by pressing the completion key.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package corfu
     :straight t
+    :init
+    (global-corfu-mode)
     :bind
     <<corfu_bind>>
     :custom
@@ -239,8 +247,6 @@ Cycle through completion candidates by pressing the completion key.
     (corfu-cycle t)
     (corfu-preselect-first nil)
     <<tab-selection>>
-    :init
-    (global-corfu-mode)
     :config
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
@@ -368,6 +374,26 @@ If All the Icons and All the Icons Completion is installed, activate All the Com
     (vertico-mode))
 #+end_src
 
+* Kind Icon
+
+Kind Icon can add icons to in-buffer completion systems. This can make it easier to visually process what type of results are being returned by the completion system.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package kind-icon
+    :straight t
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-completion)
 #+end_src
+
+

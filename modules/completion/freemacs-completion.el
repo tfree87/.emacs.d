@@ -89,6 +89,8 @@
 
 (use-package corfu
   :straight t
+  :init
+  (global-corfu-mode)
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)
@@ -104,8 +106,6 @@
         ([tab] . corfu-next)
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
-  :init
-  (global-corfu-mode)
   :config
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
@@ -168,5 +168,13 @@
   (vertico-resize t)
   :init
   (vertico-mode))
+
+(use-package kind-icon
+  :straight t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (provide 'freemacs-completion)
