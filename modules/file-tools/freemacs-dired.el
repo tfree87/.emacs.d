@@ -23,6 +23,14 @@
   :straight t
   :defer t)
 
+(use-package async
+  :straight t
+  :defer t
+  :init
+  (autoload 'dired-async-mode "dired-async.el" nil t)
+  :hook
+  (dired . dired-async-mode))
+
 (use-package rclone-tools
   :straight (rclone-tools :host github
                           :repo "tfree87/emacs-rclone-tools"

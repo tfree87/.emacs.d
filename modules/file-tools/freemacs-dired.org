@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-08 08:53:25 thomas>
+#+date: Time-stamp: <2022-07-19 21:07:18 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -110,6 +110,18 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
   (use-package disk-usage
     :straight t
     :defer t)
+#+end_src
+
+* Dired Async
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package async
+    :straight t
+    :defer t
+    :init
+    (autoload 'dired-async-mode "dired-async.el" nil t)
+    :hook
+    (dired . dired-async-mode))
 #+end_src
 
 * Rclone Tools
