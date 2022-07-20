@@ -13,14 +13,14 @@
 
 (use-package mu4e
   :defer t
+  :preface
+  (setq mail-user-agent 'mu4e-user-agent)
+  (setq read-mail-command 'mu4e)
   :custom
   (mu4e-maildir (expand-file-name "~/Mail"))
   (mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a")
   (mu4e-view-prefer-html t)
   (mu4e-view-show-images t)
-  (mail-user-agent mu4e-user-agent)
-  (read-mail-command mu4e)
-  ;; Update every 5 minutes
   (mu4e-update-interval 300)
   (mu4e-headers-auto-update t)
   (mu4e-compose-signature-auto-include t)

@@ -2,7 +2,7 @@
 
 #+title: Email Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-08 09:03:56 thomas>
+#+date: Time-stamp: <2022-07-11 19:51:09 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -49,7 +49,6 @@ Adding the hook ~turn-on-gnus-dired~ to Dired will make it easy to add attacheme
   (dired-mode . turn-on-gnus-dired-mode)
 #+end_src
 
-
 * Mu4e
 
 Mu4e is a package that used the Mu indexer to search through emails that are saved to the local system in the Maildir format.
@@ -57,9 +56,10 @@ Mu4e is a package that used the Mu indexer to search through emails that are sav
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package mu4e
     :defer t
+    :preface
+    <<mu4e_preface>>
     :custom
     <<mu4e_customize>>
-    ;; Update every 5 minutes
     (mu4e-update-interval 300)
     (mu4e-headers-auto-update t)
     (mu4e-compose-signature-auto-include t)
@@ -109,14 +109,14 @@ Add support for accepting iCalendar invites by email with Mu4e:
 
 The following will set Mu4e as the default mail user agent:
 
-#+begin_src emacs-lisp :noweb-ref mu4e_customize
-  (mail-user-agent mu4e-user-agent)
+#+begin_src emacs-lisp :noweb-ref mu4e_preface
+  (setq mail-user-agent 'mu4e-user-agent)
 #+end_src
 
 And the code below will set Mu4e as the default mail reading command:
 
-#+begin_src emacs-lisp :noweb-ref mu4e_customize
-  (read-mail-command mu4e)
+#+begin_src emacs-lisp :noweb-ref mu4e_preface
+  (setq read-mail-command 'mu4e)
 #+end_src
 
 * Org Contacts
