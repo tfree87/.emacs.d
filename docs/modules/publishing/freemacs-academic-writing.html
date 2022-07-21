@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:20 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Academic Phrases Configuration</title>
@@ -30,8 +30,12 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orga7eb406">Academic Phrases</a></li>
-<li><a href="#org4ec6195">Citar</a></li>
-<li><a href="#org9609633">Org Cite&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
+<li><a href="#org4ec6195">Citar</a>
+<ul>
+<li><a href="#org517ec52">Citar Embark</a></li>
+</ul>
+</li>
+<li><a href="#org9609633">Org Cite</a></li>
 <li><a href="#org476c8f5">End</a></li>
 </ul>
 </div>
@@ -68,9 +72,34 @@
                    <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"emacs-citar/citar"</span>
                    <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
-  <span style="color: #1ea8fc;">:after</span> org
+  <span style="color: #1ea8fc;">:after</span> org oc
   <span style="color: #1ea8fc;">:custom</span>
-  <span style="color: #ff2afc;">(</span>citar-bibliography org-cite-global-bibliography<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+  <span style="color: #ff2afc;">(</span>citar-bibliography org-cite-global-bibliography<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span>citar-library-paths '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"~/bib/files"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"all-the-icons"</span>
+    <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-symbols
+          `<span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span>file ,<span style="color: #1ea8fc;">(</span>all-the-icons-faicon <span style="color: #7984D1;">"file-o"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-green <span style="color: #1ea8fc;">:v-adjust</span> -0.1<span style="color: #1ea8fc;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #A875FF;">)</span>
+            <span style="color: #A875FF;">(</span>note ,<span style="color: #1ea8fc;">(</span>all-the-icons-material <span style="color: #7984D1;">"speaker_notes"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-blue <span style="color: #1ea8fc;">:v-adjust</span> -0.3<span style="color: #1ea8fc;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #A875FF;">)</span>
+            <span style="color: #A875FF;">(</span>link ,<span style="color: #1ea8fc;">(</span>all-the-icons-octicon <span style="color: #7984D1;">"link"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-orange <span style="color: #1ea8fc;">:v-adjust</span> 0.01<span style="color: #1ea8fc;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
+    <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-symbol-separator <span style="color: #7984D1;">"  "</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-file-parser-functions
+        '<span style="color: #a7da1e;">(</span>citar-file--parser-default
+          citar-file--parser-triplet<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+If the All the Icons package is installed, use it to add icons to Citar.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"all-the-icons"</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-symbols
+        `<span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span>file ,<span style="color: #A875FF;">(</span>all-the-icons-faicon <span style="color: #7984D1;">"file-o"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-green <span style="color: #1ea8fc;">:v-adjust</span> -0.1<span style="color: #A875FF;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #df85ff;">)</span>
+          <span style="color: #df85ff;">(</span>note ,<span style="color: #A875FF;">(</span>all-the-icons-material <span style="color: #7984D1;">"speaker_notes"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-blue <span style="color: #1ea8fc;">:v-adjust</span> -0.3<span style="color: #A875FF;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #df85ff;">)</span>
+          <span style="color: #df85ff;">(</span>link ,<span style="color: #A875FF;">(</span>all-the-icons-octicon <span style="color: #7984D1;">"link"</span> <span style="color: #1ea8fc;">:face</span> 'all-the-icons-orange <span style="color: #1ea8fc;">:v-adjust</span> 0.01<span style="color: #A875FF;">)</span> . <span style="color: #7984D1;">" "</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-symbol-separator <span style="color: #7984D1;">"  "</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 
@@ -84,11 +113,53 @@ Tell Org Cite to use Citar.
 <span style="color: #1ea8fc;">(</span>org-cite-activate-processor 'citar<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+
+<p>
+Add Citar history to <code>savehist-additional-variables</code> so that Citar usage history can be saved across sessions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'savehist-additional-variables 'citar-history<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+Tell Citar where to find file associated with citation references.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>citar-library-paths '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"~/bib/files"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+Tell Citar how to find associated files produced by Zotero (<code>citar-file-parser-default</code>) or Mendeley and Calibre (<code>citar-file-parser-triplet</code>).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> citar-file-parser-functions
+      '<span style="color: #ff2afc;">(</span>citar-file--parser-default
+        citar-file--parser-triplet<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org517ec52" class="outline-3">
+<h3 id="org517ec52">Citar Embark</h3>
+<div class="outline-text-3" id="text-org517ec52">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">citar-embark</span>
+  <span style="color: #1ea8fc;">:after</span> citart embark
+  <span style="color: #1ea8fc;">:no-require</span> t
+  <span style="color: #1ea8fc;">:config</span> <span style="color: #ff2afc;">(</span>citar-embark-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 
 <div id="outline-container-org9609633" class="outline-2">
-<h2 id="org9609633">Org Cite&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
+<h2 id="org9609633">Org Cite</h2>
 <div class="outline-text-2" id="text-org9609633">
 <p>
 Org Cite is a feature to add citation capabilities to Org Mode. The following lines will tell Org Mode to use Citar as the processor for <code>org-cite</code> and will tell Org Mode where to find the default bibliography file.
@@ -120,9 +191,9 @@ Org Cite is a feature to add citation capabilities to Org Mode. The following li
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:16&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-10 Sun 13:18&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

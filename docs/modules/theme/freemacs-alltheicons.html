@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-08 Fri 09:10 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>All the Icons Module</title>
@@ -30,11 +30,7 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orgc663d1f">All the Icons</a></li>
-<li><a href="#org85a1e72">All the Icons Completion</a>
-<ul>
-<li><a href="#org979900c">Marginalia Setup</a></li>
-</ul>
-</li>
+<li><a href="#org85a1e72">All the Icons Completion</a></li>
 <li><a href="#orgfbd62ba">All the Icons Dired</a></li>
 <li><a href="#org878c49c">All the Icons Ibuffer</a></li>
 <li><a href="#orgcfe18da">All the Icons Treemacs</a></li>
@@ -59,6 +55,7 @@ This file configures Emacs to decorate various parts with decorative icons from 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons</span>
   <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:if</span> <span style="color: #ff2afc;">(</span>display-graphic-p<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> 3<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
@@ -78,24 +75,8 @@ This file configures Emacs to decorate various parts with decorative icons from 
   <span style="color: #1ea8fc;">:after</span> all-the-icons
   <span style="color: #1ea8fc;">:config</span>
   <span style="color: #ff2afc;">(</span>all-the-icons-completion-mode<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #a7da1e;">(</span>boundp 'marginalia-mode<span style="color: #a7da1e;">)</span>
-    <span style="color: #a7da1e;">(</span>add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+  <span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-
-<div id="outline-container-org979900c" class="outline-3">
-<h3 id="org979900c">Marginalia Setup</h3>
-<div class="outline-text-3" id="text-org979900c">
-<p>
-Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>boundp 'marginalia-mode<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span>add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
 </div>
 </div>
 </div>
@@ -128,7 +109,7 @@ Setup All the Icons Completion for Marginalia mode if Marginalia Mode is active.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">all-the-icons-ibuffer</span>
   <span style="color: #1ea8fc;">:straight</span> t
-  <span style="color: #1ea8fc;">:after</span> all-the-icons
+  <span style="color: #1ea8fc;">:after</span> ibuffer all-the-icons
   <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>ibuffer-mode . all-the-icons-ibuffer-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
@@ -144,7 +125,7 @@ Use All the Icons for Treemacs instead of the default icons included with the pa
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs-all-the-icons</span>
-  <span style="color: #1ea8fc;">:after</span> treemacs
+  <span style="color: #1ea8fc;">:after</span> treemacs all-the-icons
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:config</span> <span style="color: #ff2afc;">(</span>treemacs-load-theme 'all-the-icons<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
@@ -169,9 +150,9 @@ Tell Emacs what package this file provides.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 08:44&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-11 Mon 18:53&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-08 Fri 09:10</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

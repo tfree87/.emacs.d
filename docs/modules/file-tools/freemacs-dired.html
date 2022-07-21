@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-08 Fri 09:10 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dired Configuration</title>
@@ -43,6 +43,7 @@
 </ul>
 </li>
 <li><a href="#orgdcc997f">Disc Usage</a></li>
+<li><a href="#org91cad7d">Dired Async</a></li>
 <li><a href="#org4f62749">Rclone Tools</a></li>
 <li><a href="#org73f9539">End</a></li>
 </ul>
@@ -197,6 +198,22 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 </div>
 </div>
 
+<div id="outline-container-org91cad7d" class="outline-2">
+<h2 id="org91cad7d">Dired Async</h2>
+<div class="outline-text-2" id="text-org91cad7d">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">async</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>autoload 'dired-async-mode <span style="color: #7984D1;">"dired-async.el"</span> nil t<span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:hook</span>
+  <span style="color: #ff2afc;">(</span>dired . dired-async-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org4f62749" class="outline-2">
 <h2 id="org4f62749">Rclone Tools</h2>
 <div class="outline-text-2" id="text-org4f62749">
@@ -259,9 +276,9 @@ Tell Emacs what package this file provides.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 08:53&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-19 Tue 21:07&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-08 Fri 09:10</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

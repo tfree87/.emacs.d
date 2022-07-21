@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-08 Fri 09:10 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Email Configuration</title>
@@ -87,7 +87,6 @@ Adding the hook <code>turn-on-gnus-dired</code> to Dired will make it easy to ad
 </div>
 </div>
 
-
 <div id="outline-container-orge90c123" class="outline-2">
 <h2 id="orge90c123">Mu4e</h2>
 <div class="outline-text-2" id="text-orge90c123">
@@ -98,14 +97,14 @@ Mu4e is a package that used the Mu indexer to search through emails that are sav
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">mu4e</span>
   <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:preface</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> mail-user-agent 'mu4e-user-agent<span style="color: #ff2afc;">)</span>
+  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> read-mail-command 'mu4e<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:custom</span>
   <span style="color: #ff2afc;">(</span>mu4e-maildir <span style="color: #a7da1e;">(</span>expand-file-name <span style="color: #7984D1;">"~/Mail"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-get-mail-command <span style="color: #7984D1;">"mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-view-prefer-html t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-view-show-images t<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span>mail-user-agent mu4e-user-agent<span style="color: #ff2afc;">)</span>
-  <span style="color: #ff2afc;">(</span>read-mail-command mu4e<span style="color: #ff2afc;">)</span>
-  <span style="color: #546A90;">;; </span><span style="color: #546A90;">Update every 5 minutes</span>
   <span style="color: #ff2afc;">(</span>mu4e-update-interval 300<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-headers-auto-update t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>mu4e-compose-signature-auto-include t<span style="color: #ff2afc;">)</span>
@@ -179,7 +178,7 @@ The following will set Mu4e as the default mail user agent:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>mail-user-agent mu4e-user-agent<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> mail-user-agent 'mu4e-user-agent<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 
@@ -188,7 +187,7 @@ And the code below will set Mu4e as the default mail reading command:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>read-mail-command mu4e<span style="color: #1ea8fc;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> read-mail-command 'mu4e<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -262,9 +261,9 @@ Tell Emacs what package this file provides.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 09:03&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-11 Mon 19:51&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-08 Fri 09:10</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:20 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Completion Configuration</title>
@@ -67,6 +67,8 @@
 <li><a href="#org09e475e">Orderless</a></li>
 <li><a href="#org1e1c1de">Marginalia</a></li>
 <li><a href="#org93834ae">Vertico</a></li>
+<li><a href="#org249a05f">Kind Icon</a></li>
+<li><a href="#org1b74d96">End</a></li>
 </ul>
 </div>
 </div>
@@ -237,17 +239,22 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 <div id="outline-container-org788ff41" class="outline-3">
 <h3 id="org788ff41">Consult Notes</h3>
 <div class="outline-text-3" id="text-org788ff41">
+<p>
+With Consult Notes, users can use Consult to search through note directories specified by the <code>consult-notes-sources</code> list. Consult will then let you search through these notes with completion frameworks and has good integration with Org Roam.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-notes</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> git <span style="color: #1ea8fc;">:host</span> github <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"mclear-tools/consult-notes"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:after</span> consult
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>consult-notes-sources '<span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span><span style="color: #7984D1;">"GTD"</span>  ?g  <span style="color: #7984D1;">"~/Dropbox/gtd/"</span><span style="color: #df85ff;">)</span>
+                                  <span style="color: #df85ff;">(</span><span style="color: #7984D1;">"Org Roam"</span>  ?r  <span style="color: #7984D1;">"~/Dropbox/org-roam/"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node
              consult-notes-org-roam-find-node-relation<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:config</span>
-  <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-notes-data-dirs '<span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span><span style="color: #7984D1;">"GTD"</span>  ?g  <span style="color: #7984D1;">"~/Dropbox/gtd/"</span><span style="color: #df85ff;">)</span>
-                                  <span style="color: #df85ff;">(</span><span style="color: #7984D1;">"Org Roam"</span>  ?r  <span style="color: #7984D1;">"~/Dropbox/org-roam/"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>consult-notes-org-roam-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
@@ -257,6 +264,10 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 <div id="outline-container-org9357956" class="outline-3">
 <h3 id="org9357956">Consult YASnippet</h3>
 <div class="outline-text-3" id="text-org9357956">
+<p>
+If you have a tendency to forget about all of those YASnippet template abbrevs, then Consult YASnippet can be used to search though your YASnippet templates using a completion framework.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-yasnippet</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -270,6 +281,10 @@ Change the default Emacs <code>register-preview-function</code> to use consult e
 <div id="outline-container-org9bc41d5" class="outline-3">
 <h3 id="org9bc41d5">Consult Flycheck</h3>
 <div class="outline-text-3" id="text-org9bc41d5">
+<p>
+Searching through Flycheck errors is very efficient with Consult Flycheck. It will list all of the errors from the current buffer and these can be searched using a completion framework.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-flycheck</span>
   <span style="color: #1ea8fc;">:straight</span> t
@@ -380,6 +395,8 @@ Cycle through completion candidates by pressing the completion key.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">corfu</span>
   <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:init</span>
+  <span style="color: #ff2afc;">(</span>global-corfu-mode<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:bind</span>
   <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:map</span> corfu-map
         <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"TAB"</span> . corfu-next<span style="color: #a7da1e;">)</span>
@@ -395,8 +412,6 @@ Cycle through completion candidates by pressing the completion key.
         <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>tab<span style="color: #df85ff;">]</span> . corfu-next<span style="color: #a7da1e;">)</span>
         <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"S-TAB"</span> . corfu-previous<span style="color: #a7da1e;">)</span>
         <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">[</span>backtab<span style="color: #df85ff;">]</span> . corfu-previous<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
-  <span style="color: #1ea8fc;">:init</span>
-  <span style="color: #ff2afc;">(</span>global-corfu-mode<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:config</span>
   <span style="color: #ff2afc;">(</span>advice-add 'pcomplete-completions-at-point <span style="color: #1ea8fc;">:around</span> #'cape-wrap-silent<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>advice-add 'pcomplete-completions-at-point <span style="color: #1ea8fc;">:around</span> #'cape-wrap-purify<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
@@ -541,8 +556,19 @@ Allow use of Embark commands after issuing a Consult command.
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"M-A"</span> . marginalia-cycle<span style="color: #a7da1e;">)</span>
          <span style="color: #1ea8fc;">:map</span> minibuffer-local-map
          <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"M-A"</span> . marginalia-cycle<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
+  <span style="color: #1ea8fc;">:hook</span>
+  <span style="color: #ff2afc;">(</span>marginalia-mode . all-the-icons-completion-marginalia-setup<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span>marginalia-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+
+<p>
+If All the Icons and All the Icons Completion is installed, activate All the Completion to work with Marginalia.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>marginalia-mode . all-the-icons-completion-marginalia-setup<span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -566,6 +592,35 @@ Allow use of Embark commands after issuing a Consult command.
   <span style="color: #ff2afc;">(</span>vertico-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org249a05f" class="outline-2">
+<h2 id="org249a05f">Kind Icon</h2>
+<div class="outline-text-2" id="text-org249a05f">
+<p>
+Kind Icon can add icons to in-buffer completion systems. This can make it easier to visually process what type of results are being returned by the completion system.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">kind-icon</span>
+  <span style="color: #1ea8fc;">:straight</span> t
+  <span style="color: #1ea8fc;">:after</span> corfu
+  <span style="color: #1ea8fc;">:custom</span>
+  <span style="color: #ff2afc;">(</span>kind-icon-default-face 'corfu-default<span style="color: #ff2afc;">)</span> <span style="color: #546A90;">; </span><span style="color: #546A90;">to compute blended backgrounds correctly</span>
+  <span style="color: #1ea8fc;">:config</span>
+  <span style="color: #ff2afc;">(</span>add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b74d96" class="outline-2">
+<h2 id="org1b74d96">End</h2>
+<div class="outline-text-2" id="text-org1b74d96">
+<p>
+Tell Emacs what package this file provides.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-completion</span><span style="color: #1ea8fc;">)</span>
@@ -575,9 +630,9 @@ Allow use of Embark commands after issuing a Consult command.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:13&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-12 Tue 12:21&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

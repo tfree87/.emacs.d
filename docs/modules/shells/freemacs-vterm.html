@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
 <head>
-<!-- 2022-07-07 Thu 20:20 -->
+<!-- 2022-07-20 Wed 20:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vterm Configuration</title>
@@ -29,7 +29,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org62b7e4e">Vterm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
+<li><a href="#org754f16b">VTerm</a></li>
+<li><a href="#orga299fbf">Multi VTerm</a></li>
 <li><a href="#orge398a2a">End</a></li>
 </ul>
 </div>
@@ -37,16 +38,36 @@
 <hr />
 
 
-<div id="outline-container-org62b7e4e" class="outline-2">
-<h2 id="org62b7e4e">Vterm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-org62b7e4e">
+<div id="outline-container-org754f16b" class="outline-2">
+<h2 id="org754f16b">VTerm</h2>
+<div class="outline-text-2" id="text-org754f16b">
 <p>
-Vterm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than <code>term</code> or <code>ansi-term</code> in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
+VTerm is a terminal emulator in Emacs that is written in C and compiled on the host system. This makes it faster than than <code>term</code> or <code>ansi-term</code> in Emacs. It also replicates a traditional terminal more closely than the other options in Emacs.
 </p>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">vterm</span>
+  <span style="color: #1ea8fc;">:straight</span> nil
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga299fbf" class="outline-2">
+<h2 id="orga299fbf">Multi VTerm</h2>
+<div class="outline-text-2" id="text-orga299fbf">
+<p>
+<a href="https://github.com/suonlight/multi-vterm">Multi VTerm</a> is a package that can be used to manage multiple VTerm buffers in Emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">multi-vterm</span>
+  <span style="color: #1ea8fc;">:straight</span> nil
+  <span style="color: #1ea8fc;">:defer</span> t
+  <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>multi-vterm
+             multi-vterm-project
+             multi-vterm-dedicated-toggle<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
 </div>
 </div>
@@ -65,9 +86,9 @@ Vterm is a terminal emulator in Emacs that is written in C and compiled on the h
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:18&gt;</span></span></p>
+<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 11:50&gt;</span></span></p>
 <p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
+<p class="date">Created: 2022-07-20 Wed 20:04</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
