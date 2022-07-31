@@ -1,64 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-07 Thu 20:20 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs Early Init</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="index.html"> UP </a>
- |
- <a accesskey="H" href="index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Emacs Early Init</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org8d8e4d9">Header</a></li>
-<li><a href="#org2354a07">Decrease Garbage Collection Frequency</a></li>
-<li><a href="#org7f6d391">Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></a></li>
-<li><a href="#org3fa1bad">Prevent Unwanted Runtime Compilation</a></li>
-<li><a href="#org88ec151">Disable Emacs Package Manager</a></li>
-<li><a href="#orgbb47817">Reduce Redisplay</a></li>
-<li><a href="#org0669f19">Set Environment to UTF-8</a></li>
-<li><a href="#orgd708cda">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+  <head>
+    <!-- 2022-07-21 Thu 18:55 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emacs Early Init</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="index.html"> UP </a>
+      |
+      <a accesskey="H" href="index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Emacs Early Init</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li><a href="#org8d8e4d9">Header</a></li>
+            <li>
+              <a href="#org2354a07">Decrease Garbage Collection Frequency</a>
+            </li>
+            <li>
+              <a href="#org7f6d391"
+                >Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="guix">guix</span></span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#org3fa1bad">Prevent Unwanted Runtime Compilation</a>
+            </li>
+            <li><a href="#org88ec151">Disable Emacs Package Manager</a></li>
+            <li><a href="#orgbb47817">Reduce Redisplay</a></li>
+            <li><a href="#org0669f19">Set Environment to UTF-8</a></li>
+            <li><a href="#orgd708cda">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
-<p>
-This file contains Emacs Lisp code that will run <i>before</i> the Emacs <a href="init.el">init.el</a> file.
-</p>
+      <p>
+        This file contains Emacs Lisp code that will run <i>before</i> the Emacs
+        <a href="init.el">init.el</a> file.
+      </p>
 
-<p>
-This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the <code>early-init.el</code> file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to <code>early-init.el</code>.
-</p>
+      <p>
+        This file was written using Emacs Org Mode. This makes navigating and
+        modifying my Emacs configuration much simpler as I can place different
+        elements of my configuration under separate headings. The code in this
+        file is placed in source code blocks that are tangled to the
+        <code>early-init.el</code> file that Emacs will look for upon starting.
+        When this file is saved, the source code blocks that are marked for
+        tangling will write their contents to <code>early-init.el</code>.
+      </p>
 
-<div id="outline-container-org8d8e4d9" class="outline-2">
-<h2 id="org8d8e4d9">Header</h2>
-<div class="outline-text-2" id="text-org8d8e4d9">
-<p>
-The following code block will add a header to the <code>early-init.el</code> file when it is generated on saving.
-</p>
+      <div id="outline-container-org8d8e4d9" class="outline-2">
+        <h2 id="org8d8e4d9">Header</h2>
+        <div class="outline-text-2" id="text-org8d8e4d9">
+          <p>
+            The following code block will add a header to the
+            <code>early-init.el</code> file when it is generated on saving.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span style="color: #546A90;">;;; </span><span style="color: #546A90;">early-init.el --- Emacs early init -*- lexical-binding: t -*-</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            >  <span style="color: #546A90;">;;; </span><span style="color: #546A90;">early-init.el --- Emacs early init -*- lexical-binding: t -*-</span>
 <span style="color: #546A90;">;; </span>
 
 <span style="color: #546A90;">;; </span><span style="color: #546A90;">Author: Thomas Freeman</span>
@@ -80,76 +113,113 @@ The following code block will add a header to the <code>early-init.el</code> fil
 <span style="color: #546A90;">;;; </span><span style="color: #546A90;">Code:</span>
 
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org2354a07" class="outline-2">
-<h2 id="org2354a07">Decrease Garbage Collection Frequency</h2>
-<div class="outline-text-2" id="text-org2354a07">
-<p>
-Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from <a href="https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el">https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el</a>.
-</p>
+      <div id="outline-container-org2354a07" class="outline-2">
+        <h2 id="org2354a07">Decrease Garbage Collection Frequency</h2>
+        <div class="outline-text-2" id="text-org2354a07">
+          <p>
+            Emacs collects garbage very fequently slowing down the startup
+            process. Emacs normally does a garbage collection every 800 kB.
+            Since I always have the RAM for it, I have set the garbage
+            collection to only happen after 500 MB. Increasing the number above
+            this does not provide any significant gains in startup time as of
+            yet. This idea came from
+            <a
+              href="https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el"
+              >https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el</a
+            >.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> gc-cons-threshold 500000000<span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> gc-cons-threshold 500000000<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org7f6d391" class="outline-2">
-<h2 id="org7f6d391">Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"><span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-org7f6d391">
-<p>
-The Benchmark Init package will monitor the load times for package loading as Emacs loads and create a report that can be used to check where optimizations can be made to speed up Emacs loading.
-</p>
+      <div id="outline-container-org7f6d391" class="outline-2">
+        <h2 id="org7f6d391">
+          Monitor Package Load Times&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="guix">guix</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-org7f6d391">
+          <p>
+            The Benchmark Init package will monitor the load times for package
+            loading as Emacs loads and create a report that can be used to check
+            where optimizations can be made to speed up Emacs loading.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">benchmark-init</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">benchmark-init</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>add-hook 'after-init-hook 'benchmark-init/deactivate<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org3fa1bad" class="outline-2">
-<h2 id="org3fa1bad">Prevent Unwanted Runtime Compilation</h2>
-<div class="outline-text-2" id="text-org3fa1bad">
-<p>
-Prevent extra unnecessary runtime compilation for gccemacs. This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
-</p>
+      <div id="outline-container-org3fa1bad" class="outline-2">
+        <h2 id="org3fa1bad">Prevent Unwanted Runtime Compilation</h2>
+        <div class="outline-text-2" id="text-org3fa1bad">
+          <p>
+            Prevent extra unnecessary runtime compilation for gccemacs. This
+            idea came from the
+            <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a>
+            <code>early-init.el</code> file.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> native-comp-deferred-compilation nil<span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> native-comp-deferred-compilation nil<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org88ec151" class="outline-2">
-<h2 id="org88ec151">Disable Emacs Package Manager</h2>
-<div class="outline-text-2" id="text-org88ec151">
-<p>
-In order to prevent conflicts between <code>straight.el</code> and the Emacs package manager, <code>package-enable-at-startup</code> should be set to <code>nil</code>. This came from the <a href="https://github.com/raxod502/straight.el">straight.el</a> installation instructions.
-</p>
+      <div id="outline-container-org88ec151" class="outline-2">
+        <h2 id="org88ec151">Disable Emacs Package Manager</h2>
+        <div class="outline-text-2" id="text-org88ec151">
+          <p>
+            In order to prevent conflicts between <code>straight.el</code> and
+            the Emacs package manager,
+            <code>package-enable-at-startup</code> should be set to
+            <code>nil</code>. This came from the
+            <a href="https://github.com/raxod502/straight.el">straight.el</a>
+            installation instructions.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> package-enable-at-startup nil<span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> package-enable-at-startup nil<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgbb47817" class="outline-2">
-<h2 id="orgbb47817">Reduce Redisplay</h2>
-<div class="outline-text-2" id="text-orgbb47817">
-<p>
-To reduce slowdowns caused by early redisplays when loading, the following code will reduce the amount of times Emacs redisplays when setting up windows. This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
-</p>
+      <div id="outline-container-orgbb47817" class="outline-2">
+        <h2 id="orgbb47817">Reduce Redisplay</h2>
+        <div class="outline-text-2" id="text-orgbb47817">
+          <p>
+            To reduce slowdowns caused by early redisplays when loading, the
+            following code will reduce the amount of times Emacs redisplays when
+            setting up windows. This idea came from the
+            <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a>
+            <code>early-init.el</code> file.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq-default</span> inhibit-redisplay t
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq-default</span> inhibit-redisplay t
               inhibit-message t<span style="color: #1ea8fc;">)</span>
 
 <span style="color: #1ea8fc;">(</span>add-hook 'window-setup-hook
@@ -158,40 +228,55 @@ To reduce slowdowns caused by early redisplays when loading, the following code 
                           inhibit-message nil<span style="color: #a7da1e;">)</span>
             <span style="color: #a7da1e;">(</span>redisplay<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org0669f19" class="outline-2">
-<h2 id="org0669f19">Set Environment to UTF-8</h2>
-<div class="outline-text-2" id="text-org0669f19">
-<p>
-Set the default coding system to UTF-8.This idea came from the <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a> <code>early-init.el</code> file.
-</p>
+      <div id="outline-container-org0669f19" class="outline-2">
+        <h2 id="org0669f19">Set Environment to UTF-8</h2>
+        <div class="outline-text-2" id="text-org0669f19">
+          <p>
+            Set the default coding system to UTF-8.This idea came from the
+            <a href="https://github.com/hlissner/doom-emacs">Doom Emacs</a>
+            <code>early-init.el</code> file.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>set-language-environment <span style="color: #7984D1;">"UTF-8"</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span>set-language-environment <span style="color: #7984D1;">"UTF-8"</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> default-input-method nil<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgd708cda" class="outline-2">
-<h2 id="orgd708cda">End</h2>
-<div class="outline-text-2" id="text-orgd708cda">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #546A90;">;;; </span><span style="color: #546A90;">early-init.el ends here</span>
+      <div id="outline-container-orgd708cda" class="outline-2">
+        <h2 id="orgd708cda">End</h2>
+        <div class="outline-text-2" id="text-orgd708cda">
+          <p>Tell Emacs what feature this file provides.</p>
+
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #546A90;">;;; </span><span style="color: #546A90;">early-init.el ends here</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:13&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:20</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:35&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:55</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

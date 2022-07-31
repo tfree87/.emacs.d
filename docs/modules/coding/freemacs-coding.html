@@ -1,86 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-20 Wed 20:04 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Coding Configuration</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../init.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Coding Configuration</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orga85dbf9">Aggressive Indent</a></li>
-<li><a href="#orgbcc529d">Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></a></li>
-<li><a href="#org11ef538">C</a></li>
-<li><a href="#orgc697837">Eglot</a></li>
-<li><a href="#orgf3e95e1">Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></a></li>
-<li><a href="#org426d07b">Go</a></li>
-<li><a href="#org218e25e">Minimap</a></li>
-<li><a href="#orgd226207">Magit</a></li>
-<li><a href="#org8a7efe8">Number Line Mode</a></li>
-<li><a href="#org7a90e88">Numpydoc</a></li>
-<li><a href="#org00fb19f">Paren Mode</a></li>
-<li><a href="#orga05b74e">Rainbow Delimiters</a></li>
-<li><a href="#orgec9a51b">Treemacs</a></li>
-<li><a href="#org5b9d709">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+  <head>
+    <!-- 2022-07-21 Thu 18:55 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coding Configuration</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="../../init.html"> UP </a>
+      |
+      <a accesskey="H" href="../../index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Coding Configuration</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li><a href="#orga85dbf9">Aggressive Indent</a></li>
+            <li>
+              <a href="#orgbcc529d"
+                >Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="python">python</span>&#xa0;<span class="go"
+                    >go</span
+                  ></span
+                ></a
+              >
+            </li>
+            <li><a href="#org11ef538">C</a></li>
+            <li><a href="#orgc697837">Eglot</a></li>
+            <li>
+              <a href="#orgf3e95e1"
+                >Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="python">python</span></span
+                ></a
+              >
+            </li>
+            <li><a href="#org426d07b">Go</a></li>
+            <li><a href="#org218e25e">Minimap</a></li>
+            <li><a href="#orgd226207">Magit</a></li>
+            <li><a href="#org8a7efe8">Number Line Mode</a></li>
+            <li><a href="#org7a90e88">Numpydoc</a></li>
+            <li><a href="#org00fb19f">Paren Mode</a></li>
+            <li><a href="#orga05b74e">Rainbow Delimiters</a></li>
+            <li><a href="#orgec9a51b">Treemacs</a></li>
+            <li><a href="#org5b9d709">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
+      <p>
+        The following customizations are used to improve the coding environment
+        in Emacs.
+      </p>
 
-<p>
-The following customizations are used to improve the coding environment in Emacs.
-</p>
+      <div id="outline-container-orga85dbf9" class="outline-2">
+        <h2 id="orga85dbf9">Aggressive Indent</h2>
+        <div class="outline-text-2" id="text-orga85dbf9">
+          <p>
+            <a href="https://github.com/Malabarba/aggressive-indent-mode"
+              >Aggressive Indent mode</a
+            >
+            will keep code indented by the correct amount as you type in real
+            time. This saves having to go back and reformat all the tabbing in
+            code after making changes.
+          </p>
 
-<div id="outline-container-orga85dbf9" class="outline-2">
-<h2 id="orga85dbf9">Aggressive Indent</h2>
-<div class="outline-text-2" id="text-orga85dbf9">
-<p>
-<a href="https://github.com/Malabarba/aggressive-indent-mode">Aggressive Indent mode</a> will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">aggressive-indent</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">aggressive-indent</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>c-mode . aggressive-indent-mode<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>emacs-lisp-mode . aggressive-indent-mode<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>go-mode . aggressive-indent-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgbcc529d" class="outline-2">
-<h2 id="orgbcc529d">Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span>&#xa0;<span class="go">go</span></span></h2>
-<div class="outline-text-2" id="text-orgbcc529d">
-<p>
-<a href="https://github.com/raxod502/apheleia">Apheleia</a> will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
-</p>
+      <div id="outline-container-orgbcc529d" class="outline-2">
+        <h2 id="orgbcc529d">
+          Apheleia&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="python">python</span>&#xa0;<span class="go"
+              >go</span
+            ></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgbcc529d">
+          <p>
+            <a href="https://github.com/raxod502/apheleia">Apheleia</a> will
+            format programming code using code formatters such as Black for
+            Python. The main difference between using Apheleia over formatters
+            like Black is that Apheleia will format the code asynchronously in
+            the background without disturbing your cursor position in the buffer
+            making a more streamlined experience that is more pleasant for
+            editing and saving repeatedly as I often do.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">apheleia</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">apheleia</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>apheleia <span style="color: #1ea8fc;">:host</span> github
                       <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"radian-software/apheleia"</span>
                       <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
@@ -91,193 +139,251 @@ The following customizations are used to improve the coding environment in Emacs
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setf</span> <span style="color: #a7da1e;">(</span>alist-get 'black apheleia-formatters<span style="color: #a7da1e;">)</span>
   '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"black"</span> <span style="color: #7984D1;">"--experimental-string-processing"</span> <span style="color: #7984D1;">"-"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org11ef538" class="outline-2">
-<h2 id="org11ef538">C</h2>
-<div class="outline-text-2" id="text-org11ef538">
-<p>
-I have added <code>.ino</code> files to C mode so that I can have syntax highlighting when I program my Arduino board.
-</p>
+      <div id="outline-container-org11ef538" class="outline-2">
+        <h2 id="org11ef538">C</h2>
+        <div class="outline-text-2" id="text-org11ef538">
+          <p>
+            I have added <code>.ino</code> files to C mode so that I can have
+            syntax highlighting when I program my Arduino board.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">c-mode</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">c-mode</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:mode</span> <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"\\.c\\'"</span>
          <span style="color: #7984D1;">"\\.ino\\'"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgc697837" class="outline-2">
-<h2 id="orgc697837">Eglot</h2>
-<div class="outline-text-2" id="text-orgc697837">
-<p>
-<a href="https://github.com/joaotavora/eglot">Eglot</a> is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
-</p>
+      <div id="outline-container-orgc697837" class="outline-2">
+        <h2 id="orgc697837">Eglot</h2>
+        <div class="outline-text-2" id="text-orgc697837">
+          <p>
+            <a href="https://github.com/joaotavora/eglot">Eglot</a> is a client
+            for the language server protocal (LSP) that uses a lot of the
+            built-in Emacs functions and runs quickly.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">eglot</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">eglot</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>python-mode . eglot-ensure<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgf3e95e1" class="outline-2">
-<h2 id="orgf3e95e1">Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"><span class="python">python</span></span></h2>
-<div class="outline-text-2" id="text-orgf3e95e1">
-<p>
-<a href="https://www.flycheck.org/en/latest/">Flycheck</a> can check programming syntax while typing.
-</p>
+      <div id="outline-container-orgf3e95e1" class="outline-2">
+        <h2 id="orgf3e95e1">
+          Flycheck&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="python">python</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgf3e95e1">
+          <p>
+            <a href="https://www.flycheck.org/en/latest/">Flycheck</a> can check
+            programming syntax while typing.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">flycheck</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">flycheck</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>prog-mode . flycheck-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org426d07b" class="outline-2">
-<h2 id="org426d07b">Go</h2>
-<div class="outline-text-2" id="text-org426d07b">
-<p>
-<a href="https://github.com/dominikh/go-mode.el">Go mode</a> provides a major model for editing Go code.
-</p>
+      <div id="outline-container-org426d07b" class="outline-2">
+        <h2 id="org426d07b">Go</h2>
+        <div class="outline-text-2" id="text-org426d07b">
+          <p>
+            <a href="https://github.com/dominikh/go-mode.el">Go mode</a>
+            provides a major model for editing Go code.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">go-mode</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">go-mode</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org218e25e" class="outline-2">
-<h2 id="org218e25e">Minimap</h2>
-<div class="outline-text-2" id="text-org218e25e">
-<p>
-<a href="https://github.com/dengste/minimap">Minimap</a> shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
-</p>
+      <div id="outline-container-org218e25e" class="outline-2">
+        <h2 id="org218e25e">Minimap</h2>
+        <div class="outline-text-2" id="text-org218e25e">
+          <p>
+            <a href="https://github.com/dengste/minimap">Minimap</a> shows a
+            smaller window next to the main window where an overview of the
+            whole buffer is presented and displays where the active region
+            relates to the overall structure.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">minimap</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">minimap</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgd226207" class="outline-2">
-<h2 id="orgd226207">Magit</h2>
-<div class="outline-text-2" id="text-orgd226207">
-<p>
-<a href="https://magit.vc/">Magit</a> provides an interface to Git through Emacs. It is very helpful to be able to command Git with Magit as it requires much less context switching since I do not need to save code and then switch to a terminal to run Git commands.
-</p>
+      <div id="outline-container-orgd226207" class="outline-2">
+        <h2 id="orgd226207">Magit</h2>
+        <div class="outline-text-2" id="text-orgd226207">
+          <p>
+            <a href="https://magit.vc/">Magit</a> provides an interface to Git
+            through Emacs. It is very helpful to be able to command Git with
+            Magit as it requires much less context switching since I do not need
+            to save code and then switch to a terminal to run Git commands.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">magit</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">magit</span>
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"git"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"C-x g"</span> . magit-status<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org8a7efe8" class="outline-2">
-<h2 id="org8a7efe8">Number Line Mode</h2>
-<div class="outline-text-2" id="text-org8a7efe8">
-<p>
-Number lines can be very useful in programming modes. This code below will turn on the built-in <code>display-line-numbers-mode</code> in any major mode that inherits from <code>prog-mode</code>. With wide monitors these days it is less of an issue and it can always toggled off with  <code>display-line-numbers-mode</code> on the fly.
-</p>
+      <div id="outline-container-org8a7efe8" class="outline-2">
+        <h2 id="org8a7efe8">Number Line Mode</h2>
+        <div class="outline-text-2" id="text-org8a7efe8">
+          <p>
+            Number lines can be very useful in programming modes. This code
+            below will turn on the built-in
+            <code>display-line-numbers-mode</code> in any major mode that
+            inherits from <code>prog-mode</code>. With wide monitors these days
+            it is less of an issue and it can always toggled off with
+            <code>display-line-numbers-mode</code> on the fly.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>version&lt;= <span style="color: #7984D1;">"26.0.50"</span> emacs-version<span style="color: #ff2afc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> <span style="color: #ff2afc;">(</span>version&lt;= <span style="color: #7984D1;">"26.0.50"</span> emacs-version<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>add-hook 'prog-mode-hook 'display-line-numbers-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org7a90e88" class="outline-2">
-<h2 id="org7a90e88">Numpydoc</h2>
-<div class="outline-text-2" id="text-org7a90e88">
-<p>
-Using <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a> provides an interactive tool to automatically generate Numpy style docstrings.
-</p>
+      <div id="outline-container-org7a90e88" class="outline-2">
+        <h2 id="org7a90e88">Numpydoc</h2>
+        <div class="outline-text-2" id="text-org7a90e88">
+          <p>
+            Using
+            <a href="https://github.com/douglasdavis/numpydoc.el">Numpydoc</a>
+            provides an interactive tool to automatically generate Numpy style
+            docstrings.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">numpydoc</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">numpydoc</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:map</span> python-mode-map
               <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c C-n"</span> . numpydoc-generate<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org00fb19f" class="outline-2">
-<h2 id="org00fb19f">Paren Mode</h2>
-<div class="outline-text-2" id="text-org00fb19f">
-<p>
-Paren Mode will highlight matching parentheses in programming mode buffers making it easy to determine if delimiters have been matched and what nested-level code is being written in.
-</p>
+      <div id="outline-container-org00fb19f" class="outline-2">
+        <h2 id="org00fb19f">Paren Mode</h2>
+        <div class="outline-text-2" id="text-org00fb19f">
+          <p>
+            Paren Mode will highlight matching parentheses in programming mode
+            buffers making it easy to determine if delimiters have been matched
+            and what nested-level code is being written in.
+          </p>
 
-<p>
-The following code will always highlight matching parenthesis when coding <i>immediately</i> without delay. A hook was added to defer loading the package until a programming mode:
-</p>
+          <p>
+            The following code will always highlight matching parenthesis when
+            coding <i>immediately</i> without delay. A hook was added to defer
+            loading the package until a programming mode:
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">paren</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">paren</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:custom</span>
   <span style="color: #ff2afc;">(</span>show-paren-delay 0<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>prog-mode . show-paren-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orga05b74e" class="outline-2">
-<h2 id="orga05b74e">Rainbow Delimiters</h2>
-<div class="outline-text-2" id="text-orga05b74e">
-<p>
-<a href="https://github.com/Fanael/rainbow-delimiters">Rainbow delimiters</a> colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired up. This can be a quick and easy way to check to see if all open delimiters are closed off without having to rely entirely on <code>paren-mode</code> and <code>backward-sexp</code>.
-</p>
+      <div id="outline-container-orga05b74e" class="outline-2">
+        <h2 id="orga05b74e">Rainbow Delimiters</h2>
+        <div class="outline-text-2" id="text-orga05b74e">
+          <p>
+            <a href="https://github.com/Fanael/rainbow-delimiters"
+              >Rainbow delimiters</a
+            >
+            colors delimiters such as brackets and parentheses in source code
+            making it easier to identify which delimiters are paired up. This
+            can be a quick and easy way to check to see if all open delimiters
+            are closed off without having to rely entirely on
+            <code>paren-mode</code> and <code>backward-sexp</code>.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">rainbow-delimiters</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">rainbow-delimiters</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:hook</span> <span style="color: #ff2afc;">(</span>prog-mode . rainbow-delimiters-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgec9a51b" class="outline-2">
-<h2 id="orgec9a51b">Treemacs</h2>
-<div class="outline-text-2" id="text-orgec9a51b">
-<p>
-<a href="https://github.com/Alexander-Miller/treemacs">Treemacs</a> provides a separate Emacs window to browse file directory trees for projects.
-</p>
+      <div id="outline-container-orgec9a51b" class="outline-2">
+        <h2 id="orgec9a51b">Treemacs</h2>
+        <div class="outline-text-2" id="text-orgec9a51b">
+          <p>
+            <a href="https://github.com/Alexander-Miller/treemacs">Treemacs</a>
+            provides a separate Emacs window to browse file directory trees for
+            projects.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">treemacs</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:init</span>
@@ -315,31 +421,38 @@ The following code will always highlight matching parenthesis when coding <i>imm
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:straight</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org5b9d709" class="outline-2">
-<h2 id="org5b9d709">End</h2>
-<div class="outline-text-2" id="text-org5b9d709">
-<p>
-Tell Emacs what package this file provides.
-</p>
+      <div id="outline-container-org5b9d709" class="outline-2">
+        <h2 id="org5b9d709">End</h2>
+        <div class="outline-text-2" id="text-org5b9d709">
+          <p>Tell Emacs what feature this file provides.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-coding</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-coding</span><span style="color: #1ea8fc;">)</span>
 
 <span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-coding.el ends here</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-08 Fri 11:12&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-20 Wed 20:04</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:55&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:55</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

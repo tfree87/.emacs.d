@@ -1,60 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-07 Thu 20:21 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elfeed Configuration</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../init.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Elfeed Configuration</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org1d87117">Elfeed</a></li>
-<li><a href="#orgb81f81f">Elfeed Tube</a>
-<ul>
-<li><a href="#orgc524fb4">mpv</a></li>
-</ul>
-</li>
-<li><a href="#org066d2df">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+  <head>
+    <!-- 2022-07-21 Thu 18:26 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Elfeed Configuration</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <style>
+      #org-div-home-and-up {
+        text-align: right;
+        padding-right: 10pt;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="../../init.html"> UP </a>
+      |
+      <a accesskey="H" href="../../index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Elfeed Configuration</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li><a href="#org1d87117">Elfeed</a></li>
+            <li>
+              <a href="#orgb81f81f">Elfeed Tube</a>
+              <ul>
+                <li><a href="#orgc524fb4">mpv</a></li>
+              </ul>
+            </li>
+            <li><a href="#org066d2df">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
+      <p>
+        Elfeed is a powerful and fast RSS and newsreader for Emacs. This file
+        contains the configuration for Elfeed.
+      </p>
 
-<p>
-Elfeed is a powerful and fast RSS and newsreader for Emacs. This file contains the configuration for Elfeed.
-</p>
+      <div id="outline-container-org1d87117" class="outline-2">
+        <h2 id="org1d87117">Elfeed</h2>
+        <div class="outline-text-2" id="text-org1d87117">
+          <p>
+            <a href="https://github.com/skeeto/elfeed">Elfeyed</a> is a feed
+            reader for Emacs that has powerful search capabilities and is very
+            fast.
+          </p>
 
-<div id="outline-container-org1d87117" class="outline-2">
-<h2 id="org1d87117">Elfeed</h2>
-<div class="outline-text-2" id="text-org1d87117">
-<p>
-<a href="https://github.com/skeeto/elfeed">Elfeyed</a> is a feed reader for Emacs that has powerful search capabilities and is very fast.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">elfeed</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">elfeed</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:commands</span> elfeed
@@ -62,29 +86,35 @@ Elfeed is a powerful and fast RSS and newsreader for Emacs. This file contains t
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> elfeed-feeds
         '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"https://www.sciencedaily.com/rss/all.xml"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+          </div>
 
-<p>
-All of the feeds in the Elfeed reader are set as a list passed to the <code>elfeed-feeds</code> variable.
-</p>
+          <p>
+            All of the feeds in the Elfeed reader are set as a list passed to
+            the <code>elfeed-feeds</code> variable.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> elfeed-feeds
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> elfeed-feeds
       '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"https://www.sciencedaily.com/rss/all.xml"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgb81f81f" class="outline-2">
-<h2 id="orgb81f81f">Elfeed Tube</h2>
-<div class="outline-text-2" id="text-orgb81f81f">
-<p>
-<a href="https://github.com/karthink/elfeed-tube">Elfeed Tube</a> is an extension to Elfeed that adds YouTube channels to the 
-</p>
+      <div id="outline-container-orgb81f81f" class="outline-2">
+        <h2 id="orgb81f81f">Elfeed Tube</h2>
+        <div class="outline-text-2" id="text-orgb81f81f">
+          <p>
+            <a href="https://github.com/karthink/elfeed-tube">Elfeed Tube</a> is
+            an extension to Elfeed that adds YouTube channels to the
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">elfeed-tube</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">elfeed-tube</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>elfeed-tube <span style="color: #1ea8fc;">:host</span> github
                          <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"karthink/elfeed-tube"</span>
                          <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
@@ -96,55 +126,68 @@ All of the feeds in the Elfeed reader are set as a list passed to the <code>elfe
   <span style="color: #ff2afc;">(</span>elfeed-tube-add-feeds '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"https://www.youtube.com/c/inanutshell/"</span>
                            <span style="color: #7984D1;">"https://www.youtube.com/c/veritasium/"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+          </div>
 
-<p>
-Add subsriptions to Elfeed Tube using the <code>elfeed-tube-add-feeds</code> variable.
-</p>
+          <p>
+            Add subsriptions to Elfeed Tube using the
+            <code>elfeed-tube-add-feeds</code> variable.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>elfeed-tube-add-feeds '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"https://www.youtube.com/c/inanutshell/"</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span>elfeed-tube-add-feeds '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"https://www.youtube.com/c/inanutshell/"</span>
                          <span style="color: #7984D1;">"https://www.youtube.com/c/veritasium/"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-orgc524fb4" class="outline-3">
-<h3 id="orgc524fb4">mpv</h3>
-<div class="outline-text-3" id="text-orgc524fb4">
-<p>
-Elfeed Tube require mpv for watching videos in Emacs along with the Emacs mpv package.
-</p>
+        <div id="outline-container-orgc524fb4" class="outline-3">
+          <h3 id="orgc524fb4">mpv</h3>
+          <div class="outline-text-3" id="text-orgc524fb4">
+            <p>
+              Elfeed Tube require mpv for watching videos in Emacs along with
+              the Emacs mpv package.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">mpv</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">mpv</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org066d2df" class="outline-2">
-<h2 id="org066d2df">End</h2>
-<div class="outline-text-2" id="text-org066d2df">
-<p>
-Tell Emacs what package this file provides.
-</p>
+      <div id="outline-container-org066d2df" class="outline-2">
+        <h2 id="org066d2df">End</h2>
+        <div class="outline-text-2" id="text-org066d2df">
+          <p>Tell Emacs what feature this file provides.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-elfeed</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-elfeed</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-07 Thu 20:14&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-07 Thu 20:21</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:25&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:26</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

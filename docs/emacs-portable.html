@@ -1,355 +1,766 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2022-05-15 Sun 22:10 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Running Emacs as a Portable Application</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
+  <head>
+    <!-- 2022-05-15 Sun 22:10 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Running Emacs as a Portable Application</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="generator" content="Org Mode" />
+    <style>
+      #content {
+        max-width: 60em;
+        margin: auto;
+      }
+      .title {
+        text-align: center;
+        margin-bottom: 0.2em;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: medium;
+        font-weight: bold;
+        margin-top: 0;
+      }
+      .todo {
+        font-family: monospace;
+        color: red;
+      }
+      .done {
+        font-family: monospace;
+        color: green;
+      }
+      .priority {
+        font-family: monospace;
+        color: orange;
+      }
+      .tag {
+        background-color: #eee;
+        font-family: monospace;
+        padding: 2px;
+        font-size: 80%;
+        font-weight: normal;
+      }
+      .timestamp {
+        color: #bebebe;
+      }
+      .timestamp-kwd {
+        color: #5f9ea0;
+      }
+      .org-right {
+        margin-left: auto;
+        margin-right: 0px;
+        text-align: right;
+      }
+      .org-left {
+        margin-left: 0px;
+        margin-right: auto;
+        text-align: left;
+      }
+      .org-center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .underline {
+        text-decoration: underline;
+      }
+      #postamble p,
+      #preamble p {
+        font-size: 90%;
+        margin: 0.2em;
+      }
+      p.verse {
+        margin-left: 3%;
+      }
+      pre {
+        border: 1px solid #e6e6e6;
+        border-radius: 3px;
+        background-color: #f2f2f2;
+        padding: 8pt;
+        font-family: monospace;
+        overflow: auto;
+        margin: 1.2em;
+      }
+      pre.src {
+        position: relative;
+        overflow: auto;
+      }
+      pre.src:before {
+        display: none;
+        position: absolute;
+        top: -8px;
+        right: 12px;
+        padding: 3px;
+        color: #555;
+        background-color: #f2f2f299;
+      }
+      pre.src:hover:before {
+        display: inline;
+        margin-top: 14px;
+      }
+      /* Languages per Org manual */
+      pre.src-asymptote:before {
+        content: "Asymptote";
+      }
+      pre.src-awk:before {
+        content: "Awk";
+      }
+      pre.src-authinfo::before {
+        content: "Authinfo";
+      }
+      pre.src-C:before {
+        content: "C";
+      }
+      /* pre.src-C++ doesn't work in CSS */
+      pre.src-clojure:before {
+        content: "Clojure";
+      }
+      pre.src-css:before {
+        content: "CSS";
+      }
+      pre.src-D:before {
+        content: "D";
+      }
+      pre.src-ditaa:before {
+        content: "ditaa";
+      }
+      pre.src-dot:before {
+        content: "Graphviz";
+      }
+      pre.src-calc:before {
+        content: "Emacs Calc";
+      }
+      pre.src-emacs-lisp:before {
+        content: "Emacs Lisp";
+      }
+      pre.src-fortran:before {
+        content: "Fortran";
+      }
+      pre.src-gnuplot:before {
+        content: "gnuplot";
+      }
+      pre.src-haskell:before {
+        content: "Haskell";
+      }
+      pre.src-hledger:before {
+        content: "hledger";
+      }
+      pre.src-java:before {
+        content: "Java";
+      }
+      pre.src-js:before {
+        content: "Javascript";
+      }
+      pre.src-latex:before {
+        content: "LaTeX";
+      }
+      pre.src-ledger:before {
+        content: "Ledger";
+      }
+      pre.src-lisp:before {
+        content: "Lisp";
+      }
+      pre.src-lilypond:before {
+        content: "Lilypond";
+      }
+      pre.src-lua:before {
+        content: "Lua";
+      }
+      pre.src-matlab:before {
+        content: "MATLAB";
+      }
+      pre.src-mscgen:before {
+        content: "Mscgen";
+      }
+      pre.src-ocaml:before {
+        content: "Objective Caml";
+      }
+      pre.src-octave:before {
+        content: "Octave";
+      }
+      pre.src-org:before {
+        content: "Org mode";
+      }
+      pre.src-oz:before {
+        content: "OZ";
+      }
+      pre.src-plantuml:before {
+        content: "Plantuml";
+      }
+      pre.src-processing:before {
+        content: "Processing.js";
+      }
+      pre.src-python:before {
+        content: "Python";
+      }
+      pre.src-R:before {
+        content: "R";
+      }
+      pre.src-ruby:before {
+        content: "Ruby";
+      }
+      pre.src-sass:before {
+        content: "Sass";
+      }
+      pre.src-scheme:before {
+        content: "Scheme";
+      }
+      pre.src-screen:before {
+        content: "Gnu Screen";
+      }
+      pre.src-sed:before {
+        content: "Sed";
+      }
+      pre.src-sh:before {
+        content: "shell";
+      }
+      pre.src-sql:before {
+        content: "SQL";
+      }
+      pre.src-sqlite:before {
+        content: "SQLite";
+      }
+      /* additional languages in org.el's org-babel-load-languages alist */
+      pre.src-forth:before {
+        content: "Forth";
+      }
+      pre.src-io:before {
+        content: "IO";
+      }
+      pre.src-J:before {
+        content: "J";
+      }
+      pre.src-makefile:before {
+        content: "Makefile";
+      }
+      pre.src-maxima:before {
+        content: "Maxima";
+      }
+      pre.src-perl:before {
+        content: "Perl";
+      }
+      pre.src-picolisp:before {
+        content: "Pico Lisp";
+      }
+      pre.src-scala:before {
+        content: "Scala";
+      }
+      pre.src-shell:before {
+        content: "Shell Script";
+      }
+      pre.src-ebnf2ps:before {
+        content: "ebfn2ps";
+      }
+      /* additional language identifiers per "defun org-babel-execute"
        in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
+      pre.src-cpp:before {
+        content: "C++";
+      }
+      pre.src-abc:before {
+        content: "ABC";
+      }
+      pre.src-coq:before {
+        content: "Coq";
+      }
+      pre.src-groovy:before {
+        content: "Groovy";
+      }
+      /* additional language identifiers from org-babel-shell-names in
      ob-shell.el: ob-shell is the only babel language using a lambda to put
      the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
+      pre.src-bash:before {
+        content: "bash";
+      }
+      pre.src-csh:before {
+        content: "csh";
+      }
+      pre.src-ash:before {
+        content: "ash";
+      }
+      pre.src-dash:before {
+        content: "dash";
+      }
+      pre.src-ksh:before {
+        content: "ksh";
+      }
+      pre.src-mksh:before {
+        content: "mksh";
+      }
+      pre.src-posh:before {
+        content: "posh";
+      }
+      /* Additional Emacs modes also supported by the LaTeX listings package */
+      pre.src-ada:before {
+        content: "Ada";
+      }
+      pre.src-asm:before {
+        content: "Assembler";
+      }
+      pre.src-caml:before {
+        content: "Caml";
+      }
+      pre.src-delphi:before {
+        content: "Delphi";
+      }
+      pre.src-html:before {
+        content: "HTML";
+      }
+      pre.src-idl:before {
+        content: "IDL";
+      }
+      pre.src-mercury:before {
+        content: "Mercury";
+      }
+      pre.src-metapost:before {
+        content: "MetaPost";
+      }
+      pre.src-modula-2:before {
+        content: "Modula-2";
+      }
+      pre.src-pascal:before {
+        content: "Pascal";
+      }
+      pre.src-ps:before {
+        content: "PostScript";
+      }
+      pre.src-prolog:before {
+        content: "Prolog";
+      }
+      pre.src-simula:before {
+        content: "Simula";
+      }
+      pre.src-tcl:before {
+        content: "tcl";
+      }
+      pre.src-tex:before {
+        content: "TeX";
+      }
+      pre.src-plain-tex:before {
+        content: "Plain TeX";
+      }
+      pre.src-verilog:before {
+        content: "Verilog";
+      }
+      pre.src-vhdl:before {
+        content: "VHDL";
+      }
+      pre.src-xml:before {
+        content: "XML";
+      }
+      pre.src-nxml:before {
+        content: "XML";
+      }
+      /* add a generic configuration mode; LaTeX export needs an additional
      (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+      pre.src-conf:before {
+        content: "Configuration File";
+      }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { }
-</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="index.html"> UP </a>
- |
- <a accesskey="H" href="index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Running Emacs as a Portable Application
-<br />
-<span class="subtitle">For Windows</span>
-</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgc0409c8">1. About</a></li>
-<li><a href="#org9d01dc7">2. Why Run Emacs as a Portable App?</a></li>
-<li><a href="#org6fcfd81">3. Process</a></li>
-<li><a href="#org9a28ad6">4. Access Org Agenda Files from the Cloud</a>
-<ul>
-<li><a href="#org3ba4add">4.1. Syncing Org Files Automatically</a></li>
-</ul>
-</li>
-<li><a href="#org0a5cfa2">5. Extending Portable Emacs</a></li>
-<li><a href="#org1e8d2b7">6. About This Page</a></li>
-</ul>
-</div>
-</div>
+      table {
+        border-collapse: collapse;
+      }
+      caption.t-above {
+        caption-side: top;
+      }
+      caption.t-bottom {
+        caption-side: bottom;
+      }
+      td,
+      th {
+        vertical-align: top;
+      }
+      th.org-right {
+        text-align: center;
+      }
+      th.org-left {
+        text-align: center;
+      }
+      th.org-center {
+        text-align: center;
+      }
+      td.org-right {
+        text-align: right;
+      }
+      td.org-left {
+        text-align: left;
+      }
+      td.org-center {
+        text-align: center;
+      }
+      dt {
+        font-weight: bold;
+      }
+      .footpara {
+        display: inline;
+      }
+      .footdef {
+        margin-bottom: 1em;
+      }
+      .figure {
+        padding: 1em;
+      }
+      .figure p {
+        text-align: center;
+      }
+      .equation-container {
+        display: table;
+        text-align: center;
+        width: 100%;
+      }
+      .equation {
+        vertical-align: middle;
+      }
+      .equation-label {
+        display: table-cell;
+        text-align: right;
+        vertical-align: middle;
+      }
+      .inlinetask {
+        padding: 10px;
+        border: 2px solid gray;
+        margin: 10px;
+        background: #ffffcc;
+      }
+      #org-div-home-and-up {
+        text-align: right;
+        font-size: 70%;
+        white-space: nowrap;
+      }
+      textarea {
+        overflow-x: auto;
+      }
+      .linenr {
+        font-size: smaller;
+      }
+      .code-highlighted {
+        background-color: #ffff00;
+      }
+      .org-info-js_info-navigation {
+        border-style: none;
+      }
+      #org-info-js_console-label {
+        font-size: 10px;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+      .org-info-js_search-highlight {
+        background-color: #ffff00;
+        color: #000000;
+        font-weight: bold;
+      }
+      .org-svg {
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://tfree87.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://tfree87.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://tfree87.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://tfree87.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="index.html"> UP </a>
+      |
+      <a accesskey="H" href="index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">
+        Running Emacs as a Portable Application
+        <br />
+        <span class="subtitle">For Windows</span>
+      </h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li><a href="#orgc0409c8">1. About</a></li>
+            <li>
+              <a href="#org9d01dc7">2. Why Run Emacs as a Portable App?</a>
+            </li>
+            <li><a href="#org6fcfd81">3. Process</a></li>
+            <li>
+              <a href="#org9a28ad6"
+                >4. Access Org Agenda Files from the Cloud</a
+              >
+              <ul>
+                <li>
+                  <a href="#org3ba4add">4.1. Syncing Org Files Automatically</a>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#org0a5cfa2">5. Extending Portable Emacs</a></li>
+            <li><a href="#org1e8d2b7">6. About This Page</a></li>
+          </ul>
+        </div>
+      </div>
 
+      <div id="outline-container-orgc0409c8" class="outline-2">
+        <h2 id="orgc0409c8"><span class="section-number-2">1.</span> About</h2>
+        <div class="outline-text-2" id="text-1">
+          <p>
+            I have created this page to document what I have learned in trying
+            to create an Emacs system that can run as a portable application
+            from a USB drive on a Windows system. My initial inspiration came
+            from
+            <a
+              href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f"
+              >this article</a
+            >.
+          </p>
+        </div>
+      </div>
 
-<div id="outline-container-orgc0409c8" class="outline-2">
-<h2 id="orgc0409c8"><span class="section-number-2">1.</span> About</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-I have created this page to document what I have learned in trying to create an Emacs system that can run as a portable application from a USB drive on a Windows system. My initial inspiration came from <a href="https://francopasut.medium.com/make-emacs-totally-portable-under-windows-c8c04156455f">this article</a>.
-</p>
-</div>
-</div>
+      <div id="outline-container-org9d01dc7" class="outline-2">
+        <h2 id="org9d01dc7">
+          <span class="section-number-2">2.</span> Why Run Emacs as a Portable
+          App?
+        </h2>
+        <div class="outline-text-2" id="text-2">
+          <p>
+            Here are some reasons why I run Emacs as a portable application:
+          </p>
+          <ul class="org-ul">
+            <li>
+              Access your Org Mode agenda on the go from any Windows computer
+            </li>
+            <li>
+              Always have access to a double-pane file manager such as Dired or
+              Sunshine commander even on Windows
+            </li>
+            <li>
+              The ability to use the Emacs key bindings that have become muscle
+              memory after much use
+            </li>
+            <li>
+              Emacs Eshell will work even on a Windows system as many Linux
+              shell commands are rewritten in Emacs Lisp
+            </li>
+            <li>
+              Create LaTeX documents in Windows without having to use another
+              editor
+            </li>
+            <li>
+              Check your email using Gnus or some other Emacs mail reader and
+              take your configuration with you
+            </li>
+            <li>
+              Have acess to all the power of Emacs and you custom configuration
+              anywhere you go
+            </li>
+          </ul>
+        </div>
+      </div>
 
-<div id="outline-container-org9d01dc7" class="outline-2">
-<h2 id="org9d01dc7"><span class="section-number-2">2.</span> Why Run Emacs as a Portable App?</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Here are some reasons why I run Emacs as a portable application:
-</p>
-<ul class="org-ul">
-<li>Access your Org Mode agenda on the go from any Windows computer</li>
-<li>Always have access to a double-pane file manager such as Dired or Sunshine commander even on Windows</li>
-<li>The ability to use the Emacs key bindings that have become muscle memory after much use</li>
-<li>Emacs Eshell will work even on a Windows system as many Linux shell commands are rewritten in Emacs Lisp</li>
-<li>Create LaTeX documents in Windows without having to use another editor</li>
-<li>Check your email using Gnus or some other Emacs mail reader and take your configuration with you</li>
-<li>Have acess to all the power of Emacs and you custom configuration anywhere you go</li>
-</ul>
-</div>
-</div>
+      <div id="outline-container-org6fcfd81" class="outline-2">
+        <h2 id="org6fcfd81">
+          <span class="section-number-2">3.</span> Process
+        </h2>
+        <div class="outline-text-2" id="text-3">
+          <p>
+            Here is the process I used to make Emacs run off of a USB flash
+            drive:
+          </p>
 
-<div id="outline-container-org6fcfd81" class="outline-2">
-<h2 id="org6fcfd81"><span class="section-number-2">3.</span> Process</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-Here is the process I used to make Emacs run off of a USB flash drive:
-</p>
+          <p>
+            <i
+              ><b>Note:</b> On slow systems, I have found it
+              <b>very</b> important to verify the speed of any flash drive you
+              use to launch Emacs. I have found that the difference between two
+              USB 3.0 flash drives can change <code>emacs-init-time</code> from
+              minutes to seconds with the right flash drive. Apparently, not all
+              USB 3.0 drive are alike.</i
+            >
+          </p>
 
-<p>
-<i><b>Note:</b> On slow systems, I have found it <b>very</b> important to verify the speed of any flash drive you use to launch Emacs. I have found that the difference between two USB 3.0 flash drives can change <code>emacs-init-time</code> from minutes to seconds with the right flash drive. Apparently, not all USB 3.0 drive are alike.</i>
-</p>
-
-<ol class="org-ol">
-<li>Download Emacs from the <a href="http://ftp.gnu.org/gnu/emacs/windows/">Gnu.org ftp site</a>.</li>
-<li>Extract the <code>.zip</code> file to your flash drive into a new directory (I recommend calling it <code>emacs</code>).</li>
-<li>Create a <code>.emacs.d</code> directory on your flash drive.</li>
-<li>Create a <code>runemacs.bat</code> file to launch Emacs containing the following lines:
-<ul class="org-ul">
-<li><p>
-Set Emacs home directory to the flash drive label so files are not saved to the host system.
-</p>
-<pre class="example" id="org0cca5fc">
+          <ol class="org-ol">
+            <li>
+              Download Emacs from the
+              <a href="http://ftp.gnu.org/gnu/emacs/windows/"
+                >Gnu.org ftp site</a
+              >.
+            </li>
+            <li>
+              Extract the <code>.zip</code> file to your flash drive into a new
+              directory (I recommend calling it <code>emacs</code>).
+            </li>
+            <li>
+              Create a <code>.emacs.d</code> directory on your flash drive.
+            </li>
+            <li>
+              Create a <code>runemacs.bat</code> file to launch Emacs containing
+              the following lines:
+              <ul class="org-ul">
+                <li>
+                  <p>
+                    Set Emacs home directory to the flash drive label so files
+                    are not saved to the host system.
+                  </p>
+                  <pre class="example" id="org0cca5fc">
 rem Set the Emacs home directory to the drive label of the flash drive.
 set HOME=%~dp0
-</pre></li>
-<li><p>
-Create an environment variable to tell Emacs it was launched as a portable application. I do this so I can use the same Emacs configuration for all instances of Emacs whether I am running it as a portable application or not. This lets me include code in <code>init.el</code> to check if Emacs was launched as a portable application. If Emacs detects it was launched as a portable application, I can call on different functions to set up Emacs differently.
-</p>
-<pre class="example" id="org99211d4">
+</pre
+                  >
+                </li>
+                <li>
+                  <p>
+                    Create an environment variable to tell Emacs it was launched
+                    as a portable application. I do this so I can use the same
+                    Emacs configuration for all instances of Emacs whether I am
+                    running it as a portable application or not. This lets me
+                    include code in <code>init.el</code> to check if Emacs was
+                    launched as a portable application. If Emacs detects it was
+                    launched as a portable application, I can call on different
+                    functions to set up Emacs differently.
+                  </p>
+                  <pre class="example" id="org99211d4">
 rem Set an evironment variable to tell Emacs that it is running portably
 set EMACS_PORTABLE="Y"
+</pre
+                  >
+                  <p>
+                    Now, in your <code>init.el</code> configuration file, you
+                    can use the following code to check if Emacs was called by
+                    executing <code>runemacs.bat</code> in any
+                    <code>if</code> or <code>when</code> statement:
+                  </p>
+                  <div class="org-src-container">
+                    <pre
+                      class="src src-emacs-lisp"
+                    ><span style="color: #1ea8fc;">(</span>string= <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
 </pre>
-<p>
-Now, in your <code>init.el</code> configuration file, you can use the following code to check if Emacs was called by executing <code>runemacs.bat</code> in any <code>if</code> or <code>when</code> statement:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>string= <span style="color: #ff2afc;">(</span>getenv <span style="color: #7984D1;">"EMACS_PORTABLE"</span><span style="color: #ff2afc;">)</span> <span style="color: #7984D1;">"Y"</span><span style="color: #1ea8fc;">)</span>
-</pre>
-</div>
-<p>
-In Emacs, I create my <code>init.el</code> file from Org Mode in a file called <code>init.org</code>. I use <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">noweb syntax</a> to call it with <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse the code easily. For an example see <code>&lt;&lt;portable_check&gt;&gt;</code> in <a href="#org3ba4add">4.1</a>.
-</p></li>
-<li><p>
-Call the Emacs executable and launch it.
-</p>
-<pre class="example" id="org3913970">
+                  </div>
+                  <p>
+                    In Emacs, I create my <code>init.el</code> file from Org
+                    Mode in a file called <code>init.org</code>. I use
+                    <a
+                      href="https://orgmode.org/manual/Noweb-Reference-Syntax.html"
+                      >noweb syntax</a
+                    >
+                    to call it with
+                    <code>&lt;&lt;portable_check&gt;&gt;</code> so I can reuse
+                    the code easily. For an example see
+                    <code>&lt;&lt;portable_check&gt;&gt;</code> in
+                    <a href="#org3ba4add">4.1</a>.
+                  </p>
+                </li>
+                <li>
+                  <p>Call the Emacs executable and launch it.</p>
+                  <pre class="example" id="org3913970">
 rem Find the Emacs executable and execute it.
 "%~dp0/emacs/bin/runemacs.exe" %
-</pre></li>
-</ul></li>
-<li>Enjoy!</li>
-</ol>
-</div>
-</div>
+</pre
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>Enjoy!</li>
+          </ol>
+        </div>
+      </div>
 
-<div id="outline-container-org9a28ad6" class="outline-2">
-<h2 id="org9a28ad6"><span class="section-number-2">4.</span> Access Org Agenda Files from the Cloud</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-My biggest reason for using Emacs as a portable application is the power of Org Mode. I find that as an organization and task management system, nothing else quite compares and I cannot find any system that I like better. I have tried many other systems and nothing else has been as helpful for me. Plus, it lets me use Emacs which is something I greatly enjoy so I am more likely to check my agenda if it gives me an excuse to use Emacos.
-</p>
+      <div id="outline-container-org9a28ad6" class="outline-2">
+        <h2 id="org9a28ad6">
+          <span class="section-number-2">4.</span> Access Org Agenda Files from
+          the Cloud
+        </h2>
+        <div class="outline-text-2" id="text-4">
+          <p>
+            My biggest reason for using Emacs as a portable application is the
+            power of Org Mode. I find that as an organization and task
+            management system, nothing else quite compares and I cannot find any
+            system that I like better. I have tried many other systems and
+            nothing else has been as helpful for me. Plus, it lets me use Emacs
+            which is something I greatly enjoy so I am more likely to check my
+            agenda if it gives me an excuse to use Emacos.
+          </p>
 
-<p>
-One of the biggest problems with Org Mode, however, has been how it is not based in the cloud. It took me quite a long time to figure out how to solve this problem and here is the solution I have come up with:
-</p>
+          <p>
+            One of the biggest problems with Org Mode, however, has been how it
+            is not based in the cloud. It took me quite a long time to figure
+            out how to solve this problem and here is the solution I have come
+            up with:
+          </p>
 
-<ol class="org-ol">
-<li>Store all your <code>org-agenda</code> files in the cloud (I use Dropbox)</li>
-<li><p>
-Download <a href="https://rclone.org/downloads/">rclone</a> to your flash drive. As mentioned on the rclone website:
-</p>
-<blockquote>
-<p>
-Rclone is single executable (rclone, or rclone.exe on Windows) that you can simply download as a zip archive and extract into a location of your choosing. See the install documentation for more details
-</p>
-</blockquote></li>
-<li>Use Emacs eshell to call <code>rclone.exe</code> using the <code>--config-file</code> option to save the config file to your USB flash drive</li>
-<li>Run <code>rclone.exe sync --config /path/to/config/file remote: ~/local_folder</code> to download your Org Mode agenda files from your cloud site</li>
-<li>Use Org Mode as normal</li>
-<li>Sync the changes back to the cloud with <code>rclone.exe sync --config /path/to/config/file remote: ~/local_folder remote:</code></li>
-</ol>
-</div>
+          <ol class="org-ol">
+            <li>
+              Store all your <code>org-agenda</code> files in the cloud (I use
+              Dropbox)
+            </li>
+            <li>
+              <p>
+                Download <a href="https://rclone.org/downloads/">rclone</a> to
+                your flash drive. As mentioned on the rclone website:
+              </p>
+              <blockquote>
+                <p>
+                  Rclone is single executable (rclone, or rclone.exe on Windows)
+                  that you can simply download as a zip archive and extract into
+                  a location of your choosing. See the install documentation for
+                  more details
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              Use Emacs eshell to call <code>rclone.exe</code> using the
+              <code>--config-file</code> option to save the config file to your
+              USB flash drive
+            </li>
+            <li>
+              Run
+              <code
+                >rclone.exe sync --config /path/to/config/file remote:
+                ~/local_folder</code
+              >
+              to download your Org Mode agenda files from your cloud site
+            </li>
+            <li>Use Org Mode as normal</li>
+            <li>
+              Sync the changes back to the cloud with
+              <code
+                >rclone.exe sync --config /path/to/config/file remote:
+                ~/local_folder remote:</code
+              >
+            </li>
+          </ol>
+        </div>
 
-<div id="outline-container-org3ba4add" class="outline-3">
-<h3 id="org3ba4add"><span class="section-number-3">4.1.</span> Syncing Org Files Automatically</h3>
-<div class="outline-text-3" id="text-4-1">
-<p>
-In order to avoid human error in this process, I have added functions to my <code>init.el</code> file to do this work for me automatically:
-</p>
+        <div id="outline-container-org3ba4add" class="outline-3">
+          <h3 id="org3ba4add">
+            <span class="section-number-3">4.1.</span> Syncing Org Files
+            Automatically
+          </h3>
+          <div class="outline-text-3" id="text-4-1">
+            <p>
+              In order to avoid human error in this process, I have added
+              functions to my <code>init.el</code> file to do this work for me
+              automatically:
+            </p>
 
-<p>
-This function will create an Emacs Lisp function in Emacs to run rclone:
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
+            <p>
+              This function will create an Emacs Lisp function in Emacs to run
+              rclone:
+            </p>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
   <span style="color: #A875FF;">"Sync DEST with SOURCE using rclone.</span>
 <span style="color: #A875FF;">The path to the rlcone executable can be set with RCLONE-PATH.</span>
 <span style="color: #A875FF;">The rclone configuration can be set with RCLONE-CONFIG."</span>
@@ -368,13 +779,16 @@ This function will create an Emacs Lisp function in Emacs to run rclone:
              <span style="color: #7984D1;">" "</span>
              dest<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-I then run rclone when Emacs starts up and add a hook to run when Emacs is closed with the <code>kill-emacs-hook</code> (killed):
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> &lt;&lt;portable_check&gt;&gt;
+            <p>
+              I then run rclone when Emacs starts up and add a hook to run when
+              Emacs is closed with the <code>kill-emacs-hook</code> (killed):
+            </p>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">when</span> &lt;&lt;portable_check&gt;&gt;
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">let</span> <span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span>rclone-remote <span style="color: #7984D1;">"dropbox:"</span><span style="color: #df85ff;">)</span>
         <span style="color: #df85ff;">(</span>rclone-local <span style="color: #7984D1;">"~/Dropbox"</span><span style="color: #df85ff;">)</span>
         <span style="color: #df85ff;">(</span>rclone-path  <span style="color: #7984D1;">"~/rclone/rclone.exe"</span><span style="color: #df85ff;">)</span>
@@ -389,35 +803,69 @@ I then run rclone when Emacs starts up and add a hook to run when Emacs is close
                                               rclone-path
                                               rclone-conf<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-<i><b>Note:</b> you will want to change the variables to match your own setup. I am using Dropbox for syncing my agenda files but any service supported by rclone will work.</i>
-</p>
+            <p>
+              <i
+                ><b>Note:</b> you will want to change the variables to match
+                your own setup. I am using Dropbox for syncing my agenda files
+                but any service supported by rclone will work.</i
+              >
+            </p>
 
-<p>
-This will cause Emacs to sync my Org Mode agenda files and anything else in my Dropbox automatically by downloading all my Dropbox files to my flash drive into a folder called <code>Dropbox</code>.
-</p>
-</div>
-</div>
-</div>
+            <p>
+              This will cause Emacs to sync my Org Mode agenda files and
+              anything else in my Dropbox automatically by downloading all my
+              Dropbox files to my flash drive into a folder called
+              <code>Dropbox</code>.
+            </p>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org0a5cfa2" class="outline-2">
-<h2 id="org0a5cfa2"><span class="section-number-2">5.</span> Extending Portable Emacs</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-In order to replicate all the functionality of Linux that I use when I install it to a hard drive, I installed the following dependencies onto the portable flash drive:
-</p>
+      <div id="outline-container-org0a5cfa2" class="outline-2">
+        <h2 id="org0a5cfa2">
+          <span class="section-number-2">5.</span> Extending Portable Emacs
+        </h2>
+        <div class="outline-text-2" id="text-5">
+          <p>
+            In order to replicate all the functionality of Linux that I use when
+            I install it to a hard drive, I installed the following dependencies
+            onto the portable flash drive:
+          </p>
 
-<dl class="org-dl">
-<dt>Git</dt><dd>If you have the <a href="https://portableapps.com/">PortableApps.com platform</a> installed on your flash drive. You can install <a href="https://github.com/sheabunge/GitPortable/releases">GitPortable</a> and telling Emacs where the <code>git</code> executable can be found. This is necessary for straight.el to work, to pull an updated Emacs config from Github, and for committing source code to Github.</dd>
+          <dl class="org-dl">
+            <dt>Git</dt>
+            <dd>
+              If you have the
+              <a href="https://portableapps.com/">PortableApps.com platform</a>
+              installed on your flash drive. You can install
+              <a href="https://github.com/sheabunge/GitPortable/releases"
+                >GitPortable</a
+              >
+              and telling Emacs where the <code>git</code> executable can be
+              found. This is necessary for straight.el to work, to pull an
+              updated Emacs config from Github, and for committing source code
+              to Github.
+            </dd>
 
-<dt>Hunspell</dt><dd><p>
-Spell checking does not work by default in Windows as <code>ispell</code> and <code>aspell</code> are not installed. To overcome this issue, a portable version of hunspell can be installed directly into the <code>.emacs.d</code> directory from <a href="https://sourceforge.net/projects/ezwinports/files/">ezwinports</a> and set as the <code>ispell-program-name</code>:
-</p>
+            <dt>Hunspell</dt>
+            <dd>
+              <p>
+                Spell checking does not work by default in Windows as
+                <code>ispell</code> and <code>aspell</code> are not installed.
+                To overcome this issue, a portable version of hunspell can be
+                installed directly into the <code>.emacs.d</code> directory from
+                <a href="https://sourceforge.net/projects/ezwinports/files/"
+                  >ezwinports</a
+                >
+                and set as the <code>ispell-program-name</code>:
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> <span style="color: #ff2afc;">(</span>eq system-type 'windows-nt<span style="color: #ff2afc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">if</span> <span style="color: #ff2afc;">(</span>eq system-type 'windows-nt<span style="color: #ff2afc;">)</span>
     <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">progn</span> <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #df85ff;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/hunspell/bin/hunspell.exe"</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
            <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-personal-dictionary <span style="color: #7984D1;">"~/.emacs.d/hunspell_en_US"</span><span style="color: #a7da1e;">)</span>
            <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-local-dictionary <span style="color: #7984D1;">"en_US"</span><span style="color: #a7da1e;">)</span>
@@ -425,47 +873,91 @@ Spell checking does not work by default in Windows as <code>ispell</code> and <c
                  '<span style="color: #df85ff;">(</span><span style="color: #A875FF;">(</span><span style="color: #7984D1;">"en_US"</span> <span style="color: #7984D1;">"[[:alpha:]]"</span> <span style="color: #7984D1;">"[</span><span style="color: #ff2afc; font-weight: bold;">^</span><span style="color: #7984D1;">[:alpha:]]"</span> <span style="color: #7984D1;">"[']"</span> nil <span style="color: #1ea8fc;">(</span><span style="color: #7984D1;">"-d"</span> <span style="color: #7984D1;">"en_US"</span><span style="color: #1ea8fc;">)</span> nil utf-8<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> ispell-program-name <span style="color: #a7da1e;">(</span>whicher <span style="color: #7984D1;">"hunspell"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div></dd>
+              </div>
+            </dd>
 
-<dt>MiKTeX</dt><dd><p>
-MiKTeX provides a <a href="https://miktex.org/howto/portable-edition">portable version</a> that can be installed on a flash drive and will make it possible to create LaTeX documents even if LaTeX libraries are not insalled on the host system.
-</p>
+            <dt>MiKTeX</dt>
+            <dd>
+              <p>
+                MiKTeX provides a
+                <a href="https://miktex.org/howto/portable-edition"
+                  >portable version</a
+                >
+                that can be installed on a flash drive and will make it possible
+                to create LaTeX documents even if LaTeX libraries are not
+                insalled on the host system.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>add-to-list 'exec-path <span style="color: #7984D1;">"~/PortableApps/GitPortable/App/Git/bin"</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div></dd>
+              </div>
+            </dd>
 
-<dt>PDFTools</dt><dd>If you use the PDFtools package on Emacs, if you have access to a Windows system where you have administrator access and <code>msys2</code> installed, you can install and compile PDFTools using that system so it will be ready when you take it on the road.</dd>
+            <dt>PDFTools</dt>
+            <dd>
+              If you use the PDFtools package on Emacs, if you have access to a
+              Windows system where you have administrator access and
+              <code>msys2</code> installed, you can install and compile PDFTools
+              using that system so it will be ready when you take it on the
+              road.
+            </dd>
 
-<dt>PlantUML</dt><dd><p>
-In order to be able to make flowcharts and other diagrams with <a href="https://plantuml.com/">PlantUML</a>, I downloaded the <a href="https://plantuml.com/download">PlantUML</a> <code>.jar</code> file to the <code>.emacs.d</code> folder on the USB drive and told Org Mode how to find it with the following addition to <code>init.el</code>:
-</p>
+            <dt>PlantUML</dt>
+            <dd>
+              <p>
+                In order to be able to make flowcharts and other diagrams with
+                <a href="https://plantuml.com/">PlantUML</a>, I downloaded the
+                <a href="https://plantuml.com/download">PlantUML</a>
+                <code>.jar</code> file to the <code>.emacs.d</code> folder on
+                the USB drive and told Org Mode how to find it with the
+                following addition to <code>init.el</code>:
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-plantuml-jar-path <span style="color: #ff2afc;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/plantuml/plantuml.jar"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-plantuml-jar-path <span style="color: #ff2afc;">(</span>expand-file-name <span style="color: #7984D1;">"~/.emacs.d/plantuml/plantuml.jar"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div></dd>
+              </div>
+            </dd>
 
-<dt>Rclone</dt><dd>Since Rclone can be run as a portable app, I use it to sync files between my portable Emacs on the flash drive and my other Emacs instances installed on hard drives. See <a href="#org9a28ad6">above</a>.</dd>
-</dl>
-</div>
-</div>
+            <dt>Rclone</dt>
+            <dd>
+              Since Rclone can be run as a portable app, I use it to sync files
+              between my portable Emacs on the flash drive and my other Emacs
+              instances installed on hard drives. See
+              <a href="#org9a28ad6">above</a>.
+            </dd>
+          </dl>
+        </div>
+      </div>
 
-<div id="outline-container-org1e8d2b7" class="outline-2">
-<h2 id="org1e8d2b7"><span class="section-number-2">6.</span> About This Page</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-This page was written in Emacs Org Mode and exported to HTML using the Org Mode export engine. This wonder "ReadTheOrg" theme along with how to use it can be found <a href="https://github.com/fniessen/org-html-themes">at this link</a>.
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2022-03-30 Wed 00:00</p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-05-15 Sun 22:10</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+      <div id="outline-container-org1e8d2b7" class="outline-2">
+        <h2 id="org1e8d2b7">
+          <span class="section-number-2">6.</span> About This Page
+        </h2>
+        <div class="outline-text-2" id="text-6">
+          <p>
+            This page was written in Emacs Org Mode and exported to HTML using
+            the Org Mode export engine. This wonder "ReadTheOrg" theme along
+            with how to use it can be found
+            <a href="https://github.com/fniessen/org-html-themes"
+              >at this link</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">Date: 2022-03-30 Wed 00:00</p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-05-15 Sun 22:10</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

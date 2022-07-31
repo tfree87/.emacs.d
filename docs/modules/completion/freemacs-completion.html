@@ -1,93 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-20 Wed 20:04 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Completion Configuration</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../init.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Completion Configuration</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org5182289">Cape</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org8d7cae3">Cape Completion Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org11b503d">Consult</a>
-<ul>
-<li><a href="#org274d50b">Change Register Preview to Consult</a></li>
-<li><a href="#org788ff41">Consult Notes</a></li>
-<li><a href="#org9357956">Consult YASnippet</a></li>
-<li><a href="#org9bc41d5">Consult Flycheck</a></li>
-<li><a href="#org7bd8fce">Set Root Function for Projects</a></li>
-<li><a href="#org215dd40">Set the Narrowing Key</a></li>
-<li><a href="#org5a4263a">Tweak Register Preview Window</a></li>
-<li><a href="#org0b8dc12">Use Consult to Select xref Locations</a></li>
-<li><a href="#org3a6fc9e">Completion Cycling</a></li>
-<li><a href="#orge57e699">Completion by Pressing Tab</a></li>
-</ul>
-</li>
-<li><a href="#org27e8106">Corfu</a>
-<ul>
-<li><a href="#org8289af0">Use TAB for Selecting Candidates</a></li>
-<li><a href="#org0593e14">Corfu-doc</a></li>
-</ul>
-</li>
-<li><a href="#org40239f8">Embark</a>
-<ul>
-<li><a href="#orgedff872">Embark Mode Line</a></li>
-<li><a href="#org279a8a0">Embark Integration with Consult</a></li>
-</ul>
-</li>
-<li><a href="#org09e475e">Orderless</a></li>
-<li><a href="#org1e1c1de">Marginalia</a></li>
-<li><a href="#org93834ae">Vertico</a></li>
-<li><a href="#org249a05f">Kind Icon</a></li>
-<li><a href="#org1b74d96">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+  <head>
+    <!-- 2022-07-21 Thu 18:55 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Completion Configuration</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="../../init.html"> UP </a>
+      |
+      <a accesskey="H" href="../../index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Completion Configuration</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li>
+              <a href="#org5182289">Cape</a>
+              <ul>
+                <li>
+                  <ul>
+                    <li><a href="#org8d7cae3">Cape Completion Functions</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#org11b503d">Consult</a>
+              <ul>
+                <li>
+                  <a href="#org274d50b">Change Register Preview to Consult</a>
+                </li>
+                <li><a href="#org788ff41">Consult Notes</a></li>
+                <li><a href="#org9357956">Consult YASnippet</a></li>
+                <li><a href="#org9bc41d5">Consult Flycheck</a></li>
+                <li>
+                  <a href="#org7bd8fce">Set Root Function for Projects</a>
+                </li>
+                <li><a href="#org215dd40">Set the Narrowing Key</a></li>
+                <li><a href="#org5a4263a">Tweak Register Preview Window</a></li>
+                <li>
+                  <a href="#org0b8dc12">Use Consult to Select xref Locations</a>
+                </li>
+                <li><a href="#org3a6fc9e">Completion Cycling</a></li>
+                <li><a href="#orge57e699">Completion by Pressing Tab</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#org27e8106">Corfu</a>
+              <ul>
+                <li>
+                  <a href="#org8289af0">Use TAB for Selecting Candidates</a>
+                </li>
+                <li><a href="#org0593e14">Corfu-doc</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#org40239f8">Embark</a>
+              <ul>
+                <li><a href="#orgedff872">Embark Mode Line</a></li>
+                <li>
+                  <a href="#org279a8a0">Embark Integration with Consult</a>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#org09e475e">Orderless</a></li>
+            <li><a href="#org1e1c1de">Marginalia</a></li>
+            <li><a href="#org93834ae">Vertico</a></li>
+            <li><a href="#org249a05f">Kind Icon</a></li>
+            <li><a href="#org1b74d96">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
+      <p>
+        This section contains configuration to set up completion tools in Emacs.
+      </p>
 
-<p>
-This section contains configuration to set up completion tools in Emacs.
-</p>
+      <div id="outline-container-org5182289" class="outline-2">
+        <h2 id="org5182289">Cape</h2>
+        <div class="outline-text-2" id="text-org5182289">
+          <p>
+            <a href="https://github.com/minad/cape">Cape</a> (completion at
+            point extensions) provides some extensions to make autocompletion
+            better and plays well with Corfu.
+          </p>
 
-<div id="outline-container-org5182289" class="outline-2">
-<h2 id="org5182289">Cape</h2>
-<div class="outline-text-2" id="text-org5182289">
-<p>
-<a href="https://github.com/minad/cape">Cape</a> (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org1f3711b"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">cape</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+              id="org1f3711b"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">cape</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c p p"</span> . completion-at-point<span style="color: #a7da1e;">)</span>
          <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c p t"</span> . complete-tag<span style="color: #a7da1e;">)</span>
@@ -106,73 +137,82 @@ This section contains configuration to set up completion tools in Emacs.
   <span style="color: #ff2afc;">(</span>add-to-list 'completion-at-point-functions #'cape-keyword<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>add-to-list 'completion-at-point-functions #'cape-symbol<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-org8d7cae3" class="outline-4">
-<h4 id="org8d7cae3">Cape Completion Functions</h4>
-<div class="outline-text-4" id="text-org8d7cae3">
-<p>
-Cape provides a number of <code>completion-at-point</code> functions that can be used. Below are the functions that I use that have not been intrusive.
-</p>
+        <div id="outline-container-org8d7cae3" class="outline-4">
+          <h4 id="org8d7cae3">Cape Completion Functions</h4>
+          <div class="outline-text-4" id="text-org8d7cae3">
+            <p>
+              Cape provides a number of
+              <code>completion-at-point</code> functions that can be used. Below
+              are the functions that I use that have not been intrusive.
+            </p>
 
-<p>
-The following will complete file names in buffers:
-</p>
+            <p>The following will complete file names in buffers:</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-file<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-file<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-This will complete items in TeX and LaTeX modes:
-</p>
+            <p>This will complete items in TeX and LaTeX modes:</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-tex<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-tex<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-Search other buffers for completion candidates:
-</p>
+            <p>Search other buffers for completion candidates:</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-dabbrev<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-dabbrev<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-Complete keywords in programming modes:
-</p>
+            <p>Complete keywords in programming modes:</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-keyword<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-keyword<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-Complete Emacs-lisp symbols:
-</p>
+            <p>Complete Emacs-lisp symbols:</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-symbol<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'completion-at-point-functions #'cape-symbol<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org11b503d" class="outline-2">
-<h2 id="org11b503d">Consult</h2>
-<div class="outline-text-2" id="text-org11b503d">
-<p>
-<a href="https://github.com/minad/consult">Consult</a> provides a number of highly useful commands. The complete list of commands can be found <a href="https://github.com/minad/consult#available-commands">here</a>.
-</p>
+      <div id="outline-container-org11b503d" class="outline-2">
+        <h2 id="org11b503d">Consult</h2>
+        <div class="outline-text-2" id="text-org11b503d">
+          <p>
+            <a href="https://github.com/minad/consult">Consult</a> provides a
+            number of highly useful commands. The complete list of commands can
+            be found
+            <a href="https://github.com/minad/consult#available-commands"
+              >here</a
+            >.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c h"</span> . consult-history<span style="color: #a7da1e;">)</span>
          <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-c m"</span> . consult-mode-command<span style="color: #a7da1e;">)</span>
@@ -219,32 +259,41 @@ Complete Emacs-lisp symbols:
             <span style="color: #A875FF;">(</span>car <span style="color: #1ea8fc;">(</span>project-roots project<span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-narrow-key <span style="color: #7984D1;">"&lt;"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-org274d50b" class="outline-3">
-<h3 id="org274d50b">Change Register Preview to Consult</h3>
-<div class="outline-text-3" id="text-org274d50b">
-<p>
-Change the default Emacs <code>register-preview-function</code> to use consult effectively.
-</p>
+        <div id="outline-container-org274d50b" class="outline-3">
+          <h3 id="org274d50b">Change Register Preview to Consult</h3>
+          <div class="outline-text-3" id="text-org274d50b">
+            <p>
+              Change the default Emacs <code>register-preview-function</code> to
+              use consult effectively.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>register-preview-function #'consult-register-format<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>register-preview-function #'consult-register-format<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org788ff41" class="outline-3">
-<h3 id="org788ff41">Consult Notes</h3>
-<div class="outline-text-3" id="text-org788ff41">
-<p>
-With Consult Notes, users can use Consult to search through note directories specified by the <code>consult-notes-sources</code> list. Consult will then let you search through these notes with completion frameworks and has good integration with Org Roam.
-</p>
+        <div id="outline-container-org788ff41" class="outline-3">
+          <h3 id="org788ff41">Consult Notes</h3>
+          <div class="outline-text-3" id="text-org788ff41">
+            <p>
+              With Consult Notes, users can use Consult to search through note
+              directories specified by the
+              <code>consult-notes-sources</code> list. Consult will then let you
+              search through these notes with completion frameworks and has good
+              integration with Org Roam.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-notes</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-notes</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> git <span style="color: #1ea8fc;">:host</span> github <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"mclear-tools/consult-notes"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:after</span> consult
   <span style="color: #1ea8fc;">:custom</span>
@@ -257,143 +306,181 @@ With Consult Notes, users can use Consult to search through note directories spe
   <span style="color: #1ea8fc;">:config</span>
   <span style="color: #ff2afc;">(</span>consult-notes-org-roam-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org9357956" class="outline-3">
-<h3 id="org9357956">Consult YASnippet</h3>
-<div class="outline-text-3" id="text-org9357956">
-<p>
-If you have a tendency to forget about all of those YASnippet template abbrevs, then Consult YASnippet can be used to search though your YASnippet templates using a completion framework.
-</p>
+        <div id="outline-container-org9357956" class="outline-3">
+          <h3 id="org9357956">Consult YASnippet</h3>
+          <div class="outline-text-3" id="text-org9357956">
+            <p>
+              If you have a tendency to forget about all of those YASnippet
+              template abbrevs, then Consult YASnippet can be used to search
+              though your YASnippet templates using a completion framework.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-yasnippet</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-yasnippet</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> <span style="color: #ff2afc;">(</span>consult yasnippet<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>consult-yasnippet<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org9bc41d5" class="outline-3">
-<h3 id="org9bc41d5">Consult Flycheck</h3>
-<div class="outline-text-3" id="text-org9bc41d5">
-<p>
-Searching through Flycheck errors is very efficient with Consult Flycheck. It will list all of the errors from the current buffer and these can be searched using a completion framework.
-</p>
+        <div id="outline-container-org9bc41d5" class="outline-3">
+          <h3 id="org9bc41d5">Consult Flycheck</h3>
+          <div class="outline-text-3" id="text-org9bc41d5">
+            <p>
+              Searching through Flycheck errors is very efficient with Consult
+              Flycheck. It will list all of the errors from the current buffer
+              and these can be searched using a completion framework.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-flycheck</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">consult-flycheck</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:commands</span> <span style="color: #ff2afc;">(</span>consult-flycheck<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:after</span> <span style="color: #ff2afc;">(</span>consult flycheck<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org7bd8fce" class="outline-3">
-<h3 id="org7bd8fce">Set Root Function for Projects</h3>
-<div class="outline-text-3" id="text-org7bd8fce">
-<p>
-Use the built-in project function to find the root of any project. Projectile can also be used but I have yet to compare the differences between the two projects to make a decision as to which one to use.
-</p>
+        <div id="outline-container-org7bd8fce" class="outline-3">
+          <h3 id="org7bd8fce">Set Root Function for Projects</h3>
+          <div class="outline-text-3" id="text-org7bd8fce">
+            <p>
+              Use the built-in project function to find the root of any project.
+              Projectile can also be used but I have yet to compare the
+              differences between the two projects to make a decision as to
+              which one to use.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-project-root-function
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-project-root-function
       <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">lambda</span> <span style="color: #a7da1e;">()</span>
         <span style="color: #a7da1e;">(</span><span style="color: #ff2afc; font-weight: bold;">when-let</span> <span style="color: #df85ff;">(</span>project <span style="color: #A875FF;">(</span>project-current<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
           <span style="color: #df85ff;">(</span>car <span style="color: #A875FF;">(</span>project-roots project<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org215dd40" class="outline-3">
-<h3 id="org215dd40">Set the Narrowing Key</h3>
-<div class="outline-text-3" id="text-org215dd40">
-<p>
-The narrowing key is pressed before a key used to narrow the results returned from consult. An example would be <code>&lt; m</code> to list bookmarks after calling <code>consult-buffer</code>.
-</p>
+        <div id="outline-container-org215dd40" class="outline-3">
+          <h3 id="org215dd40">Set the Narrowing Key</h3>
+          <div class="outline-text-3" id="text-org215dd40">
+            <p>
+              The narrowing key is pressed before a key used to narrow the
+              results returned from consult. An example would be
+              <code>&lt; m</code> to list bookmarks after calling
+              <code>consult-buffer</code>.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-narrow-key <span style="color: #7984D1;">"&lt;"</span><span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">setq</span> consult-narrow-key <span style="color: #7984D1;">"&lt;"</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org5a4263a" class="outline-3">
-<h3 id="org5a4263a">Tweak Register Preview Window</h3>
-<div class="outline-text-3" id="text-org5a4263a">
-<p>
-The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
-</p>
+        <div id="outline-container-org5a4263a" class="outline-3">
+          <h3 id="org5a4263a">Tweak Register Preview Window</h3>
+          <div class="outline-text-3" id="text-org5a4263a">
+            <p>
+              The following line makes the register preview window look better
+              by adding sorting and thin lines to break up the results into easy
+              to view categories.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>advice-add #'register-preview
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>advice-add #'register-preview
             <span style="color: #1ea8fc;">:override</span> #'consult-register-window<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org0b8dc12" class="outline-3">
-<h3 id="org0b8dc12">Use Consult to Select xref Locations</h3>
-<div class="outline-text-3" id="text-org0b8dc12">
-<p>
-Use Consult to search through and select xref locations in buffers
-</p>
+        <div id="outline-container-org0b8dc12" class="outline-3">
+          <h3 id="org0b8dc12">Use Consult to Select xref Locations</h3>
+          <div class="outline-text-3" id="text-org0b8dc12">
+            <p>
+              Use Consult to search through and select xref locations in buffers
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>xref-show-xrefs-function #'consult-xref<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>xref-show-xrefs-function #'consult-xref<span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>xref-show-definitions-function #'consult-xref<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org3a6fc9e" class="outline-3">
-<h3 id="org3a6fc9e">Completion Cycling</h3>
-<div class="outline-text-3" id="text-org3a6fc9e">
-<p>
-Cycle through completion candidates by pressing the completion key.
-</p>
+        <div id="outline-container-org3a6fc9e" class="outline-3">
+          <h3 id="org3a6fc9e">Completion Cycling</h3>
+          <div class="outline-text-3" id="text-org3a6fc9e">
+            <p>
+              Cycle through completion candidates by pressing the completion
+              key.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>completion-cycle-threshold t<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>completion-cycle-threshold t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-orge57e699" class="outline-3">
-<h3 id="orge57e699">Completion by Pressing Tab</h3>
-<div class="outline-text-3" id="text-orge57e699">
-<p>
-<code>&lt;TAB&gt;</code> will indent lines by default. In order to turn <code>&lt;TAB&gt;</code> into a button that activates autocomplete, the <code>tab-always-indent</code> variable must be set to <code>complete</code>. This will cause pressing <code>&lt;TAB&gt;</code> once to indent, and twice will cause it to activate completion.
-</p>
+        <div id="outline-container-orge57e699" class="outline-3">
+          <h3 id="orge57e699">Completion by Pressing Tab</h3>
+          <div class="outline-text-3" id="text-orge57e699">
+            <p>
+              <code>&lt;TAB&gt;</code> will indent lines by default. In order to
+              turn <code>&lt;TAB&gt;</code> into a button that activates
+              autocomplete, the <code>tab-always-indent</code> variable must be
+              set to <code>complete</code>. This will cause pressing
+              <code>&lt;TAB&gt;</code> once to indent, and twice will cause it
+              to activate completion.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>tab-always-indent 'complete<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>tab-always-indent 'complete<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org27e8106" class="outline-2">
-<h2 id="org27e8106">Corfu</h2>
-<div class="outline-text-2" id="text-org27e8106">
-<p>
-<a href="https://github.com/minad/corfu">Corfu</a> for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
-</p>
+      <div id="outline-container-org27e8106" class="outline-2">
+        <h2 id="org27e8106">Corfu</h2>
+        <div class="outline-text-2" id="text-org27e8106">
+          <p>
+            <a href="https://github.com/minad/corfu">Corfu</a> for in-buffer
+            completion. Corfu will provide an in-buffer popup window that will
+            be populated with various completion options.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">corfu</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">corfu</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span>global-corfu-mode<span style="color: #ff2afc;">)</span>
@@ -416,36 +503,45 @@ Cycle through completion candidates by pressing the completion key.
   <span style="color: #ff2afc;">(</span>advice-add 'pcomplete-completions-at-point <span style="color: #1ea8fc;">:around</span> #'cape-wrap-silent<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>advice-add 'pcomplete-completions-at-point <span style="color: #1ea8fc;">:around</span> #'cape-wrap-purify<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-org8289af0" class="outline-3">
-<h3 id="org8289af0">Use TAB for Selecting Candidates</h3>
-<div class="outline-text-3" id="text-org8289af0">
-<p>
-Instead of using M-tab which will switch windows in XFCE&#x2014;my default desktop environment&#x2014;use TAB to cycle between the different possible options.
-</p>
+        <div id="outline-container-org8289af0" class="outline-3">
+          <h3 id="org8289af0">Use TAB for Selecting Candidates</h3>
+          <div class="outline-text-3" id="text-org8289af0">
+            <p>
+              Instead of using M-tab which will switch windows in XFCE&#x2014;my
+              default desktop environment&#x2014;use TAB to cycle between the
+              different possible options.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org7eaadcd"><span style="color: #1ea8fc;">(</span><span style="color: #1ea8fc;">:map</span> corfu-map
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+                id="org7eaadcd"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #1ea8fc;">:map</span> corfu-map
       <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"TAB"</span> . corfu-next<span style="color: #ff2afc;">)</span>
       <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">[</span>tab<span style="color: #a7da1e;">]</span> . corfu-next<span style="color: #ff2afc;">)</span>
       <span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"S-TAB"</span> . corfu-previous<span style="color: #ff2afc;">)</span>
       <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">[</span>backtab<span style="color: #a7da1e;">]</span> . corfu-previous<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org0593e14" class="outline-3">
-<h3 id="org0593e14">Corfu-doc</h3>
-<div class="outline-text-3" id="text-org0593e14">
-<p>
-Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
-</p>
+        <div id="outline-container-org0593e14" class="outline-3">
+          <h3 id="org0593e14">Corfu-doc</h3>
+          <div class="outline-text-3" id="text-org0593e14">
+            <p>
+              Corfu-doc will bring up documentation results in a separate pop-up
+              next to the corfu pop-up with the documentation of any function or
+              variable results that are selected.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">corfu-doc</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">corfu-doc</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>corfu-doc <span style="color: #1ea8fc;">:host</span> github
                        <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"galeo/corfu-doc"</span>
                        <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
@@ -455,20 +551,24 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
   <span style="color: #ff2afc;">(</span>define-key corfu-map <span style="color: #a7da1e;">(</span>kbd <span style="color: #7984D1;">"M-p"</span><span style="color: #a7da1e;">)</span> #'corfu-doc-scroll-down<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>define-key corfu-map <span style="color: #a7da1e;">(</span>kbd <span style="color: #7984D1;">"M-n"</span><span style="color: #a7da1e;">)</span> #'corfu-doc-scroll-up<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org40239f8" class="outline-2">
-<h2 id="org40239f8">Embark</h2>
-<div class="outline-text-2" id="text-org40239f8">
-<p>
-<a href="https://github.com/oantolin/embark">Embark</a> provides the ability to execute commands on completion options found in the minibuffer.
-</p>
+      <div id="outline-container-org40239f8" class="outline-2">
+        <h2 id="org40239f8">Embark</h2>
+        <div class="outline-text-2" id="text-org40239f8">
+          <p>
+            <a href="https://github.com/oantolin/embark">Embark</a> provides the
+            ability to execute commands on completion options found in the
+            minibuffer.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">embark</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">embark</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span>
   <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"C-."</span> . embark-act<span style="color: #a7da1e;">)</span>
@@ -483,55 +583,63 @@ Corfu-doc will bring up documentation results in a separate pop-up next to the c
                  <span style="color: #df85ff;">(</span>window-parameters <span style="color: #A875FF;">(</span>mode-line-format . none<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>define-key embark-file-map <span style="color: #a7da1e;">(</span>kbd <span style="color: #7984D1;">"S"</span><span style="color: #a7da1e;">)</span> 'sudo-find-file<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-orgedff872" class="outline-3">
-<h3 id="orgedff872">Embark Mode Line</h3>
-<div class="outline-text-3" id="text-orgedff872">
-<p>
-Hide the mode line of the Embark live/completions buffers.
-</p>
+        <div id="outline-container-orgedff872" class="outline-3">
+          <h3 id="orgedff872">Embark Mode Line</h3>
+          <div class="outline-text-3" id="text-orgedff872">
+            <p>Hide the mode line of the Embark live/completions buffers.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-to-list 'display-buffer-alist
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>add-to-list 'display-buffer-alist
              '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"\\`\\*Embark Collect </span><span style="color: #ff2afc; font-weight: bold;">\\</span><span style="color: #ff2afc; font-weight: bold;">(</span><span style="color: #7984D1;">Live</span><span style="color: #ff2afc; font-weight: bold;">\\</span><span style="color: #ff2afc; font-weight: bold;">|</span><span style="color: #7984D1;">Completions</span><span style="color: #ff2afc; font-weight: bold;">\\</span><span style="color: #ff2afc; font-weight: bold;">)</span><span style="color: #7984D1;">\\*"</span>
                nil
                <span style="color: #a7da1e;">(</span>window-parameters <span style="color: #df85ff;">(</span>mode-line-format . none<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org279a8a0" class="outline-3">
-<h3 id="org279a8a0">Embark Integration with Consult</h3>
-<div class="outline-text-3" id="text-org279a8a0">
-<p>
-Allow use of Embark commands after issuing a Consult command.
-</p>
+        <div id="outline-container-org279a8a0" class="outline-3">
+          <h3 id="org279a8a0">Embark Integration with Consult</h3>
+          <div class="outline-text-3" id="text-org279a8a0">
+            <p>Allow use of Embark commands after issuing a Consult command.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">embark-consult</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">embark-consult</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> <span style="color: #ff2afc;">(</span>embark consult<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:demand</span> t
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>embark-collect-mode . consult-preview-at-point-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org09e475e" class="outline-2">
-<h2 id="org09e475e">Orderless</h2>
-<div class="outline-text-2" id="text-org09e475e">
-<p>
-<a href="https://github.com/oantolin/orderless">Orderless</a> will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. For instance, if <code>M-x</code> is entered the search results will be the same if searching for a function by using the search key <code>find file</code> or <code>file find</code>. Both entries will return the function <code>find-file</code> as the top result.
-</p>
+      <div id="outline-container-org09e475e" class="outline-2">
+        <h2 id="org09e475e">Orderless</h2>
+        <div class="outline-text-2" id="text-org09e475e">
+          <p>
+            <a href="https://github.com/oantolin/orderless">Orderless</a> will
+            allow for seaching in the minibuffer using text broken up by spaces
+            in which the order does not matter. For instance, if
+            <code>M-x</code> is entered the search results will be the same if
+            searching for a function by using the search key
+            <code>find file</code> or <code>file find</code>. Both entries will
+            return the function <code>find-file</code> as the top result.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">orderless</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">orderless</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> 3
   <span style="color: #1ea8fc;">:custom</span>
@@ -539,19 +647,24 @@ Allow use of Embark commands after issuing a Consult command.
   <span style="color: #ff2afc;">(</span>completion-category-defaults nil<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>completion-category-overrides '<span style="color: #a7da1e;">(</span><span style="color: #df85ff;">(</span>file <span style="color: #A875FF;">(</span>styles partial-completion<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org1e1c1de" class="outline-2">
-<h2 id="org1e1c1de">Marginalia</h2>
-<div class="outline-text-2" id="text-org1e1c1de">
-<p>
-<a href="https://github.com/minad/marginalia">Marginalia</a> generates annotations to items in the minibuffer similar to what is accomplished  with <a href="https://github.com/Yevgnen/ivy-rich">ivy-rich</a>.
-</p>
+      <div id="outline-container-org1e1c1de" class="outline-2">
+        <h2 id="org1e1c1de">Marginalia</h2>
+        <div class="outline-text-2" id="text-org1e1c1de">
+          <p>
+            <a href="https://github.com/minad/marginalia">Marginalia</a>
+            generates annotations to items in the minibuffer similar to what is
+            accomplished with
+            <a href="https://github.com/Yevgnen/ivy-rich">ivy-rich</a>.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">marginalia</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">marginalia</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:bind</span> <span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"M-A"</span> . marginalia-cycle<span style="color: #a7da1e;">)</span>
          <span style="color: #1ea8fc;">:map</span> minibuffer-local-map
@@ -561,28 +674,37 @@ Allow use of Embark commands after issuing a Consult command.
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span>marginalia-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+          </div>
 
-<p>
-If All the Icons and All the Icons Completion is installed, activate All the Completion to work with Marginalia.
-</p>
+          <p>
+            If All the Icons and All the Icons Completion is installed, activate
+            All the Completion to work with Marginalia.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>marginalia-mode . all-the-icons-completion-marginalia-setup<span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span>marginalia-mode . all-the-icons-completion-marginalia-setup<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org93834ae" class="outline-2">
-<h2 id="org93834ae">Vertico</h2>
-<div class="outline-text-2" id="text-org93834ae">
-<p>
-<a href="https://github.com/minad/vertico">Vertico</a> removes the <code>*Completions*</code> buffer and instead, populates a vertical list of completion options in the minibuffer region. This is similar to other completion tools in Emacs such Helm, Ivy, Selectrum, and icomplete-vertical.
-</p>
+      <div id="outline-container-org93834ae" class="outline-2">
+        <h2 id="org93834ae">Vertico</h2>
+        <div class="outline-text-2" id="text-org93834ae">
+          <p>
+            <a href="https://github.com/minad/vertico">Vertico</a> removes the
+            <code>*Completions*</code> buffer and instead, populates a vertical
+            list of completion options in the minibuffer region. This is similar
+            to other completion tools in Emacs such Helm, Ivy, Selectrum, and
+            icomplete-vertical.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">vertico</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">vertico</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:demand</span> t
   <span style="color: #1ea8fc;">:custom</span>
@@ -591,19 +713,23 @@ If All the Icons and All the Icons Completion is installed, activate All the Com
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span>vertico-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org249a05f" class="outline-2">
-<h2 id="org249a05f">Kind Icon</h2>
-<div class="outline-text-2" id="text-org249a05f">
-<p>
-Kind Icon can add icons to in-buffer completion systems. This can make it easier to visually process what type of results are being returned by the completion system.
-</p>
+      <div id="outline-container-org249a05f" class="outline-2">
+        <h2 id="org249a05f">Kind Icon</h2>
+        <div class="outline-text-2" id="text-org249a05f">
+          <p>
+            Kind Icon can add icons to in-buffer completion systems. This can
+            make it easier to visually process what type of results are being
+            returned by the completion system.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">kind-icon</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">kind-icon</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> corfu
   <span style="color: #1ea8fc;">:custom</span>
@@ -611,29 +737,36 @@ Kind Icon can add icons to in-buffer completion systems. This can make it easier
   <span style="color: #1ea8fc;">:config</span>
   <span style="color: #ff2afc;">(</span>add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org1b74d96" class="outline-2">
-<h2 id="org1b74d96">End</h2>
-<div class="outline-text-2" id="text-org1b74d96">
-<p>
-Tell Emacs what package this file provides.
-</p>
+      <div id="outline-container-org1b74d96" class="outline-2">
+        <h2 id="org1b74d96">End</h2>
+        <div class="outline-text-2" id="text-org1b74d96">
+          <p>Tell Emacs what feature this file provides.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-completion</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-completion</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-12 Tue 12:21&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-20 Wed 20:04</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:36&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:55</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

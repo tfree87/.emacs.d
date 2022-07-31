@@ -1,129 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-20 Wed 20:04 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Org Mode Configuration</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+  <head>
+    <!-- 2022-07-21 Thu 18:26 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Org Mode Configuration</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <style>
+      #org-div-home-and-up {
+        text-align: right;
+        padding-right: 10pt;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+    <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+              displayAlign: "center",
+              displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../init.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Org Mode Configuration</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org1881867">Calfw</a>
-<ul>
-<li><a href="#orga724e4c">Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-</ul>
-</li>
-<li><a href="#orgd716684">Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#org1fe9a4d">Olivetti</a></li>
-<li><a href="#orgff93256">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a>
-<ul>
-<li><a href="#org6786072">Directories</a>
-<ul>
-<li><a href="#org8823c1d">Default Directory</a></li>
-<li><a href="#orgc044546">Location of Agenda Files</a></li>
-</ul>
-</li>
-<li><a href="#org6438f40">Filing Notes</a>
-<ul>
-<li><a href="#org7c0d228">Default Notes File</a></li>
-<li><a href="#org17f4a85">Refile Targets</a></li>
-</ul>
-</li>
-<li><a href="#orgce33b64">Exporting</a></li>
-<li><a href="#org62dd767">Task Management Customization</a>
-<ul>
-<li><a href="#orgcbc4838">Drawer for State Changes</a></li>
-<li><a href="#org9912e81">Custom TODO Keywords</a></li>
-<li><a href="#org64a9afa">Project Tags</a></li>
-<li><a href="#org779ca68">Stuck Projects</a></li>
-</ul>
-</li>
-<li><a href="#orgafbc030">BibLaTeX in Org-mode</a></li>
-<li><a href="#org39114aa">Org-babel Languages</a></li>
-<li><a href="#orgdf52216">Appearance</a>
-<ul>
-<li><a href="#org09a6de4">Hide Emphasis Characters</a></li>
-<li><a href="#orgaee4cb7">Word Wrapping</a></li>
-<li><a href="#orga68c6a3">Single Space Between Headline and Tags</a></li>
-<li><a href="#org7fe66ec">Use "Clean View"</a></li>
-<li><a href="#orgaa574e5">Native Tabs</a></li>
-</ul>
-</li>
-<li><a href="#org3967ec7">Change TODO Keyword Colors</a></li>
-<li><a href="#orgbbf51a7">Capturing Ideas</a></li>
-</ul>
-</li>
-<li><a href="#orgfc6f499">Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#org1f46b88">Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></a></li>
-<li><a href="#orgb9ea08e">Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></a></li>
-<li><a href="#orgdb3992c">Org Header Sizes</a></li>
-<li><a href="#org451a269">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+              "HTML-CSS": { scale: 100,
+                              linebreaks: { automatic: "false" },
+                              webFont: "TeX"
+                             },
+              SVG: {scale: 100,
+                    linebreaks: { automatic: "false" },
+                    font: "TeX"},
+              NativeMML: {scale: 100},
+              TeX: { equationNumbers: {autoNumber: "AMS"},
+                     MultLineWidth: "85%",
+                     TagSide: "right",
+                     TagIndent: ".8em"
+                   }
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="../../init.html"> UP </a>
+      |
+      <a accesskey="H" href="../../index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Org Mode Configuration</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li>
+              <a href="#org1881867">Calfw</a>
+              <ul>
+                <li>
+                  <a href="#orga724e4c"
+                    >Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"
+                      ><span class="org">org</span></span
+                    ></a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#orgd716684"
+                >Habitica&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="org">org</span></span
+                ></a
+              >
+            </li>
+            <li><a href="#org1fe9a4d">Olivetti</a></li>
+            <li>
+              <a href="#orgff93256"
+                >Org&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="org">org</span></span
+                ></a
+              >
+              <ul>
+                <li>
+                  <a href="#org6786072">Directories</a>
+                  <ul>
+                    <li><a href="#org8823c1d">Default Directory</a></li>
+                    <li><a href="#orgc044546">Location of Agenda Files</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#org6438f40">Filing Notes</a>
+                  <ul>
+                    <li><a href="#org7c0d228">Default Notes File</a></li>
+                    <li><a href="#org17f4a85">Refile Targets</a></li>
+                  </ul>
+                </li>
+                <li><a href="#orgce33b64">Exporting</a></li>
+                <li>
+                  <a href="#org62dd767">Task Management Customization</a>
+                  <ul>
+                    <li><a href="#orgcbc4838">Drawer for State Changes</a></li>
+                    <li><a href="#org9912e81">Custom TODO Keywords</a></li>
+                    <li><a href="#org64a9afa">Project Tags</a></li>
+                    <li><a href="#org779ca68">Stuck Projects</a></li>
+                  </ul>
+                </li>
+                <li><a href="#orgafbc030">BibLaTeX in Org-mode</a></li>
+                <li><a href="#org39114aa">Org-babel Languages</a></li>
+                <li>
+                  <a href="#orgdf52216">Appearance</a>
+                  <ul>
+                    <li><a href="#org09a6de4">Hide Emphasis Characters</a></li>
+                    <li><a href="#orgaee4cb7">Word Wrapping</a></li>
+                    <li>
+                      <a href="#orga68c6a3"
+                        >Single Space Between Headline and Tags</a
+                      >
+                    </li>
+                    <li><a href="#org7fe66ec">Use "Clean View"</a></li>
+                    <li><a href="#orgaa574e5">Native Tabs</a></li>
+                  </ul>
+                </li>
+                <li><a href="#org3967ec7">Change TODO Keyword Colors</a></li>
+                <li><a href="#orgbbf51a7">Capturing Ideas</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#orgfc6f499"
+                >Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="org">org</span></span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#org1f46b88"
+                >Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="org">org</span>&#xa0;<span class="guix"
+                    >guix</span
+                  ></span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#orgb9ea08e"
+                >Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"
+                  ><span class="org">org</span></span
+                ></a
+              >
+            </li>
+            <li><a href="#orgdb3992c">Org Header Sizes</a></li>
+            <li><a href="#org451a269">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
+      <p>
+        This file provides the Org Mode configuration for my personal
+        configuration of Emacs called Freemacs.
+      </p>
 
-<p>
-This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #546A90;">;; </span><span style="color: #546A90;">Organization/Time Management/Notes Configuration</span>
+      <div class="org-src-container">
+        <pre
+          class="src src-emacs-lisp"
+        ><span style="color: #546A90;">;; </span><span style="color: #546A90;">Organization/Time Management/Notes Configuration</span>
 </pre>
-</div>
+      </div>
 
-<div id="outline-container-org1881867" class="outline-2">
-<h2 id="org1881867">Calfw</h2>
-<div class="outline-text-2" id="text-org1881867">
-<p>
-<a href="https://github.com/kiwanami/emacs-calfw">Calfw</a> provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in <code>calfw-org.el</code> where events that span multiple dates show up repeated on the display.
-</p>
+      <div id="outline-container-org1881867" class="outline-2">
+        <h2 id="org1881867">Calfw</h2>
+        <div class="outline-text-2" id="text-org1881867">
+          <p>
+            <a href="https://github.com/kiwanami/emacs-calfw">Calfw</a> provides
+            a grid-based calendar view similar to what is seen in most graphical
+            calendar programs but integrates the org agenda files. I use the
+            fork from @zemaye as this version has fixed the issue in
+            <code>calfw-org.el</code> where events that span multiple dates show
+            up repeated on the display.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">calfw</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">calfw</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>emacs-calfw <span style="color: #1ea8fc;">:host</span> github
                          <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"zemaye/emacs-calfw"</span>
                          <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
@@ -140,18 +214,28 @@ This file provides the Org Mode configuration for my personal configuration of E
   <span style="color: #ff2afc;">(</span>cfw:fchar-top-left-corner ?&#9487;<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>cfw:fchar-top-right-corner ?&#9491;<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-orga724e4c" class="outline-3">
-<h3 id="orga724e4c">Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h3>
-<div class="outline-text-3" id="text-orga724e4c">
-<p>
-<code>calfw-org.el</code>  displays org-mode events in the <code>calfw</code> calendar. I don't like the long command <code>M-x cfw:open-org-calendar</code> so I have shortened to it to <code>M-x calfworg</code> which is much easier to type and remember.
-</p>
+        <div id="outline-container-orga724e4c" class="outline-3">
+          <h3 id="orga724e4c">
+            Calfw Org&#xa0;&#xa0;&#xa0;<span class="tag"
+              ><span class="org">org</span></span
+            >
+          </h3>
+          <div class="outline-text-3" id="text-orga724e4c">
+            <p>
+              <code>calfw-org.el</code> displays org-mode events in the
+              <code>calfw</code> calendar. I don't like the long command
+              <code>M-x cfw:open-org-calendar</code> so I have shortened to it
+              to <code>M-x calfworg</code> which is much easier to type and
+              remember.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">calfw-org</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">calfw-org</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>emacs-calfw <span style="color: #1ea8fc;">:host</span> github
                          <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"zemaye/emacs-calfw"</span>
                          <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"master"</span><span style="color: #ff2afc;">)</span>
@@ -159,58 +243,91 @@ This file provides the Org Mode configuration for my personal configuration of E
   <span style="color: #1ea8fc;">:init</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">defalias</span> '<span style="color: #42c6ff;">calfworg</span> 'cfw:open-org-calendar<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgd716684" class="outline-2">
-<h2 id="orgd716684">Habitica&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-orgd716684">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">habitica</span>
+      <div id="outline-container-orgd716684" class="outline-2">
+        <h2 id="orgd716684">
+          Habitica&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="org">org</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgd716684">
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">habitica</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> org
   <span style="color: #1ea8fc;">:custom</span>
   <span style="color: #ff2afc;">(</span>habitica-turn-on-highlighting t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>habitica-show-streak t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org1fe9a4d" class="outline-2">
-<h2 id="org1fe9a4d">Olivetti</h2>
-<div class="outline-text-2" id="text-org1fe9a4d">
-<p>
-Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
-</p>
+      <div id="outline-container-org1fe9a4d" class="outline-2">
+        <h2 id="org1fe9a4d">Olivetti</h2>
+        <div class="outline-text-2" id="text-org1fe9a4d">
+          <p>
+            Olivetti is a minor mode that can be used to center text in a buffer
+            t make it more pleasant to read. It creates margins that are similar
+            to the large margins you might find in a default class of a LaTeX
+            document. I have found that large margins make reading much more
+            pleasant.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">olivetti</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">olivetti</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>org-mode . olivetti-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgff93256" class="outline-2">
-<h2 id="orgff93256">Org&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-orgff93256">
-<p>
-<a href="https://orgmode.org/">Org Mode</a> is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
-</p>
+      <div id="outline-container-orgff93256" class="outline-2">
+        <h2 id="orgff93256">
+          Org&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="org">org</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgff93256">
+          <p>
+            <a href="https://orgmode.org/">Org Mode</a> is the powerful task
+            management, calendar, agenda, publishing system, and code
+            documentation tool all-in-one that really extends the power of
+            Emacs. I use Org Mode for the following:
+          </p>
 
-<ul class="org-ul">
-<li>Organizing my tasks and projects similar to <a href="https://gettingthingsdone.com/">David Allen's "Getting Things Done"</a> method</li>
-<li>Publishing \LaTeX{} documents quicker and more easily</li>
-<li>Coding using <a href="https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20">literate programming</a>.</li>
-</ul>
+          <ul class="org-ul">
+            <li>
+              Organizing my tasks and projects similar to
+              <a href="https://gettingthingsdone.com/"
+                >David Allen's "Getting Things Done"</a
+              >
+              method
+            </li>
+            <li>Publishing \LaTeX{} documents quicker and more easily</li>
+            <li>
+              Coding using
+              <a
+                href="https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20"
+                >literate programming</a
+              >.
+            </li>
+          </ul>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:init</span>
@@ -295,229 +412,288 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">ox-extra</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>ox-extras-activate '<span style="color: #a7da1e;">(</span>ignore-headlines<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-org6786072" class="outline-3">
-<h3 id="org6786072">Directories</h3>
-<div class="outline-text-3" id="text-org6786072">
-<p>
-Set up the default directories for Org Mode.
-</p>
-</div>
+        <div id="outline-container-org6786072" class="outline-3">
+          <h3 id="org6786072">Directories</h3>
+          <div class="outline-text-3" id="text-org6786072">
+            <p>Set up the default directories for Org Mode.</p>
+          </div>
 
-<div id="outline-container-org8823c1d" class="outline-4">
-<h4 id="org8823c1d">Default Directory</h4>
-<div class="outline-text-4" id="text-org8823c1d">
-<p>
-Tell org-mode which directory is the default directory for all org-mode files.
-</p>
+          <div id="outline-container-org8823c1d" class="outline-4">
+            <h4 id="org8823c1d">Default Directory</h4>
+            <div class="outline-text-4" id="text-org8823c1d">
+              <p>
+                Tell org-mode which directory is the default directory for all
+                org-mode files.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-directory <span style="color: #7984D1;">"~/Drive/gtd"</span><span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-directory <span style="color: #7984D1;">"~/Drive/gtd"</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-orgc044546" class="outline-4">
-<h4 id="orgc044546">Location of Agenda Files</h4>
-<div class="outline-text-4" id="text-orgc044546">
-<p>
-Tell org-mode in which directory all the agenda files can be found.
-</p>
+          <div id="outline-container-orgc044546" class="outline-4">
+            <h4 id="orgc044546">Location of Agenda Files</h4>
+            <div class="outline-text-4" id="text-orgc044546">
+              <p>
+                Tell org-mode in which directory all the agenda files can be
+                found.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-agenda-start-on-weekday nil<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-agenda-start-on-weekday nil<span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>org-agenda-files `<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"~/Drive/gtd"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org6438f40" class="outline-3">
-<h3 id="org6438f40">Filing Notes</h3>
-<div class="outline-text-3" id="text-org6438f40">
-</div>
-<div id="outline-container-org7c0d228" class="outline-4">
-<h4 id="org7c0d228">Default Notes File</h4>
-<div class="outline-text-4" id="text-org7c0d228">
-<p>
-I prefer to have all of my captured notes automatically filed into a file called <code>inbox.org</code>. Changing <code>org-default-notes-file</code> can create this functionality.
-</p>
+        <div id="outline-container-org6438f40" class="outline-3">
+          <h3 id="org6438f40">Filing Notes</h3>
+          <div class="outline-text-3" id="text-org6438f40"></div>
+          <div id="outline-container-org7c0d228" class="outline-4">
+            <h4 id="org7c0d228">Default Notes File</h4>
+            <div class="outline-text-4" id="text-org7c0d228">
+              <p>
+                I prefer to have all of my captured notes automatically filed
+                into a file called <code>inbox.org</code>. Changing
+                <code>org-default-notes-file</code> can create this
+                functionality.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-default-notes-file <span style="color: #ff2afc;">(</span>concat org-directory <span style="color: #7984D1;">"/inbox.org"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-default-notes-file <span style="color: #ff2afc;">(</span>concat org-directory <span style="color: #7984D1;">"/inbox.org"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-org17f4a85" class="outline-4">
-<h4 id="org17f4a85">Refile Targets</h4>
-<div class="outline-text-4" id="text-org17f4a85">
-</div>
-<ul class="org-ul">
-<li><a id="org8c3bd20"></a>Set Org Files for Refiling<br />
-<div class="outline-text-5" id="text-org8c3bd20">
-<p>
-In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
-</p>
+          <div id="outline-container-org17f4a85" class="outline-4">
+            <h4 id="org17f4a85">Refile Targets</h4>
+            <div class="outline-text-4" id="text-org17f4a85"></div>
+            <ul class="org-ul">
+              <li>
+                <a id="org8c3bd20"></a>Set Org Files for Refiling<br />
+                <div class="outline-text-5" id="text-org8c3bd20">
+                  <p>
+                    In order to refile/move tasks from the inbox to other agenda
+                    files and subtrees, the following must be set:
+                  </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-refile-targets '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span>org-agenda-files <span style="color: #1ea8fc;">:maxlevel</span> . 3<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+                  <div class="org-src-container">
+                    <pre
+                      class="src src-emacs-lisp"
+                    ><span style="color: #1ea8fc;">(</span>org-refile-targets '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span>org-agenda-files <span style="color: #1ea8fc;">:maxlevel</span> . 3<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</li>
+                  </div>
+                </div>
+              </li>
 
-<li><a id="orgd9055de"></a>Allow Refile as Top-level Heading<br />
-<div class="outline-text-5" id="text-orgd9055de">
-<p>
-I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
-</p>
+              <li>
+                <a id="orgd9055de"></a>Allow Refile as Top-level Heading<br />
+                <div class="outline-text-5" id="text-orgd9055de">
+                  <p>
+                    I want to allow for refiling org-mode tasks at the top of a
+                    file. Setting this will also require turning off completing
+                    the path in steps if ivy-mode autocompletion is used.
+                  </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-refile-use-outline-path 'file<span style="color: #1ea8fc;">)</span>
+                  <div class="org-src-container">
+                    <pre
+                      class="src src-emacs-lisp"
+                    ><span style="color: #1ea8fc;">(</span>org-refile-use-outline-path 'file<span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>org-outline-path-complete-in-steps nil<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+                  </div>
 
-<p>
-Setting this variable allows for refiling tasks under a new heading on the fly.
-</p>
+                  <p>
+                    Setting this variable allows for refiling tasks under a new
+                    heading on the fly.
+                  </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-refile-allow-creating-parent-nodes <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">quote</span> confirm<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+                  <div class="org-src-container">
+                    <pre
+                      class="src src-emacs-lisp"
+                    ><span style="color: #1ea8fc;">(</span>org-refile-allow-creating-parent-nodes <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">quote</span> confirm<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-<div id="outline-container-orgce33b64" class="outline-3">
-<h3 id="orgce33b64">Exporting</h3>
-<div class="outline-text-3" id="text-orgce33b64">
-<p>
-To remove headers labeled with the <code>:ignore:</code> tag, the following code needs to be implemented:
-</p>
+        <div id="outline-container-orgce33b64" class="outline-3">
+          <h3 id="orgce33b64">Exporting</h3>
+          <div class="outline-text-3" id="text-orgce33b64">
+            <p>
+              To remove headers labeled with the <code>:ignore:</code> tag, the
+              following code needs to be implemented:
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">ox-extra</span><span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">require</span> '<span style="color: #df85ff; font-weight: bold;">ox-extra</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>ox-extras-activate '<span style="color: #ff2afc;">(</span>ignore-headlines<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-So that exporting Org Mode buffers doesn't lock up Emacs, the option <code>org-export-in-background</code> can be set to a non-nil value.
-</p>
+            <p>
+              So that exporting Org Mode buffers doesn't lock up Emacs, the
+              option <code>org-export-in-background</code> can be set to a
+              non-nil value.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-export-in-background t<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>org-export-in-background t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org62dd767" class="outline-3">
-<h3 id="org62dd767">Task Management Customization</h3>
-<div class="outline-text-3" id="text-org62dd767">
-</div>
-<div id="outline-container-orgcbc4838" class="outline-4">
-<h4 id="orgcbc4838">Drawer for State Changes</h4>
-<div class="outline-text-4" id="text-orgcbc4838">
-<p>
-Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
-</p>
+        <div id="outline-container-org62dd767" class="outline-3">
+          <h3 id="org62dd767">Task Management Customization</h3>
+          <div class="outline-text-3" id="text-org62dd767"></div>
+          <div id="outline-container-orgcbc4838" class="outline-4">
+            <h4 id="orgcbc4838">Drawer for State Changes</h4>
+            <div class="outline-text-4" id="text-orgcbc4838">
+              <p>
+                Put changes of TODO states for org-mode into a drawer under each
+                heading so that it does not conflict with content under the
+                headings.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-log-into-drawer t<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-log-into-drawer t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-org9912e81" class="outline-4">
-<h4 id="org9912e81">Custom TODO Keywords</h4>
-<div class="outline-text-4" id="text-org9912e81">
-<p>
-Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELED tasks.
-</p>
+          <div id="outline-container-org9912e81" class="outline-4">
+            <h4 id="org9912e81">Custom TODO Keywords</h4>
+            <div class="outline-text-4" id="text-org9912e81">
+              <p>
+                Set up the sequence of org-todo task keywords to allow for
+                delegated (WAITING) tasks and CANCELED tasks.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-todo-keywords
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-todo-keywords
  '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span>sequence <span style="color: #7984D1;">"TODO(t)"</span>
              <span style="color: #7984D1;">"WAITING(w)"</span>
              <span style="color: #7984D1;">"|"</span> <span style="color: #7984D1;">"DONE(d)"</span>
              <span style="color: #7984D1;">"CANCELED(c)"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-org64a9afa" class="outline-4">
-<h4 id="org64a9afa">Project Tags</h4>
-<div class="outline-text-4" id="text-org64a9afa">
-<p>
-I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
-</p>
+          <div id="outline-container-org64a9afa" class="outline-4">
+            <h4 id="org64a9afa">Project Tags</h4>
+            <div class="outline-text-4" id="text-org64a9afa">
+              <p>
+                I like to mark projects with a tag, however, I do not want my
+                tasks to inherit these tags because I only use the project tags
+                to locate upper-level headings. In addition, almost all of my
+                org-mode tasks fall under some sort of project headline so it
+                becomes meaningless if all of my tasks have the project tag.
+                Changing this setting prevents the tag from being inherited and
+                showing up in the agenda view.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-tags-exclude-from-inheritance '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"project"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-tags-exclude-from-inheritance '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"project"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-org779ca68" class="outline-4">
-<h4 id="org779ca68">Stuck Projects</h4>
-<div class="outline-text-4" id="text-org779ca68">
-<p>
-Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
-</p>
+          <div id="outline-container-org779ca68" class="outline-4">
+            <h4 id="org779ca68">Stuck Projects</h4>
+            <div class="outline-text-4" id="text-org779ca68">
+              <p>
+                Stuck projects are projects which are going nowhere and need to
+                be analyzed for next steps. Org-mode allows for custom
+                definitions of what a "stuck project" can be so I define a stuck
+                project as any headline with the project keyword which has no
+                TODO item below it. Org-mode by default assumes all level 2
+                headings are projects which is not the case in my setup.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-stuck-projects
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-stuck-projects
  '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"+project/-MAYBE-DONE"</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"NEXT"</span> <span style="color: #7984D1;">"TODO"</span><span style="color: #a7da1e;">)</span>
    nil
    <span style="color: #7984D1;">"\\&lt;IGNORE\\&gt;"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-orgafbc030" class="outline-3">
-<h3 id="orgafbc030">BibLaTeX in Org-mode</h3>
-<div class="outline-text-3" id="text-orgafbc030">
-<p>
-I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the <code>org-latex-pdf-process</code> variable needs to be changed to reflect this.
-</p>
+        <div id="outline-container-orgafbc030" class="outline-3">
+          <h3 id="orgafbc030">BibLaTeX in Org-mode</h3>
+          <div class="outline-text-3" id="text-orgafbc030">
+            <p>
+              I prefer BibLaTeX over the standard BibTeX as it has more powerful
+              features and supports more citation styles. In order to get
+              BibLaTeX to operate in org-mode, the
+              <code>org-latex-pdf-process</code> variable needs to be changed to
+              reflect this.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-latex-pdf-process
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>org-latex-pdf-process
  '<span style="color: #ff2afc;">(</span><span style="color: #7984D1;">"pdflatex -interaction nonstopmode -output-directory %o %f"</span>
    <span style="color: #7984D1;">"biber %b"</span>
    <span style="color: #7984D1;">"pdflatex -interaction nonstopmode -output-directory %o %f"</span>
    <span style="color: #7984D1;">"pdflatex -interaction nonstopmode -output-directory %o %f"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org39114aa" class="outline-3">
-<h3 id="org39114aa">Org-babel Languages</h3>
-<div class="outline-text-3" id="text-org39114aa">
-<p>
-In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the <code>org-babel-load-languages</code> list.
-</p>
+        <div id="outline-container-org39114aa" class="outline-3">
+          <h3 id="org39114aa">Org-babel Languages</h3>
+          <div class="outline-text-3" id="text-org39114aa">
+            <p>
+              In order to use active code in org-mode, you must define which
+              programming languages to load. For any programming language you
+              wish to use, it must be added to the
+              <code>org-babel-load-languages</code> list.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orged09ac1"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"org"</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+                id="orged09ac1"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> <span style="color: #7984D1;">"org"</span>
   <span style="color: #ff2afc;">(</span>add-to-list 'org-src-lang-modes '<span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"plantuml"</span> . plantuml<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 <span style="color: #1ea8fc;">(</span>org-babel-do-load-languages
  'org-babel-load-languages
@@ -537,116 +713,149 @@ In order to use active code in org-mode, you must define which programming langu
    <span style="color: #a7da1e;">(</span>sed . t<span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span>shell . t<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-orgdf52216" class="outline-3">
-<h3 id="orgdf52216">Appearance</h3>
-<div class="outline-text-3" id="text-orgdf52216">
-<p>
-This section contains modifications to how Org Mode appears in buffers.
-</p>
-</div>
+        <div id="outline-container-orgdf52216" class="outline-3">
+          <h3 id="orgdf52216">Appearance</h3>
+          <div class="outline-text-3" id="text-orgdf52216">
+            <p>
+              This section contains modifications to how Org Mode appears in
+              buffers.
+            </p>
+          </div>
 
-<div id="outline-container-org09a6de4" class="outline-4">
-<h4 id="org09a6de4">Hide Emphasis Characters</h4>
-<div class="outline-text-4" id="text-org09a6de4">
-<p>
-Hiding emphasis characters  in Org Mode makes the text easier to read when it is being displayed directly in Emacs. This will make <b>bold</b>, <i>italic</i>, <span class="underline">underlined</span>, <code>code</code>, and <code>verbatim</code> text show up without the *,/, _, ~, and = characters around them. 
-</p>
+          <div id="outline-container-org09a6de4" class="outline-4">
+            <h4 id="org09a6de4">Hide Emphasis Characters</h4>
+            <div class="outline-text-4" id="text-org09a6de4">
+              <p>
+                Hiding emphasis characters in Org Mode makes the text easier to
+                read when it is being displayed directly in Emacs. This will
+                make <b>bold</b>, <i>italic</i>,
+                <span class="underline">underlined</span>, <code>code</code>,
+                and <code>verbatim</code> text show up without the *,/, _, ~,
+                and = characters around them.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-hide-emphasis-markers t<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-hide-emphasis-markers t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-orgaee4cb7" class="outline-4">
-<h4 id="orgaee4cb7">Word Wrapping</h4>
-<div class="outline-text-4" id="text-orgaee4cb7">
-<p>
-Turning on <code>visual-line-mode</code> allows the text to flow in Org Mode as if working in a word processors.
-</p>
+          <div id="outline-container-orgaee4cb7" class="outline-4">
+            <h4 id="orgaee4cb7">Word Wrapping</h4>
+            <div class="outline-text-4" id="text-orgaee4cb7">
+              <p>
+                Turning on <code>visual-line-mode</code> allows the text to flow
+                in Org Mode as if working in a word processors.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>add-hook 'org-mode-hook 'visual-line-mode<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>add-hook 'org-mode-hook 'visual-line-mode<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-orga68c6a3" class="outline-4">
-<h4 id="orga68c6a3">Single Space Between Headline and Tags</h4>
-<div class="outline-text-4" id="text-orga68c6a3">
-<p>
-I keep only a single space between the headline because I find it easier to owork with when buffer sizes change or if I am editing with a mobile device. It just seems to make things simpler.
-</p>
+          <div id="outline-container-orga68c6a3" class="outline-4">
+            <h4 id="orga68c6a3">Single Space Between Headline and Tags</h4>
+            <div class="outline-text-4" id="text-orga68c6a3">
+              <p>
+                I keep only a single space between the headline because I find
+                it easier to owork with when buffer sizes change or if I am
+                editing with a mobile device. It just seems to make things
+                simpler.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-tags-column 0<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-tags-column 0<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-org7fe66ec" class="outline-4">
-<h4 id="org7fe66ec">Use "Clean View"</h4>
-<div class="outline-text-4" id="text-org7fe66ec">
-<p>
-Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
-</p>
+          <div id="outline-container-org7fe66ec" class="outline-4">
+            <h4 id="org7fe66ec">Use "Clean View"</h4>
+            <div class="outline-text-4" id="text-org7fe66ec">
+              <p>
+                Start all Emacs org-mode buffers with "clean-view" turned on.
+                This makes it easier to see and read org-mode files as all the
+                extra asterisks in the headings wil be hidden leading to more
+                empty white space and a cleaner look.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-startup-indented t<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-startup-indented t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
 
-<div id="outline-container-orgaa574e5" class="outline-4">
-<h4 id="orgaa574e5">Native Tabs</h4>
-<div class="outline-text-4" id="text-orgaa574e5">
-<p>
-This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
-</p>
+          <div id="outline-container-orgaa574e5" class="outline-4">
+            <h4 id="orgaa574e5">Native Tabs</h4>
+            <div class="outline-text-4" id="text-orgaa574e5">
+              <p>
+                This will allow for source code blocks in emacs org-mode to be
+                internally indented as they would normally be in their majors
+                modes.
+              </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-src-tab-acts-natively t<span style="color: #1ea8fc;">)</span>
+              <div class="org-src-container">
+                <pre
+                  class="src src-emacs-lisp"
+                ><span style="color: #1ea8fc;">(</span>org-src-tab-acts-natively t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org3967ec7" class="outline-3">
-<h3 id="org3967ec7">Change TODO Keyword Colors</h3>
-<div class="outline-text-3" id="text-org3967ec7">
-<p>
-Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-</p>
+        <div id="outline-container-org3967ec7" class="outline-3">
+          <h3 id="org3967ec7">Change TODO Keyword Colors</h3>
+          <div class="outline-text-3" id="text-org3967ec7">
+            <p>
+              Change the color of the org-todo keywords to make it easier to see
+              them on a color screen and distinguish between them.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>org-todo-keyword-faces
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>org-todo-keyword-faces
  '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"TODO"</span> . org-warning<span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"WAITING"</span> . <span style="color: #7984D1;">"yellow"</span><span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"CANCELED"</span> . <span style="color: #df85ff;">(</span><span style="color: #1ea8fc;">:foreground</span> <span style="color: #7984D1;">"blue"</span> <span style="color: #1ea8fc;">:weight</span> bold<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"DONE"</span> . org-done<span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-orgbbf51a7" class="outline-3">
-<h3 id="orgbbf51a7">Capturing Ideas</h3>
-<div class="outline-text-3" id="text-orgbbf51a7">
-<p>
-Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
-</p>
+        <div id="outline-container-orgbbf51a7" class="outline-3">
+          <h3 id="orgbbf51a7">Capturing Ideas</h3>
+          <div class="outline-text-3" id="text-orgbbf51a7">
+            <p>
+              Org-capture templates make creating org-mode notes quicker and
+              easier from any buffer using a standard template for each not
+              type.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org3d7e93f"><span style="color: #1ea8fc;">(</span>org-capture-templates
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+                id="org3d7e93f"
+              ><span style="color: #1ea8fc;">(</span>org-capture-templates
  '<span style="color: #ff2afc;">(</span><span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"p"</span> <span style="color: #7984D1;">"Projects item"</span> entry <span style="color: #df85ff;">(</span>file <span style="color: #7984D1;">"~/Drive/gtdprojects.org"</span><span style="color: #df85ff;">)</span>
     <span style="color: #7984D1;">"* %? :project:"</span><span style="color: #a7da1e;">)</span>
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"s"</span> <span style="color: #7984D1;">"Someday/Maybe item"</span> entry <span style="color: #df85ff;">(</span>file <span style="color: #7984D1;">"~/Drive/gtdsomeday.org"</span><span style="color: #df85ff;">)</span>
@@ -656,20 +865,28 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
    <span style="color: #a7da1e;">(</span><span style="color: #7984D1;">"t"</span> <span style="color: #7984D1;">"To Do Item"</span> entry <span style="color: #df85ff;">(</span>file+headline <span style="color: #7984D1;">"~/Drive/gtdinbox.org"</span> <span style="color: #7984D1;">"Tasks"</span><span style="color: #df85ff;">)</span>
     <span style="color: #7984D1;">"* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x"</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgfc6f499" class="outline-2">
-<h2 id="orgfc6f499">Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-orgfc6f499">
-<p>
-<a href="https://github.com/the-ted/org-mind-map">Org-mind-map</a> turns any <code>org-mode</code> buffer into a mind map in various output formats.
-</p>
+      <div id="outline-container-orgfc6f499" class="outline-2">
+        <h2 id="orgfc6f499">
+          Org-mind-map&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="org">org</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgfc6f499">
+          <p>
+            <a href="https://github.com/the-ted/org-mind-map">Org-mind-map</a>
+            turns any <code>org-mode</code> buffer into a mind map in various
+            output formats.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-mind-map</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-mind-map</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> org
   <span style="color: #1ea8fc;">:commands</span> org-mind-map-write
@@ -678,19 +895,29 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
   <span style="color: #1ea8fc;">:custom</span>
   <span style="color: #ff2afc;">(</span>org-mind-map-engine <span style="color: #7984D1;">"dot"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org1f46b88" class="outline-2">
-<h2 id="org1f46b88">Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="guix">guix</span></span></h2>
-<div class="outline-text-2" id="text-org1f46b88">
-<p>
-<a href="https://www.orgroam.com/">Org -roam</a> adds features to make linking org notes easier and provided a database file to connect all the notes together.
-</p>
+      <div id="outline-container-org1f46b88" class="outline-2">
+        <h2 id="org1f46b88">
+          Org-roam&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="org">org</span>&#xa0;<span class="guix"
+              >guix</span
+            ></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-org1f46b88">
+          <p>
+            <a href="https://www.orgroam.com/">Org -roam</a> adds features to
+            make linking org notes easier and provided a database file to
+            connect all the notes together.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-roam</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-roam</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:after</span> org
   <span style="color: #1ea8fc;">:init</span>
@@ -722,19 +949,23 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
           <span style="color: #A875FF;">(</span><span style="color: #7984D1;">"C-c n a"</span> . org-roam-alias-add<span style="color: #A875FF;">)</span>
           <span style="color: #A875FF;">(</span><span style="color: #7984D1;">"C-c n l"</span> . org-roam-buffer-toggle<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgb9ea08e" class="outline-2">
-<h2 id="orgb9ea08e">Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span></span></h2>
-<div class="outline-text-2" id="text-orgb9ea08e">
-<p>
-Org Modern is a package that prettifies Org Mode buffers.
-</p>
+      <div id="outline-container-orgb9ea08e" class="outline-2">
+        <h2 id="orgb9ea08e">
+          Org Modern&#xa0;&#xa0;&#xa0;<span class="tag"
+            ><span class="org">org</span></span
+          >
+        </h2>
+        <div class="outline-text-2" id="text-orgb9ea08e">
+          <p>Org Modern is a package that prettifies Org Mode buffers.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-modern</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">org-modern</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> org
   <span style="color: #1ea8fc;">:custom</span>
@@ -774,19 +1005,29 @@ Org Modern is a package that prettifies Org Mode buffers.
 <span style="color: #ff2afc;">(</span>global-org-modern-mode<span style="color: #ff2afc;">)</span>
 <span style="color: #ff2afc;">(</span>freemacs/org-header-formatting<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgdb3992c" class="outline-2">
-<h2 id="orgdb3992c">Org Header Sizes</h2>
-<div class="outline-text-2" id="text-orgdb3992c">
-<p>
-The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from <a href="https://github.com/daviwil">@daviwil</a> from <a href="https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look">this link</a>.
-</p>
+      <div id="outline-container-orgdb3992c" class="outline-2">
+        <h2 id="orgdb3992c">Org Header Sizes</h2>
+        <div class="outline-text-2" id="text-orgdb3992c">
+          <p>
+            The following custom function will change the heading sizes in Org
+            Mode to make it easier to see the different heading levels. In
+            addition, this will also increase the size of the document title and
+            make it more prominent. This code is modified and from
+            <a href="https://github.com/daviwil">@daviwil</a> from
+            <a
+              href="https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look"
+              >this link</a
+            >.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">freemacs/org-header-formatting</span> <span style="color: #ff2afc;">()</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">freemacs/org-header-formatting</span> <span style="color: #ff2afc;">()</span>
   <span style="color: #A875FF;">"Change the size of headers and titles in Org Mode buffers."</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">interactive</span><span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span><span style="color: #ff2afc; font-weight: bold;">with-eval-after-load</span> 'org
@@ -803,31 +1044,38 @@ The following custom function will change the heading sizes in Org Mode to make 
            <span style="color: #1ea8fc;">(</span>org-document-title . 2.25<span style="color: #1ea8fc;">)</span><span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span>
       <span style="color: #df85ff;">(</span>set-face-attribute <span style="color: #A875FF;">(</span>car face<span style="color: #A875FF;">)</span> nil <span style="color: #1ea8fc;">:height</span> <span style="color: #A875FF;">(</span>cdr face<span style="color: #A875FF;">)</span><span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org451a269" class="outline-2">
-<h2 id="org451a269">End</h2>
-<div class="outline-text-2" id="text-org451a269">
-<p>
-Tell Emacs what package this file provides.
-</p>
+      <div id="outline-container-org451a269" class="outline-2">
+        <h2 id="org451a269">End</h2>
+        <div class="outline-text-2" id="text-org451a269">
+          <p>Tell Emacs what feature this file provides.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-org</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-org</span><span style="color: #1ea8fc;">)</span>
 
 <span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-org.el ends here</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-19 Tue 20:57&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-20 Wed 20:04</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:25&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:26</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>

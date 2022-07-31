@@ -92,9 +92,15 @@
 
 (require 'freemacs-defaults)
 
-;; Load the coding module
+;; Load the project module
 
+(require 'freemacs-project)
+
+;; Load the coding module
 (require 'freemacs-coding)
+
+;; Load the AutoHotKey module
+(require 'freemacs-autohotkey)
 
 ;; Load the completion module
 
@@ -107,6 +113,10 @@
 ;; Load the editing module
 
 (require 'freemacs-editing)
+
+;; Load emacs-everywhere
+
+(require 'freemacs-everywhere)
 
 ;; Load Elfeed newsreader module
 
@@ -191,6 +201,10 @@
 ;; Load the help module
 
 (require 'freemacs-help)
+
+;; Load the YouTube module
+
+(require 'freemacs-youtube)
 
 ;; Load server module
 

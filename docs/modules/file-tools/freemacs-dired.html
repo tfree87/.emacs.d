@@ -1,139 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
-<head>
-<!-- 2022-07-20 Wed 20:04 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dired Configuration</title>
-<meta name="author" content="Thomas Freeman" />
-<meta name="keywords" content="Emacs" />
-<meta name="generator" content="Org Mode" />
-<style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-</head>
-<body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="../../init.html"> UP </a>
- |
- <a accesskey="H" href="../../index.html"> HOME </a>
-</div><div id="content" class="content">
-<h1 class="title">Dired Configuration</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgdc50781">Dired</a>
-<ul>
-<li><a href="#org67b1411">Close Dired Buffers When Another is Opened</a></li>
-<li><a href="#orgd811e27">Move/Rename/Copy Files to Another Pane</a></li>
-</ul>
-</li>
-<li><a href="#org34a194d">Dired Hacks</a>
-<ul>
-<li><a href="#org480f636">Dired Collapse</a></li>
-<li><a href="#org5db8ed7">Dired Open</a></li>
-<li><a href="#org72347b0">xdg-open</a></li>
-</ul>
-</li>
-<li><a href="#orgdcc997f">Disc Usage</a></li>
-<li><a href="#org91cad7d">Dired Async</a></li>
-<li><a href="#org4f62749">Rclone Tools</a></li>
-<li><a href="#org73f9539">End</a></li>
-</ul>
-</div>
-</div>
-<hr />
+  <head>
+    <!-- 2022-07-21 Thu 18:26 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dired Configuration</title>
+    <meta name="author" content="Thomas Freeman" />
+    <meta name="keywords" content="Emacs" />
+    <meta name="generator" content="Org Mode" />
+    <style>
+      #org-div-home-and-up {
+        text-align: right;
+        padding-right: 10pt;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"
+    ></script>
+  </head>
+  <body>
+    <div id="org-div-home-and-up">
+      <a accesskey="h" href="../../init.html"> UP </a>
+      |
+      <a accesskey="H" href="../../index.html"> HOME </a>
+    </div>
+    <div id="content" class="content">
+      <h1 class="title">Dired Configuration</h1>
+      <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+          <ul>
+            <li>
+              <a href="#orgdc50781">Dired</a>
+              <ul>
+                <li>
+                  <a href="#org67b1411"
+                    >Close Dired Buffers When Another is Opened</a
+                  >
+                </li>
+                <li>
+                  <a href="#orgd811e27"
+                    >Move/Rename/Copy Files to Another Pane</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#org34a194d">Dired Hacks</a>
+              <ul>
+                <li><a href="#org480f636">Dired Collapse</a></li>
+                <li><a href="#org5db8ed7">Dired Open</a></li>
+                <li><a href="#org72347b0">xdg-open</a></li>
+              </ul>
+            </li>
+            <li><a href="#orgdcc997f">Disc Usage</a></li>
+            <li><a href="#org91cad7d">Dired Async</a></li>
+            <li><a href="#org4f62749">Rclone Tools</a></li>
+            <li><a href="#org73f9539">End</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
 
+      <div id="outline-container-orgdc50781" class="outline-2">
+        <h2 id="orgdc50781">Dired</h2>
+        <div class="outline-text-2" id="text-orgdc50781">
+          <p>
+            The following customizations make emacs dired mode behave in a
+            similar fashion to other file browsing tools such as midnight
+            commander. While there are many great file management tools out
+            there. I keep coming back to emacs dired because of the keyboard
+            commands and flexibility.
+          </p>
 
-<div id="outline-container-orgdc50781" class="outline-2">
-<h2 id="orgdc50781">Dired</h2>
-<div class="outline-text-2" id="text-orgdc50781">
-<p>
-The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span><span style="color: #1ea8fc;">:type</span> built-in<span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:custom</span>
   <span style="color: #ff2afc;">(</span>dired-kill-when-opening-new-dired-buffer t<span style="color: #ff2afc;">)</span>
   <span style="color: #ff2afc;">(</span>dired-dwim-target t<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
+          </div>
+        </div>
 
-<div id="outline-container-org67b1411" class="outline-3">
-<h3 id="org67b1411">Close Dired Buffers When Another is Opened</h3>
-<div class="outline-text-3" id="text-org67b1411">
-<p>
-When navigating through a series of Dired buffers, all of the old locations that were traversed through are still open as Dired buffers. This can create a lot of open buffers to clean up later. Luckily, there is an option (introduced in Emacs 28) to automatically kill old Dired buffers when a new buffer is opened using the option <code>dired-kill-when-opening-new-dired-buffer</code>
-</p>
+        <div id="outline-container-org67b1411" class="outline-3">
+          <h3 id="org67b1411">Close Dired Buffers When Another is Opened</h3>
+          <div class="outline-text-3" id="text-org67b1411">
+            <p>
+              When navigating through a series of Dired buffers, all of the old
+              locations that were traversed through are still open as Dired
+              buffers. This can create a lot of open buffers to clean up later.
+              Luckily, there is an option (introduced in Emacs 28) to
+              automatically kill old Dired buffers when a new buffer is opened
+              using the option
+              <code>dired-kill-when-opening-new-dired-buffer</code>
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>dired-kill-when-opening-new-dired-buffer t<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>dired-kill-when-opening-new-dired-buffer t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-orgd811e27" class="outline-3">
-<h3 id="orgd811e27">Move/Rename/Copy Files to Another Pane</h3>
-<div class="outline-text-3" id="text-orgd811e27">
-<p>
-This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
-</p>
+        <div id="outline-container-orgd811e27" class="outline-3">
+          <h3 id="orgd811e27">Move/Rename/Copy Files to Another Pane</h3>
+          <div class="outline-text-3" id="text-orgd811e27">
+            <p>
+              This will cause emacs to default to moving/copying/renaming files
+              from the directory in one dired buffer to another in a
+              split-window. This will allow emacs to operate more like midnight
+              commander, total commander, double commander, etc.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>dired-dwim-target t<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>dired-dwim-target t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org34a194d" class="outline-2">
-<h2 id="org34a194d">Dired Hacks</h2>
-<div class="outline-text-2" id="text-org34a194d">
-<p>
-Dired Hacks is a series of modifications to add features to Dired.
-</p>
-</div>
+      <div id="outline-container-org34a194d" class="outline-2">
+        <h2 id="org34a194d">Dired Hacks</h2>
+        <div class="outline-text-2" id="text-org34a194d">
+          <p>
+            Dired Hacks is a series of modifications to add features to Dired.
+          </p>
+        </div>
 
-<div id="outline-container-org480f636" class="outline-3">
-<h3 id="org480f636">Dired Collapse</h3>
-<div class="outline-text-3" id="text-org480f636">
-<p>
-Dired colapse will show the full path in a dired buffer for paths that contain only a single file.
-</p>
+        <div id="outline-container-org480f636" class="outline-3">
+          <h3 id="org480f636">Dired Collapse</h3>
+          <div class="outline-text-3" id="text-org480f636">
+            <p>
+              Dired colapse will show the full path in a dired buffer for paths
+              that contain only a single file.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired-collapse</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired-collapse</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> dired
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>dired-mode . dired-collapse-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org5db8ed7" class="outline-3">
-<h3 id="org5db8ed7">Dired Open</h3>
-<div class="outline-text-3" id="text-org5db8ed7">
-<p>
-Dired Open adds extra hooks to <code>dired-find-file</code> which search for alternative ways to open files in Dired.
-</p>
+        <div id="outline-container-org5db8ed7" class="outline-3">
+          <h3 id="org5db8ed7">Dired Open</h3>
+          <div class="outline-text-3" id="text-org5db8ed7">
+            <p>
+              Dired Open adds extra hooks to <code>dired-find-file</code> which
+              search for alternative ways to open files in Dired.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired-open</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">dired-open</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:after</span> dired
   <span style="color: #1ea8fc;">:init</span>
@@ -141,68 +194,86 @@ Dired Open adds extra hooks to <code>dired-find-file</code> which search for alt
   <span style="color: #1ea8fc;">:config</span>
   <span style="color: #ff2afc;">(</span>define-key dired-mode-map <span style="color: #a7da1e;">(</span>kbd <span style="color: #7984D1;">"o"</span><span style="color: #a7da1e;">)</span> #'dired-open-xdg<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
 
-<div id="outline-container-org72347b0" class="outline-3">
-<h3 id="org72347b0">xdg-open</h3>
-<div class="outline-text-3" id="text-org72347b0">
-<p>
-When opening files in Emacs such as media files, <code>xdg-open</code> can be used to open the preferred application for that particular file extension. Dired Open has a function <code>dired-open-xdg</code> that will open the file on the current line in Dired using <code>xdg-open</code>.
-</p>
+        <div id="outline-container-org72347b0" class="outline-3">
+          <h3 id="org72347b0">xdg-open</h3>
+          <div class="outline-text-3" id="text-org72347b0">
+            <p>
+              When opening files in Emacs such as media files,
+              <code>xdg-open</code> can be used to open the preferred
+              application for that particular file extension. Dired Open has a
+              function <code>dired-open-xdg</code> that will open the file on
+              the current line in Dired using <code>xdg-open</code>.
+            </p>
 
-<p>
-First, <code>whicher</code> can be used to see if <code>xdg-open</code> is installed on the system.
-</p>
+            <p>
+              First, <code>whicher</code> can be used to see if
+              <code>xdg-open</code> is installed on the system.
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"xdg-open"</span><span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>whicher <span style="color: #7984D1;">"xdg-open"</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-The following line will bind the <code>o</code> key to <code>dired-open-xdg</code>:
-</p>
+            <p>
+              The following line will bind the <code>o</code> key to
+              <code>dired-open-xdg</code>:
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>define-key dired-mode-map <span style="color: #ff2afc;">(</span>kbd <span style="color: #7984D1;">"o"</span><span style="color: #ff2afc;">)</span> #'dired-open-xdg<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>define-key dired-mode-map <span style="color: #ff2afc;">(</span>kbd <span style="color: #7984D1;">"o"</span><span style="color: #ff2afc;">)</span> #'dired-open-xdg<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+            </div>
 
-<p>
-This can also be configured to work in Sunrise Commander using the <code>sr-mode-map</code>:
-</p>
+            <p>
+              This can also be configured to work in Sunrise Commander using the
+              <code>sr-mode-map</code>:
+            </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span>define-key sr-mode-map <span style="color: #ff2afc;">(</span>kbd <span style="color: #7984D1;">"o"</span><span style="color: #ff2afc;">)</span> #'dired-open-xdg<span style="color: #1ea8fc;">)</span>
+            <div class="org-src-container">
+              <pre
+                class="src src-emacs-lisp"
+              ><span style="color: #1ea8fc;">(</span>define-key sr-mode-map <span style="color: #ff2afc;">(</span>kbd <span style="color: #7984D1;">"o"</span><span style="color: #ff2afc;">)</span> #'dired-open-xdg<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-orgdcc997f" class="outline-2">
-<h2 id="orgdcc997f">Disc Usage</h2>
-<div class="outline-text-2" id="text-orgdcc997f">
-<p>
-Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
-</p>
+      <div id="outline-container-orgdcc997f" class="outline-2">
+        <h2 id="orgdcc997f">Disc Usage</h2>
+        <div class="outline-text-2" id="text-orgdcc997f">
+          <p>
+            Disc usage is a tool that can be used to determine the amount of
+            memory a directory uses in the file system.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">disk-usage</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">disk-usage</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t<span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org91cad7d" class="outline-2">
-<h2 id="org91cad7d">Dired Async</h2>
-<div class="outline-text-2" id="text-org91cad7d">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">async</span>
+      <div id="outline-container-org91cad7d" class="outline-2">
+        <h2 id="org91cad7d">Dired Async</h2>
+        <div class="outline-text-2" id="text-org91cad7d">
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">async</span>
   <span style="color: #1ea8fc;">:straight</span> t
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:init</span>
@@ -210,33 +281,40 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
   <span style="color: #1ea8fc;">:hook</span>
   <span style="color: #ff2afc;">(</span>dired . dired-async-mode<span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org4f62749" class="outline-2">
-<h2 id="org4f62749">Rclone Tools</h2>
-<div class="outline-text-2" id="text-org4f62749">
-<p>
-Rclone tools is a package that used the Emacs <code>completing-read</code> function to simplify running the <code>rclone</code> program from within Emacs and make it simpler to create scripts using Emacs lisp.
-</p>
+      <div id="outline-container-org4f62749" class="outline-2">
+        <h2 id="org4f62749">Rclone Tools</h2>
+        <div class="outline-text-2" id="text-org4f62749">
+          <p>
+            Rclone tools is a package that used the Emacs
+            <code>completing-read</code> function to simplify running the
+            <code>rclone</code> program from within Emacs and make it simpler to
+            create scripts using Emacs lisp.
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">rclone-tools</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">use-package</span> <span style="color: #df85ff; font-weight: bold;">rclone-tools</span>
   <span style="color: #1ea8fc;">:straight</span> <span style="color: #ff2afc;">(</span>rclone-tools <span style="color: #1ea8fc;">:host</span> github
                           <span style="color: #1ea8fc;">:repo</span> <span style="color: #7984D1;">"tfree87/emacs-rclone-tools"</span>
                           <span style="color: #1ea8fc;">:branch</span> <span style="color: #7984D1;">"main"</span><span style="color: #ff2afc;">)</span>
   <span style="color: #1ea8fc;">:defer</span> t
   <span style="color: #1ea8fc;">:init</span> <span style="color: #ff2afc;">(</span>whicher <span style="color: #7984D1;">"rclone"</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
+          </div>
 
-<p>
-The following function will execute the rclone command line tool
-</p>
+          <p>
+            The following function will execute the rclone command line tool
+          </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">defun</span> <span style="color: #42c6ff;">rclone-sync</span> <span style="color: #ff2afc;">(</span>source dest <span style="color: #ffd400;">&amp;optional</span> rclone-path rclone-config<span style="color: #ff2afc;">)</span>
   <span style="color: #A875FF;">"Sync DEST with SOURCE using rclone.</span>
 <span style="color: #A875FF;">The path to the rlcone executable can be set with RCLONE-PATH.</span>
 <span style="color: #A875FF;">The rclone configuration can be set with RCLONE-CONFIG."</span>
@@ -255,31 +333,38 @@ The following function will execute the rclone command line tool
              <span style="color: #7984D1;">" "</span>
              dest<span style="color: #df85ff;">)</span><span style="color: #a7da1e;">)</span><span style="color: #ff2afc;">)</span><span style="color: #1ea8fc;">)</span>
 </pre>
-</div>
-</div>
-</div>
+          </div>
+        </div>
+      </div>
 
-<div id="outline-container-org73f9539" class="outline-2">
-<h2 id="org73f9539">End</h2>
-<div class="outline-text-2" id="text-org73f9539">
-<p>
-Tell Emacs what package this file provides.
-</p>
+      <div id="outline-container-org73f9539" class="outline-2">
+        <h2 id="org73f9539">End</h2>
+        <div class="outline-text-2" id="text-org73f9539">
+          <p>Tell Emacs what feature this file provides.</p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-dired</span><span style="color: #1ea8fc;">)</span>
+          <div class="org-src-container">
+            <pre
+              class="src src-emacs-lisp"
+            ><span style="color: #1ea8fc;">(</span><span style="color: #ff2afc; font-weight: bold;">provide</span> '<span style="color: #df85ff; font-weight: bold;">freemacs-dired</span><span style="color: #1ea8fc;">)</span>
 
 <span style="color: #546A90;">;;; </span><span style="color: #546A90;">freemacs-dired.el ends here</span>
 </pre>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: Time-stamp: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-19 Tue 21:07&gt;</span></span></p>
-<p class="author">Author: Thomas Freeman</p>
-<p class="date">Created: 2022-07-20 Wed 20:04</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">
+        Date: Time-stamp:
+        <span class="timestamp-wrapper"
+          ><span class="timestamp">&lt;2022-07-21 Thu 18:25&gt;</span></span
+        >
+      </p>
+      <p class="author">Author: Thomas Freeman</p>
+      <p class="date">Created: 2022-07-21 Thu 18:26</p>
+      <p class="validation">
+        <a href="https://validator.w3.org/check?uri=referer">Validate</a>
+      </p>
+    </div>
+  </body>
 </html>
