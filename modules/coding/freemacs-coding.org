@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-31 18:34:08 thomas>
+#+date: Time-stamp: <2022-07-31 18:51:47 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -31,6 +31,7 @@ The following customizations are used to improve the coding environment in Emacs
   (use-package aggressive-indent
     :straight t
     :hook
+    (emacs-lisp-mode . aggressive-indent-mode)
     (c-mode . aggressive-indent-mode)
     (emacs-lisp-mode . aggressive-indent-mode)
     (go-mode . aggressive-indent-mode))
@@ -203,7 +204,7 @@ The following code will always highlight matching parenthesis when coding /immed
           ("C-x t M-t" . treemacs-find-tag)))
   #+end_src
 
-  
+** Treemacs Magit
 
 #+begin_src emacs-lisp :tangle yes
   (use-package treemacs-magit
