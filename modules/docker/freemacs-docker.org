@@ -2,7 +2,7 @@
 
 #+title: Docker Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:14:00 thomas>
+#+date: Time-stamp: <2022-07-21 20:10:21 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -18,7 +18,7 @@
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
@@ -50,7 +50,7 @@ This module contains packages and configuration that adds that ability to work w
 
 * End
 
-Tell Emacs what package this file provides.
+Tell Emacs what feature this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-docker)

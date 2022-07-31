@@ -2,7 +2,7 @@
 
 #+title: Spellcheck Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-07 20:17:05 thomas>
+#+date: Time-stamp: <2022-07-21 18:25:12 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -18,7 +18,7 @@
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
