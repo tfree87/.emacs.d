@@ -40,4 +40,6 @@
 (set-language-environment "UTF-8")
 (setq default-input-method nil)
 
+(provide 'early-init)
+
 ;;; early-init.el ends here
