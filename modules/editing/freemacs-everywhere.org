@@ -1,0 +1,14 @@
+
+* Emacs Everywhere :guix:
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package emacs-everywhere
+    :straight nil)
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-everywhere)
+
+  ;;; freemacs-everywehere.el ends here
+#+end_src
