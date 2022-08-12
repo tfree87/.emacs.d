@@ -2,7 +2,7 @@
 
 #+title: Email Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:20 thomas>
+#+date: Time-stamp: <2022-08-11 20:22:07 L036467>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -120,16 +120,7 @@ And the code below will set Mu4e as the default mail reading command:
 
 * Org Contacts
 
-Org-contrib has  library ~org-contacts~ that can be used to store contact information in an Org Mode file. This file is a little easier to read than using a tool such as BBDB as it can be read and understood easilty with any plain text editor.
-
-First, ~org-contacs~ must be required from the ~org-contrib~ package and the default contacts file must be defined.
-
-#+begin_src emacs-lisp :noweb-ref org_contrib_config
-  (require 'org-contacts)
-  (setq org-contacts-files '("~/Dropbox/contacts.org"))
-#+end_src
-
-Then, we can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-headers-actin~ and the ~mu4e-view-actions~ so that the key combination =a o= can be used to add an email address to the file containing our contacts.
+W can integrate ~org-contacts~ with mu4e by additng it to the ~mu4e-headers-actin~ and the ~mu4e-view-actions~ so that the key combination =a o= can be used to add an email address to the file containing our contacts.
 
 #+begin_src emacs-lisp :noweb-ref mu4e_config
  (setq mu4e-org-contacts-file  "~/Dropbox/contacts.org")

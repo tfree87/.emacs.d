@@ -1,0 +1,42 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Contacts Configuration
+#+date: <2022-08-11 Thu>
+#+author:
+#+email: 
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.1 (Org mode 9.5.4)
+#+cite_export:
+
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+
+#+tSETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+Org Contacts uses an Org Mode buffer to manager your contacts. 
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package org-contacts
+    :straight t
+    :after org
+    :custom
+    (org-contacts-files '("~/gtd/contacts.org"
+                          "~/gtd/contacts2.org")))
+#+end_src
+
+* End
+
+Tell Emacs what feature this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-contacts)
+
+  ;;; freemacs-contacts.el ends here
+#+end_src
