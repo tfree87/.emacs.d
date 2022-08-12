@@ -35,7 +35,9 @@
 (use-package olivetti
   :straight t
   :hook
-  (org-mode . olivetti-mode))
+  (org-mode . olivetti-mode)
+  :custom
+  (olivetti-body-with 86))
 
 (use-package org
   :straight (:type built-in)
@@ -48,9 +50,9 @@
   ("C-c a" . #'org-agenda)
   ("C-c c" . #'org-capture)
   :custom
-  (org-directory "~/Drive/gtd")
+  (org-directory "~/gtd")
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Drive/gtd"))
+  (org-agenda-files `("~/gtd"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
@@ -84,13 +86,13 @@
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
   (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Drive/gtdprojects.org")
+   '(("p" "Projects item" entry (file "~/gtd/projects.org")
       "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Drive/gtdsomeday.org")
+     ("s" "Someday/Maybe item" entry (file "~/gtd/someday.org")
       "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Drive/gtdtickler.org")
+     ("T" "Tickler file item" entry (file "~/gtd/tickler.org")
       "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Drive/gtdinbox.org" "Tasks")
+     ("t" "To Do Item" entry (file+headline "~/gtd/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
@@ -137,7 +139,7 @@
   :init
   (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
-  (org-roam-directory (file-truename "~/Drive/org-roam"))
+  (org-roam-directory (file-truename "~/org-roam"))
   :config
   (org-roam-setup)
   :custom

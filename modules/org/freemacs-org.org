@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:19 thomas>
+#+date: Time-stamp: <2022-08-10 10:38:48 L036467>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -18,7 +18,6 @@
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
-#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
@@ -81,10 +80,12 @@ This file provides the Org Mode configuration for my personal configuration of E
 Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package olivetti
-    :straight t
-    :hook
-    (org-mode . olivetti-mode))
+      (use-package olivetti
+        :straight t
+        :hook
+        (org-mode . olivetti-mode)
+        :custom
+        (olivetti-body-with 86))
 #+end_src
 
 * Org :org:
@@ -96,28 +97,28 @@ Olivetti is a minor mode that can be used to center text in a buffer t make it m
 - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
   
 #+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package org
-    :straight (:type built-in)
-    :defer t
-    :init
-    (whicher "pdflatex")
-    (whicher "biber")
-    :bind
-    ("C-c l" . #'org-store-link)
-    ("C-c a" . #'org-agenda)
-    ("C-c c" . #'org-capture)
-    :custom
-    <<org_customize>>
-    :config
-    (add-hook 'org-mode-hook #'turn-on-flyspell)
-    <<org_config>>
-    <<babel_languages>>)
+    (use-package org
+      :straight (:type built-in)
+      :defer t
+      :init
+      (whicher "pdflatex")
+      (whicher "biber")
+      :bind
+      ("C-c l" . #'org-store-link)
+      ("C-c a" . #'org-agenda)
+      ("C-c c" . #'org-capture)
+      :custom
+      <<org_customize>>
+      :config
+      (add-hook 'org-mode-hook #'turn-on-flyspell)
+      <<org_config>>
+      <<babel_languages>>)
 
-  (use-package org-contrib
-    :straight t
-    :defer t
-    :config
-    <<org_contrib_config>>)
+    (use-package org-contrib
+      :straight t
+      :defer t
+      :config
+      <<org_contrib_config>>)
 #+end_src
 
 ** Directories
@@ -129,7 +130,7 @@ Set up the default directories for Org Mode.
 Tell org-mode which directory is the default directory for all org-mode files.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
-  (org-directory "~/Drive/gtd")
+  (org-directory "~/gtd")
 #+end_src
 
 *** Location of Agenda Files
@@ -138,7 +139,7 @@ Tell org-mode in which directory all the agenda files can be found.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Drive/gtd"))
+  (org-agenda-files `("~/gtd"))
 #+end_src
 
 ** Filing Notes
@@ -335,13 +336,13 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 #+name: org_capture_templates
 #+begin_src emacs-lisp :noweb-ref org_customize
    (org-capture-templates
-    '(("p" "Projects item" entry (file "~/Drive/gtdprojects.org")
+    '(("p" "Projects item" entry (file "~/gtd/projects.org")
        "* %? :project:")
-      ("s" "Someday/Maybe item" entry (file "~/Drive/gtdsomeday.org")
+      ("s" "Someday/Maybe item" entry (file "~/gtd/someday.org")
        "* %?\n%x")
-      ("T" "Tickler file item" entry (file "~/Drive/gtdtickler.org")
+      ("T" "Tickler file item" entry (file "~/gtd/tickler.org")
        "* %?\n%^{Scheduled}t\n%x")
-      ("t" "To Do Item" entry (file+headline "~/Drive/gtdinbox.org" "Tasks")
+      ("t" "To Do Item" entry (file+headline "~/gtd/inbox.org" "Tasks")
        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
 #+end_src
 
@@ -371,7 +372,7 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
     :init
     (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
     :custom
-    (org-roam-directory (file-truename "~/Drive/org-roam"))
+    (org-roam-directory (file-truename "~/org-roam"))
     :config
     (org-roam-setup)
     :custom

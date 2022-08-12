@@ -18,7 +18,9 @@
   (add-to-list 'completion-at-point-functions #'cape-symbol))
 
 (use-package consult
-  :straight t
+  :straight (consult :host github
+                     :branch "main"
+                     :repo "tfree87/consult")
   :bind (("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
@@ -168,13 +170,5 @@
   (vertico-resize t)
   :init
   (vertico-mode))
-
-(use-package kind-icon
-  :straight t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (provide 'freemacs-completion)

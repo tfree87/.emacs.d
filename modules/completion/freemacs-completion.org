@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:21 thomas>
+#+date: Time-stamp: <2022-08-11 18:59:01 L036467>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -17,7 +17,6 @@
 #+html_link_up: ../../init.html
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 
-#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
@@ -85,7 +84,9 @@ Complete Emacs-lisp symbols:
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package consult
-    :straight t
+    :straight (consult :host github
+                       :branch "main"
+                       :repo "tfree87/consult")
     :bind (("C-c h" . consult-history)
            ("C-c m" . consult-mode-command)
            ("C-c k" . consult-kmacro)
@@ -377,7 +378,7 @@ If All the Icons and All the Icons Completion is installed, activate All the Com
 
 Kind Icon can add icons to in-buffer completion systems. This can make it easier to visually process what type of results are being returned by the completion system.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package kind-icon
     :straight t
     :after corfu
