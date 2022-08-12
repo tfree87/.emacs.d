@@ -20,6 +20,11 @@
   :init
   (savehist-mode))
 
+(use-package winner
+  :straight (:type built-in)
+  :config
+  (winner-mode t))
+
 (use-package winum
   :straight t
   :defer 3
