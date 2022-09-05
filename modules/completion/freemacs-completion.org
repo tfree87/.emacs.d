@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-08-11 18:59:01 L036467>
+#+date: Time-stamp: <2022-08-21 17:27:35 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -84,9 +84,7 @@ Complete Emacs-lisp symbols:
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package consult
-    :straight (consult :host github
-                       :branch "main"
-                       :repo "tfree87/consult")
+    :straight t
     :bind (("C-c h" . consult-history)
            ("C-c m" . consult-mode-command)
            ("C-c k" . consult-kmacro)
