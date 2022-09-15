@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-09-02 18:58:42 Thomas>
+#+date: Time-stamp: <2022-09-15 18:45:35 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 

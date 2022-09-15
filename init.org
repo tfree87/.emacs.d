@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-31 17:50:53 thomas>
+#+date: Time-stamp: <2022-08-21 18:00:28 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -357,6 +357,14 @@ The [[file:modules/file-tools/freemacs-dired.org][Dired module]] contains change
   ;; Load sunrise module
 
   (require 'freemacs-sunrise)
+#+end_src
+
+** Trashed
+
+Install the Trashed module to manage the system trash from within Emacs.
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-trashed)
 #+end_src
 
 * Graphing
