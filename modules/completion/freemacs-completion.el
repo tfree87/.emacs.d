@@ -18,9 +18,7 @@
   (add-to-list 'completion-at-point-functions #'cape-symbol))
 
 (use-package consult
-  :straight (consult :host github
-                     :branch "main"
-                     :repo "tfree87/consult")
+  :straight t
   :bind (("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)

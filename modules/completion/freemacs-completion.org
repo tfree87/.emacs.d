@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-08-11 18:59:01 L036467>
+#+date: Time-stamp: <2022-09-02 18:58:42 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -84,9 +84,7 @@ Complete Emacs-lisp symbols:
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package consult
-    :straight (consult :host github
-                       :branch "main"
-                       :repo "tfree87/consult")
+    :straight t
     :bind (("C-c h" . consult-history)
            ("C-c m" . consult-mode-command)
            ("C-c k" . consult-kmacro)
@@ -379,13 +377,13 @@ If All the Icons and All the Icons Completion is installed, activate All the Com
 Kind Icon can add icons to in-buffer completion systems. This can make it easier to visually process what type of results are being returned by the completion system.
 
 #+begin_src emacs-lisp :tangle no
-  (use-package kind-icon
-    :straight t
-    :after corfu
-    :custom
-    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;  (use-package kind-icon
+;    :straight t
+;    :after corfu
+;    :custom
+;    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+;    :config
+;    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
 * End
