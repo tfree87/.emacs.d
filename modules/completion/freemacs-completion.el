@@ -91,6 +91,7 @@
   :straight t
   :init
   (global-corfu-mode)
+  (corfu-popupinfo-mode)
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)
@@ -109,16 +110,6 @@
   :config
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
-
-(use-package corfu-doc
-  :straight (corfu-doc :host github
-                       :repo "galeo/corfu-doc"
-                       :branch "main")
-  :hook
-  (corfu-mode . corfu-doc-mode)
-  :config
-  (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
-  (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 
 (use-package embark
   :straight t
