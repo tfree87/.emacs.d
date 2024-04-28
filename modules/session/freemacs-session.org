@@ -2,7 +2,7 @@
 
 #+title:Session Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:12 thomas>
+#+date: Time-stamp: <2024-04-22 19:56:09 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -42,9 +42,7 @@
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package burly
-    :straight (burly :host github
-                     :repo "tfree87/burly.el"
-                     :branch "master")
+    :straight t
     :commands (burly-bookmark-frames
                burly-bookmark-windows
                burly-open-bookmark))
