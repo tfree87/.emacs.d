@@ -3,9 +3,7 @@
   :bind ("C-x C-b" . bufler))
 
 (use-package burly
-  :straight (burly :host github
-                   :repo "tfree87/burly.el"
-                   :branch "master")
+  :straight t
   :commands (burly-bookmark-frames
              burly-bookmark-windows
              burly-open-bookmark))
@@ -19,11 +17,6 @@
   :straight (:type built-in)
   :init
   (savehist-mode))
-
-(use-package winner
-  :straight (:type built-in)
-  :config
-  (winner-mode t))
 
 (use-package winum
   :straight t
