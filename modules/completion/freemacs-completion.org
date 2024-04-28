@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-09-15 18:45:35 Thomas>
+#+date: Time-stamp: <2024-04-22 19:53:19 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -238,6 +238,7 @@ Cycle through completion candidates by pressing the completion key.
     :straight t
     :init
     (global-corfu-mode)
+    (corfu-popupinfo-mode)
     :bind
     <<corfu_bind>>
     :custom
@@ -261,22 +262,6 @@ Instead of using M-tab which will switch windows in XFCE---my default desktop en
         ([tab] . corfu-next)
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
-#+end_src
-
-** Corfu-doc
-
-Corfu-doc will bring up documentation results in a separate pop-up next to the corfu pop-up with the documentation of any function or variable results that are selected.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package corfu-doc
-    :straight (corfu-doc :host github
-                         :repo "galeo/corfu-doc"
-                         :branch "main")
-    :hook
-    (corfu-mode . corfu-doc-mode)
-    :config
-    (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down)
-    (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up))
 #+end_src
 
 * Embark
@@ -393,5 +378,3 @@ Tell Emacs what feature this file provides.
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-completion)
 #+end_src
-
-
