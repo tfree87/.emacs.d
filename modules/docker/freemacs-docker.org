@@ -2,7 +2,7 @@
 
 #+title: Docker Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:21 thomas>
+#+date: Time-stamp: <2024-04-21 21:27:09 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -46,6 +46,18 @@ This module contains packages and configuration that adds that ability to work w
     :defer t
     :init
     (whicher "docker-compose"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package docker-tramp
+    :straight t
+    :defer t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dockerfile-mode
+    :straight t
+    :defer t)
 #+end_src
 
 * End
