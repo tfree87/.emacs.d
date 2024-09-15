@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-08-21 18:00:28 thomas>
+#+date: Time-stamp: <2024-09-15 13:53:22 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -207,6 +207,16 @@ However, as I have started using the GUIX System Distribution I have found that 
 * Startup Tools
 
 This section contains many of the tools used at Emacs startup that are helpful when other packages are initialized.
+
+** Benchmark Init
+
+Use benchmark-init to check the time that it takes to load Emacs. This helps to diagnose which packages and configurations are causing Emacs to load slowly.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; Load benchmark-init module
+
+  (require 'freemacs-benchmark-init)
+#+END_SRC
 
 ** No-littering
 

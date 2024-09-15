@@ -21,9 +21,6 @@
 
 (setq gc-cons-threshold 500000000)
 
-(require 'benchmark-init)
-(add-hook 'after-init-hook 'benchmark-init/deactivate)
-
 (setq native-comp-deferred-compilation nil)
 
 (setq package-enable-at-startup nil)

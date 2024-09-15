@@ -2,7 +2,7 @@
 
 #+title:Whicher Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:11 thomas>
+#+date: Time-stamp: <2024-09-15 13:35:22 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,6 +21,9 @@
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
+* Whicher
+
+Whicher is a tool that allows the user to insert commands into their Emacs configuration to check for packages and binaries required to run different Emacs packages.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package whicher

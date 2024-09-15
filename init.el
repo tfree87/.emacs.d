@@ -80,6 +80,10 @@
 
 (straight-use-package 'use-package)
 
+;; Load benchmark-init module
+
+(require 'freemacs-benchmark-init)
+
 ;; Load No-littering module
 
 (require 'freemacs-no-littering)
