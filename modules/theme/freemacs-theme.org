@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:11 thomas>
+#+date: Time-stamp: <2024-09-15 13:09:03 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -38,12 +38,20 @@ When using Calfw, the default grid color does not show very well when using the 
 
 ** Default Font
 
-Change the default font to use Source Code Pro if it is available.
+Create a function to
 
 #+begin_src emacs-lisp :tangle yes
-  (custom-theme-set-faces
-   'user
-   '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+  (defun font-available-p (font-name)
+    (member font-name (font-family-list)))
+#+end_src
+
+Change the default font to use Hack if it is available.
+
+#+begin_src emacs-lisp :tangle yes
+  (when (font-available-p "Hack")
+    (custom-theme-set-faces
+     'user
+     '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 100 :width normal))))))
 #+end_src
 
 ** Fixed and Variable Pitch Fonts
@@ -51,16 +59,20 @@ Change the default font to use Source Code Pro if it is available.
 To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
 
 #+begin_src emacs-lisp :tangle yes
-  (cond ((eq system-type 'windows-nt)
-         (custom-theme-set-faces
-          'user
-          '(variable-pitch ((t (:family "Times New Roman"))))
-          '(fixed-pitch ((t (:family "Source Code Pro"))))))
-        ((eq system-type 'gnu/linux)
-        (custom-theme-set-faces
-         'user
-         '(variable-pitch ((t (:family "Source Serif Pro"))))
-         '(fixed-pitch ((t (:family "Source Code Pro")))))))
+    (cond ((and (eq system-type 'windows-nt)
+                (font-available-p "Times New Roman")
+                (font-available-p "Hack"))
+           (custom-theme-set-faces
+            'user
+            '(variable-pitch ((t (:family "Times New Roman"))))
+            '(fixed-pitch ((t (:family "Hack"))))))
+          ((and (eq system-type 'gnu/linux)
+                (font-available-p "Liberation Serif")
+                (font-available-p "Hack"))
+          (custom-theme-set-faces
+           'user
+           '(variable-pitch ((t (:family "Liberation Serif"))))
+           '(fixed-pitch ((t (:family "Hack")))))))
 #+end_src
 
 ** Sunrise Comnmander Faces

@@ -1,17 +1,25 @@
-(custom-theme-set-faces
- 'user
- '(default ((t (:family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+(defun font-available-p (font-name)
+  (member font-name (font-family-list)))
 
-(cond ((eq system-type 'windows-nt)
+(when (font-available-p "Hack")
+  (custom-theme-set-faces
+   'user
+   '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 100 :width normal))))))
+
+(cond ((and (eq system-type 'windows-nt)
+            (font-available-p "Times New Roman")
+            (font-available-p "Hack"))
        (custom-theme-set-faces
         'user
         '(variable-pitch ((t (:family "Times New Roman"))))
-        '(fixed-pitch ((t (:family "Source Code Pro"))))))
-      ((eq system-type 'gnu/linux)
+        '(fixed-pitch ((t (:family "Hack"))))))
+      ((and (eq system-type 'gnu/linux)
+            (font-available-p "Liberation Serif")
+            (font-available-p "Hack"))
       (custom-theme-set-faces
        'user
-       '(variable-pitch ((t (:family "Source Serif Pro"))))
-       '(fixed-pitch ((t (:family "Source Code Pro")))))))
+       '(variable-pitch ((t (:family "Liberation Serif"))))
+       '(fixed-pitch ((t (:family "Hack")))))))
 
 (custom-theme-set-faces
  'user
