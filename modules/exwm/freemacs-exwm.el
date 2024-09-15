@@ -6,13 +6,14 @@
 
 (use-package exwm
   :if
+  (and (not (eq system-type 'windows-nt))
   (and (window-system)
        (not
         (string=
          (substring
           (shell-command-to-string
            (whicher "wmctrl -m ; echo $status"))
-          -2 -1) "0")))
+          -2 -1) "0"))))
   :custom
   (exwm-workspace-number 1)
   (exwm-input-global-keys

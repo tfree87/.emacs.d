@@ -3,6 +3,7 @@
 
 #+begin_src emacs-lisp :tangle yes
   (use-package emacs-everywhere
+    :if (not (eq system-type 'windows-nt))
     :straight nil)
 #+end_src
 

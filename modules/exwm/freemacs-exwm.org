@@ -2,7 +2,7 @@
 
 #+title:Emacs Desktop Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:54:05 thomas>
+#+date: Time-stamp: <2024-09-15 12:19:00 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -64,7 +64,8 @@ Currently, I only use EXWM on my GUIX systems to I do not use straight or use-pa
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package exwm
     :if
-    <<win_man_check>>
+    (and (not (eq system-type 'windows-nt))
+    <<win_man_check>>)
     :custom
     <<exwm_custom>>
     :config
