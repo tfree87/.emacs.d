@@ -88,7 +88,7 @@
   :after (consult flycheck))
 
 (use-package corfu
-  :straight t
+  :straight (:files (:defaults "extensions/*.el"))
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)

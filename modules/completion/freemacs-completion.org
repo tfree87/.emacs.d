@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-04-22 19:53:19 Thomas>
+#+date: Time-stamp: <2024-09-15 11:46:38 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -234,21 +234,21 @@ Cycle through completion candidates by pressing the completion key.
 [[https://github.com/minad/corfu][Corfu]] for in-buffer completion. Corfu will provide an in-buffer popup window that will be populated with various completion options.
 
 #+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package corfu
-    :straight t
-    :init
-    (global-corfu-mode)
-    (corfu-popupinfo-mode)
-    :bind
-    <<corfu_bind>>
-    :custom
-    (corfu-auto t)
-    (corfu-cycle t)
-    (corfu-preselect-first nil)
-    <<tab-selection>>
-    :config
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+    (use-package corfu
+      :straight (:files (:defaults "extensions/*.el"))
+      :init
+      (global-corfu-mode)
+      (corfu-popupinfo-mode)
+      :bind
+      <<corfu_bind>>
+      :custom
+      (corfu-auto t)
+      (corfu-cycle t)
+      (corfu-preselect-first nil)
+      <<tab-selection>>
+      :config
+      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 #+end_src
 
 ** Use TAB for Selecting Candidates
