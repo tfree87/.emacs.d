@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:20 thomas>
+#+date: Time-stamp: <2024-09-16 19:04:23 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -50,6 +50,26 @@ This will cause emacs to default to moving/copying/renaming files from the direc
    (dired-dwim-target t)
  #+end_src
  
+* WDired-Mode
+
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html][Wdired]], allow for a writable dired buffer. This makes it easy to rename files in dired buffers.
+
+#+begin_src emacs-lisp :tangle yes :nowweb yes
+    (use-package wdired-mode
+      :straight (:type built-in)
+      :defer t
+      :custom
+      <<wdired_custom>>)
+#+end_src
+
+** Change Permissions in Dired
+
+Wdired allows for manual editing of file premissions when ~wdired-allow-to-change-permissions~ is set to true.
+
+#+begin_src emacs-lisp :tangle yes :noweb-ref wdired_custom
+  (wdired-allow-to-change-permissions t)
+#+end_src
+
 * Dired Hacks
 
 Dired Hacks is a series of modifications to add features to Dired.
