@@ -2,7 +2,7 @@
 
 #+title: Sunrise Commander Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:14 thomas>
+#+date: Time-stamp: <2024-09-22 20:56:10 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -38,6 +38,12 @@ Sunrise Commander locks the windows vertically by default. The following line wi
 
 #+begin_src emacs-lisp :noweb-ref sr_custom
   (sr-windows-locked nil)
+#+end_src
+
+** Popviewer Mode
+
+#+begin_src emacs-lisp :noweb-ref sr_custom
+  (sr-popviewer-enabled 1)
 #+end_src
 
 * End

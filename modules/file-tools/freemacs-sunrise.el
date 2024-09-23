@@ -2,7 +2,8 @@
   :defer t
   :straight t
   :custom
-  (sr-windows-locked nil))
+  (sr-windows-locked nil)
+  (sr-popviewer-enabled 1))
 
 (provide 'freemacs-sunrise)
 
