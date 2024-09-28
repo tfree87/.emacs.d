@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-16 19:04:23 Thomas>
+#+date: Time-stamp: <2024-09-28 19:47:26 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -34,14 +34,6 @@ The following customizations make emacs dired mode behave in a similar fashion t
     <<dired_custom>>)
 #+end_src
 
-** Close Dired Buffers When Another is Opened
-
-When navigating through a series of Dired buffers, all of the old locations that were traversed through are still open as Dired buffers. This can create a lot of open buffers to clean up later. Luckily, there is an option (introduced in Emacs 28) to automatically kill old Dired buffers when a new buffer is opened using the option ~dired-kill-when-opening-new-dired-buffer~
-
-#+begin_src emacs-lisp :noweb-ref dired_custom
-  (dired-kill-when-opening-new-dired-buffer t)
-#+end_src
-
 ** Move/Rename/Copy Files to Another Pane
 
 This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
@@ -54,7 +46,7 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 
 [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html][Wdired]], allow for a writable dired buffer. This makes it easy to rename files in dired buffers.
 
-#+begin_src emacs-lisp :tangle yes :nowweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
     (use-package wdired-mode
       :straight (:type built-in)
       :defer t
@@ -66,7 +58,7 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 
 Wdired allows for manual editing of file premissions when ~wdired-allow-to-change-permissions~ is set to true.
 
-#+begin_src emacs-lisp :tangle yes :noweb-ref wdired_custom
+#+begin_src emacs-lisp :noweb-ref wdired_custom
   (wdired-allow-to-change-permissions t)
 #+end_src
 

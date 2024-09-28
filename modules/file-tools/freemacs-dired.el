@@ -2,16 +2,13 @@
   :straight (:type built-in)
   :defer t
   :custom
-  (dired-kill-when-opening-new-dired-buffer t)
   (dired-dwim-target t))
 
 (use-package wdired-mode
   :straight (:type built-in)
   :defer t
   :custom
-  <<wdired_custom>>)
-
-(wdired-allow-to-change-permissions t)
+  (wdired-allow-to-change-permissions t))
 
 (use-package dired-collapse
   :straight t
