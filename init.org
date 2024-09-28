@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-15 13:53:22 Thomas>
+#+date: Time-stamp: <2024-09-28 19:44:33 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -357,16 +357,6 @@ The [[file:modules/file-tools/freemacs-dired.org][Dired module]] contains change
   ;; Load file tools module
 
   (require 'freemacs-dired)
-#+end_src
-
-** Sunrise Commander
-
-[[https://github.com/sunrise-commander/sunrise-commander][Sunrise Commander]] is a two-pane orthodox file manager similar to Midnight Commander. The configuration for Sunrise Commander is in the [[file:modules/file-tools/freemacs-sunrise.org][sunrise module]].
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Load sunrise module
-
-  (require 'freemacs-sunrise)
 #+end_src
 
 ** Trashed

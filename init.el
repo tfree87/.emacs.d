@@ -138,10 +138,6 @@
 
 (require 'freemacs-dired)
 
-;; Load sunrise module
-
-(require 'freemacs-sunrise)
-
 (require 'freemacs-trashed)
 
 ;; Load graphing module
