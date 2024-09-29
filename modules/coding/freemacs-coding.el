@@ -47,6 +47,8 @@
   :straight t
   :bind ("C-x g" . magit-status))
 
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
 (use-package numpydoc
   :straight t
   :defer t

@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-31 18:51:47 thomas>
+#+date: Time-stamp: <2024-09-29 09:56:14 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -124,9 +124,8 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
 
 Number lines can be very useful in programming modes. This code below will turn on the built-in ~display-line-numbers-mode~ in any major mode that inherits from ~prog-mode~. With wide monitors these days it is less of an issue and it can always toggled off with  ~display-line-numbers-mode~ on the fly.
 
-#+begin_src emacs-lisp :noweb-ref emacs_config
-    (when (version<= "26.0.50" emacs-version)
-      (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 #+end_src
 
 * Numpydoc
