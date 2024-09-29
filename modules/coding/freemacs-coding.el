@@ -103,6 +103,13 @@
   :defer t
   :straight t)
 
+(use-package indent-bars
+  :straight (:host github :repo "jdtsmith/indent-bars"
+                   :branch "main")
+  :hook (prog-mode . indent-bars-mode)
+  :custom
+  (indent-bars-prefer-character t))
+
 (provide 'freemacs-coding)
 
 ;;; freemacs-coding.el ends here

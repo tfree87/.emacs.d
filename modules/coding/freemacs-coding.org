@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-29 09:56:14 thomas>
+#+date: Time-stamp: <2024-09-29 10:55:55 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -210,6 +210,17 @@ The following code will always highlight matching parenthesis when coding /immed
     :after (treemacs magit)
     :defer t
     :straight t)
+#+end_src
+
+* Indent Makers
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package indent-bars
+    :straight (:host github :repo "jdtsmith/indent-bars"
+                     :branch "main")
+    :hook (prog-mode . indent-bars-mode)
+    :custom
+    (indent-bars-prefer-character t))
 #+end_src
 
 * End
