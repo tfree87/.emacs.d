@@ -1,5 +1,5 @@
 (use-package vterm
-  :straight nil
+  :straight t
   :defer t)
 
 (use-package multi-vterm
