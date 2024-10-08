@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-28 19:44:33 Thomas>
+#+date: Time-stamp: <2024-10-07 23:05:26 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -392,6 +392,13 @@ Ledger is a plain-text accounting system that is very fast, powerful and safe. T
   (require 'freemacs-ledger)
 #+end_src
 
+* Meow Mode
+Install Meow Mode for better navigation when running Emacs in the
+browser.
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-meow)
+#+end_src
 * Org
 
 Customizations for the built-in Org Mode for Emacs.

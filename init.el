@@ -148,6 +148,8 @@
 
 (require 'freemacs-ledger)
 
+(require 'freemacs-meow)
+
 ;; Load the Org Mode module
 
 (require 'freemacs-org)
