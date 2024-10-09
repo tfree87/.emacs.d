@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-07 23:05:26 Thomas>
+#+date: Time-stamp: <2024-10-08 09:58:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -408,7 +408,10 @@ Customizations for the built-in Org Mode for Emacs.
 
   (require 'freemacs-org)
 #+end_src
-
+* Org Contacts
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-org-contacts)
+#+end_src
 * Session
 
 This section contains customizations for controlling how to navigate between Emacs windows, frames, and buffers.

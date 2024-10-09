@@ -154,6 +154,8 @@
 
 (require 'freemacs-org)
 
+(require 'freemacs-org-contacts)
+
 ;; Load session module
 
 (require 'freemacs-session)
