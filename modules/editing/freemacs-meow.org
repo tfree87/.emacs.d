@@ -113,13 +113,23 @@ Meow mode requries that all keybindings be defined Here is the recommended layou
 
 ** Install Meow Mode
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package meow
     :ensure t
     :straight t
     :config
     (meow-setup)
-    (meow-global-mode 1))
+    (meow-global-mode 1)
+    :hook
+    <<meow_hooks>>)
+#+end_src
+
+Disable meow-mode in various modes where there are compatibility issues.
+
+#+begin_src emacs-lisp :noweb-ref meow_hooks
+  (vterm-mode . meow-normal-mode)
+  (eshell-mode . meow-normal-mode)
+  (bufler-mode . meow-normal-mode)
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes

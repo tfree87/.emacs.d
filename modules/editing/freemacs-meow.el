@@ -89,6 +89,10 @@
   :straight t
   :config
   (meow-setup)
-  (meow-global-mode 1))
+  (meow-global-mode 1)
+  :hook
+  (vterm-mode . meow-normal-mode)
+  (eshell-mode . meow-normal-mode)
+  (bufler-mode . meow-normal-mode))
 
 (provide 'freemacs-meow)
