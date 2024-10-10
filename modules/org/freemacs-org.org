@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-08-10 10:38:48 L036467>
+#+date: Time-stamp: <2024-10-09 21:35:35 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -130,7 +130,7 @@ Set up the default directories for Org Mode.
 Tell org-mode which directory is the default directory for all org-mode files.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
-  (org-directory "~/gtd")
+  (org-directory "~/Nextcloud/org")
 #+end_src
 
 *** Location of Agenda Files
@@ -139,7 +139,7 @@ Tell org-mode in which directory all the agenda files can be found.
 
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/gtd"))
+  (org-agenda-files `("~/Nextcloud/org"))
 #+end_src
 
 ** Filing Notes

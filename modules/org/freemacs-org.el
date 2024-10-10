@@ -50,9 +50,9 @@
   ("C-c a" . #'org-agenda)
   ("C-c c" . #'org-capture)
   :custom
-  (org-directory "~/gtd")
+  (org-directory "~/Nextcloud/org")
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/gtd"))
+  (org-agenda-files `("~/Nextcloud/org"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
