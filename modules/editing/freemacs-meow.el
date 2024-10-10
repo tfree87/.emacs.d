@@ -90,9 +90,9 @@
   :config
   (meow-setup)
   (meow-global-mode 1)
-  :hook
-  (vterm-mode . meow-normal-mode)
-  (eshell-mode . meow-normal-mode)
-  (bufler-mode . meow-normal-mode))
+  (meow-define-state disable "dummy state")
+  (add-to-list 'meow-mode-state-list '(vterm-mode . disable))
+  (add-to-list 'meow-mode-state-list '(eshell-mode . disable))
+  (add-to-list 'meow-mode-state-list '(bufler-mode . disable)))
 
 (provide 'freemacs-meow)

@@ -120,16 +120,16 @@ Meow mode requries that all keybindings be defined Here is the recommended layou
     :config
     (meow-setup)
     (meow-global-mode 1)
-    :hook
-    <<meow_hooks>>)
+    <<meow_config>>)
 #+end_src
 
 Disable meow-mode in various modes where there are compatibility issues.
 
-#+begin_src emacs-lisp :noweb-ref meow_hooks
-  (vterm-mode . meow-normal-mode)
-  (eshell-mode . meow-normal-mode)
-  (bufler-mode . meow-normal-mode)
+#+begin_src emacs-lisp :noweb-ref meow_config
+  (meow-define-state disable "dummy state")
+  (add-to-list 'meow-mode-state-list '(vterm-mode . disable))
+  (add-to-list 'meow-mode-state-list '(eshell-mode . disable))
+  (add-to-list 'meow-mode-state-list '(bufler-mode . disable))
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
