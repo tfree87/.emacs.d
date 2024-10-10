@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-09 21:14:14 thomas>
+#+date: Time-stamp: <2024-10-09 22:08:58 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -336,7 +336,7 @@ EXWM is a window manager that runs entirely wihtin Emacs. With EXWM, Emacs frame
 #+begin_src emacs-lisp :tangle yes
   ;; Load the EXWM module
 
-  (require 'freemacs-exwm)
+  ;(require 'freemacs-exwm)
 #+end_src
 
 * File Management

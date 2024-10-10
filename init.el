@@ -128,7 +128,7 @@
 
 ;; Load the EXWM module
 
-(require 'freemacs-exwm)
+;(require 'freemacs-exwm)
 
 ;; Load file tools module
 
