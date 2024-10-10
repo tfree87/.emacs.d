@@ -118,10 +118,6 @@
 
 (require 'freemacs-editing)
 
-;; Load emacs-everywhere
-
-(require 'freemacs-everywhere)
-
 ;; Load Elfeed newsreader module
 
 (require 'freemacs-elfeed)

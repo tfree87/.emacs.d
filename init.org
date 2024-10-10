@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-08 09:58:12 thomas>
+#+date: Time-stamp: <2024-10-09 21:14:14 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -307,12 +307,6 @@ General editing tools are configured in the Emacs [[file:modules/editing/freemac
   ;; Load the editing module
 
   (require 'freemacs-editing)
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
-  ;; Load emacs-everywhere
-
-  (require 'freemacs-everywhere)
 #+end_src
 
 * Elfeed
