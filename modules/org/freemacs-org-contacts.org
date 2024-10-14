@@ -2,7 +2,7 @@
 
 #+title: Org Contacts Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-08 11:16:36 thomas>
+#+date: Time-stamp: <2024-10-14 18:19:29 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,13 +21,19 @@
 -----
 
 
+Org Contacts provides a way to manage your contacts entirely within Org Mode. This provides the ability to easily read your contacts in a single file with headings when compared to using a contacts database such ad BBDB or EBDB.
+
+This particular version of Org Contacts is my personal fork that is in development to try and make the existing Org Contacts more extensible with lists of custom contact information category types.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package org-contacts
     :straight (:host github :repo "tfree87/org-contacts"
-                       :branch "master")
+                     :branch "master")
     :custom
-    (org-contacts-files '("~/org/contacts.org")))
+    (org-contacts-files '("~/Nextcloud/org/contacts.org")))
 #+end_src
+
+Tell Emacs which package this provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-org-contacts)
