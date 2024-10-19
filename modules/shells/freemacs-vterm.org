@@ -2,7 +2,7 @@
 
 #+title: Vterm Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-29 11:42:10 thomas>
+#+date: Time-stamp: <2024-10-19 11:10:47 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,7 +29,8 @@ VTerm is a terminal emulator in Emacs that is written in C and compiled on the h
 #+begin_src emacs-lisp :tangle yes
   (use-package vterm
     :straight t
-    :defer t)
+    :defer t
+    :commands vterm)
 #+end_src
 
 * Multi VTerm
@@ -38,7 +39,7 @@ VTerm is a terminal emulator in Emacs that is written in C and compiled on the h
 
 #+begin_src emacs-lisp :tangle yes
   (use-package multi-vterm
-    :straight nil
+    :straight t
     :defer t
     :commands (multi-vterm
                multi-vterm-project
@@ -46,6 +47,8 @@ VTerm is a terminal emulator in Emacs that is written in C and compiled on the h
 #+end_src
 
 * End
+
+Tell Eemacs what package this provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-vterm)

@@ -1,9 +1,10 @@
 (use-package vterm
   :straight t
-  :defer t)
+  :defer t
+  :commands vterm)
 
 (use-package multi-vterm
-  :straight nil
+  :straight t
   :defer t
   :commands (multi-vterm
              multi-vterm-project
