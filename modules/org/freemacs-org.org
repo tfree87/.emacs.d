@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-09 21:35:35 thomas>
+#+date: Time-stamp: <2024-10-19 14:55:33 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -73,19 +73,6 @@ This file provides the Org Mode configuration for my personal configuration of E
     :custom
     (habitica-turn-on-highlighting t)
     (habitica-show-streak t))
-#+end_src
-
-* Olivetti
-
-Olivetti is a minor mode that can be used to center text in a buffer t make it more pleasant to read. It creates margins that are similar to the large margins you might find in a default class of a LaTeX document. I have found that large margins make reading much more pleasant.
-
-#+begin_src emacs-lisp :tangle yes
-      (use-package olivetti
-        :straight t
-        :hook
-        (org-mode . olivetti-mode)
-        :custom
-        (olivetti-body-with 86))
 #+end_src
 
 * Org :org:
@@ -399,42 +386,11 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
             ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
 
-* Org Modern :org:
-
-Org Modern is a package that prettifies Org Mode buffers.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package org-modern
-    :straight t
-    :after org
-    :custom
-    (org-auto-align-tags nil)
-    (org-catch-invisible-edits 'show-and-error)
-    (org-special-ctrl-a/e t)
-    (org-insert-heading-respect-content t)
-    (org-pretty-entities t)
-    (org-ellipsis "…")
-    (org-agenda-tags-column 0)
-    (org-agenda-block-separator ?─)
-    (org-modern-horizontal-rule
-     "──────────────────────────────────────────────────")
-    (org-agenda-time-grid
-     '((daily today require-timed)
-       (800 1000 1200 1400 1600 1800 2000)
-       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-    (org-agenda-current-time-string
-     "⭠ now ─────────────────────────────────────────────────")
-  :config
-  <<org_modern_config>>
-  (global-org-modern-mode)
-  (freemacs/org-header-formatting))
-#+end_src
-
 * Org Header Sizes
 
 The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
 
-#+begin_src emacs-lisp :noweb-ref org_modern_config
+#+begin_src emacs-lisp :tangle yes
   (defun freemacs/org-header-formatting ()
     "Change the size of headers and titles in Org Mode buffers."
     (interactive)

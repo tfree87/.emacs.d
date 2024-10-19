@@ -172,6 +172,10 @@
 
 (require 'freemacs-theme)
 
+;; Load centered window mode
+
+(require 'freemacs-cwm)
+
 ;; Load All the Icons module
 
 (require 'freemacs-alltheicons)

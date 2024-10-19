@@ -32,13 +32,6 @@
   (habitica-turn-on-highlighting t)
   (habitica-show-streak t))
 
-(use-package olivetti
-  :straight t
-  :hook
-  (org-mode . olivetti-mode)
-  :custom
-  (olivetti-body-with 86))
-
 (use-package org
   :straight (:type built-in)
   :defer t
@@ -165,27 +158,6 @@
           ("C-c n a" . org-roam-alias-add)
           ("C-c n l" . org-roam-buffer-toggle)))))
 
-(use-package org-modern
-  :straight t
-  :after org
-  :custom
-  (org-auto-align-tags nil)
-  (org-catch-invisible-edits 'show-and-error)
-  (org-special-ctrl-a/e t)
-  (org-insert-heading-respect-content t)
-  (org-pretty-entities t)
-  (org-ellipsis "…")
-  (org-agenda-tags-column 0)
-  (org-agenda-block-separator ?─)
-  (org-modern-horizontal-rule
-   "──────────────────────────────────────────────────")
-  (org-agenda-time-grid
-   '((daily today require-timed)
-     (800 1000 1200 1400 1600 1800 2000)
-     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-  (org-agenda-current-time-string
-   "⭠ now ─────────────────────────────────────────────────")
-:config
 (defun freemacs/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."
   (interactive)
@@ -202,8 +174,6 @@
            (org-level-8 . 1.10)
            (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
-(global-org-modern-mode)
-(freemacs/org-header-formatting))
 
 (provide 'freemacs-org)
 

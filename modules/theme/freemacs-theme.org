@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-15 15:07:11 Thomas>
+#+date: Time-stamp: <2024-10-19 14:25:31 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -187,6 +187,17 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
     :config
     (nyan-mode)
     (nyan-start-animation))
+#+end_src
+* Org Margin
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package org-margin
+    :after org
+    :straight (:host github :repo "rougier/org-margin"
+                     :branch "master")
+    :defer t
+    :config
+    (org-margin-mode 1))
 #+end_src
 
 * End

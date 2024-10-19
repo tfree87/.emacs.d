@@ -81,6 +81,14 @@
   (nyan-mode)
   (nyan-start-animation))
 
+(use-package org-margin
+  :after org
+  :straight (:host github :repo "rougier/org-margin"
+                   :branch "master")
+  :defer t
+  :config
+  (org-margin-mode 1))
+
 (provide 'freemacs-theme)
 
 ;;; freemacs-theme.el ends here
