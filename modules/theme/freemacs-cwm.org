@@ -1,0 +1,20 @@
+
+
+
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package centered-window
+    :straight t
+    :custom
+    (cwm-incremental-padding t)
+    (cwm-incremental-padding-% 5)
+    :config
+    (centered-window-mode t))
+#+end_src
+
+
+
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-cwm)
+#+end_src
