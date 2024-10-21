@@ -1,3 +1,5 @@
+; TODO Move to a separate module
+
 (use-package calfw
   :straight (emacs-calfw :host github
                          :repo "zemaye/emacs-calfw"

@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-20 20:00:20 thomas>
+#+date: Time-stamp: <2024-10-20 21:40:21 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,15 +23,13 @@
 
 This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Organization/Time Management/Notes Configuration
-#+end_src
-
 * Calfw
 
 [[https://github.com/kiwanami/emacs-calfw][Calfw]] provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
 
 #+begin_src emacs-lisp :tangle yes
+  ; TODO Move to a separate module
+
   (use-package calfw
     :straight (emacs-calfw :host github
                            :repo "zemaye/emacs-calfw"
@@ -64,7 +62,7 @@ This file provides the Org Mode configuration for my personal configuration of E
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+end_src
 
-* Org :org:
+* Org
 
 [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 
@@ -73,28 +71,35 @@ This file provides the Org Mode configuration for my personal configuration of E
 - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
   
 #+begin_src emacs-lisp :tangle yes :noweb yes
-    (use-package org
-      :straight (:type built-in)
-      :defer t
-      :init
-      (whicher "pdflatex")
-      (whicher "biber")
-      :bind
-      ("C-c l" . #'org-store-link)
-      ("C-c a" . #'org-agenda)
-      ("C-c c" . #'org-capture)
-      :custom
-      <<org_customize>>
-      :config
-      (add-hook 'org-mode-hook #'turn-on-flyspell)
-      <<org_config>>
-      <<babel_languages>>)
+  (use-package org
+    :straight (:type built-in)
+    :defer t
+    :init
+    (whicher "pdflatex")
+    (whicher "biber")
+    :bind
+    ("C-c l" . #'org-store-link)
+    ("C-c a" . #'org-agenda)
+    ("C-c c" . #'org-capture)
+    :custom
+    <<org_customize>>
+    :config
+    (add-hook 'org-mode-hook #'turn-on-flyspell)
+    <<org_config>>
+    <<babel_languages>>)
 
-    (use-package org-contrib
-      :straight t
-      :defer t
-      :config
-      <<org_contrib_config>>)
+  (use-package org-contrib
+    :straight t
+    :defer t
+    :config
+    <<org_contrib_config>>)
+#+end_src
+** Use Unique IDs for Org Links
+
+This will create unique IDs for every internal link between Org file headings. This will prevent links from breaking when files or headings are restructured.
+
+#+begin_src emacs-lisp :noweb-ref org_customize
+  (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 #+end_src
 
 ** Directories
@@ -320,21 +325,6 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
        "* %?\n%^{Scheduled}t\n%x")
       ("t" "To Do Item" entry (file+headline "~/gtd/inbox.org" "Tasks")
        "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
-#+end_src
-
-* Org-mind-map :org:
-
-[[https://github.com/the-ted/org-mind-map][Org-mind-map]] turns any ~org-mode~ buffer into a mind map in various output formats.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-mind-map
-    :straight t
-    :after org
-    :commands org-mind-map-write
-    :init
-    (require 'ox-org)
-    :custom
-    (org-mind-map-engine "dot"))
 #+end_src
 
 * Org Header Sizes
