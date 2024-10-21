@@ -152,6 +152,10 @@
 
 (require 'freemacs-org-contacts)
 
+(require 'freemacs-org-mm)
+
+(require 'freemacs-org-ql)
+
 ;; Load session module
 
 (require 'freemacs-session)
