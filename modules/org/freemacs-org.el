@@ -25,13 +25,6 @@
   :init
   (defalias 'calfworg 'cfw:open-org-calendar))
 
-(use-package habitica
-  :straight t
-  :after org
-  :custom
-  (habitica-turn-on-highlighting t)
-  (habitica-show-streak t))
-
 (use-package org
   :straight (:type built-in)
   :defer t
@@ -125,38 +118,6 @@
   (require 'ox-org)
   :custom
   (org-mind-map-engine "dot"))
-
-(use-package org-roam
-  :defer t
-  :after org
-  :init
-  (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-  :custom
-  (org-roam-directory (file-truename "~/org-roam"))
-  :config
-  (org-roam-setup)
-  :custom
-  (org-roam-dailies-directory "daily/")
-  (org-roam-capture-templates
-   '(("d" "default" plain "%?"
-      :target (file+head "${slug}.org"
-                         "#+title: ${title}\n")
-      :unnarrowed t)))
-  (org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      "* %?"
-      :target (file+head "%<%Y-%m-%d>.org"
-                         "#+title: %<%Y-%m-%d>\n"))))
-  :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n r" . org-roam-node-random)
-   (:map org-mode-map
-         (("C-c n i" . org-roam-node-insert)
-          ("C-c n o" . org-id-get-create)
-          ("C-c n t" . org-roam-tag-add)
-          ("C-c n a" . org-roam-alias-add)
-          ("C-c n l" . org-roam-buffer-toggle)))))
 
 (defun freemacs/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."

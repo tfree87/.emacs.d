@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-19 14:55:33 thomas>
+#+date: Time-stamp: <2024-10-20 20:00:20 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -62,17 +62,6 @@ This file provides the Org Mode configuration for my personal configuration of E
     :commands (cfw:open-org-calendar)
     :init
     (defalias 'calfworg 'cfw:open-org-calendar))
-#+end_src
-
-* Habitica :org:
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package habitica
-    :straight t
-    :after org
-    :custom
-    (habitica-turn-on-highlighting t)
-    (habitica-show-streak t))
 #+end_src
 
 * Org :org:
@@ -346,44 +335,6 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
     (require 'ox-org)
     :custom
     (org-mind-map-engine "dot"))
-#+end_src
-
-* Org-roam :org:guix:
-
-[[https://www.orgroam.com/][Org -roam]] adds features to make linking org notes easier and provided a database file to connect all the notes together.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-roam
-    :defer t
-    :after org
-    :init
-    (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-    :custom
-    (org-roam-directory (file-truename "~/org-roam"))
-    :config
-    (org-roam-setup)
-    :custom
-    (org-roam-dailies-directory "daily/")
-    (org-roam-capture-templates
-     '(("d" "default" plain "%?"
-        :target (file+head "${slug}.org"
-                           "#+title: ${title}\n")
-        :unnarrowed t)))
-    (org-roam-dailies-capture-templates
-     '(("d" "default" entry
-        "* %?"
-        :target (file+head "%<%Y-%m-%d>.org"
-                           "#+title: %<%Y-%m-%d>\n"))))
-    :bind
-    (("C-c n f" . org-roam-node-find)
-     ("C-c n g" . org-roam-graph)
-     ("C-c n r" . org-roam-node-random)
-     (:map org-mode-map
-           (("C-c n i" . org-roam-node-insert)
-            ("C-c n o" . org-id-get-create)
-            ("C-c n t" . org-roam-tag-add)
-            ("C-c n a" . org-roam-alias-add)
-            ("C-c n l" . org-roam-buffer-toggle)))))
 #+end_src
 
 * Org Header Sizes
