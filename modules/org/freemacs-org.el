@@ -1,5 +1,3 @@
-;; Organization/Time Management/Notes Configuration
-
 (use-package calfw
   :straight (emacs-calfw :host github
                          :repo "zemaye/emacs-calfw"
@@ -36,6 +34,7 @@
   ("C-c a" . #'org-agenda)
   ("C-c c" . #'org-capture)
   :custom
+  (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
   (org-directory "~/Nextcloud/org")
   (org-agenda-start-on-weekday nil)
   (org-agenda-files `("~/Nextcloud/org"))
@@ -109,15 +108,6 @@
   :config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
-
-(use-package org-mind-map
-  :straight t
-  :after org
-  :commands org-mind-map-write
-  :init
-  (require 'ox-org)
-  :custom
-  (org-mind-map-engine "dot"))
 
 (defun freemacs/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."
