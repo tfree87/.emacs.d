@@ -5,7 +5,7 @@
          ("C-c p d" . cape-dabbrev)
          ("C-c p f" . cape-file)
          ("C-c p k" . cape-keyword)
-         ("C-c p s" . cape-symbol)
+         ("C-c p s" . cape-elisp-symbol)
          ("C-c p a" . cape-abbrev)
          ("C-c p \\" . cape-tex)
          ("C-c p _" . cape-tex)
@@ -15,7 +15,7 @@
   (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-symbol))
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol))
 
 (use-package consult
   :straight t

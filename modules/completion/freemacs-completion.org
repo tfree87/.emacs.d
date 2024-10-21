@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-15 11:46:38 Thomas>
+#+date: Time-stamp: <2024-10-21 14:16:06 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -35,7 +35,7 @@ This section contains configuration to set up completion tools in Emacs.
            ("C-c p d" . cape-dabbrev)
            ("C-c p f" . cape-file)
            ("C-c p k" . cape-keyword)
-           ("C-c p s" . cape-symbol)
+           ("C-c p s" . cape-elisp-symbol)
            ("C-c p a" . cape-abbrev)
            ("C-c p \\" . cape-tex)
            ("C-c p _" . cape-tex)
@@ -75,7 +75,7 @@ Complete keywords in programming modes:
 Complete Emacs-lisp symbols:
 
 #+begin_src emacs-lisp :noweb-ref capfs
-  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
 #+end_src
 
 * Consult
