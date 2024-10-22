@@ -1,20 +1,53 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Centered Window Mode x c
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-10-21 22:16:48 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
 
 
+* Default Margin
+
+Use a default left and right margin of 3 to help clean up the look of Emacs buffers near window edges.
+
+#+begin_src emacs-lisp :tangle yes :comments both
+    (setq-default left-margin-width 3 right-margin-width 3)
+#+end_src
 
 
-#+begin_src emacs-lisp :tangle yes
+* Centered Window Mode
+
+Toggle on centered window mode when using a large screen with only a single Emacs window.
+
+#+begin_src emacs-lisp :tangle yes :comments both
   (use-package centered-window
     :straight t
     :custom
     (cwm-incremental-padding t)
-    (cwm-incremental-padding-% 5)
+    (cwm-incremental-padding-% 10)
     (cwm-centered-window-width 1000)
-    :config
-    (centered-window-mode t))
 #+end_src
 
 
+* End
 
+Tell Emacs what package this provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-cwm)
