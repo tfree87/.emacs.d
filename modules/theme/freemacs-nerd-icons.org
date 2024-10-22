@@ -1,0 +1,62 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Nerd Icons
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-10-21 21:48:05 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+* Completion Nerd Icons
+
+Add Nerd Icons to the minibuffer completion interface.
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (use-package nerd-icons-completion
+    :straight t
+    :after marginalia
+    :config
+    (nerd-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+#+end_src
+* Corfu Nerd Icons
+
+Add small icons to Corfu popup windows.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package nerd-icons-corfu
+    :straight t
+    :config
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+#+end_src
+* Dired Nerd Icons
+
+Add Nerd Icons to represent different file types in Dired Mode.
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (use-package nerd-icons-dired
+    :straight t
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
+#+END_SRC
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (provide 'freemacs-nerd-icons)
+#+end_src
