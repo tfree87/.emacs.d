@@ -69,7 +69,7 @@
   :after consult
   :custom
   (consult-notes-sources '(("GTD"  ?g  "~/Dropbox/gtd/")
-                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+                           ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
   :commands (consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node
