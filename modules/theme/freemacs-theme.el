@@ -44,6 +44,7 @@
 
 (use-package doom-modeline
   :straight t
+  :disabled t
   :if window-system
   :defer 1
   :config (doom-modeline-mode))
@@ -88,6 +89,26 @@
   :defer t
   :config
   (org-margin-mode 1))
+
+(use-package punch-line
+  :ensure t
+  :straight (:host github :repo "konrad1977/punch-line"
+                 :branch "master")
+  :custom
+  (punch-weather-update) ;; Use weather service
+  :config
+  (setq
+   punch-line-separator "  "
+   punch-show-project-info t					;; Show project info
+   punch-show-git-info t						;; Show git info
+   punch-show-lsp-info t						;; Show eglot info
+   punch-show-copilot-info t					;; Show copilot
+   punch-show-battery-info t					;; Show battery status
+   punch-show-weather-info t					;; Weather info
+   punch-weather-latitude "56.7365"				;; Weather latitude
+   punch-weather-longitude "16.2981"			;; Weather longitude
+   punch-line-music-info '(:service apple))		;; Music service
+  (punch-line-mode 1))
 
 (provide 'freemacs-theme)
 

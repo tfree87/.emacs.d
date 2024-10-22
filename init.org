@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-20 21:35:14 thomas>
+#+date: Time-stamp: <2024-10-21 21:31:41 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -473,26 +473,22 @@ The VTerm package used a compiled terminal written in C that is faster than othe
 
 Changes to Emacs appearance and theme can be found in the [[file:modules/theme/freemacs-theme.org][theme module]].
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Load theme module
+** Theme style
 
-  (require 'freemacs-theme)
+#+begin_src emacs-lisp :tangle yes :comments both
+    (require 'freemacs-theme)
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
-  ;; Load centered window mode
+** Centered-Window Mode
 
+#+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-cwm)
 #+end_src
 
-** All the Icons
-
-All the Icons adds icons that can improve the look of the Emacs interface. For more information on the configuration, check out the [[file:modules/theme/freemacs-alltheicons.org][all the icons module]].
+** Nerd Icons
 
 #+begin_src emacs-lisp :tangle yes
-  ;; Load All the Icons module
-
-  (require 'freemacs-alltheicons)
+  (require 'freemacs-nerd-icons)
 #+end_src
 
 * Writing/Publishing/Reading

@@ -172,17 +172,21 @@
 
 (require 'freemacs-vterm)
 
-;; Load theme module
+;; Theme style
 
+
+;; [[file:init.org::*Theme style][Theme style:1]]
 (require 'freemacs-theme)
+;; Theme style:1 ends here
 
-;; Load centered window mode
+;; Centered-Window Mode
 
+
+;; [[file:init.org::*Centered-Window Mode][Centered-Window Mode:1]]
 (require 'freemacs-cwm)
+;; Centered-Window Mode:1 ends here
 
-;; Load All the Icons module
-
-(require 'freemacs-alltheicons)
+(require 'freemacs-nerd-icons)
 
 ;; Load Academic Writing module
 
