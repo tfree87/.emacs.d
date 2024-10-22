@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-21 21:47:30 thomas>
+#+date: Time-stamp: <2024-10-21 22:00:35 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -129,7 +129,6 @@ The Doom Modeline decorates the modeline with icons and cleans up much of the cl
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
     :straight t
-    :disabled t
     :if window-system
     :defer 1
     :config (doom-modeline-mode))
@@ -189,17 +188,6 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
     (nyan-mode)
     (nyan-start-animation))
 #+end_src
-* Org Margin
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package org-margin
-    :after org
-    :straight (:host github :repo "rougier/org-margin"
-                     :branch "master")
-    :defer t
-    :config
-    (org-margin-mode 1))
-#+end_src
 
 * Punchline
 
@@ -221,8 +209,7 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
      punch-show-weather-info t					;; Weather info
      punch-weather-latitude "56.7365"				;; Weather latitude
      punch-weather-longitude "16.2981"			;; Weather longitude
-     punch-line-music-info '(:service apple))		;; Music service
-    (punch-line-mode 1))
+     punch-line-music-info '(:service apple)))
 #+end_src
 
 * End

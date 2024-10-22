@@ -44,7 +44,6 @@
 
 (use-package doom-modeline
   :straight t
-  :disabled t
   :if window-system
   :defer 1
   :config (doom-modeline-mode))
@@ -82,14 +81,6 @@
   (nyan-mode)
   (nyan-start-animation))
 
-(use-package org-margin
-  :after org
-  :straight (:host github :repo "rougier/org-margin"
-                   :branch "master")
-  :defer t
-  :config
-  (org-margin-mode 1))
-
 (use-package punch-line
   :ensure t
   :straight (:host github :repo "konrad1977/punch-line"
@@ -107,8 +98,7 @@
    punch-show-weather-info t					;; Weather info
    punch-weather-latitude "56.7365"				;; Weather latitude
    punch-weather-longitude "16.2981"			;; Weather longitude
-   punch-line-music-info '(:service apple))		;; Music service
-  (punch-line-mode 1))
+   punch-line-music-info '(:service apple)))
 
 (provide 'freemacs-theme)
 
