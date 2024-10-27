@@ -2,7 +2,7 @@
 
 #+title: Ledger Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:14 thomas>
+#+date: Time-stamp: <2024-10-26 20:33:31 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,7 +22,7 @@
 -----
 
 
-** Ledger
+* Install Ledger
 
 To conduct plain-text accounting in Emacs, [[https://github.com/ledger/ledger-mode][ledger-mode]] needs to be installed from the package repositories. This mode will create faces for the text and highlight transactions while also providing the functionality to execute ledger reports in an Emacs buffer. No shell needed.
 
