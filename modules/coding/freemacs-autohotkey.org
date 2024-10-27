@@ -2,7 +2,7 @@
 
 #+title: AutoHotKey Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 20:26:56 thomas>
+#+date: Time-stamp: <2024-10-26 20:27:37 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,7 +21,7 @@
 -----
 
 
-* Install AJK Mode
+* Install AHK Mode
 
 Install AHK Mode with Straight.
 
