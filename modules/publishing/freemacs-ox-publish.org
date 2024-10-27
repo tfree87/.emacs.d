@@ -2,7 +2,7 @@
 
 #+title: Ox-publish Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:13 thomas>
+#+date: Time-stamp: <2024-10-26 22:47:09 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -32,7 +32,9 @@
 
 * Ox-publish
 
-#+begin_src emacs-lisp :tangle yes :noweb yes
+Configure Org Ox Publish.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments 
   (use-package ox-publish
     :straight (:type built-in)
     :defer t
