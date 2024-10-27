@@ -1,0 +1,98 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:Dirvish Configuration
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-10-26 19:58:40 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Install Dirvish
+
+Direvish adds extenstions to Emacs.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package dirvish
+    :straight t
+    :init
+    <<dirvish_init>>
+    :custom
+    (dirvish-hide-details nil)
+    :config
+    <<dirvish_config>>
+    (setq dired-listing-switches
+          "-l --almost-all --human-readable --group-directories-first --no-group")
+    (dirvish-peek-mode)
+    (dirvish-side-follow-mode)
+    :bind
+    <<dirvish_bind>>)
+#+end_src
+
+* Override Dired Mode
+
+Override Dired to use Dirvish by default.
+
+#+begin_src emacs-lisp :noweb-ref dirvish_init :comments both
+    (dirvish-override-dired-mode)
+#+end_src
+
+* Nerd Icons
+
+Use Nerd Icons for Dirvish rather than All The Icons.
+
+#+begin_src emacs-lisp :noweb dirvish_config :comments both
+  (setq dirvish-subtree-state-style 'nerd)
+  (setq dirvish-path-separators (list
+                                 (format "  %s " (nerd-icons-codicon "nf-cod-home"))
+                                 (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
+                                 (format " %s " (nerd-icons-faicon "nf-fa-angle_right"))))
+#+end_src
+
+* Key Bindings
+
+Define the keybindings to use in Dirvish Mode. Some of the default keybindings will be overridden.
+
+#+begin_src emacs-lisp :noweb-ref dirvish_bind
+  (("C-c f" . dirvish-fd)
+     :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
+     ("a"   . dirvish-quick-access)
+     ("f"   . dirvish-file-info-menu)
+     ("y"   . dirvish-yank-menu)
+     ("N"   . dirvish-narrow)
+     ("^"   . dirvish-history-last)
+     ("h"   . dirvish-history-jump) ; remapped `describe-mode'
+     ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
+     ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
+     ("TAB" . dirvish-subtree-toggle)
+     ("M-f" . dirvish-history-go-forward)
+     ("M-b" . dirvish-history-go-backward)
+     ("M-l" . dirvish-ls-switches-menu)
+     ("M-m" . dirvish-mark-menu)
+     ("M-t" . dirvish-layout-toggle)
+     ("M-s" . dirvish-setup-menu)
+     ("M-e" . dirvish-emerge-menu)
+     ("M-j" . dirvish-fd-jump))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-dirvish)
+#+end_src
