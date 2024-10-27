@@ -69,7 +69,7 @@
   :after consult
   :custom
   (consult-notes-sources '(("GTD"  ?g  "~/Dropbox/gtd/")
-                           ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
   :commands (consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node
@@ -86,30 +86,6 @@
   :straight t
   :commands (consult-flycheck)
   :after (consult flycheck))
-
-(use-package corfu
-  :straight (:files (:defaults "extensions/*.el"))
-  :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
-  :bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (corfu-preselect-first nil)
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous))
-  :config
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 
 (use-package embark
   :straight t
