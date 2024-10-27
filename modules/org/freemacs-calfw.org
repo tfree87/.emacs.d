@@ -2,7 +2,7 @@
 
 #+title: Calfw Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-22 21:44:01 thomas>
+#+date: Time-stamp: <2024-10-26 21:07:45 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,11 +21,11 @@
 -----
 
 
+* Install Calfw
+
 [[https://github.com/kiwanami/emacs-calfw][Calfw]] provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
 
-#+begin_src emacs-lisp :tangle yes
-  ; TODO Move to a separate module
-
+#+begin_src emacs-lisp :tangle yes :comments both
   (use-package calfw
     :straight (emacs-calfw :host github
                            :repo "zemaye/emacs-calfw"
@@ -44,11 +44,11 @@
     (cfw:fchar-top-right-corner ?┓))
 #+end_src
 
-** Calfw Org :org:
+* Calfw Org
 
 ~calfw-org.el~  displays org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments both
   (use-package calfw-org
     :straight (emacs-calfw :host github
                            :repo "zemaye/emacs-calfw"
@@ -57,3 +57,13 @@
     :init
     (defalias 'calfworg 'cfw:open-org-calendar))
 #+END_SRC
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-calfw)
+
+  ;;; freemacs-calfw.el ends here.
+#+end_src
