@@ -21,12 +21,6 @@
        '(variable-pitch ((t (:family "Liberation Serif"))))
        '(fixed-pitch ((t (:family "Hack")))))))
 
-(custom-theme-set-faces
- 'user
- '(sr-active-path-face ((t (:foreground "yellow" :weight bold :height 120))))
- '(sr-highlight-path-face ((t (:background "yellow" :foreground "dark violet" :weight bold :height 120))))
- '(sr-passive-path-face ((t (:foreground "lightgray" :weight bold :height 120)))))
-
 (use-package time
   :defer 3
   :custom
@@ -80,25 +74,6 @@
   :config
   (nyan-mode)
   (nyan-start-animation))
-
-(use-package punch-line
-  :ensure t
-  :straight (:host github :repo "konrad1977/punch-line"
-                 :branch "master")
-  :custom
-  (punch-weather-update) ;; Use weather service
-  :config
-  (setq
-   punch-line-separator "  "
-   punch-show-project-info t					;; Show project info
-   punch-show-git-info t						;; Show git info
-   punch-show-lsp-info t						;; Show eglot info
-   punch-show-copilot-info t					;; Show copilot
-   punch-show-battery-info t					;; Show battery status
-   punch-show-weather-info t					;; Weather info
-   punch-weather-latitude "56.7365"				;; Weather latitude
-   punch-weather-longitude "16.2981"			;; Weather longitude
-   punch-line-music-info '(:service apple)))
 
 (provide 'freemacs-theme)
 
