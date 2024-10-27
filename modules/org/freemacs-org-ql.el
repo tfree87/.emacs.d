@@ -20,3 +20,5 @@
 ;; Install Org-Ql:1 ends here
 
 (provide 'freemacs-org-ql)
+
+;;; freemacs-org-ql.el ends here.
