@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-28 19:47:26 Thomas>
+#+date: Time-stamp: <2024-10-26 18:26:58 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,8 +21,6 @@
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
-
-* Dired
 
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
 
@@ -181,3 +179,4 @@ Tell Emacs what feature this file provides.
 
   ;;; freemacs-dired.el ends here
 #+end_src
+
