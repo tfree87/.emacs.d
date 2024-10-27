@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-09-29 10:55:55 thomas>
+#+date: Time-stamp: <2024-10-22 20:17:50 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -71,10 +71,10 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
 [[https://github.com/joaotavora/eglot][Eglot]] is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
 
 #+begin_src emacs-lisp :tangle yes
-  (use-package eglot
-    :straight t
-    :hook
-    (python-mode . eglot-ensure))
+ ; (use-package eglot
+ ;   :straight t
+ ;   :hook
+ ;   (python-mode . eglot-ensure))
 #+end_src
 
 * Flycheck :python:

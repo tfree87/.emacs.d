@@ -23,10 +23,10 @@
   :mode ("\\.c\\'"
          "\\.ino\\'"))
 
-(use-package eglot
-  :straight t
-  :hook
-  (python-mode . eglot-ensure))
+; (use-package eglot
+;   :straight t
+;   :hook
+;   (python-mode . eglot-ensure))
 
 (use-package flycheck
   :straight t
