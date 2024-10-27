@@ -1,6 +1,6 @@
 ;;; init.el --- Emacs initialization file -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022 Thomas Freeman
+;; Copyright (C) 2022-2024 Thomas Freeman
 
 ;; Author: Thomas Freeman
 ;; Maintainer: Thomas Freeman
@@ -37,30 +37,78 @@
 
 ;;; Code:
 
+;; Performance Optimization Start
+
+;; In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
+
+
+;; [[file:init.org::*Performance Optimization Start][Performance Optimization Start:1]]
 (let ((file-name-handler-alist nil))
+;; Performance Optimization Start:1 ends here
 
-;; Add modules to Emacs load path
+;; Load Path
 
+;; Since all of the Emacs configuration is in modules, the ~modules~ directory and all of its sub-directories must be added to the Emacs ~load-path~.
+
+
+;; [[file:init.org::*Load Path][Load Path:1]]
 (let ((default-directory "~/.emacs.d/modules/"))
   (normal-top-level-add-subdirs-to-load-path))
+;; Load Path:1 ends here
 
+;; Check for Portable Emacs Instance
+
+;; When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
+
+
+;; [[file:init.org::*Check for Portable Emacs Instance][Check for Portable Emacs Instance:1]]
 (defun freemacs/isportable-p ()
   "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
   (string= (getenv "EMACS_PORTABLE") "Y"))
+;; Check for Portable Emacs Instance:1 ends here
 
+;; Set Location of Portable Git
+
+;; Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
+
+;; The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
+
+
+;; [[file:init.org::*Set Location of Portable Git][Set Location of Portable Git:1]]
 (when (freemacs/isportable-p)
   (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+;; Set Location of Portable Git:1 ends here
 
-;; Set the location of variables set using Emacs customize interface
+;; Custom Set Variables
 
+;;  To keep variables set by the customize interfacei from being placed at the top of ~init.el~, Set Emacs customize to be put into a separate file [[./custom.el]].
+
+
+;; [[file:init.org::*Custom Set Variables][Custom Set Variables:1]]
 (setq custom-file "~/.emacs.d/custom.el")
+;; Custom Set Variables:1 ends here
 
-;; Load the file custom.el file containing variables from Emacs customize
 
+
+;; Load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refreshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
+
+
+;; [[file:init.org::*Custom Set Variables][Custom Set Variables:2]]
 (load custom-file)
+;; Custom Set Variables:2 ends here
 
-;; Install Straight.el to manage packages
+;; Straight.el
 
+;; Instead of the built-in package manager, use [[https://github.com/raxod502/straight.el][straight.el]] to pull all the packages straight from their repositories.
+
+;; 1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
+;; 2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
+;; 3. The entire package repository is cloned, which, while it takes up a lot of space, allows for editing the source code directly if desired.
+;; 4. Github repositories that are not included in ELPA, MELPA, or marmalade can be pulled 
+;;  used in ~use-package~ statements.
+
+
+;; [[file:init.org::*Straight.el][Straight.el:1]]
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -75,104 +123,231 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+;; Straight.el:1 ends here
 
-;; Set up use-package to manage package loading
+;; Install use-package
 
+;; Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
+
+
+;; [[file:init.org::*Install use-package][Install use-package:1]]
 (straight-use-package 'use-package)
+;; Install use-package:1 ends here
 
-;; Load benchmark-init module
+;; Benchmark Init
 
+;; Use benchmark-init to check the time that it takes to load Emacs. This helps to diagnose which packages and configurations are causing Emacs to load slowly.
+
+
+;; [[file:init.org::*Benchmark Init][Benchmark Init:1]]
 (require 'freemacs-benchmark-init)
+;; Benchmark Init:1 ends here
 
-;; Load No-littering module
+;; No-littering
 
+;; The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
+
+
+;; [[file:init.org::*No-littering][No-littering:1]]
 (require 'freemacs-no-littering)
+;; No-littering:1 ends here
 
-;; Load Whicher module
+;; Whicher
 
+;; Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
+
+
+;; [[file:init.org::*Whicher][Whicher:1]]
 (require 'freemacs-whicher)
+;; Whicher:1 ends here
 
-;; Load Defaults module
+;; Emacs Defaults
 
+;; Changes to the default settings of Emacs  Load the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
+
+
+;; [[file:init.org::*Emacs Defaults][Emacs Defaults:1]]
 (require 'freemacs-defaults)
+;; Emacs Defaults:1 ends here
 
-;; Load the project module
+;; Coding
 
+;; Load the [[file:modules/coding/freemacs-coding.org][coding module]].
+
+
+;; [[file:init.org::*Coding][Coding:1]]
 (require 'freemacs-project)
 
-;; Load the coding module
 (require 'freemacs-coding)
 
-;; Load the AutoHotKey module
 (require 'freemacs-autohotkey)
+;; Coding:1 ends here
 
-;; Load the completion module
+;; Completion
 
+;; Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+
+
+;; [[file:init.org::*Completion][Completion:1]]
 (require 'freemacs-completion)
+;; Completion:1 ends here
 
-;; Load the Docker module
+;; Corfu Configuration
 
+;; Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
+
+
+;; [[file:init.org::*Corfu Configuration][Corfu Configuration:1]]
+(require 'freemacs-corfu)
+;; Corfu Configuration:1 ends here
+
+;; Docker
+
+;; Load the he [[file:modules/docker/freemacs-docker.org][docker module]]. It configures the following packages:
+
+;; + Docker :: Manage Docker containers from within Emacs
+;; + Docker Compose  :: Edit docker-compose files in Emacs
+
+
+;; [[file:init.org::*Docker][Docker:1]]
 (require 'freemacs-docker)
+;; Docker:1 ends here
 
-;; Load the editing module
-
-(require 'freemacs-editing)
-
-;; Load Elfeed newsreader module
+(require 'freemacs-yasnippet)
 
 (require 'freemacs-elfeed)
 
-;; Load email module
+;; Dired
 
-(require 'freemacs-email)
+;; Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
 
-;; Load the EXWM module
 
-;(require 'freemacs-exwm)
-
-;; Load file tools module
-
+;; [[file:init.org::*Dired][Dired:1]]
 (require 'freemacs-dired)
+;; Dired:1 ends here
 
+;; Trashed
+
+;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
+
+
+;; [[file:init.org::*Trashed][Trashed:1]]
 (require 'freemacs-trashed)
+;; Trashed:1 ends here
 
-;; Load graphing module
+;; Dirvish
 
+;; Load the [[./modules/file-tools/freemacs-dired.org][Dirvish Module]].
+
+
+;; [[file:init.org::*Dirvish][Dirvish:1]]
+(require 'freemacs-dirvish)
+;; Dirvish:1 ends here
+
+;; Graphing
+
+;; Emacs can be used as an environment to create graphs, plots, and diagrams. Configuration for these are found in the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
+
+;; + Gnuplot :: Create plots using Gnuplot in Emacs
+;; + PlantUML :: Create UML diagrams with PlantUML 
+
+
+;; [[file:init.org::*Graphing][Graphing:1]]
 (require 'freemacs-graphing)
+;; Graphing:1 ends here
 
-;; Load the Ledger module
+;; Ledger
 
+;; Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
+
+
+;; [[file:init.org::*Ledger][Ledger:1]]
 (require 'freemacs-ledger)
+;; Ledger:1 ends here
 
+;; Meow Mode
+
+;; Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
+
+
+;; [[file:init.org::*Meow Mode][Meow Mode:1]]
 (require 'freemacs-meow)
+;; Meow Mode:1 ends here
 
-;; Load the Org Mode module
+;; Org
 
+;; Load the [[./modules/org/freemacs-org.org][Org Mode module]].
+
+
+;; [[file:init.org::*Org][Org:1]]
 (require 'freemacs-org)
+;; Org:1 ends here
 
+;;  Org Contacts
+
+;; Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
+
+;; [[file:init.org::*Org Contacts][Org Contacts:1]]
 (require 'freemacs-org-contacts)
+;; Org Contacts:1 ends here
 
+;; Org Mind Map
+
+;; Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]]/
+
+
+;; [[file:init.org::*Org Mind Map][Org Mind Map:1]]
 (require 'freemacs-org-mm)
+;; Org Mind Map:1 ends here
 
+;; Org-QL
+
+;; Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
+
+
+;; [[file:init.org::*Org-QL][Org-QL:1]]
 (require 'freemacs-org-ql)
+;; Org-QL:1 ends here
 
-;; Load session module
+;; Session
 
+;; Load the [[./modules/session/freemacs-session.org][Session Module]].
+
+
+;; [[file:init.org::*Session][Session:1]]
 (require 'freemacs-session)
+;; Session:1 ends here
 
-;; Load the Eshell module
+;; Eshell
 
+;; Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
+
+
+;; [[file:init.org::*Eshell][Eshell:1]]
 (require 'freemacs-eshell)
+;; Eshell:1 ends here
 
-;; Load PowerShell module
+;; Eat
 
-(require 'freemacs-powershell)
+;; Load the [[./modules/shells/freemacs-eat.org][Eat Module]].
 
-;; Load the VTerm module
 
+;; [[file:init.org::*Eat][Eat:1]]
+(require 'freemacs-eat)
+;; Eat:1 ends here
+
+;; VTerm
+
+;; Load the [[./modules/shells/freemacs-vterm.org][Vterm Module]].
+
+
+;; [[file:init.org::*VTerm][VTerm:1]]
 (require 'freemacs-vterm)
+;; VTerm:1 ends here
 
 ;; Theme style
+
+;; Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
 
 
 ;; [[file:init.org::*Theme style][Theme style:1]]
@@ -181,48 +356,109 @@
 
 ;; Centered-Window Mode
 
+;; Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
+
 
 ;; [[file:init.org::*Centered-Window Mode][Centered-Window Mode:1]]
 (require 'freemacs-cwm)
 ;; Centered-Window Mode:1 ends here
 
+;; Nerd Icons
+
+;; Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
+
+
+;; [[file:init.org::*Nerd Icons][Nerd Icons:1]]
 (require 'freemacs-nerd-icons)
+;; Nerd Icons:1 ends here
 
-;; Load Academic Writing module
+;; Academic Writing
 
+;; The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
+
+;; + Academic Phrases :: A package that inserts common template phrases into academic papers
+;; + Citar :: A citation tool that simplifies adding citations to documents
+;; + Org Cite :: The built-in Org Mode citation management system
+
+
+;; [[file:init.org::*Academic Writing][Academic Writing:1]]
 (require 'freemacs-academic-writing)
+;; Academic Writing:1 ends here
 
-;; Load Spellchecking module
+;; Spellchecking
 
+;; The spellchecking module configures the spell checking environment in Emacs. A few of the changes made:
+
+;; + Flyspell is on be default so that you do not need to remember to call ~ispell~.
+;; + Hunspell is used as the default spellchecking backend as it is more modern and works on multiple operating systems.
+
+
+;; [[file:init.org::*Spellchecking][Spellchecking:1]]
 (require 'freemacs-spellcheck)
+;; Spellchecking:1 ends here
 
-;; Load the LaTeX module
+;; \LaTeX{}
 
+;; Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
+
+
+;; [[file:init.org::*\LaTeX{}][\LaTeX{}:1]]
 (require 'freemacs-latex)
+;; \LaTeX{}:1 ends here
 
-;; Load the markdown module
+;; Markdown
 
+;; Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
+
+
+;; [[file:init.org::*Markdown][Markdown:1]]
 (require 'freemacs-markdown)
+;; Markdown:1 ends here
 
-;; Load the ox-publish module
+;; Ox-publish
 
+;; ~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
+
+
+;; [[file:init.org::*Ox-publish][Ox-publish:1]]
 (require 'freemacs-ox-publish)
+;; Ox-publish:1 ends here
 
-;; Load the pdf module
+;; PDF
 
+;; To improve the speed and to extend the ability to view PDF files in Emacs, the [[file:modules/publishing/freemacs-pdf.org][PDF module]] can be loaded.
+
+
+;; [[file:init.org::*PDF][PDF:1]]
 (require 'freemacs-pdf)
+;; PDF:1 ends here
 
-;; Load the help module
+;; Help
 
+;; The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
+
+
+;; [[file:init.org::*Help][Help:1]]
 (require 'freemacs-help)
+;; Help:1 ends here
 
-;; Load the YouTube module
+;; YouTube
 
+;; Load the [[./modules/youtube/freemacs-youtube.org][YouTube Module]].
+
+
+;; [[file:init.org::*YouTube][YouTube:1]]
 (require 'freemacs-youtube)
+;; YouTube:1 ends here
 
-;; Load server module
+;; Emacs Server
 
+;; Load the [[file:modules/server/freemacs-server.org][server module]].
+
+
+;; [[file:init.org::*Emacs Server][Emacs Server:1]]
 (require 'freemacs-server)
+;; Emacs Server:1 ends here
 
 ;; Custom Function Definitions
 
@@ -238,15 +474,6 @@
                          "|sudo:root@"
                          (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
-
-;; Sync Dropbox containing org agenda files on load and close
-
-(when (freemacs/isportable-p)
-  (setq rclone-path "~/rclone/rclone.conf")
-  (rclone-run-remote-to-local "sync" "~/Dropbox" "dropbox:")
-  (add-hook 'kill-emacs-hook (rclone-run-local-to-remote "sync"
-                                                         "~/Dropbox"
-                                                         "dropbox:")))
 
 (setq gc-cons-threshold 800000)
 )
