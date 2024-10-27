@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-20 21:40:21 thomas>
+#+date: Time-stamp: <2024-10-22 21:44:19 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,45 +22,6 @@
 
 
 This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
-
-* Calfw
-
-[[https://github.com/kiwanami/emacs-calfw][Calfw]] provides a grid-based calendar view similar to what is seen in most graphical calendar programs but integrates the org agenda files. I use the fork from @zemaye as this version has fixed the issue in ~calfw-org.el~ where events that span multiple dates show up repeated on the display.
-
-#+begin_src emacs-lisp :tangle yes
-  ; TODO Move to a separate module
-
-  (use-package calfw
-    :straight (emacs-calfw :host github
-                           :repo "zemaye/emacs-calfw"
-                           :branch "master")
-    :commands (cfw:open-calendar-buffer)
-    :init
-    (defalias 'calfw 'cfw:open-calendar-buffer)
-    :custom
-    (cfw:fchar-junction ?╋)
-    (cfw:fchar-vertical-line ?┃)
-    (cfw:fchar-horizontal-line ?━)
-    (cfw:fchar-left-junction ?┣)
-    (cfw:fchar-right-junction ?┫)
-    (cfw:fchar-top-junction ?┯)
-    (cfw:fchar-top-left-corner ?┏)
-    (cfw:fchar-top-right-corner ?┓))
-#+end_src
-
-** Calfw Org :org:
-
-~calfw-org.el~  displays org-mode events in the ~calfw~ calendar. I don't like the long command ~M-x cfw:open-org-calendar~ so I have shortened to it to ~M-x calfworg~ which is much easier to type and remember.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package calfw-org
-    :straight (emacs-calfw :host github
-                           :repo "zemaye/emacs-calfw"
-                           :branch "master")
-    :commands (cfw:open-org-calendar)
-    :init
-    (defalias 'calfworg 'cfw:open-org-calendar))
-#+end_src
 
 * Org
 
@@ -94,6 +55,7 @@ This file provides the Org Mode configuration for my personal configuration of E
     :config
     <<org_contrib_config>>)
 #+end_src
+
 ** Use Unique IDs for Org Links
 
 This will create unique IDs for every internal link between Org file headings. This will prevent links from breaking when files or headings are restructured.
@@ -248,6 +210,7 @@ In order to use active code in org-mode, you must define which programming langu
      (ledger . t)
      (octave . t)
      (plantuml . t)
+     (python . t)
      (R . t)
      (scheme . t)
      (sed . t)

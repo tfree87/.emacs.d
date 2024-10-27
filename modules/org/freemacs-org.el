@@ -1,30 +1,3 @@
-; TODO Move to a separate module
-
-(use-package calfw
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-calendar-buffer)
-  :init
-  (defalias 'calfw 'cfw:open-calendar-buffer)
-  :custom
-  (cfw:fchar-junction ?╋)
-  (cfw:fchar-vertical-line ?┃)
-  (cfw:fchar-horizontal-line ?━)
-  (cfw:fchar-left-junction ?┣)
-  (cfw:fchar-right-junction ?┫)
-  (cfw:fchar-top-junction ?┯)
-  (cfw:fchar-top-left-corner ?┏)
-  (cfw:fchar-top-right-corner ?┓))
-
-(use-package calfw-org
-  :straight (emacs-calfw :host github
-                         :repo "zemaye/emacs-calfw"
-                         :branch "master")
-  :commands (cfw:open-org-calendar)
-  :init
-  (defalias 'calfworg 'cfw:open-org-calendar))
-
 (use-package org
   :straight (:type built-in)
   :defer t
@@ -99,6 +72,7 @@
      (ledger . t)
      (octave . t)
      (plantuml . t)
+     (python . t)
      (R . t)
      (scheme . t)
      (sed . t)
