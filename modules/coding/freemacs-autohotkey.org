@@ -2,7 +2,7 @@
 
 #+title: AutoHotKey Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-08-10 10:38:03 L036467>
+#+date: Time-stamp: <2024-10-26 20:26:56 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,13 +21,29 @@
 -----
 
 
-#+begin_src emacs-lisp :tangle yes
+* Install AJK Mode
+
+Install AHK Mode with Straight.
+
+#+begin_src emacs-lisp :tangle yes :comments both
   (use-package ahk-mode
     :straight t
     :defer t
     :custom
-    (ahk-indentation 2))
+    <<ahk_custom>>)
 #+end_src
+
+* Indentation
+
+Set the default indentation for AutoHotKey files.
+
+#+begin_src emacs-lisp :noweb-ref ahk_custom :comments both
+  (ahk-identation 2)
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-autohotkey)
