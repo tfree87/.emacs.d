@@ -8,7 +8,7 @@
   :straight t
   :defer t
   :custom
-  <<ahk_custom>>)
+  (ahk-identation 2))
 ;; Install AHK Mode:1 ends here
 
 (provide 'freemacs-autohotkey)

@@ -2,7 +2,7 @@
 
 #+title: AutoHotKey Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 20:27:37 thomas>
+#+date: Time-stamp: <2024-10-26 21:20:41 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -25,7 +25,7 @@
 
 Install AHK Mode with Straight.
 
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments both
   (use-package ahk-mode
     :straight t
     :defer t
