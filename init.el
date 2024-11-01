@@ -309,6 +309,8 @@
 (require 'freemacs-org-ql)
 ;; Org-QL:1 ends here
 
+(require 'freemacs-orgsl)
+
 ;; Session
 
 ;; Load the [[./modules/session/freemacs-session.org][Session Module]].

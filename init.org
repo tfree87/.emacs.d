@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 21:05:09 thomas>
+#+date: Time-stamp: <2024-10-31 21:11:39 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -351,6 +351,12 @@ Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-org-ql)
+#+end_src
+
+* Org Super Links
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-orgsl)
 #+end_src
 
 * Session
