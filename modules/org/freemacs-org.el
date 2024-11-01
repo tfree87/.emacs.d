@@ -46,14 +46,17 @@
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
   (org-capture-templates
-   '(("p" "Projects item" entry (file "~/gtd/projects.org")
+   '(("p" "Projects item" entry (file "~/Nextcloud/org/projects.org")
       "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/gtd/someday.org")
+     ("s" "Someday/Maybe item" entry (file "~/Nextcloud/org/someday.org")
       "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/gtd/tickler.org")
+     ("T" "Tickler file item" entry (file "~/Nextcloud/org/tickler.org")
       "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/gtd/inbox.org" "Tasks")
-      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")))
+     ("t" "To Do Item" entry (file+headline "~/Nextcloud/org/inbox.org" "Tasks")
+      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
+     ("w" "Journal entry with date, scheduled" entry
+      (file+datetree+prompt "~/Nextcloud/org/work_calendar.org")
+      "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
