@@ -1,3 +1,13 @@
+;; Org
+
+;; [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
+
+;; - Organizing my tasks and projects similar to [[https://gettingthingsdone.com/][David Allen's "Getting Things Done"]] method
+;; - Publishing \LaTeX{} documents quicker and more easily
+;; - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
+  
+
+;; [[file:freemacs-org.org::*Org][Org:1]]
 (use-package org
   :straight (:type built-in)
   :defer t
@@ -23,8 +33,15 @@
   (org-todo-keywords
    '((sequence "TODO(t)"
                "WAITING(w)"
-               "|" "DONE(d)"
-               "CANCELED(c)")))
+               "|"
+               "DONE(d)"
+               "CANCELED(c)")
+   (sequence "SCRIPTING(s)"
+             "TESTING(g)"
+             "REVIEW(r)"
+             "APPROVAL(a)"
+             "|"
+             "EFFECTIVE(e)")))
   (org-tags-exclude-from-inheritance '("project"))
   (org-stuck-projects
    '("+project/-MAYBE-DONE"
@@ -54,8 +71,8 @@
       "* %?\n%^{Scheduled}t\n%x")
      ("t" "To Do Item" entry (file+headline "~/Nextcloud/org/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
-     ("w" "Journal entry with date, scheduled" entry
-      (file+datetree+prompt "~/Nextcloud/org/work_calendar.org")
+     ("w" "Work Calendar" entry
+      (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
       "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
@@ -87,7 +104,14 @@
   :config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
+;; Org:1 ends here
 
+;; Org Header Sizes
+
+;; The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
+
+
+;; [[file:freemacs-org.org::*Org Header Sizes][Org Header Sizes:1]]
 (defun freemacs/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."
   (interactive)
@@ -104,7 +128,15 @@
            (org-level-8 . 1.10)
            (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
+;; Org Header Sizes:1 ends here
 
+;; End
+
+;; Tell Emacs what feature this file provides.
+
+
+;; [[file:freemacs-org.org::*End][End:1]]
 (provide 'freemacs-org)
 
 ;;; freemacs-org.el ends here
+;; End:1 ends here
