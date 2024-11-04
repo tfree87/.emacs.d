@@ -136,7 +136,7 @@
 
 ;; Benchmark Init
 
-;; Use benchmark-init to check the time that it takes to load Emacs. This helps to diagnose which packages and configurations are causing Emacs to load slowly.
+;; Use benchmark-init to check the time that it takes to load Emacs.
 
 
 ;; [[file:init.org::*Benchmark Init][Benchmark Init:1]]
@@ -145,21 +145,12 @@
 
 ;; No-littering
 
-;; The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
+;; Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
 
 
 ;; [[file:init.org::*No-littering][No-littering:1]]
 (require 'freemacs-no-littering)
 ;; No-littering:1 ends here
-
-;; Whicher
-
-;; Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
-
-
-;; [[file:init.org::*Whicher][Whicher:1]]
-(require 'freemacs-whicher)
-;; Whicher:1 ends here
 
 ;; Emacs Defaults
 
@@ -169,6 +160,15 @@
 ;; [[file:init.org::*Emacs Defaults][Emacs Defaults:1]]
 (require 'freemacs-defaults)
 ;; Emacs Defaults:1 ends here
+
+;; Whicher
+
+;; Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
+
+
+;; [[file:init.org::*Whicher][Whicher:1]]
+(require 'freemacs-whicher)
+;; Whicher:1 ends here
 
 ;; Coding
 
@@ -192,6 +192,15 @@
 (require 'freemacs-completion)
 ;; Completion:1 ends here
 
+;; Consult
+
+;; Load the [[./modules/completion/freemacs-consult.org][Consult module]].
+
+
+;; [[file:init.org::*Consult][Consult:1]]
+(require 'freemacs-consult)
+;; Consult:1 ends here
+
 ;; Corfu Configuration
 
 ;; Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
@@ -203,10 +212,7 @@
 
 ;; Docker
 
-;; Load the he [[file:modules/docker/freemacs-docker.org][docker module]]. It configures the following packages:
-
-;; + Docker :: Manage Docker containers from within Emacs
-;; + Docker Compose  :: Edit docker-compose files in Emacs
+;; Load the he [[file:modules/docker/freemacs-docker.org][docker module]].
 
 
 ;; [[file:init.org::*Docker][Docker:1]]
@@ -217,6 +223,8 @@
 
 (require 'freemacs-elfeed)
 
+(require 'freemacs-elfeed-protocol)
+
 ;; Dired
 
 ;; Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
@@ -225,15 +233,6 @@
 ;; [[file:init.org::*Dired][Dired:1]]
 (require 'freemacs-dired)
 ;; Dired:1 ends here
-
-;; Trashed
-
-;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
-
-
-;; [[file:init.org::*Trashed][Trashed:1]]
-(require 'freemacs-trashed)
-;; Trashed:1 ends here
 
 ;; Dirvish
 
@@ -244,12 +243,18 @@
 (require 'freemacs-dirvish)
 ;; Dirvish:1 ends here
 
+;; Trashed
+
+;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
+
+
+;; [[file:init.org::*Trashed][Trashed:1]]
+(require 'freemacs-trashed)
+;; Trashed:1 ends here
+
 ;; Graphing
 
-;; Emacs can be used as an environment to create graphs, plots, and diagrams. Configuration for these are found in the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
-
-;; + Gnuplot :: Create plots using Gnuplot in Emacs
-;; + PlantUML :: Create UML diagrams with PlantUML 
+;; Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
 
 
 ;; [[file:init.org::*Graphing][Graphing:1]]

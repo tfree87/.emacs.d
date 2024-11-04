@@ -2,7 +2,7 @@
 
 #+title: Corfu  Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 19:04:45 thomas>
+#+date: Time-stamp: <2024-11-04 17:55:46 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,7 +22,9 @@
 
 * Install Corfu
 
-#+begin_src emacs-lisp :tangle yes :noweb yes
+Corfu provides completion in region functions. This will create pop ups with completion options in the buffer.
+
+#+begin_src emacs-lisp :comments both :tangle yes :noweb yes
   (use-package corfu
     :straight (:files (:defaults "extensions/*.el"))
     :init
@@ -38,28 +40,35 @@
     (corfu-auto t)
     (corfu-cycle t)
     (corfu-preselect 'prompt)
-    (:map corfu-map
-          ("TAB" . corfu-next)
-          ([tab] . corfu-next)
-          ("S-TAB" . corfu-previous)
-          ([backtab] . corfu-previous))
-  :config
-  <<corfu_config>>
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+    :config
+    <<corfu_config>>
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
 #+end_src
 
 * Unbind RET
 
 Having the "RET" key bound for Corfu becomes very frustrating when trying to enter a newline when the completion window pops up. Unbinding "RET" and using the Tab-and-Go method is preferrable in order to not have to always add an extra space at the end of every line.
 
-#+begin_src emacs-lisp :noweb-ref corfu_config
+#+begin_src emacs-lisp :comments both :noweb-ref corfu_config
   (keymap-set corfu-map "RET" `( menu-item "" nil :filter
                                  ,(lambda (&optional _)
                                     (and (derived-mode-p 'eshell-mode 'comint-mode)
                                          #'corfu-send))))
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+* Completion by Pressing Tab
+
+Set ~tab-always-indent~ variable must be set to ~complete~. This will cause pressing ~<TAB>~ once to indent, and twice will cause it to activate completion.
+
+#+begin_src emacs-lisp :comments both :noweb-ref emacs_custom
+  (tab-always-indent 'complete)
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :comeents both :tangle yes
   (provide 'freemacs-corfu)
 #+end_src

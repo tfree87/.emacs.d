@@ -1,8 +1,8 @@
-# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+ # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
 
-#+title: Emacs Configuration
+#+title: Emacs Configurion
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-31 21:11:39 thomas>
+#+date: Time-stamp: <2024-11-04 18:30:23 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -187,7 +187,7 @@ Set Straight to be configured the default manager for ~use-package~~.
 
 * Benchmark Init
 
-Use benchmark-init to check the time that it takes to load Emacs. This helps to diagnose which packages and configurations are causing Emacs to load slowly.
+Use benchmark-init to check the time that it takes to load Emacs.
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-benchmark-init)
@@ -195,18 +195,10 @@ Use benchmark-init to check the time that it takes to load Emacs. This helps to 
 
 * No-littering
 
-The [[https://github.com/emacscollective/no-littering][no-littering]] package will put Emacs configuration files for many third-party packages into separate folders under ~.emacs.d/etc/~ to help keep the ~.emacs.d/~ from getting to cluttered with different configuration files. This needs to be run before the other packages are initialized in order to ensure that when the pacakges are loaded that their configuration files will be put into the correct location.
+Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-no-littering)
-#+end_src
-
-* Whicher
-
-Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
-  (require 'freemacs-whicher)
 #+end_src
 
 * Emacs Defaults
@@ -215,6 +207,14 @@ Changes to the default settings of Emacs  Load the  the [[file:modules/defaults/
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-defaults)
+#+end_src
+
+* Whicher
+
+Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (require 'freemacs-whicher)
 #+end_src
 
 * Coding
@@ -237,6 +237,14 @@ Load the [[file:modules/completion/freemacs-completion.org][completion module]]
     (require 'freemacs-completion)
 #+end_src
 
+* Consult
+
+Load the [[./modules/completion/freemacs-consult.org][Consult module]].
+
+#+begin_src emacs-lisp :comments both :tangle yes
+  (require 'freemacs-consult)
+#+end_src
+
 * Corfu Configuration
 
 Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
@@ -247,10 +255,7 @@ Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-cor
 
 * Docker
 
-Load the he [[file:modules/docker/freemacs-docker.org][docker module]]. It configures the following packages:
-
-+ Docker :: Manage Docker containers from within Emacs
-+ Docker Compose  :: Edit docker-compose files in Emacs
+Load the he [[file:modules/docker/freemacs-docker.org][docker module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-docker)
@@ -272,20 +277,16 @@ Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
   (require 'freemacs-elfeed)
 #+end_src
 
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-elfeed-protocol)
+#+end_src
+
 * Dired
 
 Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-dired)
-#+end_src
-
-* Trashed
-
-Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
-  (require 'freemacs-trashed)
 #+end_src
 
 * Dirvish
@@ -296,12 +297,17 @@ Load the [[./modules/file-tools/freemacs-dired.org][Dirvish Module]].
   (require 'freemacs-dirvish)
 #+end_src
 
+* Trashed
+
+Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (require 'freemacs-trashed)
+#+end_src
+
 * Graphing
 
-Emacs can be used as an environment to create graphs, plots, and diagrams. Configuration for these are found in the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
-
-+ Gnuplot :: Create plots using Gnuplot in Emacs
-+ PlantUML :: Create UML diagrams with PlantUML 
+Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-graphing)
@@ -322,6 +328,7 @@ Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-meow)
 #+end_src
+
 * Org
 
 Load the [[./modules/org/freemacs-org.org][Org Mode module]].
