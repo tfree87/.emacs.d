@@ -106,7 +106,7 @@
 (use-package indent-bars
   :straight (:host github :repo "jdtsmith/indent-bars"
                    :branch "main")
-  :hook (prog-mode . indent-bars-mode)
+  :hook (python-mode . indent-bars-mode)
   :custom
   (indent-bars-prefer-character t))
 

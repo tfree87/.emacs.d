@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-22 20:17:50 thomas>
+#+date: Time-stamp: <2024-11-03 09:00:10 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -218,7 +218,7 @@ The following code will always highlight matching parenthesis when coding /immed
   (use-package indent-bars
     :straight (:host github :repo "jdtsmith/indent-bars"
                      :branch "main")
-    :hook (prog-mode . indent-bars-mode)
+    :hook (python-mode . indent-bars-mode)
     :custom
     (indent-bars-prefer-character t))
 #+end_src
