@@ -2,7 +2,7 @@
 
 #+title: Centered Window Mode x c
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-21 22:16:48 thomas>
+#+date: Time-stamp: <2024-11-03 14:50:14 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,16 +22,7 @@
 -----
 
 
-* Default Margin
-
-Use a default left and right margin of 3 to help clean up the look of Emacs buffers near window edges.
-
-#+begin_src emacs-lisp :tangle yes :comments both
-    (setq-default left-margin-width 3 right-margin-width 3)
-#+end_src
-
-
-* Centered Window Mode
+* Install Centered Window Mode
 
 Toggle on centered window mode when using a large screen with only a single Emacs window.
 
@@ -41,7 +32,7 @@ Toggle on centered window mode when using a large screen with only a single Emac
     :custom
     (cwm-incremental-padding t)
     (cwm-incremental-padding-% 10)
-    (cwm-centered-window-width 1000)
+    (cwm-centered-window-width 1000))
 #+end_src
 
 
