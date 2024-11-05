@@ -201,6 +201,8 @@
 (require 'freemacs-consult)
 ;; Consult:1 ends here
 
+(require 'freemacs-marginalia)
+
 ;; Corfu Configuration
 
 ;; Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
