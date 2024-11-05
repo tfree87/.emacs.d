@@ -168,7 +168,7 @@
 
 (require 'freemacs-elfeed)
 
-(require 'freemacs-elfeed-protocol)
+;  (require 'freemacs-elfeed-protocol)
 
 ;; Dired
 ;; Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
