@@ -7,7 +7,6 @@
 ;; - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
   
 
-;; [[file:freemacs-org.org::*Org][Org:1]]
 (use-package org
   :straight (:type built-in)
   :defer t
@@ -27,7 +26,7 @@
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
-  (org-refile-allow-creating-parent-nodes (quote confirm))
+  (org-refile-allow-creating-parent-nodes 'confirm)
   (org-export-in-background t)
   (org-log-into-drawer t)
   (org-todo-keywords
@@ -73,7 +72,32 @@
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
      ("w" "Work Calendar" entry
       (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
+      "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")
+     ("c" "Personal Calendar" entry
+      (file+datetree+prompt "~/Nextcloud/org/personal-calendar.org")
       "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")))
+  (org-modules '(ol-bbdb
+                 ol-bibtex
+                 ol-docviewol-doi
+                 ol-eww
+                 ol-gnus
+                 org-habit
+                 org-id
+                 ol-info
+                 org-inlinetask
+                 ol-mhe
+                 org-mouse
+                 org-protocol
+                 ol-rmail
+                 ol-w3m
+                 ol-eshell
+                 org-annotate-file
+                 ol-bookmark
+                 org-checklist
+                 org-choose
+                 ol-eisp-symbol
+                 org-notify org-toc))
+  
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -82,12 +106,15 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
+     (c . t)
+     (cpp . t)
      (calc . t)
      (css . t)
+     (dot . t)
      (emacs-lisp . t)
      (eshell . t)
      (gnuplot . t)
-     (dot . t)
+     (java . t)
      (latex . t)
      (ledger . t)
      (octave . t)
@@ -96,7 +123,9 @@
      (R . t)
      (scheme . t)
      (sed . t)
-     (shell . t))))
+     (shell . t)
+     (sql . t)
+     (sqlite . t))))
 
 (use-package org-contrib
   :straight t
@@ -104,14 +133,11 @@
   :config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
-;; Org:1 ends here
 
 ;; Org Header Sizes
 
 ;; The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
 
-
-;; [[file:freemacs-org.org::*Org Header Sizes][Org Header Sizes:1]]
 (defun freemacs/org-header-formatting ()
   "Change the size of headers and titles in Org Mode buffers."
   (interactive)
@@ -128,15 +154,11 @@
            (org-level-8 . 1.10)
            (org-document-title . 2.25)))
       (set-face-attribute (car face) nil :height (cdr face)))))
-;; Org Header Sizes:1 ends here
 
 ;; End
 
 ;; Tell Emacs what feature this file provides.
 
-
-;; [[file:freemacs-org.org::*End][End:1]]
 (provide 'freemacs-org)
 
 ;;; freemacs-org.el ends here
-;; End:1 ends here

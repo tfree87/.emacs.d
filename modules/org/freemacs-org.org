@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-02 20:59:03 thomas>
+#+date: Time-stamp: <2024-11-05 17:14:56 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,8 +21,6 @@
 -----
 
 
-This file provides the Org Mode configuration for my personal configuration of Emacs called Freemacs.
-
 * Org
 
 [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
@@ -31,7 +29,7 @@ This file provides the Org Mode configuration for my personal configuration of E
 - Publishing \LaTeX{} documents quicker and more easily
 - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
   
-#+begin_src emacs-lisp :comments both :tangle yes :noweb yes
+#+begin_src emacs-lisp :comments org :tangle yes :noweb yes
   (use-package org
     :straight (:type built-in)
     :defer t
@@ -59,8 +57,7 @@ This file provides the Org Mode configuration for my personal configuration of E
 ** Use Unique IDs for Org Links
 
 Create unique IDs for every internal link between Org headings to prevent links from breaking when files or headings are restructured.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 #+end_src
 
@@ -71,16 +68,14 @@ Set up the default directories for Org Mode.
 *** Default Directory
 
 Tell org-mode which directory is the default directory for all org-mode files.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-directory "~/Nextcloud/org")
 #+end_src
 
 *** Location of Agenda Files
 
 Tell org-mode in which directory all the agenda files can be found.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-agenda-start-on-weekday nil)
   (org-agenda-files `("~/Nextcloud/org"))
 #+end_src
@@ -91,7 +86,7 @@ Tell org-mode in which directory all the agenda files can be found.
 
 I prefer to have all of my captured notes automatically filed into a file called ~inbox.org~. Changing ~org-default-notes-file~ can create this functionality.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-default-notes-file (concat org-directory "/inbox.org"))
 #+end_src
 
@@ -101,7 +96,7 @@ I prefer to have all of my captured notes automatically filed into a file called
 
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
 #+end_src
 
@@ -109,29 +104,26 @@ In order to refile/move tasks from the inbox to other agenda files and subtrees,
 
 I want to allow for refiling org-mode tasks at the top of a file. Setting this will also require turning off completing the path in steps if ivy-mode autocompletion is used.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
 #+end_src
  
 Setting this variable allows for refiling tasks under a new heading on the fly.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
-  (org-refile-allow-creating-parent-nodes (quote confirm))
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
+  (org-refile-allow-creating-parent-nodes 'confirm)
 #+end_src
 
 ** Exporting
 
 To remove headers labeled with the ~:ignore:~ tag, the following needs to be implemented:
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_contrib_config
+#+begin_src emacs-lisp :comments org :noweb-ref org_contrib_config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
 #+end_src
 
 So that exporting Org Mode buffers doesn't lock up Emacs, the option ~org-export-in-background~ can be set to a non-nil value.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-export-in-background t)
 #+end_src
 
@@ -141,7 +133,7 @@ So that exporting Org Mode buffers doesn't lock up Emacs, the option ~org-export
 
 Put changes of TODO states for org-mode into a drawer under each heading so that it does not conflict with content under the headings.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-log-into-drawer t)
 #+end_src
 
@@ -149,7 +141,7 @@ Put changes of TODO states for org-mode into a drawer under each heading so that
 
 Set up the sequence of org-todo task keywords to allow for delegated (WAITING) tasks and CANCELED tasks.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-todo-keywords
    '((sequence "TODO(t)"
                "WAITING(w)"
@@ -168,7 +160,7 @@ Set up the sequence of org-todo task keywords to allow for delegated (WAITING) t
 
 I like to mark projects with a tag, however, I do not want my tasks to inherit these tags because I only use the project tags to locate upper-level headings. In addition, almost all of my org-mode tasks fall under some sort of project headline so it becomes meaningless if all of my tasks have the project tag. Changing this setting prevents the tag from being inherited and showing up in the agenda view.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-tags-exclude-from-inheritance '("project"))
 #+end_src
 
@@ -176,7 +168,7 @@ I like to mark projects with a tag, however, I do not want my tasks to inherit t
 
 Stuck projects are projects which are going nowhere and need to be analyzed for next steps. Org-mode allows for custom definitions of what a "stuck project" can be so I define a stuck project as any headline with the project keyword which has no TODO item below it. Org-mode by default assumes all level 2 headings are projects which is not the case in my setup.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-stuck-projects
    '("+project/-MAYBE-DONE"
      ("NEXT" "TODO")
@@ -188,7 +180,7 @@ Stuck projects are projects which are going nowhere and need to be analyzed for 
 
 I prefer BibLaTeX over the standard BibTeX as it has more powerful features and supports more citation styles. In order to get BibLaTeX to operate in org-mode, the ~org-latex-pdf-process~ variable needs to be changed to reflect this.
 
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-latex-pdf-process
    '("pdflatex -interaction nonstopmode -output-directory %o %f"
      "biber %b"
@@ -198,21 +190,23 @@ I prefer BibLaTeX over the standard BibTeX as it has more powerful features and 
 
 ** Org-babel Languages
 
-In order to use active code in org-mode, you must define which programming languages to load. For any programming language you wish to use, it must be added to the ~org-babel-load-languages~ list.
-
+Activate languages to use in Org Babel
 #+name: babel_languages
-#+begin_src emacs-lisp :comments both
+#+begin_src emacs-lisp :comments org
   (with-eval-after-load "org"
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
+     (c . t)
+     (cpp . t)
      (calc . t)
      (css . t)
+     (dot . t)
      (emacs-lisp . t)
      (eshell . t)
      (gnuplot . t)
-     (dot . t)
+     (java . t)
      (latex . t)
      (ledger . t)
      (octave . t)
@@ -221,7 +215,9 @@ In order to use active code in org-mode, you must define which programming langu
      (R . t)
      (scheme . t)
      (sed . t)
-     (shell . t)))
+     (shell . t)
+     (sql . t)
+     (sqlite . t)))
 #+end_src
 
 ** Appearance
@@ -231,48 +227,42 @@ This section contains modifications to how Org Mode appears in buffers.
 *** Hide Emphasis Characters
 
 Hiding emphasis characters  in Org Mode makes the text easier to read when it is being displayed directly in Emacs. This will make *bold*, /italic/, _underlined_, ~code~, and =verbatim= text show up without the *,/, _, ~, and = characters around them. 
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-hide-emphasis-markers t)
 #+end_src
 
 *** Word Wrapping
 
 Turning on ~visual-line-mode~ allows the text to flow in Org Mode at the end of the window.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_config
+#+begin_src emacs-lisp :comments org :noweb-ref org_config
   (add-hook 'org-mode-hook 'visual-line-mode)
 #+end_src
 
 *** Single Space Between Headline and Tags
 
 Just add a single space between a headline and tags for simplicity.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-tags-column 0)
 #+end_src
 
 *** Use "Clean View"
 
 Start all Emacs org-mode buffers with "clean-view" turned on. This makes it easier to see and read org-mode files as all the extra asterisks in the headings wil be hidden leading to more empty white space and a cleaner look.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-startup-indented t)
 #+end_src
 
 *** Native Tabs
 
 This will allow for source code blocks in emacs org-mode to be internally indented as they would normally be in their majors modes.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-src-tab-acts-natively t)
  #+end_src
  
 ** Change TODO Keyword Colors
 
 Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-todo-keyword-faces
    '(("TODO" . org-warning)
      ("WAITING" . "yellow")
@@ -283,9 +273,8 @@ Change the color of the org-todo keywords to make it easier to see them on a col
 ** Capturing
 
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
-
 #+name: org_capture_templates
-#+begin_src emacs-lisp :comments both :noweb-ref org_customize
+#+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-capture-templates
    '(("p" "Projects item" entry (file "~/Nextcloud/org/projects.org")
       "* %? :project:")
@@ -297,14 +286,44 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
      ("w" "Work Calendar" entry
       (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
+      "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")
+     ("c" "Personal Calendar" entry
+      (file+datetree+prompt "~/Nextcloud/org/personal-calendar.org")
       "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")))
+#+end_src
+
+* Org Modules
+
+Load Org modules for extra functionality.
+#+begin_src emacs-lisp :noweb-ref org_customize
+  (org-modules '(ol-bbdb
+                 ol-bibtex
+                 ol-docviewol-doi
+                 ol-eww
+                 ol-gnus
+                 org-habit
+                 org-id
+                 ol-info
+                 org-inlinetask
+                 ol-mhe
+                 org-mouse
+                 org-protocol
+                 ol-rmail
+                 ol-w3m
+                 ol-eshell
+                 org-annotate-file
+                 ol-bookmark
+                 org-checklist
+                 org-choose
+                 ol-eisp-symbol
+                 org-notify org-toc))
+
 #+end_src
 
 * Org Header Sizes
 
 The following custom function will change the heading sizes in Org Mode to make it easier to see the different heading levels. In addition, this will also increase the size of the document title and make it more prominent. This code is modified and from [[https://github.com/daviwil][@daviwil]] from [[https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-05.org#improving-the-look][this link]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (defun freemacs/org-header-formatting ()
     "Change the size of headers and titles in Org Mode buffers."
     (interactive)
@@ -326,8 +345,7 @@ The following custom function will change the heading sizes in Org Mode to make 
 * End
 
 Tell Emacs what feature this file provides.
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (provide 'freemacs-org)
 
   ;;; freemacs-org.el ends here
