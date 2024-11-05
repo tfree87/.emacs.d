@@ -1,0 +1,44 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:  Vertico Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-05 13:44:02 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+-----
+
+
+* Vertico
+
+[[https://github.com/minad/vertico][Vertico]] removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package vertico
+    :straight t
+    :demand t
+    :custom
+    (vertico-cycle t)
+    (vertico-resize t)
+    :init
+    (vertico-mode))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-vertico)
+#+end_src

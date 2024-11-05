@@ -183,14 +183,23 @@
 (require 'freemacs-autohotkey)
 ;; Coding:1 ends here
 
-;; Completion
+;; Embark
 
-;; Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+;; Load the [[./modules/completion/freemacs-embark.org][Embark module]]
 
 
-;; [[file:init.org::*Completion][Completion:1]]
-(require 'freemacs-completion)
-;; Completion:1 ends here
+;; [[file:init.org::*Embark][Embark:1]]
+(require 'freemacs-embark)
+;; Embark:1 ends here
+
+;; Cape
+
+;; Load the [[./modules/completion/freemacs-cape.org][Cape module]].
+
+
+;; [[file:init.org::*Cape][Cape:1]]
+(require 'freemacs-cape)
+;; Cape:1 ends here
 
 ;; Consult
 
@@ -201,31 +210,45 @@
 (require 'freemacs-consult)
 ;; Consult:1 ends here
 
-(require 'freemacs-marginalia)
+;; Corfu
 
-;; Corfu Configuration
-
-;; Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
+;; Load the [[./modules/completion/freemacs-corfu.org][Corfu module]]
 
 
-;; [[file:init.org::*Corfu Configuration][Corfu Configuration:1]]
+;; [[file:init.org::*Corfu][Corfu:1]]
 (require 'freemacs-corfu)
-;; Corfu Configuration:1 ends here
+;; Corfu:1 ends here
 
 ;; Docker
 
-;; Load the he [[file:modules/docker/freemacs-docker.org][docker module]].
+;; Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
 
 
 ;; [[file:init.org::*Docker][Docker:1]]
 (require 'freemacs-docker)
 ;; Docker:1 ends here
 
+;; YASnippet
+
+;; Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
+
+
+;; [[file:init.org::*YASnippet][YASnippet:1]]
 (require 'freemacs-yasnippet)
+;; YASnippet:1 ends here
 
+;; Elfeed
+
+;; Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
+
+
+;; [[file:init.org::*Elfeed][Elfeed:1]]
 (require 'freemacs-elfeed)
+;; Elfeed:1 ends here
 
+;; [[file:init.org::*Elfeed][Elfeed:2]]
 (require 'freemacs-elfeed-protocol)
+;; Elfeed:2 ends here
 
 ;; Dired
 
@@ -272,6 +295,15 @@
 (require 'freemacs-ledger)
 ;; Ledger:1 ends here
 
+;; Marginalia
+
+;; Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
+
+
+;; [[file:init.org::*Marginalia][Marginalia:1]]
+(require 'freemacs-marginalia)
+;; Marginalia:1 ends here
+
 ;; Meow Mode
 
 ;; Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
@@ -280,6 +312,15 @@
 ;; [[file:init.org::*Meow Mode][Meow Mode:1]]
 (require 'freemacs-meow)
 ;; Meow Mode:1 ends here
+
+;; Orderless
+
+;; Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
+
+
+;; [[file:init.org::*Orderless][Orderless:1]]
+(require 'freemacs-orderless)
+;; Orderless:1 ends here
 
 ;; Org
 
@@ -318,6 +359,15 @@
 
 (require 'freemacs-orgsl)
 
+;; Ox-publish
+
+;; ~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
+
+
+;; [[file:init.org::*Ox-publish][Ox-publish:1]]
+(require 'freemacs-ox-publish)
+;; Ox-publish:1 ends here
+
 ;; Session
 
 ;; Load the [[./modules/session/freemacs-session.org][Session Module]].
@@ -344,6 +394,15 @@
 ;; [[file:init.org::*Eat][Eat:1]]
 (require 'freemacs-eat)
 ;; Eat:1 ends here
+
+;; Vertico
+
+;; Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+
+
+;; [[file:init.org::*Vertico][Vertico:1]]
+(require 'freemacs-vertico)
+;; Vertico:1 ends here
 
 ;; VTerm
 
@@ -424,15 +483,6 @@
 (require 'freemacs-markdown)
 ;; Markdown:1 ends here
 
-;; Ox-publish
-
-;; ~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
-
-
-;; [[file:init.org::*Ox-publish][Ox-publish:1]]
-(require 'freemacs-ox-publish)
-;; Ox-publish:1 ends here
-
 ;; PDF
 
 ;; To improve the speed and to extend the ability to view PDF files in Emacs, the [[file:modules/publishing/freemacs-pdf.org][PDF module]] can be loaded.
@@ -469,8 +519,21 @@
 (require 'freemacs-server)
 ;; Emacs Server:1 ends here
 
-;; Custom Function Definitions
+;; Custom Functions
 
+;; This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
+
+
+;; [[file:init.org::*Custom Functions][Custom Functions:1]]
+;; Custom Function Definitions
+;; Custom Functions:1 ends here
+
+;; Sudo Find File
+
+;; This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
+
+
+;; [[file:init.org::*Sudo Find File][Sudo Find File:1]]
 (whicher "sudo")
 (defun sudo-find-file (file)
   "Open FILE as root."
@@ -483,10 +546,25 @@
                          "|sudo:root@"
                          (file-remote-p file 'host) ":" (file-remote-p file 'localname))
                (concat "/sudo:root@localhost:" file))))
+;; Sudo Find File:1 ends here
 
+;; Performance Optimization End
+
+;; Close off the ~let~ statement at the beginning of the init file.
+
+
+;; [[file:init.org::*Performance Optimization End][Performance Optimization End:1]]
 (setq gc-cons-threshold 800000)
 )
+;; Performance Optimization End:1 ends here
 
+;; End
+
+;; Add a final comment to indicate the end of the file.
+
+
+;; [[file:init.org::*End][End:1]]
 (provide 'init)
 
 ;;; init.el ends here
+;; End:1 ends here

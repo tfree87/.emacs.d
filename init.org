@@ -1,8 +1,8 @@
- # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
 
 #+title: Emacs Configurion
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-04 20:08:40 thomas>
+#+date: Time-stamp: <2024-11-05 14:08:37 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -229,12 +229,20 @@ Load the [[file:modules/coding/freemacs-coding.org][coding module]].
   (require 'freemacs-autohotkey)
 #+end_src
 
-* Completion
+* Embark
 
-Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+Load the [[./modules/completion/freemacs-embark.org][Embark module]]
 
-#+begin_src emacs-lisp :tangle yes :comments both
-    (require 'freemacs-completion)
+#+begin_src emacs-lisp :comments both :tangle yes
+  (require 'freemacs-embark)
+#+end_src
+
+* Cape
+
+Load the [[./modules/completion/freemacs-cape.org][Cape module]].
+
+#+begin_src emacs-lisp :comments both :tangle yes
+  (require 'freemacs-cape)
 #+end_src
 
 * Consult
@@ -245,27 +253,19 @@ Load the [[./modules/completion/freemacs-consult.org][Consult module]].
   (require 'freemacs-consult)
 #+end_src
 
-* Marginalia
+* Corfu
 
-Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
+Load the [[./modules/completion/freemacs-corfu.org][Corfu module]]
 
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-marginalia)
-#+end_src
-
-* Corfu Configuration
-
-Load the Cofu module (see [[./modules/completion/freemacs-corfu.el][freemacs-corfu]]).
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :comments both :tangle yes
   (require 'freemacs-corfu)
 #+end_src
 
 * Docker
 
-Load the he [[file:modules/docker/freemacs-docker.org][docker module]].
+Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
 
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :comments both :tangle yes :comments both
   (require 'freemacs-docker)
 #+end_src
 
@@ -273,7 +273,7 @@ Load the he [[file:modules/docker/freemacs-docker.org][docker module]].
 
 Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (require 'freemacs-yasnippet)
 #+end_src
 
@@ -281,11 +281,11 @@ Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
 
 Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (require 'freemacs-elfeed)
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (require 'freemacs-elfeed-protocol)
 #+end_src
 
@@ -329,6 +329,14 @@ Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
   (require 'freemacs-ledger)
 #+end_src
 
+* Marginalia
+
+Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
+
+#+begin_src emacs-lisp :comments both :tangle yes
+  (require 'freemacs-marginalia)
+#+end_src
+
 * Meow Mode
 
 Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
@@ -337,6 +345,13 @@ Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
   (require 'freemacs-meow)
 #+end_src
 
+* Orderless
+
+Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (require 'freemacs-orderless)
+#+end_src
 * Org
 
 Load the [[./modules/org/freemacs-org.org][Org Mode module]].
@@ -374,6 +389,14 @@ Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
   (require 'freemacs-orgsl)
 #+end_src
 
+* Ox-publish
+
+~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (require 'freemacs-ox-publish)
+#+end_src
+
 * Session
 
 Load the [[./modules/session/freemacs-session.org][Session Module]].
@@ -396,6 +419,14 @@ Load the [[./modules/shells/freemacs-eat.org][Eat Module]].
 
 #+begin_src emacs-lisp :tangle yes :comments both
   (require 'freemacs-eat)
+#+end_src
+
+* Vertico
+
+Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+
+#+begin_src emacs-lisp :tangle yes :comments both
+    (require 'freemacs-vertico)
 #+end_src
 
 * VTerm
@@ -469,14 +500,6 @@ Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
   (require 'freemacs-markdown)
 #+end_src
 
-* Ox-publish
-
-~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
-  (require 'freemacs-ox-publish)
-#+end_src
-
 * PDF
 
 To improve the speed and to extend the ability to view PDF files in Emacs, the [[file:modules/publishing/freemacs-pdf.org][PDF module]] can be loaded.
@@ -513,7 +536,7 @@ Load the [[file:modules/server/freemacs-server.org][server module]].
 
 This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
 ;; Custom Function Definitions
 #+end_src
 
@@ -521,7 +544,7 @@ This section contains custom functions that I have either created myself or borr
 
 This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (whicher "sudo")
   (defun sudo-find-file (file)
     "Open FILE as root."
@@ -540,7 +563,7 @@ This function creates a ~sudo-find-file~ command that can be used to open files 
 
 Close off the ~let~ statement at the beginning of the init file.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (setq gc-cons-threshold 800000)
   )
 #+end_src
@@ -549,8 +572,9 @@ Close off the ~let~ statement at the beginning of the init file.
 
 Add a final comment to indicate the end of the file.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :comments both :tangle yes
   (provide 'init)
 
   ;;; init.el ends here
 #+end_src
+

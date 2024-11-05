@@ -1,0 +1,84 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:  Cape Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-05 10:16:43 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+-----
+
+* Install Cape
+
+ [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
+ 
+#+name: cape
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package cape
+    :straight t
+    :bind (("C-c p p" . completion-at-point)
+           ("C-c p t" . complete-tag)
+           ("C-c p d" . cape-dabbrev)
+           ("C-c p f" . cape-file)
+           ("C-c p k" . cape-keyword)
+           ("C-c p s" . cape-elisp-symbol)
+           ("C-c p a" . cape-abbrev)
+           ("C-c p \\" . cape-tex)
+           ("C-c p _" . cape-tex)
+           ("C-c p ^" . cape-tex))
+    :init
+    <<capfs>>)
+#+end_src
+
+* Cape Completion Functions
+
+Cape provides a number of ~completion-at-point~ functions that can be used. Below are the functions that I use that have not been intrusive.
+
+The following will complete file names in buffers:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-file)
+#+end_src
+
+This will complete items in TeX and LaTeX modes:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+#+end_src
+
+Search other buffers for completion candidates:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+#+end_src
+
+Complete keywords in programming modes:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+#+end_src
+
+Complete Emacs-lisp symbols:
+
+#+begin_src emacs-lisp :noweb-ref capfs
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-cape)
+#+end_src

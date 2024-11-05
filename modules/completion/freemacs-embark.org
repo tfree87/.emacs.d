@@ -1,0 +1,73 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Embark Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-05 09:18:20 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+-----
+
+
+* Embark
+
+[[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package embark
+    :straight t
+    :bind
+    (("C-." . embark-act)
+     ("C-;" . embark-dwim)
+     ("C-h B" . embark-bindings))
+    :init
+    (setq prefix-help-command #'embark-prefix-help-command)
+    :config
+    <<embark_config>>
+    (define-key embark-file-map (kbd "S") 'sudo-find-file))
+#+end_src
+
+* Embark Mode Line
+
+Hide the mode line of the Embark live/completions buffers.
+
+#+begin_src emacs-lisp :noweb-ref embark_config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+#+end_src
+
+* Embark Integration with Consult
+
+Allow use of Embark commands after issuing a Consult command.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package embark-consult
+    :straight t
+    :after (embark consult)
+    :demand t
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
+
+* End
+
+Tell Emacs what pacakge this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-embark)
+
+  ;;; freemacs-embark.el ends here.
+#+end_src
