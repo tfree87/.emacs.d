@@ -1,4 +1,4 @@
-;; Org
+;; Configure Org
 
 ;; [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 
@@ -97,7 +97,6 @@
                  org-choose
                  ol-eisp-symbol
                  org-notify org-toc))
-  
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -106,8 +105,7 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
-     (c . t)
-     (cpp . t)
+     (C . t)
      (calc . t)
      (css . t)
      (dot . t)

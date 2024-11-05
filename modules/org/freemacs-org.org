@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 17:14:56 thomas>
+#+date: Time-stamp: <2024-11-05 17:39:02 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,7 +21,7 @@
 -----
 
 
-* Org
+* Configure Org
 
 [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
 
@@ -198,8 +198,7 @@ Activate languages to use in Org Babel
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
-     (c . t)
-     (cpp . t)
+     (C . t)
      (calc . t)
      (css . t)
      (dot . t)
@@ -317,7 +316,6 @@ Load Org modules for extra functionality.
                  org-choose
                  ol-eisp-symbol
                  org-notify org-toc))
-
 #+end_src
 
 * Org Header Sizes
