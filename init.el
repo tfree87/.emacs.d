@@ -76,11 +76,6 @@
 
 (load custom-file)
 
-;; Emacs Defaults
-;; Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
-
-(require 'freemacs-defaults)
-
 ;; Straight.el
 ;; Instead of the built-in package manager, use [[https://github.com/raxod502/straight.el][straight.el]] to pull all the packages straight from their repositories.
 
@@ -118,6 +113,11 @@
 ;; Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
 
 (require 'freemacs-whicher)
+
+;; Emacs Defaults
+;; Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
+
+(require 'freemacs-defaults)
 
 ;; Centered-Window Mode
 ;; Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].

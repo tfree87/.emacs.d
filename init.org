@@ -129,11 +129,6 @@ This needs to be done early in the loading process because it contains the addre
 #+begin_src emacs-lisp :tangle yes :comments org
   (load custom-file)
 #+end_src
-* Emacs Defaults
-Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
-#+begin_src emacs-lisp :tangle yes :comments org
-  (require 'freemacs-defaults)
-#+end_src
 * Startup Packags
 Packages in the this section need to be initializaed before all others.
 ** Straight.el
@@ -177,6 +172,11 @@ Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
 Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-whicher)
+#+end_src
+* Emacs Defaults
+Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
+#+begin_src emacs-lisp :tangle yes :comments org
+  (require 'freemacs-defaults)
 #+end_src
 * Other Packages
 ** Centered-Window Mode
