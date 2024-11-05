@@ -1,0 +1,23 @@
+* Install Marginalia
+
+[[https://github.com/minad/marginalia][Marginalia]] generates annotations to items in the minibuffer similar to what is accomplished  with [[https://github.com/Yevgnen/ivy-rich][ivy-rich]].
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  (use-package marginalia
+    :straight t
+    :bind (("M-A" . marginalia-cycle)
+           :map minibuffer-local-map
+           ("M-A" . marginalia-cycle))
+    :init
+    (marginalia-mode))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-marginalia)
+
+  ;;; freemaacs-marginalia.el ends here. 
+#+end_src

@@ -2,7 +2,7 @@
 
 #+title: Nerd Icons
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-21 21:48:05 thomas>
+#+date: Time-stamp: <2024-11-04 19:02:12 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -33,6 +33,7 @@ Add Nerd Icons to the minibuffer completion interface.
     (nerd-icons-completion-mode)
     (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 #+end_src
+
 * Corfu Nerd Icons
 
 Add small icons to Corfu popup windows.
@@ -43,6 +44,7 @@ Add small icons to Corfu popup windows.
     :config
     (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 #+end_src
+
 * Dired Nerd Icons
 
 Add Nerd Icons to represent different file types in Dired Mode.
@@ -53,6 +55,7 @@ Add Nerd Icons to represent different file types in Dired Mode.
     :hook
     (dired-mode . nerd-icons-dired-mode))
 #+END_SRC
+
 * End
 
 Tell Emacs what package this file provides.

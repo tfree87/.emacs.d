@@ -3,7 +3,7 @@
 ;; Add Nerd Icons to the minibuffer completion interface.
 
 
-;; [[file:freemacs-nerdicons.org::*Completion Nerd Icons][Completion Nerd Icons:1]]
+;; [[file:freemacs-nerd-icons.org::*Completion Nerd Icons][Completion Nerd Icons:1]]
 (use-package nerd-icons-completion
   :straight t
   :after marginalia
@@ -22,7 +22,7 @@
 ;; Add Nerd Icons to represent different file types in Dired Mode.
 
 
-;; [[file:freemacs-nerdicons.org::*Dired Nerd Icons][Dired Nerd Icons:1]]
+;; [[file:freemacs-nerd-icons.org::*Dired Nerd Icons][Dired Nerd Icons:1]]
 (use-package nerd-icons-dired
   :straight t
   :hook
@@ -34,6 +34,6 @@
 ;; Tell Emacs what package this file provides.
 
 
-;; [[file:freemacs-nerdicons.org::*End][End:1]]
+;; [[file:freemacs-nerd-icons.org::*End][End:1]]
 (provide 'freemacs-nerd-icons)
 ;; End:1 ends here

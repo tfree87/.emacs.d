@@ -47,16 +47,6 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package marginalia
-  :straight t
-  :bind (("M-A" . marginalia-cycle)
-         :map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-  :hook
-  (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init
-  (marginalia-mode))
-
 (use-package vertico
   :straight t
   :demand t

@@ -2,7 +2,7 @@
 
 #+title: Completion Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-04 18:26:47 thomas>
+#+date: Time-stamp: <2024-11-04 20:08:51 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -132,28 +132,6 @@ Allow use of Embark commands after issuing a Consult command.
     (completion-styles '(orderless))
     (completion-category-defaults nil)
     (completion-category-overrides '((file (styles partial-completion)))))
-#+end_src
-
-* Marginalia
-
-[[https://github.com/minad/marginalia][Marginalia]] generates annotations to items in the minibuffer similar to what is accomplished  with [[https://github.com/Yevgnen/ivy-rich][ivy-rich]].
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package marginalia
-    :straight t
-    :bind (("M-A" . marginalia-cycle)
-           :map minibuffer-local-map
-           ("M-A" . marginalia-cycle))
-    :hook
-    <<marginalia_hooks>>
-    :init
-    (marginalia-mode))
-#+end_src
-
-If All the Icons and All the Icons Completion is installed, activate All the Completion to work with Marginalia.
-
-#+begin_src emacs-lisp :noweb-ref marginalia_hooks
-  (marginalia-mode . all-the-icons-completion-marginalia-setup)
 #+end_src
 
 * Vertico
