@@ -4,7 +4,6 @@
   (version-control t)
   (delete-old-versions t)
   (vc-make-backup-files t)
-  ;  (inhibit-startup-screen t)
   (register-preview-delay 0)
   (ring-bell-function #'ignore)
   (visible-bell t)

@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-03 14:44:21 thomas>
+#+date: Time-stamp: <2024-11-05 15:02:52 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -79,7 +79,7 @@ Display Battery Mode will display the battery charge status in the modeline
 
 * Backup Files with Version Control
 
- Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
+Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
 
 
  #+begin_src emacs-lisp :noweb-ref emacs_custom
@@ -96,14 +96,6 @@ Indenting with spaces rather than tabs is genrally recommended when working with
   (setq-default indent-tabs-mode nil)
 #+end_src
 
-* Inhibit Startup Screen
-
-After seeing the startup screen hundreds of times, there is no longer any need to load it on startup as it no longer contains any new information.
-
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-;  (inhibit-startup-screen t)
-#+end_src
-
 * Register Delay
 
 #+begin_src emacs-lisp :noweb-ref emacs_custom
@@ -112,6 +104,7 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 
 * Ring Bell Function
 
+Disable the bell error sound in Emacs and use a visible bell instead.
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (ring-bell-function #'ignore)
   (visible-bell t)
@@ -119,17 +112,14 @@ After seeing the startup screen hundreds of times, there is no longer any need t
 
 * Send Deleted Files to System Trash
 
- Emacs does not send files to the trash by default which is counter-intuitive for many beginning users. /In order to risk losing files it is a good idea to turn on the option to send all files to the system trash./
-
+Send files to the system trash instead of directly deleing them.
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (delete-by-moving-to-trash t)
  #+end_src
  
 * Shorten "Yes or No" to "Y or N"
 
-To make work faster, instead of typing "yes" or "no" for each question prompt, use just "y" or "n"
-.
-
+Instead of typing "yes" or "no" for each question prompt, use just "y" or "n".
 #+begin_src emacs-lisp :noweb-ref emacs_config
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -137,7 +127,6 @@ To make work faster, instead of typing "yes" or "no" for each question prompt, u
 * Show Column Number
 
 Many programming language style guides recommend that each line of code is less than 80 characters long. To determine if code lines are too long, a simple tool is to activate ~column-number-mode~. Once enabled, the current column (i.e. the number of characters on that line) will be displayed.
-
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (column-number-mode t)
 #+end_src

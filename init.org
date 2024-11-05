@@ -2,7 +2,7 @@
 
 #+title: Emacs Configurion
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 14:08:37 thomas>
+#+date: Time-stamp: <2024-11-05 15:02:49 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -89,72 +89,56 @@ The following code block will add a header to the ~init.el~ file when it is gene
 #+end_src
 
 * Performance Optimization Start
-
-In order to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement to speed up the load process. This can help a little when Emacs is run as a portable app from a flash drive as I often do.See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+to slightly reduce the load time for Emacs, the whole ~init.el~ file can be wrapped in the following let statement. See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
+#+begin_src emacs-lisp :tangle yes :comments org
   (let ((file-name-handler-alist nil))
 #+end_src
-
 * Load Path
-
-Since all of the Emacs configuration is in modules, the ~modules~ directory and all of its sub-directories must be added to the Emacs ~load-path~.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+All of this Emacs configuration is in modules. The ~modules~ directory and all of its sub-directories must be added to the Emacs ~load-path~.
+#+begin_src emacs-lisp :tangle yes :comments org
   (let ((default-directory "~/.emacs.d/modules/"))
     (normal-top-level-add-subdirs-to-load-path))
 #+end_src
-
 * Running Emacs as a Portable App
-
 I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs.
-
 ** Check for Portable Emacs Instance
-
 When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (defun freemacs/isportable-p ()
     "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
     (string= (getenv "EMACS_PORTABLE") "Y"))
  #+end_src
- 
 ** Set Location of Portable Git
 
 Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
 
 The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
 
- #+begin_src emacs-lisp :tangle yes :noweb yes :comments both
+ #+begin_src emacs-lisp :tangle yes :noweb yes :comments org
    (when (freemacs/isportable-p)
      (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
  #+end_src
 
 * Custom Set Variables
-
- To keep variables set by the customize interfacei from being placed at the top of ~init.el~, Set Emacs customize to be put into a separate file [[./custom.el]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+Place custom variables in [[./custom.el]] rather than [[./init.el]].
+#+begin_src emacs-lisp :tangle yes :comments org
   (setq custom-file "~/.emacs.d/custom.el")
 #+end_src
-
-Load the custom file. This needs to be done early in the loading process because it contains the addresses for the package repositories. If this is not loaded before refreshing packages and making calls to ~use-package~, then the ~:ensure~ command will not be able to pull the packages and install them.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+Load the custom variables (Emacs customize interface) file.
+This needs to be done early in the loading process because it contains the addresses for the package repositories.
+#+begin_src emacs-lisp :tangle yes :comments org
   (load custom-file)
 #+end_src
-
-* Straight.el
-
+* Emacs Defaults
+Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
+#+begin_src emacs-lisp :tangle yes :comments org
+  (require 'freemacs-defaults)
+#+end_src
+* Startup Packags
+Packages in the this section need to be initializaed before all others.
+** Straight.el
 Instead of the built-in package manager, use [[https://github.com/raxod502/straight.el][straight.el]] to pull all the packages straight from their repositories.
-
-1. It is easier to avoid conflicts with different package repositories such as duplicates packages in ELPA and MELPA.
-2. I can define a specific fork to use for a specific package to get bug fixes or modifications.
-3. The entire package repository is cloned, which, while it takes up a lot of space, allows for editing the source code directly if desired.
-4. Github repositories that are not included in ELPA, MELPA, or marmalade can be pulled 
- used in ~use-package~ statements.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (expand-file-name
@@ -170,58 +154,39 @@ Instead of the built-in package manager, use [[https://github.com/raxod502/strai
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
  #+end_src
- 
-* Install use-package
-
+** Install use-package
 Use ~straight.el~ to install ~use-package~ to manage Emacs packages.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (straight-use-package 'use-package)
 #+end_src
-
 Set Straight to be configured the default manager for ~use-package~~.
-
-#+begin_src emacs-lisp :tangle no :comments both
+#+begin_src emacs-lisp :tangle no :comments org
   (setq straight-use-package-by-default t)
 #+end_src
-
-* Benchmark Init
-
+** Benchmark Init
 Use benchmark-init to check the time that it takes to load Emacs.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-benchmark-init)
 #+END_SRC
-
-* No-littering
-
+** No-littering
 Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-no-littering)
 #+end_src
-
-* Emacs Defaults
-
-Changes to the default settings of Emacs  Load the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
-  (require 'freemacs-defaults)
-#+end_src
-
-* Whicher
-
+** Whicher
 Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-whicher)
 #+end_src
-
-* Coding
-
+* Other Packages
+** Centered-Window Mode
+Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
+#+begin_src emacs-lisp :tangle yes :comments org
+  (require 'freemacs-cwm)
+#+end_src
+** Coding
 Load the [[file:modules/coding/freemacs-coding.org][coding module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-project)
 
   (require 'freemacs-coding)
@@ -229,350 +194,245 @@ Load the [[file:modules/coding/freemacs-coding.org][coding module]].
   (require 'freemacs-autohotkey)
 #+end_src
 
-* Embark
-
+** Embark
 Load the [[./modules/completion/freemacs-embark.org][Embark module]]
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-embark)
 #+end_src
 
-* Cape
-
+** Cape
 Load the [[./modules/completion/freemacs-cape.org][Cape module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-cape)
 #+end_src
 
-* Consult
-
+** Consult
 Load the [[./modules/completion/freemacs-consult.org][Consult module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-consult)
 #+end_src
 
-* Corfu
-
+** Corfu
 Load the [[./modules/completion/freemacs-corfu.org][Corfu module]]
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-corfu)
 #+end_src
 
-* Docker
-
+** Docker
 Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes :comments both
+#+begin_src emacs-lisp :comments org :tangle yes :comments org
   (require 'freemacs-docker)
 #+end_src
 
-* YASnippet
-
+** YASnippet
 Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-yasnippet)
 #+end_src
 
-* Elfeed
-
+** Elfeed
 Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-elfeed)
 #+end_src
 
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-elfeed-protocol)
 #+end_src
 
-* Dired
-
+** Dired
 Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-dired)
 #+end_src
 
-* Dirvish
-
+** Dirvish
 Load the [[./modules/file-tools/freemacs-dired.org][Dirvish Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-dirvish)
 #+end_src
 
-* Trashed
-
+** Trashed
 Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-trashed)
 #+end_src
 
-* Graphing
-
+** Graphing
 Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-graphing)
 #+end_src
 
-* Ledger
-
+** Ledger
 Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-ledger)
 #+end_src
 
-* Marginalia
-
+** Marginalia
 Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (require 'freemacs-marginalia)
 #+end_src
 
-* Meow Mode
-
+** Meow Mode
 Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-meow)
 #+end_src
 
-* Orderless
-
+** Orderless
 Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-orderless)
 #+end_src
-* Org
-
+** Org
 Load the [[./modules/org/freemacs-org.org][Org Mode module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-org)
 #+end_src
 
-*  Org Contacts
-
+**  Org Contacts
 Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-org-contacts)
 #+end_src
 
-* Org Mind Map
-
+** Org Mind Map
 Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]]/
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-org-mm)
 #+end_src
 
-* Org-QL
-
+** Org-QL
 Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-org-ql)
 #+end_src
 
-* Org Super Links
-
+** Org Super Links
+Load the [[./modules/org/freemacs-orgsl.org][Org Super Links module]].
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-orgsl)
 #+end_src
 
-* Ox-publish
-
+** Ox-publish
 ~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-ox-publish)
 #+end_src
 
-* Session
-
+** Session
 Load the [[./modules/session/freemacs-session.org][Session Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-session)
 #+end_src
 
-* Eshell
-
+** Eshell
 Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-eshell)
 #+end_src
 
-* Eat
-
+** Eat
 Load the [[./modules/shells/freemacs-eat.org][Eat Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-eat)
 #+end_src
 
-* Vertico
-
+** Vertico
 Load the [[file:modules/completion/freemacs-completion.org][completion module]]
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
     (require 'freemacs-vertico)
 #+end_src
 
-* VTerm
-
+** VTerm
 Load the [[./modules/shells/freemacs-vterm.org][Vterm Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-vterm)
 #+end_src
 
-* Theme style
-
+** Theme style
 Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
     (require 'freemacs-theme)
 #+end_src
 
-* Centered-Window Mode
-
-Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
-  (require 'freemacs-cwm)
-#+end_src
-
-* Nerd Icons
-
+** Nerd Icons
 Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-nerd-icons)
 #+end_src
 
-* Academic Writing
-
+** Academic Writing
 The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
-
 + Academic Phrases :: A package that inserts common template phrases into academic papers
 + Citar :: A citation tool that simplifies adding citations to documents
 + Org Cite :: The built-in Org Mode citation management system
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-academic-writing)
 #+end_src
 
 ** Spellchecking
-
 The spellchecking module configures the spell checking environment in Emacs. A few of the changes made:
 
 + Flyspell is on be default so that you do not need to remember to call ~ispell~.
 + Hunspell is used as the default spellchecking backend as it is more modern and works on multiple operating systems.
 
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-spellcheck)
 #+end_src
 
 ** \LaTeX{}
-
 Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-latex)
 #+end_src
 
-* Markdown
-
+** Markdown
 Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-markdown)
 #+end_src
 
-* PDF
-
+** PDF
 To improve the speed and to extend the ability to view PDF files in Emacs, the [[file:modules/publishing/freemacs-pdf.org][PDF module]] can be loaded.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
    (require 'freemacs-pdf)
 #+end_src
 
-* Help
-
+** Help
 The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
    (require 'freemacs-help)
 #+end_src
 
-* YouTube
-
+** YouTube
 Load the [[./modules/youtube/freemacs-youtube.org][YouTube Module]].
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-youtube)
 #+end_src
 
 * Emacs Server
 
 Load the [[file:modules/server/freemacs-server.org][server module]].
-
-#+begin_src emacs-lisp :tangle yes :noweb yes :comments both
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (require 'freemacs-server)
 #+end_src
 
 * Custom Functions
-
-This section contains custom functions that I have either created myself or borrowed from others to accomplish small tasks.
-
-#+begin_src emacs-lisp :comments both :tangle yes
-;; Custom Function Definitions
-#+end_src
-
-** Sudo Find File
-
-This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
-
-#+begin_src emacs-lisp :comments both :tangle yes
-  (whicher "sudo")
-  (defun sudo-find-file (file)
-    "Open FILE as root."
-    (interactive "FOpen file as root: ")
-    (when (file-writable-p file)
-      (user-error "File is user writeable, aborting sudo"))
-    (find-file (if (file-remote-p file)
-                   (concat "/" (file-remote-p file 'method) ":"
-                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
-                           "|sudo:root@"
-                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-                 (concat "/sudo:root@localhost:" file))))
-#+end_src
-
 * Performance Optimization End
-
 Close off the ~let~ statement at the beginning of the init file.
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (setq gc-cons-threshold 800000)
   )
 #+end_src
 
 * End
-
 Add a final comment to indicate the end of the file.
-
-#+begin_src emacs-lisp :comments both :tangle yes
+#+begin_src emacs-lisp :comments org :tangle yes
   (provide 'init)
 
   ;;; init.el ends here

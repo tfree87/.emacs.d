@@ -2,7 +2,7 @@
 
 #+title: Embark Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 09:18:20 thomas>
+#+date: Time-stamp: <2024-11-05 15:02:42 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -17,16 +17,17 @@
 #+html_link_up: ../../init.html
 #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
-* Embark
+* Install Embark
 
 [[https://github.com/oantolin/embark][Embark]] provides the ability to execute commands on completion options found in the minibuffer.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package embark
     :straight t
+    :after vertico
     :bind
     (("C-." . embark-act)
      ("C-;" . embark-dwim)
@@ -38,10 +39,30 @@
     (define-key embark-file-map (kbd "S") 'sudo-find-file))
 #+end_src
 
+* Custom Functions for Embark
+
+Below are functions defined to be used with Embark.
+
+** Sudo Find File
+This function creates a ~sudo-find-file~ command that can be used to open files as the super user. This can be really useful when combined with Embark. This function was copied from https://karthinks.com/software/fifteen-ways-to-use-embark/.
+#+begin_src emacs-lisp :noweb-ref embark_config
+  (whicher "sudo")
+  (defun sudo-find-file (file)
+    "Open FILE as root."
+    (interactive "FOpen file as root: ")
+    (when (file-writable-p file)
+      (user-error "File is user writeable, aborting sudo"))
+    (find-file (if (file-remote-p file)
+                   (concat "/" (file-remote-p file 'method) ":"
+                           (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                           "|sudo:root@"
+                           (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                 (concat "/sudo:root@localhost:" file))))
+#+end_src
+
 * Embark Mode Line
 
 Hide the mode line of the Embark live/completions buffers.
-
 #+begin_src emacs-lisp :noweb-ref embark_config
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -52,8 +73,7 @@ Hide the mode line of the Embark live/completions buffers.
 * Embark Integration with Consult
 
 Allow use of Embark commands after issuing a Consult command.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package embark-consult
     :straight t
     :after (embark consult)
@@ -65,8 +85,7 @@ Allow use of Embark commands after issuing a Consult command.
 * End
 
 Tell Emacs what pacakge this file provides.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-embark)
 
   ;;; freemacs-embark.el ends here.
