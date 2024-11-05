@@ -2,7 +2,7 @@
 
 #+title:Session Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-04-22 19:56:09 Thomas>
+#+date: Time-stamp: <2024-11-05 18:29:18 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,16 +21,6 @@
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
-
-* Bufler
-
-[[https://github.com/alphapapa/bufler.el][Bufler]] provides a buffer switching menu that has some enhanced automatic groupings that make it easier to configure than [[https://www.emacswiki.org/emacs/IbufferMode][Ibuffer]] as it requires less manual work to create buffer groups. It can also sort buffers into groups based on projects using ~project.el~.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package bufler
-    :straight t
-    :bind ("C-x C-b" . bufler))
-#+end_src
 
 * Burly
 

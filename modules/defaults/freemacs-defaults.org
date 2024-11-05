@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 15:02:52 thomas>
+#+date: Time-stamp: <2024-11-05 18:34:43 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -132,6 +132,16 @@ Many programming language style guides recommend that each line of code is less 
 #+end_src
 
 A better fix would be to use code formatters to prevent lines from getting too long. For example, Apheleia will run formatters such as Black on Python code to keep code lines from becoming too long.
+
+* Use IBuffer Instead of Buffer List
+
+Use IBuffer instead of the traditional buffer list.
+#+begin_src emacs-lisp :tangle yes
+  (use-package ibuffer
+    :straight (:type built-in)
+    :bind
+    ("C-x C-b" . ibuffer))
+#+end_src
 
 * End
 

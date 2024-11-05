@@ -31,6 +31,11 @@
   :config
   (display-battery-mode t))
 
+(use-package ibuffer
+  :straight (:type built-in)
+  :bind
+  ("C-x C-b" . ibuffer))
+
 (provide 'freemacs-defaults)
 
 ;;; freemacs-defaults.el ends here

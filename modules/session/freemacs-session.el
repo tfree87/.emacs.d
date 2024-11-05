@@ -1,7 +1,3 @@
-(use-package bufler
-  :straight t
-  :bind ("C-x C-b" . bufler))
-
 (use-package burly
   :straight t
   :commands (burly-bookmark-frames
