@@ -67,7 +67,7 @@ This Emacs configuration is implemented with the following key features:
 - Default Keybindings :: When possible, the default keybindings are used. Emacs was my first text editor and I have learned and memorized many of the keybindings from reading through the Emacs manual. This version of Emacs is /not/ designed for Evil.
 - Fast :: I am always trying to make Emacs run as fast as possible as I am often on slow machines and running Emacs from a flash drive /really/ slows things down. Nearly every package has loading deferred.
 - Modular :: This configuration has been split into modules which can be found in the [[./modules/]] folder. This makes the files smaller, easier to read and interpret, easier for bug-fixing, and simpler to interpret with benchmark.el.
-- Portable :: This configuration is designed to work under both Linux /and/ Windows. It has been tested in Linux Mint, on Raspberry Pi OS, Windows 10, and Windows 11. It is also designed to run quickly from a flash drive with [[file:runemacs.bat][runemacs.bat]].
+- Portable :: This configuration is designed to work under both Linux /and/ Windows. It has been tested in  GUIX, on Raspberry Pi OS, Windows 10, and Windows 11. It is also designed to run quickly from a flash drive with [[file:runemacs.bat][runemacs.bat]].
 
 * Rationale
 
