@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 17:52:53 thomas>
+#+date: Time-stamp: <2024-11-05 20:22:38 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,6 +179,11 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
+** Aggressive Indent
+Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-aggressive-indent)
+#+end_src
 ** Centered-Window Mode
 Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
 #+begin_src emacs-lisp :tangle yes :comments org

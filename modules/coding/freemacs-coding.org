@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-03 09:00:10 thomas>
+#+date: Time-stamp: <2024-11-05 20:21:57 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,20 +23,6 @@
 
 The following customizations are used to improve the coding environment in Emacs.
 
-* Aggressive Indent
-
-[[https://github.com/Malabarba/aggressive-indent-mode][Aggressive Indent mode]] will keep code indented by the correct amount as you type in real time. This saves having to go back and reformat all the tabbing in code after making changes.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package aggressive-indent
-    :straight t
-    :hook
-    (emacs-lisp-mode . aggressive-indent-mode)
-    (c-mode . aggressive-indent-mode)
-    (emacs-lisp-mode . aggressive-indent-mode)
-    (go-mode . aggressive-indent-mode))
-#+end_src
-
 * Apheleia :python:go:
 
 [[https://github.com/raxod502/apheleia][Apheleia]] will format programming code using code formatters such as Black for Python. The main difference between using Apheleia over formatters like Black is that Apheleia will format the code asynchronously in the background without disturbing your cursor position in the buffer making a more streamlined experience that is more pleasant for editing and saving repeatedly as I often do.
@@ -46,9 +32,6 @@ The following customizations are used to improve the coding environment in Emacs
     :straight (apheleia :host github
                         :repo "radian-software/apheleia"
                         :branch "main")
-    :hook
-    (prog-mode . apheleia-mode)
-    (tex-mode . apheleia-mode)
     :config
     (setf (alist-get 'black apheleia-formatters)
     '("black" "--experimental-string-processing" "-")))
@@ -64,28 +47,6 @@ I have added ~.ino~ files to C mode so that I can have syntax highlighting when 
     :defer t
     :mode ("\\.c\\'"
            "\\.ino\\'"))
-#+end_src
-
-* Eglot
-
-[[https://github.com/joaotavora/eglot][Eglot]] is a client for the language server protocal (LSP) that uses a lot of the built-in Emacs functions and runs quickly.
-
-#+begin_src emacs-lisp :tangle yes
- ; (use-package eglot
- ;   :straight t
- ;   :hook
- ;   (python-mode . eglot-ensure))
-#+end_src
-
-* Flycheck :python:
-
-[[https://www.flycheck.org/en/latest/][Flycheck]] can check programming syntax while typing.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package flycheck
-    :straight t
-    :hook
-    (prog-mode . flycheck-mode))
 #+end_src
 
 * Go
@@ -126,18 +87,6 @@ Number lines can be very useful in programming modes. This code below will turn 
 
 #+begin_src emacs-lisp :tangle yes
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-#+end_src
-
-* Numpydoc
-
-Using [[https://github.com/douglasdavis/numpydoc.el][Numpydoc]] provides an interactive tool to automatically generate Numpy style docstrings.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package numpydoc
-    :straight t
-    :defer t
-    :bind (:map python-mode-map
-                ("C-c C-n" . numpydoc-generate)))
 #+end_src
 
 * Paren Mode
@@ -212,7 +161,7 @@ The following code will always highlight matching parenthesis when coding /immed
     :straight t)
 #+end_src
 
-* Indent Makers
+* Indent Bars
 
 #+begin_src emacs-lisp :tangle yes
   (use-package indent-bars

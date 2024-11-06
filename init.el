@@ -119,6 +119,8 @@
 
 (require 'freemacs-defaults)
 
+(require 'freemacs-aggressive-indent)
+
 ;; Centered-Window Mode
 ;; Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
 

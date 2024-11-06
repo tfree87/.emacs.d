@@ -1,18 +1,7 @@
-(use-package aggressive-indent
-  :straight t
-  :hook
-  (emacs-lisp-mode . aggressive-indent-mode)
-  (c-mode . aggressive-indent-mode)
-  (emacs-lisp-mode . aggressive-indent-mode)
-  (go-mode . aggressive-indent-mode))
-
 (use-package apheleia
   :straight (apheleia :host github
                       :repo "radian-software/apheleia"
                       :branch "main")
-  :hook
-  (prog-mode . apheleia-mode)
-  (tex-mode . apheleia-mode)
   :config
   (setf (alist-get 'black apheleia-formatters)
   '("black" "--experimental-string-processing" "-")))
@@ -22,16 +11,6 @@
   :defer t
   :mode ("\\.c\\'"
          "\\.ino\\'"))
-
-; (use-package eglot
-;   :straight t
-;   :hook
-;   (python-mode . eglot-ensure))
-
-(use-package flycheck
-  :straight t
-  :hook
-  (prog-mode . flycheck-mode))
 
 (use-package go-mode
   :straight t
@@ -48,12 +27,6 @@
   :bind ("C-x g" . magit-status))
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-
-(use-package numpydoc
-  :straight t
-  :defer t
-  :bind (:map python-mode-map
-              ("C-c C-n" . numpydoc-generate)))
 
 (use-package paren
   :straight (:type built-in)
