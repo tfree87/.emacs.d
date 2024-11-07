@@ -14,6 +14,6 @@
 
 ;; Tell Emacs what package this file provides.
 
-(require 'freemacs-aggressive-indent);
+(provide 'freemacs-aggressive-indent);
 
 ;;; freemacs-aggressive-indent.el ends here.

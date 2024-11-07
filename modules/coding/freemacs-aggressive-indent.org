@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 19:49:00 thomas>
+#+date: Time-stamp: <2024-11-07 17:00:19 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -37,7 +37,7 @@
 
 Tell Emacs what package this file provides.
 #+begin_src emacs-lisp :tangle yes :comments org
-  (require 'freemacs-aggressive-indent);
+  (provide 'freemacs-aggressive-indent);
 
   ;;; freemacs-aggressive-indent.el ends here.
 #+end_src

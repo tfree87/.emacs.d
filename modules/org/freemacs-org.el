@@ -70,12 +70,17 @@
       "* %?\n%^{Scheduled}t\n%x")
      ("t" "To Do Item" entry (file+headline "~/Nextcloud/org/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
-     ("w" "Work Calendar" entry
+     ("c" "Calendar Entries")
+     ("cw" "Work Calendar" entry
       (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
-      "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")
-     ("c" "Personal Calendar" entry
+      "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n%i\n%?\n")
+     ("cp" "Personal Calendar" entry
       (file+datetree+prompt "~/Nextcloud/org/personal-calendar.org")
-      "* %^{Title}\n<%(org-read-date nil nil org-read-date-final-answer)>\n%i\n%?\n")))
+      "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n\n")
+     ("r" "Periodic Reflections")
+     ("rd" "Daily Enty" entry
+      (file+datetree+prompt "~/Nextcloud/org/reflection/daily.org")
+      "* Daily Gratitude\n\n%?\n\n* Daily Affirmation\n\n")))
   (org-modules '(ol-bbdb
                  ol-bibtex
                  ol-docviewol-doi
