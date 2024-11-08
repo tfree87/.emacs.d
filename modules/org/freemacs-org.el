@@ -21,7 +21,7 @@
   (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
   (org-directory "~/Nextcloud/org")
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Nextcloud/org"))
+  (org-agenda-files `("~/org"))
   (org-default-notes-file (concat org-directory "/inbox.org"))
   (org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
@@ -62,24 +62,24 @@
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
   (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Nextcloud/org/projects.org")
+   '(("p" "Projects item" entry (file "~/org/projects.org")
       "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Nextcloud/org/someday.org")
+     ("s" "Someday/Maybe item" entry (file "~/org/someday.org")
       "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Nextcloud/org/tickler.org")
+     ("T" "Tickler file item" entry (file "~/org/tickler.org")
       "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Nextcloud/org/inbox.org" "Tasks")
+     ("t" "To Do Item" entry (file+headline "~/org/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
      ("c" "Calendar Entries")
      ("cw" "Work Calendar" entry
-      (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
+      (file+datetree+prompt "~/org/work-calendar.org")
       "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n%i\n%?\n")
      ("cp" "Personal Calendar" entry
-      (file+datetree+prompt "~/Nextcloud/org/personal-calendar.org")
+      (file+datetree+prompt "~/org/personal-calendar.org")
       "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n\n")
      ("r" "Periodic Reflections")
      ("rd" "Daily Enty" entry
-      (file+datetree+prompt "~/Nextcloud/org/reflection/daily.org")
+      (file+datetree+prompt "~/org/reflection/daily.org")
       "* Daily Gratitude\n\n%?\n\n* Daily Affirmation\n\n")))
   (org-modules '(ol-bbdb
                  ol-bibtex

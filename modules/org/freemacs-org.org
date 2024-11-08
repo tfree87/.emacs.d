@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-07 16:57:28 abc>
+#+date: Time-stamp: <2024-11-07 21:35:28 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -77,7 +77,7 @@ Tell org-mode which directory is the default directory for all org-mode files.
 Tell org-mode in which directory all the agenda files can be found.
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/Nextcloud/org"))
+  (org-agenda-files `("~/org"))
 #+end_src
 
 ** Filing Notes
@@ -275,24 +275,24 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
 #+name: org_capture_templates
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-capture-templates
-   '(("p" "Projects item" entry (file "~/Nextcloud/org/projects.org")
+   '(("p" "Projects item" entry (file "~/org/projects.org")
       "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/Nextcloud/org/someday.org")
+     ("s" "Someday/Maybe item" entry (file "~/org/someday.org")
       "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/Nextcloud/org/tickler.org")
+     ("T" "Tickler file item" entry (file "~/org/tickler.org")
       "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/Nextcloud/org/inbox.org" "Tasks")
+     ("t" "To Do Item" entry (file+headline "~/org/inbox.org" "Tasks")
       "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
      ("c" "Calendar Entries")
      ("cw" "Work Calendar" entry
-      (file+datetree+prompt "~/Nextcloud/org/work-calendar.org")
+      (file+datetree+prompt "~/org/work-calendar.org")
       "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n%i\n%?\n")
      ("cp" "Personal Calendar" entry
-      (file+datetree+prompt "~/Nextcloud/org/personal-calendar.org")
+      (file+datetree+prompt "~/org/personal-calendar.org")
       "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n\n")
      ("r" "Periodic Reflections")
      ("rd" "Daily Enty" entry
-      (file+datetree+prompt "~/Nextcloud/org/reflection/daily.org")
+      (file+datetree+prompt "~/org/reflection/daily.org")
       "* Daily Gratitude\n\n%?\n\n* Daily Affirmation\n\n")))
 #+end_src
 

@@ -2,7 +2,7 @@
 
 #+title: Org Contacts Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-14 18:19:29 abc>
+#+date: Time-stamp: <2024-11-07 21:36:12 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -30,7 +30,7 @@ This particular version of Org Contacts is my personal fork that is in developme
     :straight (:host github :repo "tfree87/org-contacts"
                      :branch "master")
     :custom
-    (org-contacts-files '("~/Nextcloud/org/contacts.org")))
+    (org-contacts-files '("~/org/contacts.org")))
 #+end_src
 
 Tell Emacs which package this provides.
