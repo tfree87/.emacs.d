@@ -2,7 +2,7 @@
 
 #+title:  Vertico Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 13:44:02 thomas>
+#+date: Time-stamp: <2024-11-08 08:13:09 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,11 +23,12 @@
 * Vertico
 
 [[https://github.com/minad/vertico][Vertico]] removes the ~*Completions*~ buffer and instead, populates a vertical list of completion options in the minibuffer region.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org :noweb yes
   (use-package vertico
     :straight t
     :demand t
+    :bind
+    <<vertico_bind>>
     :custom
     (vertico-cycle t)
     (vertico-resize t)
@@ -35,10 +36,19 @@
     (vertico-mode))
 #+end_src
 
+Change Emacs keybindings to work better when run in a browser. See [[https://systemcrafters.net/emacs-tips/streamline-completions-with-vertico/][System Crafters]].
+#+begin_src emacs-lisp :comments org :noweb-ref vertico_bind
+  (:map vertico-map
+        ("C-j" . vertico-next)
+        ("C-k" . vertico-previous)
+        ("C-f" . vertico-exit)
+        :map minibuffer-local-map
+        ("M-b" . backward-kill-word))
+#+end_src
+
 * End
 
 Tell Emacs what package this file provides.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-vertico)
 #+end_src
