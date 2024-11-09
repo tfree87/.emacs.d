@@ -2,7 +2,7 @@
 
 #+title:  Vertico Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-08 08:13:09 abc>
+#+date: Time-stamp: <2024-11-08 12:31:03 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
