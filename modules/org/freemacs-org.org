@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-07 21:35:28 abc>
+#+date: Time-stamp: <2024-11-09 10:34:08 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -143,17 +143,24 @@ Set up the sequence of org-todo task keywords to allow for delegated (WAITING) t
 
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-todo-keywords
-   '((sequence "TODO(t)"
+   '((sequence "MAYBE(m)"
+               "SOMEDAY(s)"
+               "TODO(t)"
                "WAITING(w)"
                "|"
                "DONE(d)"
                "CANCELED(c)")
-   (sequence "SCRIPTING(s)"
-             "TESTING(g)"
-             "REVIEW(r)"
-             "APPROVAL(a)"
-             "|"
-             "EFFECTIVE(e)")))
+     (sequence "MAYBE(m)"
+               "SOMEDAY(s)"
+               "PLANNING(p)"
+               "|"
+               "PLANNED(P)")
+      (sequence "SCRIPTING(S)"
+                "TESTING(G)"
+                "REVIEW(R)"
+                "APPROVAL(A)"
+                "|"
+                "EFFECTIVE(E)")))
 #+end_src
 
 *** Project Tags
@@ -274,26 +281,63 @@ Change the color of the org-todo keywords to make it easier to see them on a col
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
-  (org-capture-templates
-   '(("p" "Projects item" entry (file "~/org/projects.org")
-      "* %? :project:")
-     ("s" "Someday/Maybe item" entry (file "~/org/someday.org")
-      "* %?\n%x")
-     ("T" "Tickler file item" entry (file "~/org/tickler.org")
-      "* %?\n%^{Scheduled}t\n%x")
-     ("t" "To Do Item" entry (file+headline "~/org/inbox.org" "Tasks")
-      "* TODO %? %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
-     ("c" "Calendar Entries")
-     ("cw" "Work Calendar" entry
-      (file+datetree+prompt "~/org/work-calendar.org")
-      "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n%i\n%?\n")
-     ("cp" "Personal Calendar" entry
-      (file+datetree+prompt "~/org/personal-calendar.org")
-      "* %^{Title}\n<%(org-read-date t nil org-read-date-final-answer)>\n\n")
-     ("r" "Periodic Reflections")
-     ("rd" "Daily Enty" entry
-      (file+datetree+prompt "~/org/reflection/daily.org")
-      "* Daily Gratitude\n\n%?\n\n* Daily Affirmation\n\n")))
+    (org-capture-templates
+     '(("r" "Future Reminders")
+       ("c" "Calendar Entries")
+       ("t" "To Do Items")
+       ("p" "Projects item"
+        entry
+        (file "~/org/projects.org")
+        "* %? :project:")
+       ("rs" "Someday/Maybe Item"
+        entry
+        (file "~/org/someday.org")
+        "* %?\n%x")
+       ("rt" "Tickler file item"
+        entry
+        (file "~/org/tickler.org")
+        "* %?\n%^{Scheduled}t\n\n%x")
+       ("th" "Habit Item"
+        entry
+        (file+headline "~/org/inbox.org" "Habits")
+        "* TODO %^{Title} %^G\n:PROPERTIES:\n:STYLE: habit\n:END:")
+       ("tt" "Unscheduled TODO"
+        entry
+        (file+headline "~/org/inbox.org" "Tasks")
+        "* TODO %^{Title} %^G\n\n%x")
+       ("ts" "Scheduled TODO"
+        entry
+        (file+headline "~/org/inbox.org" "Tasks")
+        "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t\n\n%x")
+       ("td" "Deadline TODO"
+        entry
+        (file+headline "~/org/inbox.org" "Tasks")
+        "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
+       ("cw"
+        "Work Calendar"
+        entry
+        (file+olp+datetree "~/org/work-calendar.org")
+        "* %^{Title}\n%^{LOCATION|Virtual}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
+       ("cp"
+        "Personal Calendar"
+        entry
+        (file+olp+datetree "~/org/personal-calendar.org")
+        "* %^{Title}\n%^{LOCATION}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
+       ("r" "Periodic Reflections")
+       ("rd" "Daily Enty"
+        entry
+        (file+olp+datetree "~/org/reflection/daily.org")
+        "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n* Daily Goal\n\n%^{Today's Goal}")
+       ("rw" "Week Begin"
+        entry
+        (file+olp+datetree "~/org/reflection/weekly.org")
+        "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n* Exicted About\n1. %^{1st Priority}\n2. %^{2nb Priority}\n3. %^{3rd Priority}"
+        :tree-type week)
+       ("rw" "Week End"
+        entry
+        (file+olp+datetree "~/org/reflection/weekly.org")
+        "* Reflection\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
+        :tree-type week)))
 #+end_src
 
 * Org Modules
