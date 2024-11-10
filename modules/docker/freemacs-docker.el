@@ -10,6 +10,14 @@
   :init
   (whicher "docker-compose"))
 
+(use-package docker-tramp
+  :straight t
+  :defer t)
+
+(use-package dockerfile-mode
+  :straight t
+  :mode ("Dockerfile\\'" . dockerfile-mode))
+
 (provide 'freemacs-docker)
 
 ;;; freemacs-docker.el ends here
