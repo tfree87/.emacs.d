@@ -119,6 +119,12 @@
 
 (require 'freemacs-defaults)
 
+;; Gnus
+
+;; Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
+
+(require 'freemacs-gnus)
+
 (require 'freemacs-aggressive-indent)
 
 ;; Centered-Window Mode
