@@ -119,11 +119,7 @@
 
 (require 'freemacs-defaults)
 
-;; Gnus
-
-;; Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
-
-(require 'freemacs-gnus)
+(require 'freemacs-listen)
 
 (require 'freemacs-aggressive-indent)
 
@@ -141,11 +137,6 @@
 
 (require 'freemacs-autohotkey)
 
-;; Embark
-;; Load the [[./modules/completion/freemacs-embark.org][Embark module]]
-
-(require 'freemacs-embark)
-
 ;; Cape
 ;; Load the [[./modules/completion/freemacs-cape.org][Cape module]].
 
@@ -161,23 +152,6 @@
 
 (require 'freemacs-corfu)
 
-;; Docker
-;; Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
-
-(require 'freemacs-docker)
-
-;; YASnippet
-;; Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
-
-(require 'freemacs-yasnippet)
-
-;; Elfeed
-;; Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
-
-(require 'freemacs-elfeed)
-
-;  (require 'freemacs-elfeed-protocol)
-
 ;; Dired
 ;; Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
 
@@ -188,10 +162,43 @@
 
 (require 'freemacs-dirvish)
 
-;; Trashed
-;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
+;; Docker
+;; Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
 
-(require 'freemacs-trashed)
+(require 'freemacs-docker)
+
+;; Eat
+;; Load the [[./modules/shells/freemacs-eat.org][Eat Module]].
+
+(require 'freemacs-eat)
+
+;; Elfeed
+;; Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
+
+(require 'freemacs-elfeed)
+
+;  (require 'freemacs-elfeed-protocol)
+
+;; Embark
+;; Load the [[./modules/completion/freemacs-embark.org][Embark module]]
+
+(require 'freemacs-embark)
+
+;; Eshell
+;; Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
+
+(require 'freemacs-eshell)
+
+;; Gnus
+
+;; Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
+
+(require 'freemacs-gnus)
+
+;; Help
+;; The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
+
+(require 'freemacs-help)
 
 ;; Graphing
 ;; Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
@@ -208,10 +215,20 @@
 
 (require 'freemacs-marginalia)
 
+;; Markdown
+;; Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
+
+(require 'freemacs-markdown)
+
 ;; Meow Mode
 ;; Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
 
 (require 'freemacs-meow)
+
+;; Nerd Icons
+;; Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
+
+(require 'freemacs-nerd-icons)
 
 ;; Orderless
 ;; Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
@@ -223,10 +240,12 @@
 
 (require 'freemacs-org)
 
-;;  Org Contacts
+;; Org Contacts
 ;; Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
 
 (require 'freemacs-org-contacts)
+
+(require 'freemacs-org-mime)
 
 ;; Org Mind Map
 ;; Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]]/
@@ -250,15 +269,10 @@
 
 (require 'freemacs-session)
 
-;; Eshell
-;; Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
+;; Trashed
+;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
 
-(require 'freemacs-eshell)
-
-;; Eat
-;; Load the [[./modules/shells/freemacs-eat.org][Eat Module]].
-
-(require 'freemacs-eat)
+(require 'freemacs-trashed)
 
 ;; Vertico
 ;; Load the [[file:modules/completion/freemacs-completion.org][completion module]]
@@ -274,11 +288,6 @@
 ;; Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
 
 (require 'freemacs-theme)
-
-;; Nerd Icons
-;; Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
-
-(require 'freemacs-nerd-icons)
 
 ;; Academic Writing
 ;; The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
@@ -303,20 +312,15 @@
 
 (require 'freemacs-latex)
 
-;; Markdown
-;; Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
-
-(require 'freemacs-markdown)
-
 ;; PDF
 ;; To improve the speed and to extend the ability to view PDF files in Emacs, the [[file:modules/publishing/freemacs-pdf.org][PDF module]] can be loaded.
 
 (require 'freemacs-pdf)
 
-;; Help
-;; The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
+;; YASnippet
+;; Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
 
-(require 'freemacs-help)
+(require 'freemacs-yasnippet)
 
 ;; YouTube
 ;; Load the [[./modules/youtube/freemacs-youtube.org][YouTube Module]].
