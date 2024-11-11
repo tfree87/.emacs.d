@@ -1,0 +1,16 @@
+* Install Listen.el
+
+#+begin_src emacs-lisp :tangle yes :comments both
+  (use-package listen
+    :straight t
+    :custom
+    (listen-directory "~/Music/"))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-listen)
+#+end_src
+
