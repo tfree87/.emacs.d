@@ -69,18 +69,18 @@
      ("CANCELED" . (:foreground "blue" :weight bold))
      ("DONE" . org-done)))
   (org-capture-templates
-   '(("r" "Future Reminders")
+   '(("f" "Future Reminders")
      ("c" "Calendar Entries")
      ("t" "To Do Items")
      ("p" "Projects item"
       entry
       (file "~/org/projects.org")
       "* %? :project:")
-     ("rs" "Someday/Maybe Item"
+     ("fs" "Someday/Maybe Item"
       entry
       (file "~/org/someday.org")
       "* %?\n%x")
-     ("rt" "Tickler file item"
+     ("ft" "Tickler file item"
       entry
       (file "~/org/tickler.org")
       "* %?\n%^{Scheduled}t\n\n%x")
@@ -118,7 +118,7 @@
      ("rw" "Week Begin"
       entry
       (file+olp+datetree "~/org/reflection/weekly.org")
-      "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n* Exicted About\n1. %^{1st Priority}\n2. %^{2nb Priority}\n3. %^{3rd Priority}"
+      "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n1. %^{1st Priority}\n2. %^{2nd Priority}\n3. %^{3rd Priority}\n\n* Exicted About\n1. %^{Excited About 1}\n2. %^{ Excited About 2}\n3. %^{Excited About 3}"
       :tree-type week)
      ("rw" "Week End"
       entry
