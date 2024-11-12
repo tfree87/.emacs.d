@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-11 12:36:17 abc>
+#+date: Time-stamp: <2024-11-12 14:08:12 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -143,9 +143,7 @@ Set up the sequence of org-todo task keywords to allow for delegated (WAITING) t
 
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-todo-keywords
-   '((sequence "MAYBE(m)"
-               "SOMEDAY(s)"
-               "TODO(t)"
+   '((sequence "TODO(t)"
                "WAITING(w)"
                "|"
                "DONE(d)"
@@ -264,17 +262,6 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
   (org-src-tab-acts-natively t)
  #+end_src
- 
-** Change TODO Keyword Colors
-
-Change the color of the org-todo keywords to make it easier to see them on a color screen and distinguish between them.
-#+begin_src emacs-lisp :comments org :noweb-ref org_customize
-  (org-todo-keyword-faces
-   '(("TODO" . org-warning)
-     ("WAITING" . "yellow")
-     ("CANCELED" . (:foreground "blue" :weight bold))
-     ("DONE" . org-done)))
-#+end_src
 
 ** Capturing
 
@@ -327,7 +314,7 @@ Org-capture templates make creating org-mode notes quicker and easier from any b
        ("rd" "Daily Enty"
         entry
         (file+olp+datetree "~/org/reflection/daily.org")
-        "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n* Daily Goal\n\n%^{Today's Goal}")
+        "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}")
        ("rw" "Week Begin"
         entry
         (file+olp+datetree "~/org/reflection/weekly.org")
