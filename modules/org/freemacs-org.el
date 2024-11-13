@@ -30,9 +30,7 @@
   (org-export-in-background t)
   (org-log-into-drawer t)
   (org-todo-keywords
-   '((sequence "MAYBE(m)"
-               "SOMEDAY(s)"
-               "TODO(t)"
+   '((sequence "TODO(t)"
                "WAITING(w)"
                "|"
                "DONE(d)"
@@ -63,11 +61,6 @@
   (org-tags-column 0)
   (org-startup-indented t)
   (org-src-tab-acts-natively t)
-  (org-todo-keyword-faces
-   '(("TODO" . org-warning)
-     ("WAITING" . "yellow")
-     ("CANCELED" . (:foreground "blue" :weight bold))
-     ("DONE" . org-done)))
   (org-capture-templates
    '(("f" "Future Reminders")
      ("c" "Calendar Entries")
@@ -114,7 +107,7 @@
      ("rd" "Daily Enty"
       entry
       (file+olp+datetree "~/org/reflection/daily.org")
-      "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n* Daily Goal\n\n%^{Today's Goal}")
+      "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}")
      ("rw" "Week Begin"
       entry
       (file+olp+datetree "~/org/reflection/weekly.org")
