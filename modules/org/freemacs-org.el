@@ -97,12 +97,16 @@
       "Work Calendar"
       entry
       (file+olp+datetree "~/org/work-calendar.org")
-      "* %^{Title}\n%^{LOCATION|Virtual}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
+      "* %^{Title}\n%^{LOCATION|Virtual}p\n%T\n"
+      :time-prompt t
+      :unnarrowed t)
      ("cp"
       "Personal Calendar"
       entry
       (file+olp+datetree "~/org/personal-calendar.org")
-      "* %^{Title}\n%^{LOCATION}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
+      "* %^{Title}\n%^{LOCATION}p\n%T\n"
+      :time-prompt t
+      :unnarrowed t)
      ("r" "Periodic Reflections")
      ("rd" "Daily Enty"
       entry
@@ -113,10 +117,10 @@
       (file+olp+datetree "~/org/reflection/weekly.org")
       "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n1. %^{1st Priority}\n2. %^{2nd Priority}\n3. %^{3rd Priority}\n\n* Exicted About\n1. %^{Excited About 1}\n2. %^{ Excited About 2}\n3. %^{Excited About 3}"
       :tree-type week)
-     ("rw" "Week End"
+     ("rW" "Week End"
       entry
       (file+olp+datetree "~/org/reflection/weekly.org")
-      "* Reflection\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
+      "* Reflectioni\n\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
       :tree-type week)))
   (org-modules '(ol-bbdb
                  ol-bibtex

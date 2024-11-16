@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-12 14:08:12 abc>
+#+date: Time-stamp: <2024-11-15 09:54:16 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -268,63 +268,67 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 Org-capture templates make creating org-mode notes quicker and easier from any buffer using a standard template for each not type.
 #+name: org_capture_templates
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
-    (org-capture-templates
-     '(("f" "Future Reminders")
-       ("c" "Calendar Entries")
-       ("t" "To Do Items")
-       ("p" "Projects item"
-        entry
-        (file "~/org/projects.org")
-        "* %? :project:")
-       ("fs" "Someday/Maybe Item"
-        entry
-        (file "~/org/someday.org")
-        "* %?\n%x")
-       ("ft" "Tickler file item"
-        entry
-        (file "~/org/tickler.org")
-        "* %?\n%^{Scheduled}t\n\n%x")
-       ("th" "Habit Item"
-        entry
-        (file+headline "~/org/inbox.org" "Habits")
-        "* TODO %^{Title} %^G\n:PROPERTIES:\n:STYLE: habit\n:END:")
-       ("tt" "Unscheduled TODO"
-        entry
-        (file+headline "~/org/inbox.org" "Tasks")
-        "* TODO %^{Title} %^G\n\n%x")
-       ("ts" "Scheduled TODO"
-        entry
-        (file+headline "~/org/inbox.org" "Tasks")
-        "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t\n\n%x")
-       ("td" "Deadline TODO"
-        entry
-        (file+headline "~/org/inbox.org" "Tasks")
-        "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
-       ("cw"
-        "Work Calendar"
-        entry
-        (file+olp+datetree "~/org/work-calendar.org")
-        "* %^{Title}\n%^{LOCATION|Virtual}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
-       ("cp"
-        "Personal Calendar"
-        entry
-        (file+olp+datetree "~/org/personal-calendar.org")
-        "* %^{Title}\n%^{LOCATION}p\n<%(org-read-date t nil org-read-date-final-answer)>\n")
-       ("r" "Periodic Reflections")
-       ("rd" "Daily Enty"
-        entry
-        (file+olp+datetree "~/org/reflection/daily.org")
-        "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}")
-       ("rw" "Week Begin"
-        entry
-        (file+olp+datetree "~/org/reflection/weekly.org")
-        "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n1. %^{1st Priority}\n2. %^{2nd Priority}\n3. %^{3rd Priority}\n\n* Exicted About\n1. %^{Excited About 1}\n2. %^{ Excited About 2}\n3. %^{Excited About 3}"
-        :tree-type week)
-       ("rw" "Week End"
-        entry
-        (file+olp+datetree "~/org/reflection/weekly.org")
-        "* Reflection\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
-        :tree-type week)))
+  (org-capture-templates
+   '(("f" "Future Reminders")
+     ("c" "Calendar Entries")
+     ("t" "To Do Items")
+     ("p" "Projects item"
+      entry
+      (file "~/org/projects.org")
+      "* %? :project:")
+     ("fs" "Someday/Maybe Item"
+      entry
+      (file "~/org/someday.org")
+      "* %?\n%x")
+     ("ft" "Tickler file item"
+      entry
+      (file "~/org/tickler.org")
+      "* %?\n%^{Scheduled}t\n\n%x")
+     ("th" "Habit Item"
+      entry
+      (file+headline "~/org/inbox.org" "Habits")
+      "* TODO %^{Title} %^G\n:PROPERTIES:\n:STYLE: habit\n:END:")
+     ("tt" "Unscheduled TODO"
+      entry
+      (file+headline "~/org/inbox.org" "Tasks")
+      "* TODO %^{Title} %^G\n\n%x")
+     ("ts" "Scheduled TODO"
+      entry
+      (file+headline "~/org/inbox.org" "Tasks")
+      "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t\n\n%x")
+     ("td" "Deadline TODO"
+      entry
+      (file+headline "~/org/inbox.org" "Tasks")
+      "* TODO %^{Title} %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n%x")
+     ("cw"
+      "Work Calendar"
+      entry
+      (file+olp+datetree "~/org/work-calendar.org")
+      "* %^{Title}\n%^{LOCATION|Virtual}p\n%T\n"
+      :time-prompt t
+      :unnarrowed t)
+     ("cp"
+      "Personal Calendar"
+      entry
+      (file+olp+datetree "~/org/personal-calendar.org")
+      "* %^{Title}\n%^{LOCATION}p\n%T\n"
+      :time-prompt t
+      :unnarrowed t)
+     ("r" "Periodic Reflections")
+     ("rd" "Daily Enty"
+      entry
+      (file+olp+datetree "~/org/reflection/daily.org")
+      "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}")
+     ("rw" "Week Begin"
+      entry
+      (file+olp+datetree "~/org/reflection/weekly.org")
+      "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n1. %^{1st Priority}\n2. %^{2nd Priority}\n3. %^{3rd Priority}\n\n* Exicted About\n1. %^{Excited About 1}\n2. %^{ Excited About 2}\n3. %^{Excited About 3}"
+      :tree-type week)
+     ("rW" "Week End"
+      entry
+      (file+olp+datetree "~/org/reflection/weekly.org")
+      "* Reflectioni\n\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
+      :tree-type week)))
 #+end_src
 
 * Org Modules
