@@ -2,7 +2,6 @@
 #+title: Gnus Configuration
 #+description: This org-mode file contains an org-babel implementation of the .emacs or /.emacs.d/init.el file.
 #+language: en
-#+property: header-args    :results silent :exports code
 
 
 * Mail Directory
