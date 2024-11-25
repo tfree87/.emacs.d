@@ -2,7 +2,7 @@
 
 #+title: Server Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:19 thomas>
+#+date: Time-stamp: <2024-11-15 19:50:14 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -27,8 +27,7 @@ Running Emacs as a server means that if I create a new instance of Emacs with th
 * Start Emacs Server
 
 I have this option run only when I am not executing Emacs as a portable app as it is unlikely that there will be Emacs installed on the system that I am running Emacs on when I am using it as a portable application.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   ;; Start an Emacs server
 
   (use-package server
@@ -39,11 +38,9 @@ I have this option run only when I am not executing Emacs as a portable app as i
       (server-start)))
 #+end_src
 
-
 * End
 
 Tell Emacs what feature this file provides.
- 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-server)
 #+end_src
