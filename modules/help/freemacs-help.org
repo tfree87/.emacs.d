@@ -2,7 +2,7 @@
 
 #+title: Help Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:14 thomas>
+#+date: Time-stamp: <2024-11-18 21:20:42 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -24,16 +24,8 @@
 
 * Helpful
 
-[[https://github.com/Wilfred/helpful][Helpful]] improves the Emacs help functions by adding new features to the ~*Help*~ buffers such as:
-
-- Links to source code
-- Better formatting of docstrings
-- Lists of callers
-- Keymaps
-- Aliases
-- And more...
-
-#+begin_src emacs-lisp :tangle yes
+[[https://github.com/Wilfred/helpful][Helpful]] improves the Emacs help functions by adding new features to the ~*Help*~ buffer.
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package helpful
     :straight t
     :defer t
@@ -49,8 +41,7 @@
 * Popper
 
 [[https://github.com/karthink/popper][Popper]] lets a user define any window as a short-term pop up window.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package popper
     :straight t
     :bind (("C-`"   . popper-toggle-latest)
@@ -64,9 +55,8 @@
 
 ** Popper Buffers
 
-For each buffer that will become a popper pop up buffer, it must be defined below:
-
-#+begin_src emacs-lisp :noweb-ref popper_init
+For each buffer that will become a popper pop up buffer, it must be defined below.
+#+begin_src emacs-lisp :noweb-ref popper_init :comments org
   (setq popper-reference-buffers
           '("\\*Messages\\*"
             "\\*Embark Actions\\*"
@@ -80,8 +70,7 @@ For each buffer that will become a popper pop up buffer, it must be defined belo
 * Which-key
 
 [[https://github.com/justbur/emacs-which-key][Which-key]] provides a pop-up menu when there is a pause in the minibuffer or if executed directly to show the keyboard commands available to the current buffer.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package which-key
     :straight t
     :defer 3
@@ -98,8 +87,7 @@ How to start which-key
 
 *** C-h During Key Combination Entry
 
-Type C-h during any key combination to pop-up which key
-
+Type C-h during any key combination to pop-up which key.
 #+begin_src emacs-lisp :noweb-ref wk_custom
   (which-key-show-early-on-C-h t)
 #+end_src
@@ -107,7 +95,6 @@ Type C-h during any key combination to pop-up which key
 *** Press <f4> in Any Mode
 
 Use the <f4> key in any major mode to see the key bindings
-
 #+begin_src emacs-lisp :noweb-ref wk_config
   (global-set-key (kbd "<f4>") 'which-key-show-major-mode)
 #+end_src
@@ -116,12 +103,13 @@ Use the <f4> key in any major mode to see the key bindings
 
 Set up which-key to use the side window preferably
 
-#+begin_src nnemacs-lisp :noweb-ref wk_config
+#+begin_src emacs-lisp :noweb-ref wk_config
   (which-key-setup-side-window-right-bottom)
 #+end_src
 
 * End
 
+Tell Emacs what package this file provides.
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-help)
 
