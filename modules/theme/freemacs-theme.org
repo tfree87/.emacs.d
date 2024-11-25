@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-27 13:28:38 thomas>
+#+date: Time-stamp: <2024-11-23 18:22:04 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -38,16 +38,14 @@ When using Calfw, the default grid color does not show very well when using the 
 
 ** Default Font
 
-Create a function to
-
-#+begin_src emacs-lisp :tangle yes
+Create a function to check if a font exists on the system.
+#+begin_src emacs-lisp :tangle yes :comments org
   (defun font-available-p (font-name)
     (member font-name (font-family-list)))
 #+end_src
 
 Change the default font to use Hack if it is available.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (when (font-available-p "Hack")
     (custom-theme-set-faces
      'user
@@ -58,7 +56,7 @@ Change the default font to use Hack if it is available.
 
 To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
     (cond ((and (eq system-type 'windows-nt)
                 (font-available-p "Times New Roman")
                 (font-available-p "Hack"))
@@ -97,7 +95,6 @@ When I am running Emacs with [[https://github.com/ch11ng/exwm][EXWM]] as my wind
 * Doom Themes
 
 I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
     :straight t
@@ -110,10 +107,7 @@ I have switched to the Doom theme ~doom-outrun-electric~ because I find the colo
 
 * Doom Modeline
 
-The Doom Modeline decorates the modeline with icons and cleans up much of the clutter in the modeline.  An example of the Doom Modeline is below.
-
-[[file:./screenshots/doom-modeline.png][./screenshots/doom-modeline.png]]
-
+The Doom Modeline decorates the modeline with icons and cleans up much of the clutter in the modeline.
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
     :straight t
@@ -125,7 +119,6 @@ The Doom Modeline decorates the modeline with icons and cleans up much of the cl
 * Menu Bar, Scroll Bar, and Tool Bar
 
 Hide the menu bar.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package menu-bar
     :straight (:type built-in)
@@ -134,7 +127,6 @@ Hide the menu bar.
 #+end_src
 
 Hide the tool bar.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package tool-bar
     :straight (:type built-in)
@@ -143,7 +135,6 @@ Hide the tool bar.
 #+end_src
 
 Hide the scroll bar.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package scroll-bar
     :straight (:type built-in)

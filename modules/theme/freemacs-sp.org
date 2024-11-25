@@ -1,0 +1,13 @@
+#+begin_src emacs-lisp :tangle yes
+  (use-package spacious-padding
+    :straight t
+    :defer 3
+    :config
+    (spacious-padding-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-sp)
+
+  ;;; freemacs-sp.el ends here.
+#+end_src

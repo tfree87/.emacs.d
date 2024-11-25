@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-10 16:50:35 thomas>
+#+date: Time-stamp: <2024-11-24 15:31:17 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,6 +179,17 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
+** SLIME
+Load the SLIME module
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-slime)
+#+end_src
+
+** Function of the Day
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-fotd)
+#+end_src
 ** Listen
 
 Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
@@ -394,6 +405,12 @@ Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
     (require 'freemacs-theme)
 #+end_src
 
+** Spacious Padding
+
+Load the [[./modules/theme/freemacs-sp.org][Spacious Padding module]].
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-sp)
+#+end_src
 ** Academic Writing
 The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:
 + Academic Phrases :: A package that inserts common template phrases into academic papers

@@ -1,0 +1,42 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:  Indent Bars Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-06 19:10:47 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Indent Bars
+
+Indent bars mode will draw bars in the buffer showing indent levels in code.
+#+begin_src emacs-lisp :comment org :tangle yes
+  (use-package indent-bars
+    :straight (:host github :repo "jdtsmith/indent-bars"
+                     :branch "main")
+    :hook (python-mode . indent-bars-mode)
+    :custom
+    (when (version< emacs-version "29")
+      (indent-bars-prefer-character t)))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-indent-bars)
+#+end_src

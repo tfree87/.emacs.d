@@ -1,0 +1,40 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:  Magit Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-06 18:40:22 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5)
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Install Magit
+
+[[https://magit.vc/][Magit]] provides an interface to Git through Emacs.
+#+begin_src emacs-lisp :comments org :tangle yes
+  (use-package magit
+    :init
+    (whicher "git")
+    :straight t
+    :bind ("C-x g" . magit-status))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+#+begin_src emacs-lisp :comments org :tangle yes
+  (provide 'freemacs-magit)
+#+end_src

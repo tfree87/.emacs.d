@@ -119,6 +119,10 @@
 
 (require 'freemacs-defaults)
 
+(require 'freemacs-slime)
+
+(require 'freemacs-fotd)
+
 (require 'freemacs-listen)
 
 (require 'freemacs-aggressive-indent)
@@ -288,6 +292,8 @@
 ;; Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
 
 (require 'freemacs-theme)
+
+(require 'freemacs-sp)
 
 ;; Academic Writing
 ;; The [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]] contains configurations to improve the environment for writing academic papers in Emacs. It contains configuration for the following packages:

@@ -1,0 +1,49 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:  Parenthesis Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-11-06 19:16:15 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+* Install Paren Mode
+
+Paren Mode will highlight matching parentheses in programming mode buffers.
+#+begin_src emacs-lisp :tangle yes  
+  (use-package paren
+    :straight (:type built-in)
+    :defer t
+    :custom
+    (show-paren-delay 0)
+    :hook (prog-mode . show-paren-mode))
+#+end_src
+
+* Install Rainbow Delimiters
+
+[[https://github.com/Fanael/rainbow-delimiters][Rainbow delimiters]] colors delimiters such as brackets and parentheses in source code making it easier to identify which delimiters are paired.
+#+begin_src emacs-lisp :comments org :tangle yes
+  (use-package rainbow-delimiters
+    :straight t
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+* End
+
+Tell Emacs what package this file provides.
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-parens)
+#+end_src

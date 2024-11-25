@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 18:34:43 thomas>
+#+date: Time-stamp: <2024-11-23 20:55:43 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,7 +23,6 @@
 
 
 The code below collects customizations for Emacs built-in components.
-
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package emacs
     :custom
@@ -57,14 +56,6 @@ Emacs supports bidirectional editing. This is rarely used feature for many and c
          (setq bidi-inhibit-bpa t))
     #+end_src
     
-* Default Margin
-
-Use a default left and right margin of 3 to help clean up the look of Emacs buffers near window edges.
-
-#+begin_src emacs-lisp :tangle yes :comments both
-    (setq-default left-margin-width 3 right-margin-width 3)
-#+end_src
-
 * Display Battery Mode
 
 Display Battery Mode will display the battery charge status in the modeline 
