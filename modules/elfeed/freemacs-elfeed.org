@@ -2,7 +2,7 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 20:10:21 thomas>
+#+date: Time-stamp: <2024-11-15 19:36:49 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -84,4 +84,5 @@ Tell Emacs what feature this file provides.
 
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-elfeed)
+  (require 'freemacs-elfeed-protocol)
 #+end_src

@@ -23,3 +23,4 @@
   :defer t)
 
 (provide 'freemacs-elfeed)
+(require 'freemacs-elfeed-protocol)
