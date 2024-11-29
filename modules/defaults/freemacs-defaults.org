@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-23 20:55:43 thomas>
+#+date: Time-stamp: <2024-11-29 15:57:04 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,7 +23,7 @@
 
 
 The code below collects customizations for Emacs built-in components.
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package emacs
     :custom
     <<emacs_custom>>
@@ -31,11 +31,10 @@ The code below collects customizations for Emacs built-in components.
     <<emacs_config>>)
 #+end_src
 
-* Automatic Time Stamps
+* Automatic Time Stamping
 
-Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be found in the first eight lines. The ~time-stamp~ command can then be used to automatically update the time. A simpler solution, however, is to have Emacs automatically update the time stamp when the buffer is saved.
-
-#+begin_src emacs-lisp :noweb-ref emacs_config
+Emacs  will automatically update any ~Time-stamp: <>~ foutnd the first eight lines of a buffer on save with the following option.
+#+begin_src emacs-lisp :noweb-ref emacs_config :comments org
   (add-hook 'before-save-hook 'time-stamp)
 #+end_src
 
@@ -44,14 +43,12 @@ Emacs supports time stamps in any text buffer where ~Time-stamp: <>~ can be foun
 Emacs supports bidirectional editing. This is rarely used feature for many and can actually result in slower performance. To improve performance if bidirectional editing it not used, the following can be set:
 
 1. Tell Emacs that text should be read from left to right.
-
-   #+begin_src emacs-lisp :noweb-ref emacs_custom
+   #+begin_src emacs-lisp :noweb-ref emacs_custom :comments org
      (bidi-paragraph-direction 'left-to-right)
    #+end_src
 
-2. Turn off bidrectional editing mode.
-   
-   #+begin_src emacs-lisp :noweb-ref emacs_config
+2. Turn off bidrectional editing
+   #+begin_src emacs-lisp :noweb-ref emacs_config :comments org
      (if (version<= "27.1" emacs-version)
          (setq bidi-inhibit-bpa t))
     #+end_src
@@ -63,9 +60,21 @@ Display Battery Mode will display the battery charge status in the modeline
 #+begin_src emacs-lisp :tangle yes
   (use-package battery
     :straight (:type built-in)
+    :init
+    (defun any (pred list)
+      (while (and list (not (funcall pred (car list))))
+        (pop list))
+      (car list))
     :defer 3
     :config
-    (display-battery-mode t))
+    (if (and battery-status-function
+             (not (any '(lambda (value)
+                          (string-match-p 
+                           (battery-format "%B"
+                                           (funcall battery-status-function))
+                           value))
+                       '("unknown" "N/A" "NA"))))
+    (display-battery-mode t)))
 #+end_src
 
 * Backup Files with Version Control
@@ -123,6 +132,13 @@ Many programming language style guides recommend that each line of code is less 
 #+end_src
 
 A better fix would be to use code formatters to prevent lines from getting too long. For example, Apheleia will run formatters such as Black on Python code to keep code lines from becoming too long.
+
+* Single Space at the End of Sentences
+
+Tell Emacs that sentences end with a single space rather than two spaces.
+#+begin_src emacs-lisp :noweb-ref emacs_custom :comments org
+  (sentence-end-double-space nil)
+#+end_src
 
 * Use IBuffer Instead of Buffer List
 
