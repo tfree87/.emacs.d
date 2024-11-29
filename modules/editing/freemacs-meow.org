@@ -22,8 +22,7 @@ Meow mode changes the default keybindings in Emacs to follow a modal editing sty
 ** Define Keybindings
 
 Meow mode requries that all keybindings be defined Here is the recommended layout for QWERTY keyboards.
-
-#+begin_src emacs-lisp :noweb-ref meow_init
+#+begin_src emacs-lisp :noweb-ref meow_init :comments org
     (defun meow-setup ()
       (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
       (meow-motion-overwrite-define-key
@@ -160,7 +159,7 @@ Disable meow-mode in various modes where there are compatibility issues.
   (meow-define-state disable "dummy state")
   (add-to-list 'meow-mode-state-list '(vterm-mode . disable))
   (add-to-list 'meow-mode-state-list '(eshell-mode . disable))
-  (add-to-list 'meow-mode-state-list '(bufler-mode . disable))
+  (add-to-list 'meow-mode-state-list '(pdf-view-mode . disable))
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes

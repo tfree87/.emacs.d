@@ -119,6 +119,6 @@
   (meow-define-state disable "dummy state")
   (add-to-list 'meow-mode-state-list '(vterm-mode . disable))
   (add-to-list 'meow-mode-state-list '(eshell-mode . disable))
-  (add-to-list 'meow-mode-state-list '(bufler-mode . disable)))
+  (add-to-list 'meow-mode-state-list '(pdf-view-mode . disable)))
 
 (provide 'freemacs-meow)
