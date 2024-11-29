@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-24 15:31:17 thomas>
+#+date: Time-stamp: <2024-11-29 09:10:03 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,22 +179,10 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
-** SLIME
-Load the SLIME module
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-slime)
-#+end_src
-
-** Function of the Day
+** PDF-Tools
 
 #+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-fotd)
-#+end_src
-** Listen
-
-Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
-#+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-listen)
+  (require 'freemacs-pdf)
 #+end_src
 ** Aggressive Indent
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
@@ -268,6 +256,13 @@ Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
 ;  (require 'freemacs-elfeed-protocol)
 #+end_src
 
+** Elfeed Protocol
+
+Load the [[./modules/elfeed/freemacs-elfeed-protocol.el][Elfeed Protocol module]].
+#+begin_src emacs-lisp :tangle yes :comments org
+  (require 'freemacs-elfeed-protocol)
+#+end_src   
+
 ** Embark
 Load the [[./modules/completion/freemacs-embark.org][Embark module]]
 #+begin_src emacs-lisp :comments org :tangle yes
@@ -280,6 +275,11 @@ Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
   (require 'freemacs-eshell)
 #+end_src
 
+** Function of the Day
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-fotd)
+#+end_src
 ** Gnus
 
 Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
@@ -304,6 +304,12 @@ Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
   (require 'freemacs-ledger)
 #+end_src
 
+** Listen
+
+Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-listen)
+#+end_src
 ** Marginalia
 Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
 #+begin_src emacs-lisp :comments org :tangle yes
@@ -381,6 +387,12 @@ Load the [[./modules/session/freemacs-session.org][Session Module]].
   (require 'freemacs-session)
 #+end_src
 
+** SLIME
+Load the SLIME module
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-slime)
+#+end_src
+
 ** Trashed
 Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
 #+begin_src emacs-lisp :tangle yes :comments org
@@ -431,8 +443,8 @@ The spellchecking module configures the spell checking environment in Emacs. A f
 #+end_src
 
 ** \LaTeX{}
-Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 
+Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-latex)
 #+end_src

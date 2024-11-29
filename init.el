@@ -119,11 +119,7 @@
 
 (require 'freemacs-defaults)
 
-(require 'freemacs-slime)
-
-(require 'freemacs-fotd)
-
-(require 'freemacs-listen)
+(require 'freemacs-pdf)
 
 (require 'freemacs-aggressive-indent)
 
@@ -183,6 +179,12 @@
 
 ;  (require 'freemacs-elfeed-protocol)
 
+;; Elfeed Protocol
+
+;; Load the [[./modules/elfeed/freemacs-elfeed-protocol.el][Elfeed Protocol module]].
+
+(require 'freemacs-elfeed-protocol)
+
 ;; Embark
 ;; Load the [[./modules/completion/freemacs-embark.org][Embark module]]
 
@@ -192,6 +194,8 @@
 ;; Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
 
 (require 'freemacs-eshell)
+
+(require 'freemacs-fotd)
 
 ;; Gnus
 
@@ -213,6 +217,8 @@
 ;; Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
 
 (require 'freemacs-ledger)
+
+(require 'freemacs-listen)
 
 ;; Marginalia
 ;; Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
@@ -273,6 +279,8 @@
 
 (require 'freemacs-session)
 
+(require 'freemacs-slime)
+
 ;; Trashed
 ;; Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
 
@@ -313,8 +321,8 @@
 (require 'freemacs-spellcheck)
 
 ;; \LaTeX{}
-;; Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 
+;; Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
 
 (require 'freemacs-latex)
 
