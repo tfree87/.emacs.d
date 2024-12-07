@@ -2,7 +2,7 @@
 
 #+title:  Consult Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-07 10:45:04 thomas>
+#+date: Time-stamp: <2024-12-07 11:02:18 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -37,7 +37,7 @@
 
 Set the keybindings for consult.
 
-#+begin_src emacs-lisp :comments both :tangle yes :noweb-ref consult_bind
+#+begin_src emacs-lisp :comments both :noweb-ref consult_bind
   (;; C-c bindings in `mode-specific-map'
    ("C-c M-x" . consult-mode-command)
    ("C-c h" . consult-history)
