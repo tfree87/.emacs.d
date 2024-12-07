@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-29 09:10:03 thomas>
+#+date: Time-stamp: <2024-11-30 12:44:45 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,10 +179,11 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
-** PDF-Tools
+** Dired Rsync
 
+Load the [[./modules/file-tools/freemacs-drsync.org][Dired Rsync module]].
 #+begin_src emacs-lisp :tangle yes
-  (require 'freemacs-pdf)
+  (require 'freemacs-drsync)
 #+end_src
 ** Aggressive Indent
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
@@ -381,6 +382,11 @@ Load the [[./modules/org/freemacs-orgsl.org][Org Super Links module]].
   (require 'freemacs-ox-publish)
 #+end_src
 
+** PDF-Tools
+
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-pdf)
+#+end_src
 ** Session
 Load the [[./modules/session/freemacs-session.org][Session Module]].
 #+begin_src emacs-lisp :tangle yes :comments org

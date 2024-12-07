@@ -1,0 +1,22 @@
+#+begin_src emacs-lisp :tangle yes
+  (use-package dired-rsync
+    :straight t
+    :after dired
+    :bind (:map dired-mode-map
+                ("C-c C-r" . dired-rsync)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package dired-rsync-transient
+    :straight t
+    :after dired
+    :bind (:map dired-mode-map
+                ("C-c C-x" . dired-rsync-transient)))
+#+end_src
+
+
+Tell Emacs what package this file provides.
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-drsync)
+#+end_src
+

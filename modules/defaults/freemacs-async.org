@@ -2,7 +2,7 @@
 
 #+title: Async Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-29 10:17:22 thomas>
+#+date: Time-stamp: <2024-11-29 18:29:22 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -15,23 +15,25 @@
 #+keywords: Emacs
 #+html_link_home: ../../index.html
 #+html_link_up: ../../init.html
-#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
 
-The code below collects customizations for Emacs built-in components.
+* Install Package Async
+
+Install the async package.
 #+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package async
     :straight t
-    :custom
-    <<async_custom>>
     :config
     <<async_config>>)
 #+end_src
 
+* Dired Async
+
+Turn on asynchronous operations in Dired.
 #+begin_src emacs-lisp :noweb-ref async_config
   (autoload 'dired-async-mode "dired-async.el" nil t)
   (dired-async-mode 1)
@@ -39,6 +41,7 @@ The code below collects customizations for Emacs built-in components.
 
 * End
 
+Tell Emacs what package this file provides.
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-async)
 

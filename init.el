@@ -119,7 +119,7 @@
 
 (require 'freemacs-defaults)
 
-(require 'freemacs-pdf)
+(require 'freemacs-drsync)
 
 (require 'freemacs-aggressive-indent)
 
@@ -273,6 +273,8 @@
 ;; ~ox-publish.el~ makes it easy to create multi-page websites from Org Mode files by defining a publishing project. The configuration for this package can be found in the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
 
 (require 'freemacs-ox-publish)
+
+(require 'freemacs-pdf)
 
 ;; Session
 ;; Load the [[./modules/session/freemacs-session.org][Session Module]].

@@ -2,7 +2,7 @@
 
 #+title:  Consult Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-04 18:19:51 thomas>
+#+date: Time-stamp: <2024-12-07 10:45:04 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -37,7 +37,7 @@
 
 Set the keybindings for consult.
 
-#+begin_src emacs-lisp :comments both :tangle yes: :noweb-ref consult_bind
+#+begin_src emacs-lisp :comments both :tangle yes :noweb-ref consult_bind
   (;; C-c bindings in `mode-specific-map'
    ("C-c M-x" . consult-mode-command)
    ("C-c h" . consult-history)
@@ -164,7 +164,7 @@ The narrowing key is pressed before a key used to narrow the results returned fr
 
 The following line makes the register preview window look better by adding sorting and thin lines to break up the results into easy to view categories.
 
-#+begin_src emacs-lisp :noweb-ref emacs_config
+#+begin_src emacs-lisp :noweb-ref consult_config
   (advice-add #'register-preview
               :override #'consult-register-window)
 #+end_src
@@ -173,9 +173,9 @@ The following line makes the register preview window look better by adding sorti
 
 Use Consult to search through and select xref locations in buffers
 
-#+begin_src emacs-lisp :noweb-ref emacs_custom
-  (xref-show-xrefs-function #'consult-xref)
-  (xref-show-definitions-function #'consult-xref)
+#+begin_src emacs-lisp :noweb-ref consult_config
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
 #+end_src
 
 * Completion Cycling
