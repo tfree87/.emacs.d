@@ -2,7 +2,7 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-28 18:46:42 thomas>
+#+date: Time-stamp: <2024-12-04 19:11:06 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,60 +22,14 @@
 -----
 
 
-Elfeed is a powerful and fast RSS and newsreader for Emacs. This file contains the configuration for Elfeed.
+* InstallElfeed
 
-* Elfeed
-
-[[https://github.com/skeeto/elfeed][Elfeyed]] is a feed reader for Emacs that has powerful search capabilities and is very fast.
-
+[[https://github.com/skeeto/elfeed][Elfeyed]] is a feed reader for Emacs that has powerful search capabilities.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package elfeed
     :straight t
     :defer t
-    :commands elfeed
-    :custom
-    <<elfeed_feeds>>)
-#+end_src
-
-All of the feeds in the Elfeed reader are set as a list passed to the ~elfeed-feeds~ variable.
-
-#+begin_src emacs-lisp :noweb-ref elfeed_feeds
-  (setq elfeed-feeds
-        '("https://www.sciencedaily.com/rss/all.xml"))
-#+end_src
-
-* Elfeed Tube
-
-[[https://github.com/karthink/elfeed-tube][Elfeed Tube]] is an extension to Elfeed that adds YouTube channels to the 
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package elfeed-tube
-    :straight (elfeed-tube :host github
-                           :repo "karthink/elfeed-tube"
-                           :branch "master")
-    :defer t
-    :after elfeed
-    :config
-    (require 'elfeed-tube-mpv)
-    (elfeed-tube-setup)
-    <<elfeed_tube_subs>>)
-#+end_src
-
-Add subsriptions to Elfeed Tube using the ~elfeed-tube-add-feeds~ variable.
-
-#+begin_src emacs-lisp :noweb-ref elfeed_tube_subs
-  (elfeed-tube-add-feeds '("https://www.youtube.com/c/inanutshell/"
-                           "https://www.youtube.com/c/veritasium/"))
-#+end_src
-
-** mpv
-
-Elfeed Tube require mpv for watching videos in Emacs along with the Emacs mpv package.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package mpv
-    :straight t
-    :defer t)
+    :commands elfeed)
 #+end_src
 
 * End
