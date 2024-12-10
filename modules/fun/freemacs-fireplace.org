@@ -1,0 +1,9 @@
+#+begin_src emacs-lisp :tangle yes :comments org
+    (use-package fireplace
+      :straight t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes :comments org
+  (provide 'freemacs-fireplace)
+#+end_src
+
