@@ -119,6 +119,8 @@
 
 (require 'freemacs-defaults)
 
+(require 'freemacs-fireplace)
+
 (require 'freemacs-drsync)
 
 (require 'freemacs-aggressive-indent)

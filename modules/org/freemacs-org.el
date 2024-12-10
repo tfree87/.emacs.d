@@ -1,16 +1,12 @@
 ;; Configure Org
 
-;; [[https://orgmode.org/][Org Mode]] is the powerful task management, calendar, agenda, publishing system, and code documentation tool all-in-one that really extends the power of Emacs. I use Org Mode for the following:
-
-;; - Organizing my tasks and projects similar to [[https://gettingthingsdone.com/][David Allen's "Getting Things Done"]] method
-;; - Publishing \LaTeX{} documents quicker and more easily
-;; - Coding using [[https://en.wikipedia.org/wiki/Literate_programming#:~:text=Literate%20programming%20is%20a%20programming%20paradigm%20introduced%20by,which%20compilable%20source%20code%20can%20be%20generated.%20][literate programming]].
-  
+;; Set up configuration for buit-in Org Mode.  
 
 (use-package org
   :straight (:type built-in)
   :defer t
   :init
+  
   (whicher "pdflatex")
   (whicher "biber")
   :bind
@@ -19,11 +15,12 @@
   ("C-c c" . #'org-capture)
   :custom
   (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
-  (org-directory "~/Nextcloud/org")
+  (org-directory "~/org")
   (org-agenda-start-on-weekday nil)
-  (org-agenda-files `("~/org"))
-  (org-default-notes-file (concat org-directory "/inbox.org"))
-  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (org-agenda-files `("~/org/agenda"))
+  (org-default-notes-file (concat org-directory "/notes/notes.org"))
+  (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
+                          ((concat org-directory "/notes") :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-allow-creating-parent-nodes 'confirm)
@@ -40,12 +37,12 @@
                "PLANNING(p)"
                "|"
                "PLANNED(P)")
-      (sequence "SCRIPTING(S)"
-                "TESTING(G)"
-                "REVIEW(R)"
-                "APPROVAL(A)"
-                "|"
-                "EFFECTIVE(E)")))
+     (sequence "SCRIPTING(S)"
+               "TESTING(G)"
+               "REVIEW(R)"
+               "APPROVAL(A)"
+               "|"
+               "EFFECTIVE(E)")))
   (org-tags-exclude-from-inheritance '("project"))
   (org-stuck-projects
    '("+project/-MAYBE-DONE"

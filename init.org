@@ -2,7 +2,7 @@
 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-30 12:44:45 thomas>
+#+date: Time-stamp: <2024-12-07 11:12:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,6 +179,10 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
+** Fireplace
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-fireplace)
+#+end_src
 ** Dired Rsync
 
 Load the [[./modules/file-tools/freemacs-drsync.org][Dired Rsync module]].
