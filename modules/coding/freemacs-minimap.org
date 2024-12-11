@@ -1,0 +1,9 @@
+* Minimap
+
+[[https://github.com/dengste/minimap][Minimap]] shows a smaller window next to the main window where an overview of the whole buffer is presented and displays where the active region relates to the overall structure.
+#+begin_src emacs-lisp :tangle yes
+  (use-package minimap
+    :straight t
+    :command minimap-mode)
+#+end_src
+

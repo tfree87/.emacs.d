@@ -1,3 +1,4 @@
+* Install Eat
 
 
 #+begin_src emacs-lisp :tangle yes
@@ -10,11 +11,16 @@
                              ("terminfo/65" "terminfo/65/*")
                              ("integration" "integration/*")
                              (:exclude ".dir-locals.el" "*-tests.el")))
-    :defer t
+    :commands eat
     :hook
     (eshell-load . eat-eshell-mode)) 
 #+end_src
 
+* End
+
+Tell Emacs what package this file provides.
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-eat)
+
+  ;;; freemacs-eat ends here.
 #+end_src

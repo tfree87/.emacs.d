@@ -2,7 +2,7 @@
 
 #+title:Dirvish Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 19:58:40 thomas>
+#+date: Time-stamp: <2024-12-11 13:44:25 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,7 @@ Direvish adds extenstions to Emacs.
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package dirvish
     :straight t
+    :after dired
     :init
     <<dirvish_init>>
     :custom

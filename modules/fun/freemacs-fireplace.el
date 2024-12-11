@@ -1,4 +1,7 @@
 (use-package fireplace
-  :straight t)
+  :straight t
+  :commands fireplace)
 
 (provide 'freemacs-fireplace)
+
+;;; freemacs-fireplace.el ends here.

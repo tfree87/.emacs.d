@@ -1,9 +1,15 @@
 #+begin_src emacs-lisp :tangle yes :comments org
-    (use-package fireplace
-      :straight t)
+  (use-package fireplace
+    :straight t
+    :defer t
+    :commands fireplace)
 #+end_src
+
+
 
 #+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-fireplace)
+
+  ;;; freemacs-fireplace.el ends here.
 #+end_src
 

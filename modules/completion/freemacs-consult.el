@@ -68,8 +68,7 @@
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
   :after consult
   :custom
-  (consult-notes-sources '(("GTD"  ?g  "~/Dropbox/gtd/")
-                                  ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+  (consult-notes-sources '(("Org"  ?g  "~/org/notes")))
   :commands (consult-notes
              consult-notes-search-all
              consult-notes-org-roam-find-node

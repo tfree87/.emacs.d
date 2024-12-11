@@ -2,7 +2,7 @@
 
 #+title: Centered Window Mode x c
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-03 14:50:14 thomas>
+#+date: Time-stamp: <2024-12-11 11:49:24 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,7 @@ Toggle on centered window mode when using a large screen with only a single Emac
 #+begin_src emacs-lisp :tangle yes :comments both
   (use-package centered-window
     :straight t
+    :commands centered-window-mode
     :custom
     (cwm-incremental-padding t)
     (cwm-incremental-padding-% 10)

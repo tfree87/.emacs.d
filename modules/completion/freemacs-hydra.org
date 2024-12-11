@@ -1,0 +1,11 @@
+#+begin_src emacs-lisp :tangle yes
+  (use-package hydra
+    :straight t
+    :defer t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+  (provide 'freemacs-hydra)
+
+  ;;; freemacs-hydra ends here.
+#+end_src

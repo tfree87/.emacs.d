@@ -2,7 +2,7 @@
 
 #+title:  Consult Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-07 11:02:18 thomas>
+#+date: Time-stamp: <2024-12-10 20:01:00 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,7 +23,6 @@
 * Install Consult
 
 [[https://github.com/minad/consult][Consult]] provides a number of highly useful commands. The complete list of commands can be found [[https://github.com/minad/consult#available-commands][here]].
-
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package consult
     :straight t
@@ -36,7 +35,6 @@
 * Keybindings
 
 Set the keybindings for consult.
-
 #+begin_src emacs-lisp :comments both :noweb-ref consult_bind
   (;; C-c bindings in `mode-specific-map'
    ("C-c M-x" . consult-mode-command)
@@ -95,7 +93,6 @@ Set the keybindings for consult.
 * Change Register Preview to Consult
 
 Change the default Emacs ~register-preview-function~ to use consult effectively.
-
 #+begin_src emacs-lisp :noweb-ref emacs_custom
   (register-preview-function #'consult-register-format)
 #+end_src
@@ -103,14 +100,12 @@ Change the default Emacs ~register-preview-function~ to use consult effectively.
 * Consult Notes
 
 With Consult Notes, users can use Consult to search through note directories specified by the ~consult-notes-sources~ list. Consult will then let you search through these notes with completion frameworks and has good integration with Org Roam.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package consult-notes
     :straight (:type git :host github :repo "mclear-tools/consult-notes")
     :after consult
     :custom
-    (consult-notes-sources '(("GTD"  ?g  "~/Dropbox/gtd/")
-                                    ("Org Roam"  ?r  "~/Dropbox/org-roam/")))
+    (consult-notes-sources '(("Org"  ?g  "~/org/notes")))
     :commands (consult-notes
                consult-notes-search-all
                consult-notes-org-roam-find-node

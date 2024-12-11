@@ -5,6 +5,8 @@
 (use-package magit
   :init
   (whicher "git")
+  :commands magit-status
+  :defer t
   :straight t
   :bind ("C-x g" . magit-status))
 

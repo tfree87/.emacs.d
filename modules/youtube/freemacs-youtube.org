@@ -1,11 +1,9 @@
 * YTDL
 
 YTDL is a package that provides an interface to the ~youtube-dl~ command line program to download content from YouTube and other video websites.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package ytdl
     :straight t
-    :defer t
     :custom
     (ytdl-download-folder (expand-file-name "~/Downloads/ytdl"))
     (ytdl-music-folder (expand-file-name "~/Music/ytdl"))
@@ -20,7 +18,6 @@ YTDL is a package that provides an interface to the ~youtube-dl~ command line pr
 * End
 
 Tell Emacs what package this file provides
-
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-youtube)
 

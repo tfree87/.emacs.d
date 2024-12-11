@@ -2,7 +2,7 @@
 
 #+title:  Orderless Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 10:03:22 thomas>
+#+date: Time-stamp: <2024-12-10 20:04:34 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,8 +23,7 @@
 * Intall Orderless
 
 [[https://github.com/oantolin/orderless][Orderless]] will allow for seaching in the minibuffer using text broken up by spaces in which the order does not matter. 
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package orderless
     :straight t
     :defer 3
@@ -37,7 +36,8 @@
 * End
 
 Tell Emacs what package this file provides.
-
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-orderless)
+
+  ;;; freemacs-orderless.el ends here.
 #+end_src

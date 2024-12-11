@@ -1,8 +1,8 @@
  # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
-
+ 
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-07 11:12:12 thomas>
+#+date: Time-stamp: <2024-12-11 15:07:06 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,33 +179,37 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
+** Hydra
+Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
+#+begin_src emacs-lisp :tangle yes :comments org
+  (require 'freemacs-hydra)
+#+end_src
 ** Fireplace
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-fireplace)
 #+end_src
-** Dired Rsync
 
+** Dired Rsync
 Load the [[./modules/file-tools/freemacs-drsync.org][Dired Rsync module]].
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-drsync)
 #+end_src
+
 ** Aggressive Indent
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-aggressive-indent)
 #+end_src
+
 ** Centered-Window Mode
 Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-cwm)
 #+end_src
-** Coding
-Load the [[file:modules/coding/freemacs-coding.org][coding module]].
+
+** AutoHotKey
+Load the [[./modules/coding/freemacs-autohotkey.org][AutoHotKey module]].
 #+begin_src emacs-lisp :tangle yes :comments org
-  (require 'freemacs-project)
-
-  (require 'freemacs-coding)
-
   (require 'freemacs-autohotkey)
 #+end_src
 
@@ -262,7 +266,6 @@ Load the [[./modules/elfeed/freemacs-elfeed.org][Elfeed Module]].
 #+end_src
 
 ** Elfeed Protocol
-
 Load the [[./modules/elfeed/freemacs-elfeed-protocol.el][Elfeed Protocol module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-elfeed-protocol)
@@ -286,11 +289,11 @@ Load the [[./modules/shells/freemacs-eshell.org][Eshell Module]].
   (require 'freemacs-fotd)
 #+end_src
 ** Gnus
-
 Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-gnus)
 #+end_src
+
 ** Help
 The [[file:modules/help/freemacs-help.org][help module]] contains configuration that adds additional tools for help tools in Emacs:
 #+begin_src emacs-lisp :tangle yes :comments org
@@ -310,11 +313,17 @@ Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
 #+end_src
 
 ** Listen
-
 Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-listen)
 #+end_src
+
+** Magit
+Load the [[./modules/coding/freemacs-magit.org][Magit module]].
+#+begin_src emacs-lisp :tangle yes
+  (require 'freemacs-magit)
+#+end_src
+
 ** Marginalia
 Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
 #+begin_src emacs-lisp :comments org :tangle yes
@@ -344,6 +353,7 @@ Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-orderless)
 #+end_src
+
 ** Org
 Load the [[./modules/org/freemacs-org.org][Org Mode module]].
 #+begin_src emacs-lisp :tangle yes :comments org
@@ -357,11 +367,11 @@ Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
 #+end_src
 
 ** Org Mime
-
 Load the [[./modules/email/freemacs-org-mime.org][Org MIME module]].
 #+begin_src emacs-lisp :tangle yes
   (require 'freemacs-org-mime)
 #+end_src
+
 ** Org Mind Map
 Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]]/
 #+begin_src emacs-lisp :tangle yes :comments org
@@ -484,7 +494,6 @@ Load the [[file:modules/server/freemacs-server.org][server module]].
   (require 'freemacs-server)
 #+end_src
 
-* Custom Functions
 * Performance Optimization End
 Close off the ~let~ statement at the beginning of the init file.
 #+begin_src emacs-lisp :comments org :tangle yes

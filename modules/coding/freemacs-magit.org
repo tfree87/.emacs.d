@@ -2,7 +2,7 @@
 
 #+title:  Magit Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-06 18:40:22 thomas>
+#+date: Time-stamp: <2024-12-11 15:00:55 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -28,6 +28,8 @@
   (use-package magit
     :init
     (whicher "git")
+    :commands magit-status
+    :defer t
     :straight t
     :bind ("C-x g" . magit-status))
 #+end_src

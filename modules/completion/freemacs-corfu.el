@@ -2,13 +2,13 @@
 
 ;; Corfu provides completion in region functions. This will create pop ups with completion options in the buffer.
 
-
 ;; [[file:freemacs-corfu.org::*Install Corfu][Install Corfu:1]]
 (use-package corfu
   :straight (:files (:defaults "extensions/*.el"))
   :init
   (global-corfu-mode)
   (corfu-popupinfo-mode)
+  :defer t
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)

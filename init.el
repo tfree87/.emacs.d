@@ -119,6 +119,11 @@
 
 (require 'freemacs-defaults)
 
+;; Hydra
+;; Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
+
+(require 'freemacs-hydra)
+
 (require 'freemacs-fireplace)
 
 (require 'freemacs-drsync)
@@ -130,12 +135,8 @@
 
 (require 'freemacs-cwm)
 
-;; Coding
-;; Load the [[file:modules/coding/freemacs-coding.org][coding module]].
-
-(require 'freemacs-project)
-
-(require 'freemacs-coding)
+;; AutoHotKey
+;; Load the [[./modules/coding/freemacs-autohotkey.org][AutoHotKey module]].
 
 (require 'freemacs-autohotkey)
 
@@ -182,7 +183,6 @@
 ;  (require 'freemacs-elfeed-protocol)
 
 ;; Elfeed Protocol
-
 ;; Load the [[./modules/elfeed/freemacs-elfeed-protocol.el][Elfeed Protocol module]].
 
 (require 'freemacs-elfeed-protocol)
@@ -200,7 +200,6 @@
 (require 'freemacs-fotd)
 
 ;; Gnus
-
 ;; Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
 
 (require 'freemacs-gnus)
@@ -221,6 +220,8 @@
 (require 'freemacs-ledger)
 
 (require 'freemacs-listen)
+
+(require 'freemacs-magit)
 
 ;; Marginalia
 ;; Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].

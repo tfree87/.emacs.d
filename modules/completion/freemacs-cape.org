@@ -2,7 +2,7 @@
 
 #+title:  Cape Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-05 10:16:43 thomas>
+#+date: Time-stamp: <2024-12-10 19:56:32 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,10 +21,9 @@
 
 * Install Cape
 
- [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu.
- 
+ [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu. 
 #+name: cape
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package cape
     :straight t
     :bind (("C-c p p" . completion-at-point)

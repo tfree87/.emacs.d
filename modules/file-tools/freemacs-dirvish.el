@@ -1,5 +1,6 @@
 (use-package dirvish
   :straight t
+  :after dired
   :init
   (dirvish-override-dired-mode)
   :custom

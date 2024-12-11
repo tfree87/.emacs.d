@@ -1,5 +1,8 @@
 (use-package slime
   :straight t
+  :defer t
+  :mode "\\.lisp\\'"
+  :commands slime
   :config
   (setq inferior-lisp-program "/usr/bin/clisp"))
 

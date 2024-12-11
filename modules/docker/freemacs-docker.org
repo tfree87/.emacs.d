@@ -2,7 +2,7 @@
 
 #+title: Docker Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-09 15:25:07 thomas>
+#+date: Time-stamp: <2024-12-11 12:41:24 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -22,14 +22,13 @@
 -----
 
 
-This module contains packages and configuration that adds that ability to work with both Docker and Docker files in Emacs.
-
 * Docker Mode
 
 [[https://github.com/Silex/docker.el][Docker Mode]] is an interface in Emacs to manage Docker containers.
 #+begin_src emacs-lisp :tangle yes
   (use-package docker
     :straight t
+    :commands docker
     :init
     (whicher "docker")
     :bind ("C-c d" . docker))
@@ -41,7 +40,7 @@ This module contains packages and configuration that adds that ability to work w
 #+begin_src emacs-lisp :tangle yes
   (use-package docker-compose-mode
     :straight t
-    :defer t
+    :mode "docker-compose\\.y\."
     :init
     (whicher "docker-compose"))
 #+end_src
@@ -54,7 +53,6 @@ This module contains packages and configuration that adds that ability to work w
 
 * Dockerfile Mode
 
-
 #+begin_src emacs-lisp :tangle yes
   (use-package dockerfile-mode
     :straight t
@@ -64,7 +62,6 @@ This module contains packages and configuration that adds that ability to work w
 * End
 
 Tell Emacs what feature this file provides.
-
 #+begin_src emacs-lisp :tangle yes
   (provide 'freemacs-docker)
 

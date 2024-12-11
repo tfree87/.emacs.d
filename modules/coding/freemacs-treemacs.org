@@ -1,0 +1,48 @@
+* Treemacs
+
+[[https://github.com/Alexander-Miller/treemacs][Treemacs]] provides a separate Emacs window to browse file directory trees for projects.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package treemacs
+    :straight t
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :custom
+    (treemacs-show-hidden-files t)
+    (treemacs-wide-toggle-width 60)
+    (treemacs-width 30)
+    (treemacs-width-is-initially-locked nil)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (treemacs-hide-gitignored-files-mode nil)
+    :config
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t d"   . treemacs-select-directory)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
+  #+end_src
+
+** Treemacs Magit
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :defer t
+    :straight t)
+#+end_src
+
+

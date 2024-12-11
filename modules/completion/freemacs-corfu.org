@@ -2,7 +2,7 @@
 
 #+title: Corfu  Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-04 17:55:46 thomas>
+#+date: Time-stamp: <2024-12-11 15:00:08 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,13 +23,13 @@
 * Install Corfu
 
 Corfu provides completion in region functions. This will create pop ups with completion options in the buffer.
-
 #+begin_src emacs-lisp :comments both :tangle yes :noweb yes
   (use-package corfu
     :straight (:files (:defaults "extensions/*.el"))
     :init
     (global-corfu-mode)
     (corfu-popupinfo-mode)
+    :defer t
     :bind
     (:map corfu-map
           ("TAB" . corfu-next)

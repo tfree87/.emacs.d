@@ -2,7 +2,7 @@
 
 #+title: Coding Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-07 17:00:19 abc>
+#+date: Time-stamp: <2024-12-11 14:14:11 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -20,12 +20,14 @@
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
 
+
 * Install Aggressive Indent
 
 [[https://github.com/Malabarba/aggressive-indent-mode][Aggressive Indent mode]] will keep code indented by the correct amount as you type in real time.
 #+begin_src emacs-lisp :tangle yes :comments org
   (use-package aggressive-indent
     :straight t
+    :defer t
     :hook
     (emacs-lisp-mode . aggressive-indent-mode)
     (c-mode . aggressive-indent-mode)

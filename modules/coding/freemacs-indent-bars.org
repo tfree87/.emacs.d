@@ -2,7 +2,7 @@
 
 #+title:  Indent Bars Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-06 19:10:47 thomas>
+#+date: Time-stamp: <2024-12-11 14:16:21 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -28,6 +28,7 @@ Indent bars mode will draw bars in the buffer showing indent levels in code.
   (use-package indent-bars
     :straight (:host github :repo "jdtsmith/indent-bars"
                      :branch "main")
+    :defer t
     :hook (python-mode . indent-bars-mode)
     :custom
     (when (version< emacs-version "29")

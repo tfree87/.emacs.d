@@ -1,0 +1,6 @@
+#+begin_src emacs-lisp :tangle yes
+  (use-package prog-mode
+    :straight (:type built-in)
+    :hook
+    (prog-mode . #'display-line-numbers-mode))
+#+end_src

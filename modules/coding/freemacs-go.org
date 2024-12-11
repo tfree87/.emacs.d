@@ -1,0 +1,10 @@
+* Go
+
+[[https://github.com/dominikh/go-mode.el][Go mode]] provides a major model for editing Go code.
+
+#+begin_src emacs-lisp :tangle yes
+  (use-package go-mode
+    :straight t
+    :defer t
+    :mode "\\.go\\'")
+#+end_src

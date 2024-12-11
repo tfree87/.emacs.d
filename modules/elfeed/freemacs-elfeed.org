@@ -2,7 +2,7 @@
 
 #+title: Elfeed Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-04 19:11:06 thomas>
+#+date: Time-stamp: <2024-12-11 14:49:51 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,7 @@
   (use-package elfeed
     :straight t
     :defer t
+    :commands elfeed
     :commands elfeed)
 #+end_src
 

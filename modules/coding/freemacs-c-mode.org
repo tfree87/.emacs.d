@@ -1,0 +1,26 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title: Coding Configuration
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-12-10 19:50:17 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+* C
+
+I have added ~.ino~ files to C mode so that I can have syntax highlighting when I program my Arduino board.
+#+begin_src emacs-lisp :tangle yes
+  (use-package c-mode
+    :straight (:type built-in)
+    :defer t
+    :mode ("\\.c\\'"
+           "\\.ino\\'"))
+#+end_src
+

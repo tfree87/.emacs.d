@@ -1,3 +1,8 @@
+;; Install Cape
+
+;;  [[https://github.com/minad/cape][Cape]] (completion at point extensions) provides some extensions to make autocompletion better and plays well with Corfu. 
+;; #+name: cape
+
 (use-package cape
   :straight t
   :bind (("C-c p p" . completion-at-point)

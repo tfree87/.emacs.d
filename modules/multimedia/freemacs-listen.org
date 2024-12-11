@@ -3,6 +3,8 @@
 #+begin_src emacs-lisp :tangle yes :comments both
   (use-package listen
     :straight t
+    :defer t
+    :commands listen
     :custom
     (listen-directory "~/Music/"))
 #+end_src

@@ -4,6 +4,7 @@
 
 (use-package aggressive-indent
   :straight t
+  :defer t
   :hook
   (emacs-lisp-mode . aggressive-indent-mode)
   (c-mode . aggressive-indent-mode)
