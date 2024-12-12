@@ -1,7 +1,7 @@
 ;; Mail Directory
 ;; Set the default mail directory
 
-(org-contacts-gnus-insinuate)
+;(org-contacts-gnus-insinuate)
 (setq nnml-directory "~/Mail")
 (setq message-directory "~/Mail")
 

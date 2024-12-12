@@ -7,7 +7,7 @@
 * Mail Directory
 Set the default mail directory
 #+begin_src emacs-lisp :tangle yes :comments org
-  (org-contacts-gnus-insinuate)
+  ;(org-contacts-gnus-insinuate)
   (setq nnml-directory "~/Mail")
   (setq message-directory "~/Mail")
 #+end_src
