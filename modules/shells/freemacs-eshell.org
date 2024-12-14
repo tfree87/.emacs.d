@@ -2,7 +2,7 @@
 
 #+title: Eshell Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:12 thomas>
+#+date: Time-stamp: <2024-12-14 12:46:37 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -30,6 +30,7 @@ Eshell is a very powerful lisp-based shell that I have learned to love most beca
   (use-package eshell
     :straight (:type built-in)
     :defer t
+    :commands eshell
     :hook
     <<eshell_prompt>>
     (eshell-mode . (lambda ()

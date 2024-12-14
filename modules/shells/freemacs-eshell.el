@@ -1,6 +1,7 @@
 (use-package eshell
   :straight (:type built-in)
   :defer t
+  :commands eshell
   :hook
   (eshell-load . (lambda ()
                         (eshell-git-prompt-use-theme 'multiline2)))
