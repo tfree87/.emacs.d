@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-23 18:22:04 thomas>
+#+date: Time-stamp: <2024-12-14 10:52:05 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -76,7 +76,6 @@ To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fi
 * Display Time
 
 This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-
 #+begin_src emacs-lisp :tangle yes :noweb yes
   (use-package time
     :defer 3
@@ -94,7 +93,7 @@ When I am running Emacs with [[https://github.com/ch11ng/exwm][EXWM]] as my wind
 
 * Doom Themes
 
-I have switched to the Doom theme ~doom-outrun-electric~ because I find the colors appealing and it has been easier to configure than my earlier attempts to configure a Spacemacs-like theme.
+Set the theme to ~doom-outrun-electric~.
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
     :straight t
@@ -127,7 +126,7 @@ Hide the menu bar.
 #+end_src
 
 Hide the tool bar.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package tool-bar
     :straight (:type built-in)
     :config
@@ -135,7 +134,7 @@ Hide the tool bar.
 #+end_src
 
 Hide the scroll bar.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package scroll-bar
     :straight (:type built-in)
     :config
@@ -145,8 +144,7 @@ Hide the scroll bar.
 * Mixed Pitch
 
 Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package mixed-pitch
     :straight t
     :hook
@@ -156,8 +154,7 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
 * Nyan Mode
 
 [[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package nyan-mode
     :straight t
     :if window-system
@@ -175,8 +172,7 @@ Mixed pitch mode is a package that makes it easy to use a combination of fixed-w
 * End
 
 Tell Emacs what package this file provides.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-theme)
 
   ;;; freemacs-theme.el ends here

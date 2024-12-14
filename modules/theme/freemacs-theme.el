@@ -60,20 +60,36 @@
   :config
   (menu-bar-mode -1))
 
+
+
+;; Hide the tool bar.
+
 (use-package tool-bar
   :straight (:type built-in)
   :config
   (tool-bar-mode -1))
+
+
+
+;; Hide the scroll bar.
 
 (use-package scroll-bar
   :straight (:type built-in)
   :config
   (toggle-scroll-bar -1))
 
+;; Mixed Pitch
+
+;; Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
+
 (use-package mixed-pitch
   :straight t
   :hook
   (org-mode . mixed-pitch-mode))
+
+;; Nyan Mode
+
+;; [[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
 
 (use-package nyan-mode
   :straight t
@@ -87,6 +103,10 @@
   :config
   (nyan-mode)
   (nyan-start-animation))
+
+;; End
+
+;; Tell Emacs what package this file provides.
 
 (provide 'freemacs-theme)
 
