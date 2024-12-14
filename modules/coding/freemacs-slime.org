@@ -2,7 +2,7 @@
 
 #+title: SLIME  Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-11 14:17:37 thomas>
+#+date: Time-stamp: <2024-12-13 15:21:41 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -30,7 +30,7 @@
     :mode "\\.lisp\\'"
     :commands slime
     :config
-    (setq inferior-lisp-program "/usr/bin/clisp"))
+    (setq inferior-lisp-program "/usr/bin/sbcl"))
 #+end_src
 
 * End

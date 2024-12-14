@@ -4,7 +4,7 @@
   :mode "\\.lisp\\'"
   :commands slime
   :config
-  (setq inferior-lisp-program "/usr/bin/clisp"))
+  (setq inferior-lisp-program "/usr/bin/sbcl"))
 
 (provide 'freemacs-slime)
 
