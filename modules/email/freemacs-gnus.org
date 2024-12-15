@@ -2,7 +2,7 @@
 
 #+title:  Gnus Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-11 15:44:46 thomas>
+#+date: Time-stamp: <2024-12-14 18:23:33 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -32,13 +32,13 @@
     <<gnus_hooks>>
     :custom
     (gnus-init-file "~/.emacs.d/gnus.el")
-    (gnus-icalendar-org-capture-file "~/org/inbox.org")
+    (gnus-icalendar-org-capture-file (concat (car org-agenda-files) "/inbox.org"))
     (gnus-icalendar-org-capture-headline '("Calendar"))
     :config
     (require 'gnus-icalendar)
     (gnus-icalendar-setup)
     (gnus-icalendar-org-setup)
-    <<gnus_config>>)
+     <<gnus_config>>)
 #+end_src
 
 ** Attach Files to Email from Dired

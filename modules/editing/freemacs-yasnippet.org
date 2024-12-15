@@ -2,7 +2,7 @@
 
 #+title: YASnippet Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 19:44:33 thomas>
+#+date: Time-stamp: <2024-12-13 17:43:14 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -25,30 +25,29 @@
 * Install YASnippet
 
 [[https://github.com/joaotavora/yasnippet][YASnippet]] takes a small bit of text or an abbreviation and expands it into a template once the ~<TAB>~ key has been pressed. 
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package yasnippet
     :straight t
-    :defer 3
-    :config
-    (yas-global-mode 1))
+    :defer t
+    :hook
+    (org-mode . yas-minor-mode)
+    (prog-mode . yas-minor-mode))
 #+end_src
 
 ** Install Snippets
 
 The package [[https://github.com/AndreaCrotti/yasnippet-snippets][YASnippet Snippets]] loads many pre-defined templates for YASnippet.
-
-#+begin_src emacs-lisp :tangle yes :comments both
+#+begin_src emacs-lisp :tangle yes :comments org
   (use-package yasnippet-snippets
     :straight t
+    :after yasnippet
     :defer t)
 #+end_src
 
 * End
 
 Tell Emacs what package this file provides.
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :comments org
   (provide 'freemacs-yasnippet)
 
   ;;; freemacs-editing.el ends here

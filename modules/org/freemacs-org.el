@@ -6,7 +6,7 @@
   :straight (:type built-in)
   :defer t
   :init
-  
+  (setq org-capture-templates nil)
   (whicher "pdflatex")
   (whicher "biber")
   :bind
@@ -20,7 +20,7 @@
   (org-agenda-files `("~/org/agenda"))
   (org-default-notes-file (concat org-directory "/notes/notes.org"))
   (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
-                          ((concat org-directory "/notes") :maxlevel . 3)))
+                         ((concat org-directory "/notes") :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-allow-creating-parent-nodes 'confirm)
@@ -106,7 +106,7 @@
      (shell . t)
      (sql . t)
      (sqlite . t)))
-  (load-file "~/.emacs.d/org-templates/capture-templates.el"))
+  (mapc 'load (file-expand-wildcards "~/.emacs.d/org-templates/*.el")))
 
 (use-package org-contrib
   :straight t

@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-09 21:19:04 thomas>
+#+date: Time-stamp: <2024-12-14 20:47:04 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,7 +29,7 @@ Set up configuration for buit-in Org Mode.
     :straight (:type built-in)
     :defer t
     :init
-    <<org_init>>
+    (setq org-capture-templates nil)
     (whicher "pdflatex")
     (whicher "biber")
     :bind
@@ -42,7 +42,7 @@ Set up configuration for buit-in Org Mode.
     (add-hook 'org-mode-hook #'turn-on-flyspell)
     <<org_config>>
     <<babel_languages>>
-    (load-file "~/.emacs.d/org-templates/capture-templates.el"))
+    (mapc 'load (file-expand-wildcards "~/.emacs.d/org-templates/*.el")))
 
   (use-package org-contrib
     :straight t
@@ -92,8 +92,8 @@ Tell org mode where the default notes file can be found for org-capture.
 
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
-    (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
-                            ((concat org-directory "/notes") :maxlevel . 3)))
+  (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
+                         ((concat org-directory "/notes") :maxlevel . 3)))
 #+end_src
 
 **** Allow Refile as Top-level Heading
