@@ -1,0 +1,122 @@
+ # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+ 
+#+title:  Org Capture Templates
+#+author: Thomas Freeman
+#+date: Time-stamp: <2024-12-14 21:03:10 thomas>
+#+description: A series of org capture templates for org mode.
+
+
+Collect the org capture teplates and add them to the list of templates.
+#+begin_src emacs-lisp :comments org :noweb yes :tangle yes
+  (mapc (lambda (x) (add-to-list 'org-capture-templates x)) 
+        '(
+          <<capture_templates>>
+          ))
+#+end_src
+
+* Ticker/Future Reminders
+
+Capturing reminder items for the future.
+#+begin_src emacs-lisp :noweb-ref capture_templates
+  ("f" "Future Reminders")
+
+  ("fs" "Someday/Maybe Item"
+   entry
+   (file "~/org/agenda/someday.org")
+   "* %?\n%x")
+
+  ("ft" "Tickler file item"
+   entry
+   (file "~/org/agenda/tickler.org")
+   "* %?\n%^{Scheduled}t\n\n%x")
+#+end_src
+
+*  Task Items
+
+Capturing tasks.
+#+begin_src emacs-lisp :noweb-ref capture_templates
+  ("t" "To Do Items")
+
+  ("p" "Projects item"
+   entry
+   (file "~/org/agenda//projects.org")
+   "* %? [\%] %^g:project:")
+
+  ("tb" "Scheduled and Deadline TODO"
+   entry
+   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n %(my/org-contacts)")
+
+  ("td" "Deadline TODO"
+   entry
+   (file+headline "~/org/agenda//inbox.org" "Tasks")
+   "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: DEADLINE: %^{Deadline}t\n%x")
+
+  ("th" "Habit Item"
+   entry
+   (file+headline "~/org/agenda/inbox.org" "Habits")
+   "* TODO %^{Title} %^G\n:PROPERTIES:\n:STYLE: habit\n:END:")
+
+  ("to" "Deleegated Work Task"
+   entry
+   (file "~/org/agenda//work.org")
+   "* WAITING [#%^{Priority|B|A|C}] %^{Title} %^G\n:PROPERTIES:\n:WAITING_ON: %(or\n\n%x")
+
+  ("ts" "Scheduled TODO"
+   entry
+   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: %^{Scheduled}t\n\n%x")
+
+  ("tu" "Unscheduled TODO"
+   entry
+   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\n\n%x")
+
+#+end_src
+
+* Calendar Entries
+
+Org capture templates for creating calendar/appointment enttries.
+#+begin_src emacs-lisp :noweb-ref capture_templates
+  ("c" "Calendar Entries")
+  
+  ("cw"
+   "Work Calendar"
+   entry
+   (file+olp+datetree "~/org/agenda/work-calendar.org")
+   "* %^{Title}\n%^{LOCATION|Virtual}p\n%T\n"
+   :time-prompt t
+   :unnarrowed t)
+
+  ("cp"
+   "Personal Calendar"
+   entry
+   (file+olp+datetree "~/org/agenda/personal-calendar.org")
+   "* %^{Title}\n%^{LOCATION}p\n%T\n"
+   :time-prompt t
+   :unnarrowed t)
+#+end_src
+
+* Periodic Reflections
+
+Templates to reflect on the days, weeks, and months based on the Clever Fox planner.
+#+begin_src emacs-lisp :noweb-reg capture_templates
+  ("r" "Periodic Reflections")
+
+  ("rd" "Daily Enty"
+   entry
+   (file+olp+datetree "~/org/reflection/daily.org")
+   "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}")
+
+  ("rw" "Week Begin"
+   entry
+   (file+olp+datetree "~/org/reflection/weekly.org")
+   "* Weekly Goal\n\n- :Goal: %^{Goal}\n- :Reward: %^{Reward}\n\n* Weekly Priorities\n\n1. %^{1st Priority}\n2. %^{2nd Priority}\n3. %^{3rd Priority}\n\n* Exicted About\n1. %^{Excited About 1}\n2. %^{ Excited About 2}\n3.  %^{Excited About 3}"
+   :tree-type week)
+
+  ("rW" "Week End"
+   entry
+   (file+olp+datetree "~/org/reflection/weekly.org")
+   "* Reflectioni\n\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
+   :tree-type week)
+#+end_src
