@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Elisp with org comments
+# key: elispc_
+# --
+#+begin_src elisp :tangle yes :comments org
+$0
+#+end_src
