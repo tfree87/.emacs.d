@@ -86,6 +86,16 @@
   :commands (consult-flycheck)
   :after (consult flycheck))
 
+;; Consult Dir
+
+
+(use-package consult-dir
+  :straight t
+  :bind (("C-x C-d" . consult-dir)
+         :map minibuffer-local-completion-map
+         ("C-x C-d" . consult-dir)
+         ("C-x C-j" . consult-dir-jump-file)))
+
 (provide 'freemacs-consult)
 
 ;;; freemacs-consult.el ends here.

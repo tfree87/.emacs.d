@@ -2,7 +2,7 @@
 
 #+title:  Consult Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-10 20:01:00 thomas>
+#+date: Time-stamp: <2024-12-15 20:33:00 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -179,6 +179,17 @@ Always cycle through completion candidates by pressing the completion key.
 
 #+begin_src emacs-lisp :comments both :noweb-ref emacs_custom
   (completion-cycle-threshold t)
+#+end_src
+
+* Consult Dir
+
+#+begin_src elisp :tangle yes :comments org :noweb yes
+  (use-package consult-dir
+    :straight t
+    :bind (("C-x C-d" . consult-dir)
+           :map minibuffer-local-completion-map
+           ("C-x C-d" . consult-dir)
+           ("C-x C-j" . consult-dir-jump-file)))
 #+end_src
 
 * End
