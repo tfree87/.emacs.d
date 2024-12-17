@@ -18,7 +18,6 @@
 
 ;; To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
 
-
 (cond ((and (eq system-type 'windows-nt)
             (font-available-p "Times New Roman")
             (font-available-p "Hack"))
@@ -29,17 +28,10 @@
       ((and (eq system-type 'gnu/linux)
             (font-available-p "Liberation Serif")
             (font-available-p "Hack"))
-      (custom-theme-set-faces
-       'user
-       '(variable-pitch ((t (:family "Liberation Serif"))))
-       '(fixed-pitch ((t (:family "Hack")))))))
-
-(use-package time
-  :defer 3
-  :custom
-  (display-time-and-date t)
-  :config
-  (display-time-mode t))
+       (custom-theme-set-faces
+        'user
+        '(variable-pitch ((t (:family "Liberation Serif"))))
+        '(fixed-pitch ((t (:family "Hack")))))))
 
 (use-package doom-themes
   :straight t

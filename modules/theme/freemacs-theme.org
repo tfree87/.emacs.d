@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-14 10:52:05 thomas>
+#+date: Time-stamp: <2024-12-15 11:04:40 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,7 +29,6 @@ This section contains custom set faces.
 ** Change Calfw Grid Color
 
 When using Calfw, the default grid color does not show very well when using the Droom theme ~doom-outrun-electric~. The following will change it to a color that will be easier to see.
-
 #+begin_src emacs-lisp
   (custom-theme-set-faces
    'user
@@ -55,40 +54,21 @@ Change the default font to use Hack if it is available.
 ** Fixed and Variable Pitch Fonts
 
 To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
-
 #+begin_src emacs-lisp :tangle yes :comments org
-    (cond ((and (eq system-type 'windows-nt)
-                (font-available-p "Times New Roman")
-                (font-available-p "Hack"))
-           (custom-theme-set-faces
-            'user
-            '(variable-pitch ((t (:family "Times New Roman"))))
-            '(fixed-pitch ((t (:family "Hack"))))))
-          ((and (eq system-type 'gnu/linux)
-                (font-available-p "Liberation Serif")
-                (font-available-p "Hack"))
-          (custom-theme-set-faces
-           'user
-           '(variable-pitch ((t (:family "Liberation Serif"))))
-           '(fixed-pitch ((t (:family "Hack")))))))
-#+end_src
-
-* Display Time
-
-This will display the time in the Emacs mode line. This can be very useful if task bars are hidden on the desktop or working from a text-only terminal.
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package time
-    :defer 3
-    :custom
-    <<time_custom>>
-    :config
-    (display-time-mode t))
-#+end_src
-
-When I am running Emacs with [[https://github.com/ch11ng/exwm][EXWM]] as my window manager, I want to be able to see the date and time. Since this is a nice feature to have in [[https://github.com/ch11ng/exwm][EXWM]] and does not detract much from the overall experience of Emacs, I might as well turn it on all the time.
-
-#+begin_src emacs-lisp :noweb-ref time_custom
-  (display-time-and-date t)
+  (cond ((and (eq system-type 'windows-nt)
+              (font-available-p "Times New Roman")
+              (font-available-p "Hack"))
+         (custom-theme-set-faces
+          'user
+          '(variable-pitch ((t (:family "Times New Roman"))))
+          '(fixed-pitch ((t (:family "Hack"))))))
+        ((and (eq system-type 'gnu/linux)
+              (font-available-p "Liberation Serif")
+              (font-available-p "Hack"))
+         (custom-theme-set-faces
+          'user
+          '(variable-pitch ((t (:family "Liberation Serif"))))
+          '(fixed-pitch ((t (:family "Hack")))))))
 #+end_src
 
 * Doom Themes
