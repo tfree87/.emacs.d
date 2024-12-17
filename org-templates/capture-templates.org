@@ -2,14 +2,14 @@
  
 #+title:  Org Capture Templates
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-14 21:03:10 thomas>
+#+date: Time-stamp: <2024-12-16 17:43:37 thomas>
 #+description: A series of org capture templates for org mode.
 
 
 Collect the org capture teplates and add them to the list of templates.
 #+begin_src emacs-lisp :comments org :noweb yes :tangle yes
   (mapc (lambda (x) (add-to-list 'org-capture-templates x)) 
-        '(
+        `(
           <<capture_templates>>
           ))
 #+end_src
@@ -22,13 +22,13 @@ Capturing reminder items for the future.
 
   ("fs" "Someday/Maybe Item"
    entry
-   (file "~/org/agenda/someday.org")
+   (file ,(concat (car org-agenda-files) "/someday.org"))
    "* %?\n%x")
 
   ("ft" "Tickler file item"
    entry
-   (file "~/org/agenda/tickler.org")
-   "* %?\n%^{Scheduled}t\n\n%x")
+   (file ,(concat (car org-agenda-files) "/tickler.org"))
+    "* %?\n%^{Scheduled}t\n\n%x")
 #+end_src
 
 *  Task Items
@@ -39,39 +39,38 @@ Capturing tasks.
 
   ("p" "Projects item"
    entry
-   (file "~/org/agenda//projects.org")
-   "* %? [\%] %^g:project:")
+   (file ,(concat (car org-agenda-files) "/projects.org"))
+   "* [#%^{Priority|B|A|C}] %^{Title} [\%] %^G:project:\n%?")
 
   ("tb" "Scheduled and Deadline TODO"
    entry
-   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   (file+headline ,(concat (car org-agenda-files) "/inbox.org") "Tasks")
    "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: %^{Scheduled}t DEADLINE: %^{Deadline}t\n %(my/org-contacts)")
 
   ("td" "Deadline TODO"
    entry
-   (file+headline "~/org/agenda//inbox.org" "Tasks")
+   (file+headline ,(concat (car org-agenda-files) "/inbox.org") "Tasks")
    "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: DEADLINE: %^{Deadline}t\n%x")
 
   ("th" "Habit Item"
    entry
-   (file+headline "~/org/agenda/inbox.org" "Habits")
+   (file+headline ,(concat (car org-agenda-files) "/inbox.org") "Habits")
    "* TODO %^{Title} %^G\n:PROPERTIES:\n:STYLE: habit\n:END:")
 
   ("to" "Deleegated Work Task"
    entry
-   (file "~/org/agenda//work.org")
+   (file ,(concat (car org-agenda-files) "/work.org"))
    "* WAITING [#%^{Priority|B|A|C}] %^{Title} %^G\n:PROPERTIES:\n:WAITING_ON: %(or\n\n%x")
 
   ("ts" "Scheduled TODO"
    entry
-   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   (file+headline ,(concat (car org-agenda-files) "/inbox.org") "Tasks")
    "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\nSCHEDULED: %^{Scheduled}t\n\n%x")
 
   ("tu" "Unscheduled TODO"
    entry
-   (file+headline "~/org/agenda/inbox.org" "Tasks")
+   (file+headline ,(concat (car org-agenda-files) "/inbox.org") "Tasks")
    "* TODO [#%^{Priority|B|A|C}] %^{Title} %^G\n\n%x")
-
 #+end_src
 
 * Calendar Entries
@@ -83,7 +82,7 @@ Org capture templates for creating calendar/appointment enttries.
   ("cw"
    "Work Calendar"
    entry
-   (file+olp+datetree "~/org/agenda/work-calendar.org")
+   (file+olp+datetree ,(concat (car org-agenda-files) "/work-calendar.org"))
    "* %^{Title}\n%^{LOCATION|Virtual}p\n%T\n"
    :time-prompt t
    :unnarrowed t)
@@ -91,7 +90,7 @@ Org capture templates for creating calendar/appointment enttries.
   ("cp"
    "Personal Calendar"
    entry
-   (file+olp+datetree "~/org/agenda/personal-calendar.org")
+   (file+olp+datetree ,(concat (car org-agenda-files) "/personal-calendar.org"))
    "* %^{Title}\n%^{LOCATION}p\n%T\n"
    :time-prompt t
    :unnarrowed t)
@@ -119,4 +118,34 @@ Templates to reflect on the days, weeks, and months based on the Clever Fox plan
    (file+olp+datetree "~/org/reflection/weekly.org")
    "* Reflectioni\n\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
    :tree-type week)
+#+end_src
+
+* Shopping Items
+
+#+begin_src elisp :tangle yes :comments org :noweb-ref capture_templates
+  ("s" "Shopping Lists")
+
+  ("sh" "Hardware Store"
+   (file+headline ,(concat (car org-agenda-files) "Hardware"))
+   " - [ ] %?")
+
+  ("sf" "Food and Groceries"
+   (file+headline ,(concat (car org-agenda-files) "Food and Groceries"))
+   " - [ ] %?")
+
+  ("sg" "Gifts"
+   (file+headline ,(concat (car org-agenda-files) "Gifts"))
+   " - [ ] %?")
+
+  ("sh" "Household"
+   (file+headline ,(concat (car org-agenda-files) "Household Items"))
+   " - [ ] %?")
+
+  ("sp" "Project Supplies"
+   (file+headline ,(concat (car org-agenda-files) "Project Supplies"))
+   " - [ ] %?")
+
+  ("se" "Electronics"
+   (file+headline ,(concat (car org-agenda-files) "Electronnics"))
+   " - [ ] %?")
 #+end_src
