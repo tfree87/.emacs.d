@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-14 20:47:04 thomas>
+#+date: Time-stamp: <2024-12-16 15:08:16 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -92,8 +92,8 @@ Tell org mode where the default notes file can be found for org-capture.
 
 In order to refile/move tasks from the inbox to other agenda files and subtrees, the following must be set:
 #+begin_src emacs-lisp :comments org :noweb-ref org_customize
-  (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
-                         ((concat org-directory "/notes") :maxlevel . 3)))
+  (org-refile-targets `((org-agenda-files :maxlevel . 4)
+                        (,(concat org-directory "/notes") :maxlevel . 3)))
 #+end_src
 
 **** Allow Refile as Top-level Heading
@@ -170,6 +170,17 @@ Define a stuck project as any headline with the project keyword which has no TOD
      ("NEXT" "TODO")
      nil
      "\\<IGNORE\\>"))
+#+end_src
+
+*** Automatically Mark Parents as Done When All Children Are Done 
+
+For headers with subtasks, automatically mark the header as completed when all the subtasks are complete.
+#+begin_src emacs-lisp :tangle yes :comments org
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (org-todo (if (= n-not-done 0) "DONE" "TODO")))
+
+  (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 #+end_src
 
 ** BibLaTeX in Org-mode

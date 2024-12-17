@@ -19,8 +19,8 @@
   (org-agenda-start-on-weekday nil)
   (org-agenda-files `("~/org/agenda"))
   (org-default-notes-file (concat org-directory "/notes/notes.org"))
-  (org-ref~ile-targets '((org-agenda-files :maxlevel . 4)
-                         ((concat org-directory "/notes") :maxlevel . 3)))
+  (org-refile-targets `((org-agenda-files :maxlevel . 4)
+                        (,(concat org-directory "/notes") :maxlevel . 3)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-allow-creating-parent-nodes 'confirm)
@@ -114,6 +114,16 @@
   :config
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
+
+;; Automatically Mark Parents as Done When All Children Are Done 
+
+;; For headers with subtasks, automatically mark the header as completed when all the subtasks are complete.
+
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (org-todo (if (= n-not-done 0) "DONE" "TODO")))
+
+(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
 
 ;; Org Header Sizes
 
