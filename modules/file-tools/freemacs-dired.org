@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-10-26 18:26:58 thomas>
+#+date: Time-stamp: <2024-12-15 15:32:27 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -23,8 +23,7 @@
 
 
 The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package dired
     :straight (:type built-in)
     :defer t
@@ -32,18 +31,16 @@ The following customizations make emacs dired mode behave in a similar fashion t
     <<dired_custom>>)
 #+end_src
 
-** Move/Rename/Copy Files to Another Pane
+** Move/Rename/Copy Files to Another Window
 
-This will cause emacs to default to moving/copying/renaming files from the directory in one dired buffer to another in a split-window. This will allow emacs to operate more like midnight commander, total commander, double commander, etc.
-
- #+begin_src emacs-lisp :noweb-ref dired_custom
+This will cause Emacs to default to moving/copying/renaming files from the directory in one Dired buffer.
+ #+begin_src emacs-lisp :noweb-ref dired_custom :comments org
    (dired-dwim-target t)
  #+end_src
  
 * WDired-Mode
 
 [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html][Wdired]], allow for a writable dired buffer. This makes it easy to rename files in dired buffers.
-
 #+begin_src emacs-lisp :tangle yes :noweb yes
     (use-package wdired-mode
       :straight (:type built-in)
@@ -55,7 +52,6 @@ This will cause emacs to default to moving/copying/renaming files from the direc
 ** Change Permissions in Dired
 
 Wdired allows for manual editing of file premissions when ~wdired-allow-to-change-permissions~ is set to true.
-
 #+begin_src emacs-lisp :noweb-ref wdired_custom
   (wdired-allow-to-change-permissions t)
 #+end_src
@@ -67,7 +63,6 @@ Dired Hacks is a series of modifications to add features to Dired.
 ** Dired Collapse
 
 Dired colapse will show the full path in a dired buffer for paths that contain only a single file.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package dired-collapse
     :straight t
@@ -115,7 +110,6 @@ This can also be configured to work in Sunrise Commander using the ~sr-mode-map~
 * Disc Usage
 
 Disc usage is a tool that can be used to determine the amount of memory a directory uses in the file system.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package disk-usage
     :straight t
@@ -137,7 +131,6 @@ Disc usage is a tool that can be used to determine the amount of memory a direct
 * Rclone Tools
 
 Rclone tools is a package that used the Emacs ~completing-read~ function to simplify running the ~rclone~ program from within Emacs and make it simpler to create scripts using Emacs lisp.
-
 #+begin_src emacs-lisp :tangle yes
   (use-package rclone-tools
     :straight (rclone-tools :host github
@@ -148,7 +141,6 @@ Rclone tools is a package that used the Emacs ~completing-read~ function to simp
 #+end_src
 
 The following function will execute the rclone command line tool
-
 #+begin_src emacs-lisp :tangle yes
   (defun rclone-sync (source dest &optional rclone-path rclone-config)
     "Sync DEST with SOURCE using rclone.

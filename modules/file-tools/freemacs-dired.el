@@ -1,3 +1,29 @@
+;; # -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+;; #+title:Dired Configuration
+;; #+author: Thomas Freeman
+;; #+date: Time-stamp: <2024-12-15 15:32:27 thomas>
+;; #+language: en_US
+;; #+property: header-args :results silent :exports code
+
+;; #+options: html-link-use-abs-url:nil html-postamble:auto
+;; #+options: html-preamble:t html-scripts:nil html-style:t
+;; #+options: html5-fancy:nil tex:t num:nil toc:t
+;; #+html_doctype: xhtml-strict
+;; #+html_container: div
+;; #+html_content_class: content
+;; #+keywords: Emacs
+;; #+html_link_home: ../../index.html
+;; #+html_link_up: ../../init.html
+;; #+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+;; #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+;; #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+;; -----
+
+
+;; The following customizations make emacs dired mode behave in a similar fashion to other file browsing tools such as midnight commander. While there are many great file management tools out there. I keep coming back to emacs dired because of the keyboard commands and flexibility.
+
 (use-package dired
   :straight (:type built-in)
   :defer t
