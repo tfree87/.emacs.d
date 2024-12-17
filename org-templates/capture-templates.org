@@ -2,7 +2,7 @@
  
 #+title:  Org Capture Templates
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-16 17:43:37 thomas>
+#+date: Time-stamp: <2024-12-17 15:47:12 abc>
 #+description: A series of org capture templates for org mode.
 
 
@@ -83,7 +83,7 @@ Org capture templates for creating calendar/appointment enttries.
    "Work Calendar"
    entry
    (file+olp+datetree ,(concat (car org-agenda-files) "/work-calendar.org"))
-   "* %^{Title}\n%^{LOCATION|Virtual}p\n%T\n"
+   "* %^{Title}\n%^{LOCATION|Virtual}p%T\n"
    :time-prompt t
    :unnarrowed t)
 
@@ -91,7 +91,7 @@ Org capture templates for creating calendar/appointment enttries.
    "Personal Calendar"
    entry
    (file+olp+datetree ,(concat (car org-agenda-files) "/personal-calendar.org"))
-   "* %^{Title}\n%^{LOCATION}p\n%T\n"
+   "* %^{Title}\n%^{LOCATION}p%T\n\n"
    :time-prompt t
    :unnarrowed t)
 #+end_src
@@ -99,7 +99,7 @@ Org capture templates for creating calendar/appointment enttries.
 * Periodic Reflections
 
 Templates to reflect on the days, weeks, and months based on the Clever Fox planner.
-#+begin_src emacs-lisp :noweb-reg capture_templates
+#+begin_src emacs-lisp :noweb-ref capture_templates
   ("r" "Periodic Reflections")
 
   ("rd" "Daily Enty"
