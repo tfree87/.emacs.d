@@ -2,7 +2,7 @@
  
 ;; #+title:  Org Capture Templates
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-17 15:47:12 abc>
+;; #+date: Time-stamp: <2024-12-17 20:57:40 thomas>
 ;; #+description: A series of org capture templates for org mode.
 
 
@@ -74,6 +74,31 @@
          "* %^{Title}\n%^{LOCATION}p%T\n\n"
          :time-prompt t
          :unnarrowed t)
+        ("s" "Shopping Lists")
+        
+        ("sh" "Hardware Store"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Hardware"))
+        
+        ("sf" "Food and Groceries"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Food and Groceries"))
+        
+        ("sg" "Gifts"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Gifts"))
+        
+        ("sh" "Household"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Household Items"))
+        
+        ("sp" "Project Supplies"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Project Supplies"))
+        
+        ("se" "Electronics"
+         checkitem
+         (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Electronnics"))
         ("r" "Periodic Reflections")
         
         ("rd" "Daily Enty"
@@ -92,58 +117,4 @@
          (file+olp+datetree "~/org/reflection/weekly.org")
          "* Reflectioni\n\n** Lessons Learned\n\n1. %^{1st Lesson}\n2. %^{2nd Lesson}\n3. %^{3rd Lesson}\n** This Week's Wins\n\n1. %^{1st Win}\n2. %^{2nd Win}\n3. %^{3rd Win}\n\n** Improvments for Next Week\n1. %^{1st Improvement}\n2. %^{2nd Improvement}\n3. %^{3rd Improvement}"
          :tree-type week)
-        ("s" "Shopping Lists")
-        
-        ("sh" "Hardware Store"
-         (file+headline ,(concat (car org-agenda-files) "Hardware"))
-         " - [ ] %?")
-        
-        ("sf" "Food and Groceries"
-         (file+headline ,(concat (car org-agenda-files) "Food and Groceries"))
-         " - [ ] %?")
-        
-        ("sg" "Gifts"
-         (file+headline ,(concat (car org-agenda-files) "Gifts"))
-         " - [ ] %?")
-        
-        ("sh" "Household"
-         (file+headline ,(concat (car org-agenda-files) "Household Items"))
-         " - [ ] %?")
-        
-        ("sp" "Project Supplies"
-         (file+headline ,(concat (car org-agenda-files) "Project Supplies"))
-         " - [ ] %?")
-        
-        ("se" "Electronics"
-         (file+headline ,(concat (car org-agenda-files) "Electronnics"))
-         " - [ ] %?")
         ))
-
-;; Shopping Items
-
-
-("s" "Shopping Lists")
-
-("sh" "Hardware Store"
- (file+headline ,(concat (car org-agenda-files) "Hardware"))
- " - [ ] %?")
-
-("sf" "Food and Groceries"
- (file+headline ,(concat (car org-agenda-files) "Food and Groceries"))
- " - [ ] %?")
-
-("sg" "Gifts"
- (file+headline ,(concat (car org-agenda-files) "Gifts"))
- " - [ ] %?")
-
-("sh" "Household"
- (file+headline ,(concat (car org-agenda-files) "Household Items"))
- " - [ ] %?")
-
-("sp" "Project Supplies"
- (file+headline ,(concat (car org-agenda-files) "Project Supplies"))
- " - [ ] %?")
-
-("se" "Electronics"
- (file+headline ,(concat (car org-agenda-files) "Electronnics"))
- " - [ ] %?")

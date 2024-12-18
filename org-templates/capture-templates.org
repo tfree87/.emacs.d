@@ -2,7 +2,7 @@
  
 #+title:  Org Capture Templates
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-17 15:47:12 abc>
+#+date: Time-stamp: <2024-12-17 20:57:40 thomas>
 #+description: A series of org capture templates for org mode.
 
 
@@ -96,6 +96,35 @@ Org capture templates for creating calendar/appointment enttries.
    :unnarrowed t)
 #+end_src
 
+* Shopping Items
+
+#+begin_src elisp :comments org :noweb-ref capture_templates
+  ("s" "Shopping Lists")
+
+  ("sh" "Hardware Store"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Hardware"))
+
+  ("sf" "Food and Groceries"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Food and Groceries"))
+
+  ("sg" "Gifts"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Gifts"))
+
+  ("sh" "Household"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Household Items"))
+
+  ("sp" "Project Supplies"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Project Supplies"))
+
+  ("se" "Electronics"
+   checkitem
+   (file+headline ,(concat (car org-agenda-files) "/shopping.org") "Electronnics"))
+#+end_src
 * Periodic Reflections
 
 Templates to reflect on the days, weeks, and months based on the Clever Fox planner.
@@ -120,32 +149,3 @@ Templates to reflect on the days, weeks, and months based on the Clever Fox plan
    :tree-type week)
 #+end_src
 
-* Shopping Items
-
-#+begin_src elisp :tangle yes :comments org :noweb-ref capture_templates
-  ("s" "Shopping Lists")
-
-  ("sh" "Hardware Store"
-   (file+headline ,(concat (car org-agenda-files) "Hardware"))
-   " - [ ] %?")
-
-  ("sf" "Food and Groceries"
-   (file+headline ,(concat (car org-agenda-files) "Food and Groceries"))
-   " - [ ] %?")
-
-  ("sg" "Gifts"
-   (file+headline ,(concat (car org-agenda-files) "Gifts"))
-   " - [ ] %?")
-
-  ("sh" "Household"
-   (file+headline ,(concat (car org-agenda-files) "Household Items"))
-   " - [ ] %?")
-
-  ("sp" "Project Supplies"
-   (file+headline ,(concat (car org-agenda-files) "Project Supplies"))
-   " - [ ] %?")
-
-  ("se" "Electronics"
-   (file+headline ,(concat (car org-agenda-files) "Electronnics"))
-   " - [ ] %?")
-#+end_src
