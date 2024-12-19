@@ -119,12 +119,6 @@
 
 (require 'freemacs-defaults)
 
-;; Org Super Agenda
-
-;; Load the [[./modules/org/freemacs-orgsa.org][Org Super Agenda Module]]
-
-(require 'freemacs-orgsa)
-
 ;; Hydra
 ;; Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
 
