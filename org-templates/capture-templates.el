@@ -2,7 +2,7 @@
  
 ;; #+title:  Org Capture Templates
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-17 21:09:00 thomas>
+;; #+date: Time-stamp: <2024-12-19 08:45:32 abc>
 ;; #+description: A series of org capture templates for org mode.
 
 
@@ -115,9 +115,8 @@
         ("rd" "Daily Enty"
          entry
          (file+olp+datetree "~/org/reflection/daily.org")
-         "* Daily Gratitude\n\n- I am grateful for %^{Gratitude}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}"
+         "* Daily Gratitude\n\n- I am grateful for %^{I am grateful for...}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}"
          :empty-lines 1)
-        
         ("rw" "Week Begin"
          entry
          (file+olp+datetree "~/org/reflection/weekly.org")
