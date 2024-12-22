@@ -2,7 +2,7 @@
  
 ;; #+title:  Org Capture Templates
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-19 08:45:32 abc>
+;; #+date: Time-stamp: <2024-12-19 08:55:04 abc>
 ;; #+description: A series of org capture templates for org mode.
 
 
