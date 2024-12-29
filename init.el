@@ -119,6 +119,12 @@
 
 (require 'freemacs-defaults)
 
+;; Winner
+
+;; Load the [[./modules/defaults/freemacs-winner.org][Winner module]]
+
+(require 'freemacs-winner)
+
 ;; Hydra
 ;; Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
 
@@ -163,7 +169,7 @@
 ;; Dirvish
 ;; Load the [[./modules/file-tools/freemacs-dired.org][Dirvish Module]].
 
-(require 'freemacs-dirvish)
+; (require 'freemacs-dirvish)
 
 ;; Docker
 ;; Load the the [[file:modules/docker/freemacs-docker.org][docker module]].

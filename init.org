@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-18 19:03:02 abc>
+#+date: Time-stamp: <2024-12-29 12:56:21 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -179,6 +179,12 @@ Changes to the default settings of Emacs from the  the [[file:modules/defaults/f
   (require 'freemacs-defaults)
 #+end_src
 * Other Packages
+** Winner
+
+Load the [[./modules/defaults/freemacs-winner.org][Winner module]]
+#+begin_src elisp :tangle yes :comments org
+(require 'freemacs-winner)
+#+end_src
 ** Hydra
 Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
 #+begin_src emacs-lisp :tangle yes :comments org
@@ -240,7 +246,7 @@ Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
 ** Dirvish
 Load the [[./modules/file-tools/freemacs-dired.org][Dirvish Module]].
 #+begin_src emacs-lisp :tangle yes :comments org
-  (require 'freemacs-dirvish)
+ ; (require 'freemacs-dirvish)
 #+end_src
 
 ** Docker
