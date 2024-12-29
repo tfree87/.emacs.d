@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-29 15:57:04 thomas>
+#+date: Time-stamp: <2024-12-29 17:19:50 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -31,9 +31,23 @@ The code below collects customizations for Emacs built-in components.
     <<emacs_config>>)
 #+end_src
 
+* Enable Windmove
+
+Enable the Windmove default keybindings at startup for easy window switching
+#+begin_src elisp :tangle yes :comments org :noweb-ref emacs_config
+  (windmove-default-keybindings)
+#+end_src
+
+* Apropos Sort By Relevancy
+
+Sort apropos results by their relevancy scores.
+#+begin_src elisp :tangle yes :comments org :noweb-ref emacs_custom
+  (apropos-sort-by-scores t)
+#+end_src
+
 * Automatic Time Stamping
 
-Emacs  will automatically update any ~Time-stamp: <>~ foutnd the first eight lines of a buffer on save with the following option.
+Automatically update any ~Time-stamp: <>~ foutnd the first eight lines of a buffer on save with the following option.
 #+begin_src emacs-lisp :noweb-ref emacs_config :comments org
   (add-hook 'before-save-hook 'time-stamp)
 #+end_src
