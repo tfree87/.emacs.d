@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-29 17:19:50 thomas>
+#+date: Time-stamp: <2024-12-29 20:23:47 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -25,23 +25,32 @@
 The code below collects customizations for Emacs built-in components.
 #+begin_src emacs-lisp :tangle yes :noweb yes :comments org
   (use-package emacs
+    :bind
+    <<emacs_bind>>
     :custom
     <<emacs_custom>>
     :config
     <<emacs_config>>)
 #+end_src
 
+* Bind Imenu
+
+Bind Imenu to ~M-i~.
+#+begin_src elisp :comments org :noweb-ref emacs_bind
+  (("M-i" . imenu))
+#+end_src
+
 * Enable Windmove
 
 Enable the Windmove default keybindings at startup for easy window switching
-#+begin_src elisp :tangle yes :comments org :noweb-ref emacs_config
+#+begin_src elisp :comments org :noweb-ref emacs_config
   (windmove-default-keybindings)
 #+end_src
 
 * Apropos Sort By Relevancy
 
 Sort apropos results by their relevancy scores.
-#+begin_src elisp :tangle yes :comments org :noweb-ref emacs_custom
+#+begin_src elisp :comments org :noweb-ref emacs_custom
   (apropos-sort-by-scores t)
 #+end_src
 

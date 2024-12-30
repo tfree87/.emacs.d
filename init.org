@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-29 12:56:21 thomas>
+#+date: Time-stamp: <2024-12-29 19:17:04 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -185,6 +185,7 @@ Load the [[./modules/defaults/freemacs-winner.org][Winner module]]
 #+begin_src elisp :tangle yes :comments org
 (require 'freemacs-winner)
 #+end_src
+
 ** Hydra
 Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
 #+begin_src emacs-lisp :tangle yes :comments org

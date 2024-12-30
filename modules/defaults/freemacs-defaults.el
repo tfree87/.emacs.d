@@ -2,7 +2,7 @@
 
 ;; #+title: Defaults Configuration
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-29 17:19:50 thomas>
+;; #+date: Time-stamp: <2024-12-29 20:23:47 thomas>
 ;; #+language: en_US
 ;; #+property: header-args :results silent :exports code
 
@@ -25,6 +25,8 @@
 ;; The code below collects customizations for Emacs built-in components.
 
 (use-package emacs
+  :bind
+  (("M-i" . imenu))
   :custom
   (apropos-sort-by-scores t)
   (bidi-paragraph-direction 'left-to-right)
@@ -44,18 +46,6 @@
       (setq bidi-inhibit-bpa t))
   (setq-default indent-tabs-mode nil)
   (fset 'yes-or-no-p 'y-or-n-p))
-
-;; Enable Windmove
-
-;; Enable the Windmove default keybindings at startup for easy window switching
-
-(windmove-default-keybindings)
-
-;; Apropos Sort By Relevancy
-
-;; Sort apropos results by their relevancy scores.
-
-(apropos-sort-by-scores t)
 
 (use-package battery
   :straight (:type built-in)
