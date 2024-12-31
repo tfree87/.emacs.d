@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Elisp Babel Block with Noweb and Org Comments 
+# key: elispcno_
+# --
+
+#+begin_src elisp :tangle yes :comments org :noweb yes
+$0
+#+end_src

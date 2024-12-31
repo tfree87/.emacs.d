@@ -119,6 +119,12 @@
 
 (require 'freemacs-defaults)
 
+;; Imenu
+
+;; Load the [[./modules/defaults/freemacs-imenu.org][Imenu module]].
+
+(require 'freemacs-imenu)
+
 ;; Winner
 
 ;; Load the [[./modules/defaults/freemacs-winner.org][Winner module]]

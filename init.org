@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-29 19:17:04 thomas>
+#+date: Time-stamp: <2024-12-30 15:28:12 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -16,7 +16,6 @@
 #+keywords: Emacs
 #+html_link_home: index.html
 #+html_link_up: index.html
-#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
 -----
@@ -177,6 +176,13 @@ Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
 Changes to the default settings of Emacs from the  the [[file:modules/defaults/freemacs-defaults.org][defaults module]].
 #+begin_src emacs-lisp :tangle yes :comments org
   (require 'freemacs-defaults)
+#+end_src
+
+** Imenu
+
+Load the [[./modules/defaults/freemacs-imenu.org][Imenu module]].
+#+begin_src elisp :tangle yes :comments org :noweb yes
+  (require 'freemacs-imenu)
 #+end_src
 * Other Packages
 ** Winner
