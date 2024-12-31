@@ -2,7 +2,7 @@
 
 ;; #+title: Defaults Configuration
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-29 20:23:47 thomas>
+;; #+date: Time-stamp: <2024-12-30 16:31:00 thomas>
 ;; #+language: en_US
 ;; #+property: header-args :results silent :exports code
 
@@ -25,9 +25,8 @@
 ;; The code below collects customizations for Emacs built-in components.
 
 (use-package emacs
-  :bind
-  (("M-i" . imenu))
   :custom
+  (inhibit-startup-screen t)
   (apropos-sort-by-scores t)
   (bidi-paragraph-direction 'left-to-right)
   (version-control t)
