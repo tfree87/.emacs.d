@@ -2,7 +2,7 @@
 
 #+title:Dired Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-15 15:32:27 thomas>
+#+date: Time-stamp: <2024-12-30 17:42:30 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,13 @@ The following customizations make emacs dired mode behave in a similar fashion t
     :defer t
     :custom
     <<dired_custom>>)
+#+end_src
+
+** Enable Dired-x
+
+#+begin_src elisp :tangle yes :comments org :noweb-ref dired_custom
+  (with-eval-after-load 'dired
+    (require 'dired-x))
 #+end_src
 
 ** Move/Rename/Copy Files to Another Window

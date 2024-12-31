@@ -2,7 +2,7 @@
 
 ;; #+title:Dired Configuration
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-15 15:32:27 thomas>
+;; #+date: Time-stamp: <2024-12-30 17:42:30 thomas>
 ;; #+language: en_US
 ;; #+property: header-args :results silent :exports code
 
@@ -28,7 +28,15 @@
   :straight (:type built-in)
   :defer t
   :custom
+  (with-eval-after-load 'dired
+    (require 'dired-x))
   (dired-dwim-target t))
+
+;; Enable Dired-x
+
+
+(with-eval-after-load 'dired
+  (require 'dired-x))
 
 (use-package wdired-mode
   :straight (:type built-in)
