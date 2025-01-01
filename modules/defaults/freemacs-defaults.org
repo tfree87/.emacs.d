@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-31 14:33:20 thomas>
+#+date: Time-stamp: <2025-01-01 15:15:32 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -44,9 +44,18 @@ Enable the Windmove default keybindings at startup for easy window switching
   (windmove-default-keybindings)
 #+end_src
 
+* Default Fill Column
+
+Set the default fill column to 80 to ensure code lines fit in most terminals.
+
+#+begin_src elisp :tangle yes :comments org :noweb emacs_config
+      (setq-default fill-column 80)
+#+end_src
+
 * Apropos Sort By Relevancy
 
 Sort apropos results by their relevancy scores.
+
 #+begin_src elisp :comments org :noweb-ref emacs_custom
   (apropos-sort-by-scores t)
 #+end_src

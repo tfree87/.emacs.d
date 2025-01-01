@@ -2,7 +2,7 @@
 
 ;; #+title: Defaults Configuration
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-31 14:33:20 thomas>
+;; #+date: Time-stamp: <2025-01-01 15:15:32 thomas>
 ;; #+language: en_US
 ;; #+property: header-args :results silent :exports code
 
@@ -45,6 +45,13 @@
       (setq bidi-inhibit-bpa t))
   (setq-default indent-tabs-mode nil)
   (fset 'yes-or-no-p 'y-or-n-p))
+
+;; Default Fill Column
+
+;; Set the default fill column to 80 to ensure code lines fit in most terminals.
+
+
+(setq-default fill-column 80)
 
 (use-package ibuffer
   :straight (:type built-in)
