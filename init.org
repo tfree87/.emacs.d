@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-31 19:23:41 thomas>
+#+date: Time-stamp: <2025-01-01 09:34:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -452,14 +452,27 @@ Load the [[./modules/publishing/freemacs-pdf.org][PDF module]].
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-pdf)
 #+end_src
-** Session
-Load the [[./modules/session/freemacs-session.org][Session Module]].
+
+** Recentf
+
+Load the [[./modules/session/freemacs-recentf.org][Recentf Module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
-  (require 'freemacs-session)
+  (require 'freemacs-recentf)
+#+end_src
+
+** Savehist
+
+Load the [[./modules/session/freemacs-savehist.org][Savehist module]].
+
+#+begin_src emacs-lisp :noweb-ref emacs_modules 
+  (require 'freemacs-savehist)
 #+end_src
 
 ** SLIME
+
 Load the SLIME module
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-slime)
 #+end_src
@@ -512,7 +525,7 @@ Load the [[./modules/publishing/freemacs-spellcheck.org][Spellcheck module]].
 
 ** Winner
 
-Load the [[./modules/defaults/freemacs-winner.org][Winner module]]
+Load the [[./modules/session/freemacs-winner.org][Winner module]].
 #+begin_src elisp :noweb-ref emacs_modules 
 (require 'freemacs-winner)
 #+end_src

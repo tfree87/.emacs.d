@@ -1,0 +1,37 @@
+#+title:  Recentf Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2025-01-01 09:34:11 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Recentf Mode
+
+Recentf Mode will save a list of recent files so they can be called easily after restarting Emacs. To access the files, ~M-x recentf-open-files~ can be called to get a list of the recent files in a buffer.
+
+#+begin_src emacs-lisp :tangle yes
+  ;; -*- lexical-binding: t -*-
+
+  (use-package recentf
+      :straight (:type built-in)
+      :config
+      (recentf-mode t))
+
+  (provide 'freemacs-recentf)
+
+  ;;; freemacs-recentf.el ends here.
+#+end_src

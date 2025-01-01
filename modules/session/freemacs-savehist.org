@@ -1,0 +1,38 @@
+#+title:  Savehist Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2025-01-01 09:29:39 thomas>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Savehist
+
+Savehist will save the selections from completion history between Emacs sessions. This makes it so that commonly used commands and files will float to the top of the minibuffer in Vertico.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  ;; -*- lexical-binding: t -*-
+
+  (use-package savehist
+    :straight (:type built-in)
+    :init
+    (savehist-mode))
+
+  (provide 'freemacs-savehist)
+
+  ;;; freemacs-savehist.el ends here.
+  #+end_src
+
