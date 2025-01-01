@@ -2,7 +2,7 @@
  
 ;; #+title:  Org Capture Templates
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-19 08:55:04 abc>
+;; #+date: Time-stamp: <2024-12-31 10:34:55 thomas>
 ;; #+description: A series of org capture templates for org mode.
 
 
@@ -25,7 +25,7 @@
           :empty-lines 1)
         ("t" "To Do Items")
         
-        ("p" "Projects item"
+        ("tp" "Projects item"
          entry
          (file ,(concat (car org-agenda-files) "/projects.org"))
          "* [#%^{Priority|B|A|C}] %^{Title} [\%] %^G:project:\n%?"

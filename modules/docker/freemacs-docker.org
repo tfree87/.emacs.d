@@ -2,7 +2,7 @@
 
 #+title: Docker Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-11 12:41:24 thomas>
+#+date: Time-stamp: <2024-12-31 09:51:47 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -15,7 +15,6 @@
 #+keywords: Emacs
 #+html_link_home: ../../index.html
 #+html_link_up: ../../init.html
-#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
 #+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
 
 #+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
@@ -45,14 +44,9 @@
     (whicher "docker-compose"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
-  (use-package docker-tramp
-    :straight t
-    :defer t)
-#+end_src
-
 * Dockerfile Mode
 
+Use Dockerfile mode for editing Dockerfiles.
 #+begin_src emacs-lisp :tangle yes
   (use-package dockerfile-mode
     :straight t

@@ -2,7 +2,7 @@
 
 #+title: Defaults Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-30 16:31:00 thomas>
+#+date: Time-stamp: <2024-12-31 14:33:20 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -73,35 +73,9 @@ Emacs supports bidirectional editing. This is rarely used feature for many and c
          (setq bidi-inhibit-bpa t))
     #+end_src
     
-* Display Battery Mode
-
-Display Battery Mode will display the battery charge status in the modeline 
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package battery
-    :straight (:type built-in)
-    :init
-    (defun any (pred list)
-      (while (and list (not (funcall pred (car list))))
-        (pop list))
-      (car list))
-    :defer 3
-    :config
-    (if (and battery-status-function
-             (not (any '(lambda (value)
-                          (string-match-p 
-                           (battery-format "%B"
-                                           (funcall battery-status-function))
-                           value))
-                       '("unknown" "N/A" "NA"))))
-    (display-battery-mode t)))
-#+end_src
-
 * Backup Files with Version Control
 
 Emacs has a built-in version control system in which it will create a series of backup files. This will create a number of backup flies, however, that will need to be cleaned up on a regular basis.
-
-
  #+begin_src emacs-lisp :noweb-ref emacs_custom
    (version-control t)
    (delete-old-versions t)

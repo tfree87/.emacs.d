@@ -2,7 +2,7 @@
 
 ;; #+title: Defaults Configuration
 ;; #+author: Thomas Freeman
-;; #+date: Time-stamp: <2024-12-30 16:31:00 thomas>
+;; #+date: Time-stamp: <2024-12-31 14:33:20 thomas>
 ;; #+language: en_US
 ;; #+property: header-args :results silent :exports code
 
@@ -45,24 +45,6 @@
       (setq bidi-inhibit-bpa t))
   (setq-default indent-tabs-mode nil)
   (fset 'yes-or-no-p 'y-or-n-p))
-
-(use-package battery
-  :straight (:type built-in)
-  :init
-  (defun any (pred list)
-    (while (and list (not (funcall pred (car list))))
-      (pop list))
-    (car list))
-  :defer 3
-  :config
-  (if (and battery-status-function
-           (not (any '(lambda (value)
-                        (string-match-p 
-                         (battery-format "%B"
-                                         (funcall battery-status-function))
-                         value))
-                     '("unknown" "N/A" "NA"))))
-  (display-battery-mode t)))
 
 (use-package ibuffer
   :straight (:type built-in)

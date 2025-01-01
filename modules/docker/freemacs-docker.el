@@ -1,18 +1,15 @@
 (use-package docker
   :straight t
+  :commands docker
   :init
   (whicher "docker")
   :bind ("C-c d" . docker))
 
 (use-package docker-compose-mode
   :straight t
-  :defer t
+  :mode "docker-compose\\.y\."
   :init
   (whicher "docker-compose"))
-
-(use-package docker-tramp
-  :straight t
-  :defer t)
 
 (use-package dockerfile-mode
   :straight t

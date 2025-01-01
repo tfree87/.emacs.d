@@ -82,8 +82,8 @@
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
-  (with-eval-after-load "org"
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+  ;(with-eval-after-load "org"
+  ;  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
