@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-01 15:03:00 thomas>
+#+date: Time-stamp: <2025-01-01 15:23:51 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -134,7 +134,7 @@ Modules in this section must be run before the others.
 Load the [[./modules/package-management/freemacs-straight.org][Straight module]].
 
 #+begin_src elisp :noweb-ref emacs_modules
-(require 'freemacs-straight)
+  (require 'freemacs-straight)
 #+end_src
 
 ** Benchmark Init
