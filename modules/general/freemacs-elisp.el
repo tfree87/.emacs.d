@@ -1,10 +1,6 @@
-;; Any
-
-;; This function checks if there are any elements in the list 
-
-
 (defun any (predicate list)
-  "Returns T if any items in LIST meet the conditions of predicate function PREDICATE without modifying the list."
+  "Returns T if any items in LIST meet the conditions of predicate function
+  PREDICATE without modifying the list."
   (cond
    ((null list) nil)
    ((funcall predicate (car list)) t)

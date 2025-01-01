@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-01 09:34:07 thomas>
+#+date: Time-stamp: <2025-01-01 15:03:00 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -25,26 +25,11 @@
 
 This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the ~init.el~ file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to ~init.el~.
 
-** Tags
-
-Tags are used in this document to help make navigation of the packages easier and to provide additional information about piecing together this Emacs configuration. Below are descriptions of the tags and their meanings:
-
-- deprecated :: This package has been "deprecated" in favor of another package that better integrates with this Emacs configuration or produces a better workflow.
-- disabled :: Any package marked with this tag has been disabled due to it causing issues or the package was deprecated.
-- GUIX :: Packages managed by GUIX are marked with this tag. There are a number of reasons why a package might be managed by GUIX over using package managers in Emacs:
-    
-  1. The package requires compilation on the host system (e.g. Pdf Tools and Org-roam). Using the GUIX package manager will manage the compilation automatically. Also, packages that need to be compiled are difficult to run on portable Emacs so they will be left out when Emacs is used as a portable app.
-  2. The package is only run on a Linux System with GUIX installed or on the GUIX System Distribution so there is no need to have Emacs manage this package.
-  3. The package relies on another program installed on the host system (e.g. Mu4e requires Mu).
-
-- testing :: A package or function that is added and is being tested for use is marked with this tag.
-- Windows  :: Customizations exclusively for the use on the Windows operating system are marked with this tag.
-
 * Header for ~init.el~
 
 The following code block will add a header to the ~init.el~ file when it is generated on saving:
 
-#+begin_src emacs-lisp :tangle yes :noweb yes
+#+begin_src emacs-lisp :tangle yes :noweb tangle
   ;;; init.el --- Emacs initialization file -*- lexical-binding: t -*-
 
   ;; Copyright (C) 2022-2024 Thomas Freeman
@@ -76,7 +61,7 @@ The following code block will add a header to the ~init.el~ file when it is gene
 
   ;;; URL: https://github.com/tfree87/.emacs.d
 
-  ;; For documentation and for editing this file, see the init.org in the
+  ;; For documentation and for editing this file, see init.org in the
   ;; github repository tfree87/.emacs.d
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;; Code:
@@ -89,10 +74,31 @@ The following code block will add a header to the ~init.el~ file when it is gene
 * Performance Optimization
 
 Reduce the load time for Emacs. See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
-#+begin_src emacs-lisp  :noweb yes :noweb-ref emacs_init
+#+begin_src emacs-lisp :noweb eval :noweb-ref emacs_init
+
+  ;; Speed up Emacs loading during initialization.
   (let ((file-name-handler-alist nil))
+
+    <<emacs_custom>>
+
+    ;; Load modules from modules directory.
+    ;; Correct ordering is critical, see init.org.
+
     <<emacs_modules>>
+
+    ;; Set garbage collection back to normal.
     (setq gc-cons-threshold 800000))
+#+end_src
+
+* Custom Set Variables
+
+Place custom variables in [[./custom.el]] rather than [[./init.el]] and load it.
+
+#+begin_src emacs-lisp :noweb-ref emacs_custom
+  ;; Tell Emacs where to find custom variables from the customize interface.
+
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
 #+end_src
 
 * Load Path
@@ -103,45 +109,20 @@ Add the ~modules~ directory and all of its sub-directories to the ~load-path~.
     (normal-top-level-add-subdirs-to-load-path))
 #+end_src
 
-* Running Emacs as a Portable App
-
-I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs.
-
-** Check for Portable Emacs Instance
-
-When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
-#+begin_src emacs-lisp :noweb-ref emacs_modules 
-  (defun freemacs/isportable-p ()
-    "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
-    (string= (getenv "EMACS_PORTABLE") "Y"))
- #+end_src
- 
-** Set Location of Portable Git
-
-Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
-
-The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
-
- #+begin_src emacs-lisp :noweb-ref emacs_modules
-   (when (freemacs/isportable-p)
-     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
- #+end_src
-
-* Custom Set Variables
-
-Place custom variables in [[./custom.el]] rather than [[./init.el]] and load it.
-
-#+begin_src emacs-lisp :noweb-ref emacs_modules 
-  (setq custom-file "~/.emacs.d/custom.el")
-  (load custom-file)
-#+end_src
-
 * Helper Functions
 
-Load helper functions required for Emacs initialization. These functions don't rely on external libraries to keep loading fast.
+Load [[./modules/general/freemacs-elisp.org][helper functions]] required for Emacs initialization. These functions don't rely on external libraries to keep loading fast.
 
 #+begin_src elisp :noweb-ref emacs_modules
   (require 'freemacs-elisp)
+#+end_src
+
+* Portable Emacs
+
+If running Emacs as a portable app, configure it prior to running Straight.el so Straight can find the git executable.
+
+#+begin_src elisp :noweb-ref emacs_modules
+  (require 'freemacs-portable)
 #+end_src
 
 * Startup Modules
@@ -163,20 +144,28 @@ Use benchmark-init to check the time that it takes to load Emacs.
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-benchmark-init)
 #+END_SRC
+
 ** No-littering
+
 Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-no-littering)
 #+end_src
 ** Whicher
+
 Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-whicher)
 #+end_src
+
 * Other Modules
+
 ** Aggressive Indent
 
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-aggressive-indent)
 #+end_src
@@ -184,6 +173,7 @@ Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent mo
 ** Centered-Window Mode
 
 Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-cwm)
 #+end_src
@@ -191,6 +181,7 @@ Load the [[./modules/theme/freemacs-cwm.org][Centered Window module]].
 ** AutoHotKey
 
 Load the [[./modules/coding/freemacs-autohotkey.org][AutoHotKey module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-autohotkey)
 #+end_src
@@ -198,6 +189,7 @@ Load the [[./modules/coding/freemacs-autohotkey.org][AutoHotKey module]].
 ** Battery
 
 Load the [[./modules/defaults/freemacs-battery.org][Battery module]].
+
 #+begin_src elisp :noweb-ref emacs_modules
   (require 'freemacs-battery)
 #+end_src
@@ -205,6 +197,7 @@ Load the [[./modules/defaults/freemacs-battery.org][Battery module]].
 ** Cape
 
 Load the [[./modules/completion/freemacs-cape.org][Cape module]].
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules
   (require 'freemacs-cape)
 #+end_src
@@ -212,6 +205,7 @@ Load the [[./modules/completion/freemacs-cape.org][Cape module]].
 ** Consult
 
 Load the [[./modules/completion/freemacs-consult.org][Consult module]].
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules
   (require 'freemacs-consult)
 #+end_src
@@ -219,6 +213,7 @@ Load the [[./modules/completion/freemacs-consult.org][Consult module]].
 ** Corfu
 
 Load the [[./modules/completion/freemacs-corfu.org][Corfu module]]
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules
   (require 'freemacs-corfu)
 #+end_src
@@ -226,6 +221,7 @@ Load the [[./modules/completion/freemacs-corfu.org][Corfu module]]
 ** Dired
 
 Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-dired)
 #+end_src
@@ -233,6 +229,7 @@ Load the [[file:modules/file-tools/freemacs-dired.org][Dired module]].
 ** Dired Rsync
 
 Load the [[./modules/file-tools/freemacs-drsync.org][Dired Rsync module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-drsync)
 #+end_src
@@ -240,6 +237,7 @@ Load the [[./modules/file-tools/freemacs-drsync.org][Dired Rsync module]].
 ** Docker
 
 Load the the [[file:modules/docker/freemacs-docker.org][docker module]].
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules 
   (require 'freemacs-docker)
 #+end_src

@@ -29,22 +29,27 @@
 
 ;;; URL: https://github.com/tfree87/.emacs.d
 
-;; For documentation and for editing this file, see the init.org in the
+;; For documentation and for editing this file, see init.org in the
 ;; github repository tfree87/.emacs.d
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Code:
 
+
+;; Speed up Emacs loading during initialization.
 (let ((file-name-handler-alist nil))
-  (let ((default-directory "~/.emacs.d/modules/"))
-    (normal-top-level-add-subdirs-to-load-path))
-  (defun freemacs/isportable-p ()
-    "A function to check whether Emacs was executed as a portable application in Windows by the runemacs.bat script."
-    (string= (getenv "EMACS_PORTABLE") "Y"))
-  (when (freemacs/isportable-p)
-    (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+
+  ;; Tell Emacs where to find custom variables from the customize interface.
+  
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
+
+  ;; Load modules from modules directory.
+  ;; Correct ordering is critical, see init.org.
+
+  (let ((default-directory "~/.emacs.d/modules/"))
+    (normal-top-level-add-subdirs-to-load-path))
   (require 'freemacs-elisp)
+  (require 'freemacs-portable)
   (require 'freemacs-straight)
   (require 'freemacs-benchmark-init)
   (require 'freemacs-no-littering)
@@ -103,6 +108,8 @@
   (require 'freemacs-yasnippet)
   (require 'freemacs-youtube)
   (require 'freemacs-server)
+
+  ;; Set garbage collection back to normal.
   (setq gc-cons-threshold 800000))
 
 ;;; init.el ends here

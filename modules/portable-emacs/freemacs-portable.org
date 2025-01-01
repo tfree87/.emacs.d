@@ -1,0 +1,31 @@
+* Running Emacs as a Portable App
+
+I like to use Emacs at work and at home to boost my productivity, but I often find when I am at work or using another computer using Windows and I cannot always install Emacs to the host system. In this case, I run Emacs from a USB thumb drive so that I can still have access to the power of Emacs even when I am not working on my home personal computer. Running Emacs from a thumb drive has some caveats. For instance, if you are running Emacs from a thumb drive on a work computer and you do not have administrator access, then a lot of features will break. This section contains code that can be used to run Emacs.
+
+** Check for Portable Emacs Instance
+
+When [[file:runemacs.bat][runemacs.bat]] is executed, it will set the environment variable ~EMACS_PORTABLE~ to "Y". By checking for this, we can tell that Emacs that it was executed to be run from a flash drive.
+
+#+begin_src emacs-lisp :tangle yes
+  (defun freemacs/isportable-p ()
+    "A function to check whether Emacs was executed as a portable application in
+    Windows by the runemacs.bat script."
+    (string= (getenv "EMACS_PORTABLE") "Y"))
+ #+end_src
+
+** Set Location of Portable Git
+
+Straight.el cannot operate without access to Git. Luckily, there is a portable version of Git ([[https://github.com/sheabunge/GitPortable][sheabunge/GitPortable]]) for Windows that can be installed on the [[https://portableapps.com/][PortableApp]] platform to provide access to Git without having it installed on the host system. After downloading GitPortable, we need to tell Emacs where it can find the binary executable so that Emacs programs can call Git when needed.
+
+The following line code will check to see if Emacs is being run as a portable app and, if it is, then add the path where git.exe can be found to the ~exec-path~ list:
+
+ #+begin_src emacs-lisp :tangle yes
+   (when (freemacs/isportable-p)
+     (add-to-list 'exec-path "~/PortableApps/GitPortable/App/Git/bin"))
+ #+end_src
+
+ #+begin_src elisp :tangle yes
+   (provide 'freemacs-portable)
+
+   ;;; freemacs-portable.el ends here.
+ #+end_src
