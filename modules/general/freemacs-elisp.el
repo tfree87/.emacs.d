@@ -12,7 +12,8 @@
 
 
 (defun font-available-p (font-name)
-
+  "Returns T if FONT-NAME is a member of the avaiable fonts in
+FONT-FAMILY-LIST."
   (member font-name (font-family-list)))
 
 ;; End
