@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 13:55:26 thomas>
+#+date: Time-stamp: <2025-01-05 14:14:21 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -74,9 +74,11 @@ The following code block will add a header to the ~init.el~ file when it is gene
 * Performance Optimization
 
 Reduce the load time for Emacs. See [[https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/][this Reddit post]] for more information.
+
 #+begin_src emacs-lisp :noweb eval :noweb-ref emacs_init
 
   ;; Speed up Emacs loading during initialization.
+  
   (let ((file-name-handler-alist nil))
 
     <<emacs_custom>>
@@ -104,6 +106,7 @@ Place custom variables in [[./custom.el]] rather than [[./init.el]] and load it.
 * Load Path
 
 Add the ~modules~ directory and all of its sub-directories to the ~load-path~.
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (let ((default-directory "~/.emacs.d/modules/"))
     (normal-top-level-add-subdirs-to-load-path))
@@ -389,6 +392,14 @@ Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
 
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-nerd-icons)
+#+end_src
+
+** Nyan Mode
+
+Load the [[./modules/theme/freemacs-nyan.org][Nyan module]].
+
+#+begin_src elisp :noweb-ref emacs_modules
+  (require 'freemacs-nyan)
 #+end_src
 
 ** Orderless

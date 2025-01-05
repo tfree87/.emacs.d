@@ -36,6 +36,7 @@
 
 
 ;; Speed up Emacs loading during initialization.
+
 (let ((file-name-handler-alist nil))
 
   ;; Tell Emacs where to find custom variables from the customize interface.
@@ -84,6 +85,7 @@
   (require 'freemacs-meow)
   (require 'freemacs-mp)
   (require 'freemacs-nerd-icons)
+  (require 'freemacs-nyan)
   (require 'freemacs-orderless)
   (require 'freemacs-org)
   (require 'freemacs-org-contacts)
