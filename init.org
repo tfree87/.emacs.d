@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 13:22:07 thomas>
+#+date: Time-stamp: <2025-01-05 13:55:26 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -154,7 +154,6 @@ Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
 #+end_src
 
 * Other Modules
-
 ** Aggressive Indent
 
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].
@@ -374,6 +373,14 @@ Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
 
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-meow)
+#+end_src
+
+** Mixed Pitch Mode
+
+Load the [[./modules/theme/freemacs-mp.org][Mixed Pitch module]].
+
+#+begin_src emacs-lisp :noweb-ref emacs_modules
+  (require 'freemacs-mp)
 #+end_src
 
 ** Nerd Icons

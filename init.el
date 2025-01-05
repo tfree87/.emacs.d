@@ -82,6 +82,7 @@
   (require 'freemacs-marginalia)
   (require 'freemacs-markdown)
   (require 'freemacs-meow)
+  (require 'freemacs-mp)
   (require 'freemacs-nerd-icons)
   (require 'freemacs-orderless)
   (require 'freemacs-org)

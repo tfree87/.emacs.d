@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-15 11:04:40 thomas>
+#+date: Time-stamp: <2025-01-05 13:55:34 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,7 @@ This section contains custom set faces.
 ** Change Calfw Grid Color
 
 When using Calfw, the default grid color does not show very well when using the Droom theme ~doom-outrun-electric~. The following will change it to a color that will be easier to see.
+
 #+begin_src emacs-lisp
   (custom-theme-set-faces
    'user
@@ -37,13 +38,8 @@ When using Calfw, the default grid color does not show very well when using the 
 
 ** Default Font
 
-Create a function to check if a font exists on the system.
-#+begin_src emacs-lisp :tangle yes :comments org
-  (defun font-available-p (font-name)
-    (member font-name (font-family-list)))
-#+end_src
-
 Change the default font to use Hack if it is available.
+
 #+begin_src emacs-lisp :tangle yes :comments org
   (when (font-available-p "Hack")
     (custom-theme-set-faces
@@ -51,29 +47,10 @@ Change the default font to use Hack if it is available.
      '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 100 :width normal))))))
 #+end_src
 
-** Fixed and Variable Pitch Fonts
-
-To make Mixed Pitch mode  visually appealing, the fonts ~variable-pitch~ and ~fixed-pitch~ can be set. If Emacs is used on multiple operating systems, the fonts can be specified per operating system using a conditional ~cond~ statement. The code below will use different fonts for a Windows system versus a GNU/Linux system.
-#+begin_src emacs-lisp :tangle yes :comments org
-  (cond ((and (eq system-type 'windows-nt)
-              (font-available-p "Times New Roman")
-              (font-available-p "Hack"))
-         (custom-theme-set-faces
-          'user
-          '(variable-pitch ((t (:family "Times New Roman"))))
-          '(fixed-pitch ((t (:family "Hack"))))))
-        ((and (eq system-type 'gnu/linux)
-              (font-available-p "Liberation Serif")
-              (font-available-p "Hack"))
-         (custom-theme-set-faces
-          'user
-          '(variable-pitch ((t (:family "Liberation Serif"))))
-          '(fixed-pitch ((t (:family "Hack")))))))
-#+end_src
-
 * Doom Themes
 
 Set the theme to ~doom-outrun-electric~.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
     :straight t
@@ -87,6 +64,7 @@ Set the theme to ~doom-outrun-electric~.
 * Doom Modeline
 
 The Doom Modeline decorates the modeline with icons and cleans up much of the clutter in the modeline.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-modeline
     :straight t
@@ -98,6 +76,7 @@ The Doom Modeline decorates the modeline with icons and cleans up much of the cl
 * Menu Bar, Scroll Bar, and Tool Bar
 
 Hide the menu bar.
+
 #+begin_src emacs-lisp :tangle yes
   (use-package menu-bar
     :straight (:type built-in)
@@ -121,20 +100,11 @@ Hide the scroll bar.
     (toggle-scroll-bar -1))
 #+end_src
 
-* Mixed Pitch
-
-Mixed pitch mode is a package that makes it easy to use a combination of fixed-width and variable-width fonts in the same buffer. I use this with Org Mode to use different file types for prose and and for source code blocks.
-#+begin_src emacs-lisp :tangle yes :comments org
-  (use-package mixed-pitch
-    :straight t
-    :hook
-    (org-mode . mixed-pitch-mode))
-#+end_src
-
 * Nyan Mode
 
-[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line that shows progress through a buffer.
-#+begin_src emacs-lisp :tangle yes :comments org
+[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line. The length of the rainbow corresponds to buffer location.
+
+#+begin_src emacs-lisp :tangle yes
   (use-package nyan-mode
     :straight t
     :if window-system
