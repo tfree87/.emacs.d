@@ -2,7 +2,7 @@
 
 #+title: Corfu  Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-11 15:00:08 thomas>
+#+date: Time-stamp: <2025-01-05 12:57:07 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -41,9 +41,7 @@ Corfu provides completion in region functions. This will create pop ups with com
     (corfu-cycle t)
     (corfu-preselect 'prompt)
     :config
-    <<corfu_config>>
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify))
+    <<corfu_config>>)
 #+end_src
 
 * Unbind RET

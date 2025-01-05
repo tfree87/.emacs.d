@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-01 15:23:51 thomas>
+#+date: Time-stamp: <2025-01-05 13:22:07 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -127,15 +127,7 @@ If running Emacs as a portable app, configure it prior to running Straight.el so
 
 * Startup Modules
 
-Modules in this section must be run before the others.
-
-** Straight.el
-
-Load the [[./modules/package-management/freemacs-straight.org][Straight module]].
-
-#+begin_src elisp :noweb-ref emacs_modules
-  (require 'freemacs-straight)
-#+end_src
+Modules in this section should be run before the others.
 
 ** Benchmark Init
 
@@ -152,6 +144,7 @@ Load the [[./modules/startup/freemacs-no-littering.org][No Littering module]].
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-no-littering)
 #+end_src
+
 ** Whicher
 
 Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
@@ -311,16 +304,10 @@ Load the [[FILE:modules/help/freemacs-help.org][Help module]].
    (require 'freemacs-help)
 #+end_src
 
-** Hydra
-
-Load the [[./modules/completion/freemacs-hydra.org][Hydra module]].
-#+begin_src emacs-lisp :noweb-ref emacs_modules 
-  (require 'freemacs-hydra)
-#+end_src
-
 ** Imenu
 
 Load the [[./modules/defaults/freemacs-imenu.org][Imenu module]].
+
 #+begin_src elisp :noweb-ref emacs_modules
   (require 'freemacs-imenu)
 #+end_src
@@ -328,6 +315,7 @@ Load the [[./modules/defaults/freemacs-imenu.org][Imenu module]].
 ** Graphing
 
 Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-graphing)
 #+end_src
@@ -335,6 +323,7 @@ Load the [[file:modules/graphing/freemacs-graphing.org][graphing module]].
 ** \LaTeX{}
 
 Configuration for working with \LaTeX documents can be found in the [[file:modules/publishing/freemacs-latex.org][\LaTeX{} module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-latex)
 #+end_src
@@ -342,6 +331,7 @@ Configuration for working with \LaTeX documents can be found in the [[file:modul
 ** Ledger
 
 Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-ledger)
 #+end_src
@@ -349,6 +339,7 @@ Load the [[file:modules/math/freemacs-ledger.org][Ledger module]].
 ** Listen
 
 Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-listen)
 #+end_src
@@ -356,13 +347,15 @@ Add the [[./modules/multimedia/freemacs-listen.org][Listen module]].
 ** Magit
 
 Load the [[./modules/coding/freemacs-magit.org][Magit module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-magit)
 #+end_src
 
 ** Marginalia
 
-Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
+Load the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules
   (require 'freemacs-marginalia)
 #+end_src
@@ -370,6 +363,7 @@ Loadt the [[./modules/completion/freemacs-marginalia.org][Marginalia module]].
 ** Markdown
 
 Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-markdown)
 #+end_src
@@ -377,6 +371,7 @@ Load the [[File:modules/publishing/freemacs-markdown.org][Markdown module]].
 ** Meow Mode
 
 Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-meow)
 #+end_src
@@ -384,6 +379,7 @@ Load the [[./modules/editing/freemacs-meow.org][Meow Mode module]].
 ** Nerd Icons
 
 Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-nerd-icons)
 #+end_src
@@ -391,6 +387,7 @@ Load the [[./modules/theme/freemacs-nerd-icons.org][Nerd Icons module]].
 ** Orderless
 
 Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-orderless)
 #+end_src
@@ -398,13 +395,15 @@ Load the [[./modules/completion/freemacs-orderless.el][Orderless module]].
 ** Org
 
 Load the [[./modules/org/freemacs-org.org][Org Mode module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-org)
 #+end_src
 
 ** Org Contacts
 
-Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
+Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-org-contacts)
 #+end_src
@@ -412,20 +411,23 @@ Load the [[./modules/org/freemacs-org-contacts.org][Org Contacts Module]].
 ** Org Mime
 
 Load the [[./modules/email/freemacs-org-mime.org][Org MIME module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-org-mime)
 #+end_src
 
 ** Org Mind Map
 
-Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]]/
+Load the [[./modules/org/freemacs-org-mm.org][Org Mind Map module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-org-mm)
 #+end_src
 
 ** Org-QL
 
-Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
+Load the [[./modules/org/freemacs-org-ql.org][Org Ql module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-org-ql)
 #+end_src
@@ -433,6 +435,7 @@ Load the [[./modules/org/freemacs-org-ql.org][Org Ql Module]].
 ** Org Super Links
 
 Load the [[./modules/org/freemacs-orgsl.org][Org Super Links module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-orgsl)
 #+end_src
@@ -440,6 +443,7 @@ Load the [[./modules/org/freemacs-orgsl.org][Org Super Links module]].
 ** Ox-publish
 
 Load the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-ox-publish)
 #+end_src
@@ -453,7 +457,7 @@ Load the [[./modules/publishing/freemacs-pdf.org][PDF module]].
 
 ** Recentf
 
-Load the [[./modules/session/freemacs-recentf.org][Recentf Module]].
+Load the [[./modules/session/freemacs-recentf.org][Recentf module]].
 
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-recentf)
@@ -467,35 +471,42 @@ Load the [[./modules/session/freemacs-savehist.org][Savehist module]].
   (require 'freemacs-savehist)
 #+end_src
 
-** SLIME
+** Sly
 
-Load the SLIME module
+Load the [[./modules/coding/freemacs-sly.org][Sly module]].
 
 #+begin_src emacs-lisp :noweb-ref emacs_modules
-  (require 'freemacs-slime)
+  (require 'freemacs-sly)
 #+end_src
 
 ** Trashed
+
 Load the [[./modules/file-tools/freemacs-trashed.org][Trashed Module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-trashed)
 #+end_src
 
 ** Vertico
 
-Load the [[file:modules/completion/freemacs-completion.org][completion module]]
+Load the [[file:modules/completion/freemacs-completion.org][completion module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
     (require 'freemacs-vertico)
 #+end_src
 
 ** VTerm
-Load the [[./modules/shells/freemacs-vterm.org][Vterm Module]].
+
+Load the [[./modules/shells/freemacs-vterm.org][Vterm module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-vterm)
 #+end_src
 
 ** Theme style
-Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
+
+Load the [[./modules/theme/freemacs-theme.org][Theme module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
     (require 'freemacs-theme)
 #+end_src
@@ -503,6 +514,7 @@ Load the [[./modules/theme/freemacs-theme.org][Theme Module]].
 ** Spacious Padding
 
 Load the [[./modules/theme/freemacs-sp.org][Spacious Padding module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-sp)
 #+end_src
@@ -510,6 +522,7 @@ Load the [[./modules/theme/freemacs-sp.org][Spacious Padding module]].
 ** Academic Writing
 
 Load the [[file:modules/publishing/freemacs-academic-writing.org][academic writing module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-academic-writing)
 #+end_src
@@ -517,6 +530,7 @@ Load the [[file:modules/publishing/freemacs-academic-writing.org][academic writi
 ** Spellchecking
 
 Load the [[./modules/publishing/freemacs-spellcheck.org][Spellcheck module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-spellcheck)
 #+end_src
@@ -524,6 +538,7 @@ Load the [[./modules/publishing/freemacs-spellcheck.org][Spellcheck module]].
 ** Winner
 
 Load the [[./modules/session/freemacs-winner.org][Winner module]].
+
 #+begin_src elisp :noweb-ref emacs_modules 
 (require 'freemacs-winner)
 #+end_src
@@ -531,13 +546,15 @@ Load the [[./modules/session/freemacs-winner.org][Winner module]].
 ** YASnippet
 
 Load the [[./modules/editing/freemacs-yasnippet.org][YASnippet module]].
+
 #+begin_src emacs-lisp  :noweb-ref emacs_modules
   (require 'freemacs-yasnippet)
 #+end_src
 
 ** YouTube
 
-Load the [[./modules/youtube/freemacs-youtube.org][YouTube Module]].
+Load the [[./modules/youtube/freemacs-youtube.org][YouTube module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-youtube)
 #+end_src
@@ -545,6 +562,7 @@ Load the [[./modules/youtube/freemacs-youtube.org][YouTube Module]].
 ** Emacs Server
 
 Load the [[file:modules/server/freemacs-server.org][server module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-server)
 #+end_src
