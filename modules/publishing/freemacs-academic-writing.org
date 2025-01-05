@@ -2,7 +2,7 @@
 
 #+title: Academic Phrases Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:13 thomas>
+#+date: Time-stamp: <2025-01-03 14:34:26 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,6 +29,7 @@
 #+begin_src emacs-lisp :tangle yes
   (use-package academic-phrases
     :straight t
+    :commands academic-phrases
     :defer t)
 #+end_src
 
@@ -42,7 +43,7 @@
                      :repo "emacs-citar/citar"
                      :branch "main")
     :defer t
-    :after org oc
+    :after org
     :custom
     (citar-bibliography org-cite-global-bibliography)
     <<citar_customize>>
@@ -93,22 +94,10 @@ Tell Citar how to find associated files produced by Zotero (~citar-file-parser-d
 
 #+begin_src emacs-lisp :tangle yes
   (use-package citar-embark
-    :after citart embark
+    :after citar embark
     :no-require t
     :config (citar-embark-mode))
 #+End_src
-
-* Org Cite
-
-Org Cite is a feature to add citation capabilities to Org Mode. The following lines will tell Org Mode to use Citar as the processor for ~org-cite~ and will tell Org Mode where to find the default bibliography file.
-
-#+begin_src emacs-lisp :tangle yes :noweb yes
-  (use-package oc
-    :defer t
-    :custom
-    (org-cite-global-bibliography '("~/bib/bib.bib"))
-    <<org_cite_custom>>)
-#+end_src
 
 * End
 

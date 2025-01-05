@@ -1,5 +1,6 @@
 (use-package academic-phrases
   :straight t
+  :commands academic-phrases
   :defer t)
 
 (use-package citar
@@ -7,7 +8,7 @@
                    :repo "emacs-citar/citar"
                    :branch "main")
   :defer t
-  :after org oc
+  :after org
   :custom
   (citar-bibliography org-cite-global-bibliography)
   (citar-library-paths '("~/bib/files"))
@@ -25,17 +26,9 @@
 (add-to-list 'savehist-additional-variables 'citar-history)
 
 (use-package citar-embark
-  :after citart embark
+  :after citar embark
   :no-require t
   :config (citar-embark-mode))
-
-(use-package oc
-  :defer t
-  :custom
-  (org-cite-global-bibliography '("~/bib/bib.bib"))
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar))
 
 (provide 'freemacs-academic-writing)
 
