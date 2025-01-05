@@ -2,7 +2,7 @@
 
 #+title: General Elisp Functions
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-01 15:04:13 thomas>
+#+date: Time-stamp: <2025-01-05 13:43:22 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -34,6 +34,16 @@ This function checks if there are any elements in the a list passed to it.
      ((null list) nil)
      ((funcall predicate (car list)) t)
      (t (any predicate (cdr list)))))
+#+end_src
+
+* Font Predicate Function
+
+Create a function to check if a font exists on the system.
+
+#+begin_src emacs-lisp :tangle yes :comments org
+  (defun font-available-p (font-name)
+    
+    (member font-name (font-family-list)))
 #+end_src
 
 * End
