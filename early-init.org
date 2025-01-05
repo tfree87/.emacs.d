@@ -2,7 +2,7 @@
 
 #+title: Emacs Early Init
 #+authgor: Thomas Freeman
-#+date: Time-stamp: <2024-09-15 13:51:06 Thomas>
+#+date: Time-stamp: <2025-01-03 14:31:16 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -21,13 +21,11 @@
 
 This file contains Emacs Lisp code that will run /before/ the Emacs [[file:init.el][init.el]] file.
 
-This file was written using Emacs Org Mode. This makes navigating and modifying my Emacs configuration much simpler as I can place different elements of my configuration under separate headings. The code in this file is placed in source code blocks that are tangled to the ~early-init.el~ file that Emacs will look for upon starting. When this file is saved, the source code blocks that are marked for tangling will write their contents to ~early-init.el~.
-
 * Header
 
 The following code block will add a header to the ~early-init.el~ file when it is generated on saving.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes :noweb yes
   ;;; early-init.el --- Emacs early init -*- lexical-binding: t -*-
   ;; 
 
@@ -49,29 +47,27 @@ The following code block will add a header to the ~early-init.el~ file when it i
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;; Code:
 
+  (let ((file-name-handler-alist nil))
+    <<early_init>>)
+
+  (provide 'early-init)
+
+  ;;; early-init.el ends here.
 #+end_src
 
 * Decrease Garbage Collection Frequency
 
 Emacs collects garbage very fequently slowing down the startup process. Emacs normally does a garbage collection every 800 kB. Since I always have the RAM for it, I have set the garbage collection to only happen after 500 MB. Increasing the number above this does not provide any significant gains in startup time as of yet. This idea came from https://blog.d46.us/advanced-emacs-startup/#/.emacs.d/init.el.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref early_init
   (setq gc-cons-threshold 500000000)
-#+end_src
-
-* Prevent Unwanted Runtime Compilation
-
-Prevent extra unnecessary runtime compilation for gccemacs. This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ~early-init.el~ file.
-
-#+begin_src emacs-lisp :tangle yes
-  (setq native-comp-deferred-compilation nil)
 #+end_src
 
 * Disable Emacs Package Manager
 
 In order to prevent conflicts between ~straight.el~ and the Emacs package manager, ~package-enable-at-startup~ should be set to ~nil~. This came from the [[https://github.com/raxod502/straight.el][straight.el]] installation instructions.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref early_init
   (setq package-enable-at-startup nil)
 #+end_src
 
@@ -79,7 +75,7 @@ In order to prevent conflicts between ~straight.el~ and the Emacs package manage
 
 To reduce slowdowns caused by early redisplays when loading, the following code will reduce the amount of times Emacs redisplays when setting up windows. This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ~early-init.el~ file.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref early_init
   (setq-default inhibit-redisplay t
                 inhibit-message t)
   
@@ -94,17 +90,46 @@ To reduce slowdowns caused by early redisplays when loading, the following code 
 
 Set the default coding system to UTF-8.This idea came from the [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ~early-init.el~ file.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :noweb-ref early_init
   (set-language-environment "UTF-8")
   (setq default-input-method nil)
 #+end_src
 
-* End
+* Install Straight.el
 
-Tell Emacs what feature this file provides.
+Boostrap Straight.el.
 
-#+begin_src emacs-lisp :tangle yes
-  (provide 'early-init)
+#+begin_src elisp :noweb-ref early_init
+  (defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-  ;;; early-init.el ends here
+#+end_src
+
+* Install use-package
+
+Use ~straight.el~ to install ~use-package~ to manage Emacs packages. Use-Package is built into newer Emacs versions.
+
+#+begin_src emacs-lisp :noweb-ref early_init
+  (if (version< emacs-version "29")
+      (straight-use-package 'use-package))
+#+end_src
+
+* Set Use-Package to Utilize Straight.el by Default.
+
+ Set Straight to be configured the default manager for ~use-package~.
+
+#+begin_src emacs-lisp :noweb-ref early_init
+  (setq straight-use-package-by-default t)
 #+end_src

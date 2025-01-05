@@ -19,24 +19,38 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Code:
 
-(setq gc-cons-threshold 500000000)
-
-(setq native-comp-deferred-compilation nil)
-
-(setq package-enable-at-startup nil)
-
-(setq-default inhibit-redisplay t
-              inhibit-message t)
-
-(add-hook 'window-setup-hook
-          (lambda ()
-            (setq-default inhibit-redisplay nil
-                          inhibit-message nil)
-            (redisplay)))
-
-(set-language-environment "UTF-8")
-(setq default-input-method nil)
+(let ((file-name-handler-alist nil))
+  (setq gc-cons-threshold 500000000)
+  (setq package-enable-at-startup nil)
+  (setq-default inhibit-redisplay t
+                inhibit-message t)
+  
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (setq-default inhibit-redisplay nil
+                            inhibit-message nil)
+              (redisplay)))
+  (set-language-environment "UTF-8")
+  (setq default-input-method nil)
+    (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  
+  (if (version< emacs-version "29")
+      (straight-use-package 'use-package))
+  (setq straight-use-package-by-default t))
 
 (provide 'early-init)
 
-;;; early-init.el ends here
+;;; early-init.el ends here.
