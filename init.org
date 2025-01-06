@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 14:14:21 thomas>
+#+date: Time-stamp: <2025-01-06 16:09:37 abc>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -471,6 +471,14 @@ Load the [[file:modules/publishing/freemacs-ox-publish.org][ox-publish module]].
 Load the [[./modules/publishing/freemacs-pdf.org][PDF module]].
 #+begin_src emacs-lisp :noweb-ref emacs_modules
   (require 'freemacs-pdf)
+#+end_src
+
+** Popper
+
+Load the [[./modules/help/freemacs-popper.org][Popper module]].
+
+#+begin_src elisp :noweb-ref emacs_modules
+  (require 'freemacs-popper)
 #+end_src
 
 ** Recentf

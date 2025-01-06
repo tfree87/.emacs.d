@@ -1,0 +1,63 @@
+# -*-eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t);-*-
+
+#+title:Popper Module
+#+author: Thomas Freeman
+#+date: Time-stamp: <2025-01-06 16:05:50 abc>
+#+language: en_US
+#+property: header-args :results silent :exports code
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t num:nil toc:t
+#+html_doctype: xhtml-strict
+#+html_container: div
+#+html_content_class: content
+#+keywords: Emacs
+#+html_link_home: ../../index.html
+#+html_link_up: ../../init.html
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)
+#+html_head: <style>#org-div-home-and-up { text-align: right; padding-right: 10pt; }</style>
+
+#+SETUPFILE: https://tfree87.github.io/org-html-themes/org/theme-readtheorg.setup
+-----
+
+
+* Popper
+
+[[https://github.com/karthink/popper][Popper]] allows for certain buffers to display in popup windows by default.
+
+#+begin_src emacs-lisp :tangle yes :noweb yes
+  ;; -*- lexical-binding: t -*-
+
+  (use-package popper
+    :straight t
+    :bind (("C-`"   . popper-toggle-latest)
+           ("M-`"   . popper-cycle)
+           ("C-M-`" . popper-toggle-type))
+    :custeom
+    <<popper_custom>>
+    :config
+    (popper-mode t)
+    (popper-echo-mode t))
+
+
+  (require 'freemacs-popper)
+
+  ;;; freemacs-popper.el ends here.
+#+end_src
+
+** Popper Buffers
+
+For each buffer that will become a popper pop up buffer, it must be defined below.
+#+begin_src emacs-lisp :noweb-ref popper_custom
+  (popper-reference-buffers
+          '("\\*Warnings\\*"
+            "\\*Messages\\*"
+            "\\*Embark Actions\\*"
+            "Output\\*$"
+            "\\*Async Shell Command\\*"
+            "\\*Whicher Report\\*"
+            help-mode
+            compilation-mode))
+#+end_src
+

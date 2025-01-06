@@ -2,7 +2,7 @@
 
 #+title: Help Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-11-18 21:20:42 thomas>
+#+date: Time-stamp: <2025-01-06 16:30:58 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -36,35 +36,6 @@
     ("C-c C-d" . #'helpful-at-point)
     ("C-h F" . #'helpful-function)
     ("C-h C" . #'helpful-command))
-#+end_src
-
-* Popper
-
-[[https://github.com/karthink/popper][Popper]] lets a user define any window as a short-term pop up window.
-#+begin_src emacs-lisp :tangle yes :noweb yes :comments org
-  (use-package popper
-    :straight t
-    :bind (("C-`"   . popper-toggle-latest)
-           ("M-`"   . popper-cycle)
-           ("C-M-`" . popper-toggle-type))
-    :init
-    <<popper_init>>
-    (popper-mode +1)
-    (popper-echo-mode +1))
-#+end_src
-
-** Popper Buffers
-
-For each buffer that will become a popper pop up buffer, it must be defined below.
-#+begin_src emacs-lisp :noweb-ref popper_init :comments org
-  (setq popper-reference-buffers
-          '("\\*Messages\\*"
-            "\\*Embark Actions\\*"
-            "Output\\*$"
-            "\\*Async Shell Command\\*"
-            "\\*Whicher Report\\*"
-            help-mode
-            compilation-mode))
 #+end_src
 
 * Which-key

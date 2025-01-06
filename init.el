@@ -95,6 +95,7 @@
   (require 'freemacs-orgsl)
   (require 'freemacs-ox-publish)
   (require 'freemacs-pdf)
+  (require 'freemacs-popper)
   (require 'freemacs-recentf)
   (require 'freemacs-savehist)
   (require 'freemacs-sly)
