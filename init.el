@@ -73,7 +73,7 @@
   (require 'freemacs-fireplace)
   (require 'freemacs-fotd)
   (require 'freemacs-gnus)
-  (require 'freemacs-help)
+  (require 'freemacs-helpful)
   (require 'freemacs-imenu)
   (require 'freemacs-graphing)
   (require 'freemacs-latex)
@@ -97,6 +97,7 @@
   (require 'freemacs-pdf)
   (require 'freemacs-popper)
   (require 'freemacs-recentf)
+  (require 'freemacs-rh)
   (require 'freemacs-savehist)
   (require 'freemacs-sly)
   (require 'freemacs-trashed)
@@ -115,3 +116,10 @@
   (setq gc-cons-threshold 800000))
 
 ;;; init.el ends here
+
+;; Which Key
+
+;; Load the [[./modules/help/freemacs-wk.org][Whick Key module]].
+
+
+(require 'freemacs-wk)

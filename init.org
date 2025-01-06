@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-06 16:09:37 abc>
+#+date: Time-stamp: <2025-01-06 23:42:53 abc>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -299,11 +299,12 @@ Load the [[./modules/email/freemacs-gnus.org][Gnus Module]].
   (require 'freemacs-gnus)
 #+end_src
 
-** Help
+** Helpful
 
-Load the [[FILE:modules/help/freemacs-help.org][Help module]].
+Load the [[./modules/help/freemacs-helpful.org][Helpful module]].
+
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
-   (require 'freemacs-help)
+   (require 'freemacs-helpful)
 #+end_src
 
 ** Imenu
@@ -489,6 +490,14 @@ Load the [[./modules/session/freemacs-recentf.org][Recentf module]].
   (require 'freemacs-recentf)
 #+end_src
 
+** Repeat Help
+
+Load the [[./modules/help/freemacs-rh.org][Repeat Help module]].
+
+#+begin_src emacs-lisp :noweb-ref emacs_modules
+  (require 'freemacs-rh)
+#+end_src
+
 ** Savehist
 
 Load the [[./modules/session/freemacs-savehist.org][Savehist module]].
@@ -559,6 +568,14 @@ Load the [[./modules/publishing/freemacs-spellcheck.org][Spellcheck module]].
 
 #+begin_src emacs-lisp :noweb-ref emacs_modules 
   (require 'freemacs-spellcheck)
+#+end_src
+
+** Which Key
+
+Load the [[./modules/help/freemacs-wk.org][Whick Key module]].
+
+#+begin_src elisp :tangle yes :comments org :noweb yes
+  (require 'freemacs-wk)
 #+end_src
 
 ** Winner

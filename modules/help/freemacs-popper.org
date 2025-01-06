@@ -2,7 +2,7 @@
 
 #+title:Popper Module
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-06 16:05:50 abc>
+#+date: Time-stamp: <2025-01-06 19:59:37 abc>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -34,14 +34,14 @@
     :bind (("C-`"   . popper-toggle-latest)
            ("M-`"   . popper-cycle)
            ("C-M-`" . popper-toggle-type))
-    :custeom
+    :custom
     <<popper_custom>>
     :config
     (popper-mode t)
     (popper-echo-mode t))
 
 
-  (require 'freemacs-popper)
+  (provide 'freemacs-popper)
 
   ;;; freemacs-popper.el ends here.
 #+end_src

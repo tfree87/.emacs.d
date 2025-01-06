@@ -5,7 +5,7 @@
   :bind (("C-`"   . popper-toggle-latest)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
-  :custeom
+  :custom
   (popper-reference-buffers
           '("\\*Warnings\\*"
             "\\*Messages\\*"
@@ -20,6 +20,6 @@
   (popper-echo-mode t))
 
 
-(require 'freemacs-popper)
+(provide 'freemacs-popper)
 
 ;;; freemacs-popper.el ends here.
