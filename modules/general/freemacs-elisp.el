@@ -16,6 +16,12 @@
 FONT-FAMILY-LIST."
   (member font-name (font-family-list)))
 
+(defun file->string (path)
+  "Read file from PATH and output a string."
+  (with-temp-buffer
+    (insert-file-contents path)
+    (buffer-string)))
+
 ;; End
 
 ;; Tell Emacs what package this file provides.

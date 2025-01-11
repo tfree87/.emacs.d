@@ -2,7 +2,7 @@
 
 #+title: General Elisp Functions
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 13:59:38 thomas>
+#+date: Time-stamp: <2025-01-10 20:40:06 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -45,6 +45,18 @@ Create a function to check if a font exists on the system.
     "Returns T if FONT-NAME is a member of the avaiable fonts in
   FONT-FAMILY-LIST."
     (member font-name (font-family-list)))
+#+end_src
+
+* File->String
+
+Take a file and convert it to a string.
+
+#+begin_src emacs-lisp :tangle yes
+  (defun file->string (path)
+    "Read file from PATH and output a string."
+    (with-temp-buffer
+      (insert-file-contents path)
+      (buffer-string)))
 #+end_src
 
 * End
