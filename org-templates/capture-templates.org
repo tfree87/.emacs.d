@@ -2,7 +2,7 @@
  
 #+title:  Org Capture Templates
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-31 10:34:55 thomas>
+#+date: Time-stamp: <2025-01-10 18:41:10 thomas>
 #+description: A series of org capture templates for org mode.
 
 
@@ -143,7 +143,7 @@ Templates to reflect on the days, weeks, and months based on the Clever Fox plan
 #+begin_src emacs-lisp :noweb-ref capture_templates
   ("r" "Periodic Reflections")
 
-  ("rd" "Daily Enty"
+  ("rd" "Daily Entry"
    entry
    (file+olp+datetree "~/org/reflection/daily.org")
    "* Daily Gratitude\n\n- I am grateful for %^{I am grateful for...}\n\n* Daily Affirmation\n\n%^{Affirmation}\n\n* Daily Goal\n\n%^{Today's Goal}"
