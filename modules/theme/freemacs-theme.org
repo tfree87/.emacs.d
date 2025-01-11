@@ -2,7 +2,7 @@
 
 #+title: Theme Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 13:55:34 thomas>
+#+date: Time-stamp: <2025-01-05 14:14:58 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -98,25 +98,6 @@ Hide the scroll bar.
     :straight (:type built-in)
     :config
     (toggle-scroll-bar -1))
-#+end_src
-
-* Nyan Mode
-
-[[https://github.com/TeMPOraL/nyan-mode][Nyan-mode]] displays a nyan cat on the mode line. The length of the rainbow corresponds to buffer location.
-
-#+begin_src emacs-lisp :tangle yes
-  (use-package nyan-mode
-    :straight t
-    :if window-system
-    :defer 3
-    :init
-    ;; Requires mplayer to play the music
-    (whicher "mplayer")
-    :custom
-    (nyan-wavy-trail t)
-    :config
-    (nyan-mode)
-    (nyan-start-animation))
 #+end_src
 
 * End

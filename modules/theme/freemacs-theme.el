@@ -45,19 +45,6 @@
   :config
   (toggle-scroll-bar -1))
 
-(use-package nyan-mode
-  :straight t
-  :if window-system
-  :defer 3
-  :init
-  ;; Requires mplayer to play the music
-  (whicher "mplayer")
-  :custom
-  (nyan-wavy-trail t)
-  :config
-  (nyan-mode)
-  (nyan-start-animation))
-
 ;; End
 
 ;; Tell Emacs what package this file provides.
