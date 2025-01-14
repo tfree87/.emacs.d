@@ -7,7 +7,7 @@
   :config
   (if (eq system-type 'windows-nt)
       (setq inferior-lisp-program (whicher "C:/SBCL/sbcl.exe"))
-    (setq inferior-lisp-program (whicher "/usr/bin/sbcl"))))
+    (setq inferior-lisp-program (whicher "/usr/bin/sbcl --noinform --no-linedit"))))
 
 
 (provide 'freemacs-sly)

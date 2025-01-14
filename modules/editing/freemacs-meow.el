@@ -115,10 +115,11 @@
     (meow--two-char-exit-insert-state meow-two-char-escape-sequence))
   
   (define-key meow-insert-state-keymap (substring meow-two-char-escape-sequence 0 1)
-    #'meow-two-char-exit-insert-state)
+              #'meow-two-char-exit-insert-state)
   (meow-define-state disable "dummy state")
   (add-to-list 'meow-mode-state-list '(vterm-mode . disable))
   (add-to-list 'meow-mode-state-list '(eshell-mode . disable))
-  (add-to-list 'meow-mode-state-list '(pdf-view-mode . disable)))
+  (add-to-list 'meow-mode-state-list '(pdf-view-mode . disable))
+  (add-to-list 'meow-mode-state-list '(sly-mrepl-mode . disable)))
 
 (provide 'freemacs-meow)

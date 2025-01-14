@@ -2,7 +2,7 @@
 
 #+title: Sly Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-05 14:10:55 thomas>
+#+date: Time-stamp: <2025-01-14 10:41:23 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -43,5 +43,5 @@ Set the location of the LISP implementation.
 #+begin_src elisp :noweb-ref sly_config
   (if (eq system-type 'windows-nt)
       (setq inferior-lisp-program (whicher "C:/SBCL/sbcl.exe"))
-    (setq inferior-lisp-program (whicher "/usr/bin/sbcl")))
+    (setq inferior-lisp-program (whicher "/usr/bin/sbcl --noinform --no-linedit")))
 #+end_src
