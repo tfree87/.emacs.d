@@ -1,10 +1,9 @@
 (use-package org-contacts
-  :straight (:host github :repo "tfree87/org-contacts"
-                   :branch "master")
+  :straight t
   :defer t
   :commands (org-contacts org-contacts-agenda)
   :custom
-  (org-contacts-files '("~/org/contacts.org")))
+  (org-contacts-files '("~/org/agenda/contacts.org")))
 
 (provide 'freemacs-org-contacts)
 
