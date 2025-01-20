@@ -71,12 +71,14 @@
                  org-protocol
                  ol-rmail
                  ol-w3m
+                 ol-docview
+                 ol-doi
                  ol-eshell
                  org-annotate-file
                  ol-bookmark
                  org-checklist
                  org-choose
-                 ol-eisp-symbol
+                 ol-elisp-symbol
                  org-toc))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
