@@ -13,9 +13,7 @@
 ;; Completion Nerd Icons:1 ends here
 
 (use-package nerd-icons-corfu
-  :straight t
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+  :straight t)
 
 ;; Dired Nerd Icons
 
