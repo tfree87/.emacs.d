@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-16 15:08:16 thomas>
+#+date: Time-stamp: <2025-01-19 19:15:53 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -270,7 +270,6 @@ Load Org modules for extra functionality.
 #+begin_src emacs-lisp :noweb-ref org_customize
   (org-modules '(ol-bbdb
                  ol-bibtex
-                 ol-docviewol-doi
                  ol-eww
                  ol-gnus
                  org-habit
@@ -288,7 +287,7 @@ Load Org modules for extra functionality.
                  org-checklist
                  org-choose
                  ol-eisp-symbol
-                 org-notify org-toc))
+                 org-toc))
 #+end_src
 
 * Org Header Sizes

@@ -60,7 +60,6 @@
   (org-src-tab-acts-natively t)
   (org-modules '(ol-bbdb
                  ol-bibtex
-                 ol-docviewol-doi
                  ol-eww
                  ol-gnus
                  org-habit
@@ -78,12 +77,12 @@
                  org-checklist
                  org-choose
                  ol-eisp-symbol
-                 org-notify org-toc))
+                 org-toc))
   :config
   (add-hook 'org-mode-hook #'turn-on-flyspell)
   (add-hook 'org-mode-hook 'visual-line-mode)
-  ;(with-eval-after-load "org"
-  ;  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+  (with-eval-after-load "org"
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
