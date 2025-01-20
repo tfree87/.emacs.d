@@ -1,14 +1,21 @@
 (use-package ispell
   :straight (:type built-in)
+  :custom
+  (ispell-local-dictionary "en_US")
+  (ispell-program-name (whicher "hunspell"))
+  (ispell-local-dictionary-alist '(("en_US"
+                                    "[[:alpha:]]"
+                                    "[^[:alpha:]]"
+                                    "[']"
+                                    nil
+                                    ("-d" "en_US")
+                                    nil
+                                    utf-8)))
   :defer t
   :config
-  (if (eq system-type 'windows-nt)
-      (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-             (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-             (setq ispell-local-dictionary "en_US")
-             (setq ispell-local-dictionary-alist
-                   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-    (setq ispell-program-name (whicher "hunspell"))))
+  (when (boundp 'ispell-hunspell-dictionary-alist)
+    (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist))
+  (setq hunspell-default-dict "en_US"))
 
 (use-package flyspell
   :straight (:type built-in)

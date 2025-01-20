@@ -2,7 +2,7 @@
 
 #+title: Spellcheck Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2022-07-21 18:25:12 thomas>
+#+date: Time-stamp: <2025-01-19 19:58:19 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -29,15 +29,22 @@ Ispell is the default spell checking tool in Emacs. In order for spellchecking t
 #+begin_src emacs-lisp :tangle yes
   (use-package ispell
     :straight (:type built-in)
+    :custom
+    (ispell-local-dictionary "en_US")
+    (ispell-program-name (whicher "hunspell"))
+    (ispell-local-dictionary-alist '(("en_US"
+                                      "[[:alpha:]]"
+                                      "[^[:alpha:]]"
+                                      "[']"
+                                      nil
+                                      ("-d" "en_US")
+                                      nil
+                                      utf-8)))
     :defer t
     :config
-    (if (eq system-type 'windows-nt)
-        (progn (setq ispell-program-name (expand-file-name "~/.emacs.d/hunspell/bin/hunspell.exe"))
-               (setq ispell-personal-dictionary "~/.emacs.d/hunspell_en_US")
-               (setq ispell-local-dictionary "en_US")
-               (setq ispell-local-dictionary-alist
-                     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
-      (setq ispell-program-name (whicher "hunspell"))))
+    (when (boundp 'ispell-hunspell-dictionary-alist)
+      (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist))
+    (setq hunspell-default-dict "en_US"))
 #+end_src
 
 * Flyspell

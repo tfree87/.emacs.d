@@ -107,6 +107,7 @@
   (require 'freemacs-sp)
   (require 'freemacs-academic-writing)
   (require 'freemacs-spellcheck)
+  (require 'freemacs-wk)
   (require 'freemacs-winner)
   (require 'freemacs-yasnippet)
   (require 'freemacs-youtube)
@@ -116,10 +117,3 @@
   (setq gc-cons-threshold 800000))
 
 ;;; init.el ends here
-
-;; Which Key
-
-;; Load the [[./modules/help/freemacs-wk.org][Whick Key module]].
-
-
-(require 'freemacs-wk)

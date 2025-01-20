@@ -2,7 +2,7 @@
 
 #+title: Org Mode Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2024-12-16 15:08:16 thomas>
+#+date: Time-stamp: <2025-01-19 19:54:02 Thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -268,27 +268,28 @@ This will allow for source code blocks in emacs org-mode to be internally indent
 
 Load Org modules for extra functionality.
 #+begin_src emacs-lisp :noweb-ref org_customize
-  (org-modules '(ol-bbdb
-                 ol-bibtex
-                 ol-docviewol-doi
-                 ol-eww
-                 ol-gnus
-                 org-habit
-                 org-id
-                 ol-info
-                 org-inlinetask
-                 ol-mhe
-                 org-mouse
-                 org-protocol
-                 ol-rmail
-                 ol-w3m
-                 ol-eshell
-                 org-annotate-file
-                 ol-bookmark
-                 org-checklist
-                 org-choose
-                 ol-eisp-symbol
-                 org-notify org-toc))
+    (org-modules '(ol-bbdb
+                   ol-bibtex
+                   ol-eww
+                   ol-gnus
+                   org-habit
+                   org-id
+                   ol-info
+                   org-inlinetask
+                   ol-mhe
+                   org-mouse
+                   org-protocol
+                   ol-rmail
+                   ol-w3m
+                   ol-docview
+                   ol-doi
+                   ol-eshell
+                   org-annotate-file
+                   ol-bookmark
+                   org-checklist
+                   org-choose
+                   ol-elisp-symbol
+                   org-toc))
 #+end_src
 
 * Org Header Sizes

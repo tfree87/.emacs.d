@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-06 23:42:53 abc>
+#+date: Time-stamp: <2025-01-19 18:17:27 Thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -574,7 +574,7 @@ Load the [[./modules/publishing/freemacs-spellcheck.org][Spellcheck module]].
 
 Load the [[./modules/help/freemacs-wk.org][Whick Key module]].
 
-#+begin_src elisp :tangle yes :comments org :noweb yes
+#+begin_src elisp :noweb-ref emacs_modules
   (require 'freemacs-wk)
 #+end_src
 
