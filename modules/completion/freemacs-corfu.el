@@ -13,6 +13,7 @@
                            (corfu-popupinfo-mode 1))))
   (meow-insert-exit . (lambda ()
                         (progn
+                          (corfu-quit)
                           (corfu-mode -1)
                           (corfu-popupinfo-mode -1))))
   :bind

@@ -2,7 +2,7 @@
 
 #+title: Corfu  Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-20 13:07:53 thomas>
+#+date: Time-stamp: <2025-01-20 19:58:03 thomas>
 #+language: en_US
 #+property: header-args :results silent :exports code
 
@@ -70,6 +70,7 @@ Having the "RET" key bound for Corfu becomes very frustrating when trying to ent
                            (corfu-popupinfo-mode 1))))
   (meow-insert-exit . (lambda ()
                         (progn
+                          (corfu-quit)
                           (corfu-mode -1)
                           (corfu-popupinfo-mode -1))))
 #+end_src
