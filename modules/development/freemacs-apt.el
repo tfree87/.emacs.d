@@ -29,10 +29,9 @@ space."
   "Install a package with "
   (interactive "sPackage to install: ")
   (let ((arguments (transient-args transient-current-command)))
-    (message (concat "sudo apt install -y "
-                     package
-                     " "
-                     (apt--args-to-string arguments)))))
+    (async-shell-command (concat "sudo apt install -y "
+                                 package
+                                 " " (apt--args-to-string arguments)))))
 
 (transient-define-prefix apt-install-transient ()
   "Transient menu for apt install command"
