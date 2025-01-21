@@ -54,6 +54,7 @@
   (require 'freemacs-benchmark-init)
   (require 'freemacs-no-littering)
   (require 'freemacs-whicher)
+  (require 'freemacs-apt)
   (require 'freemacs-aggressive-indent)
   (require 'freemacs-cwm)
   (require 'freemacs-autohotkey)

@@ -2,7 +2,7 @@
  
 #+title: Emacs Configuration
 #+author: Thomas Freeman
-#+date: Time-stamp: <2025-01-19 18:17:27 Thomas>
+#+date: Time-stamp: <2025-01-20 19:47:34 thomas>
 #+description: This org-mode file contains an org-babel implementation of the .emacs or .emacs.d/init.el file.
 #+language: en_US
 #+property: header-args :results silent :exports code
@@ -157,6 +157,12 @@ Load the [[./modules/startup/freemacs-whicher.org][Whicher module]].
 #+end_src
 
 * Other Modules
+** Apt
+
+#+begin_src emacs-lisp :noweb-ref emacs_modules
+  (require 'freemacs-apt)
+#+end_src
+
 ** Aggressive Indent
 
 Load the [[./modules/coding/freemacs-aggressive-indent.org][Aggressive Indent module]].

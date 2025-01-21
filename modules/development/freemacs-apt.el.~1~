@@ -1,0 +1,47 @@
+(require 'transient)
+
+(defun apt-remove (package)
+  "Remove PACKAGE using apt."
+  (interactive "sPackage to remove: ")
+  (async-shell-command (concat "sudo apt remove -y " package)))
+
+(defun apt-upgrade ()
+  "Update package lists using apt."
+  (interactive)
+  (async-shell-command "sudo apt update"))
+
+(defun apt-update ()
+  "Update package lists using apt."
+  (interactive)
+  (async-shell-command "sudo apt update"))
+
+(defun apt-install (package &optional args)
+  "Install a package with "
+  (interactive "sPackage to install: ")
+  (let ((arguments (list (transient-args transient-current-command))))
+    (message (concat "sudo apt install -y"
+                     package
+                     arguments))))
+
+(transient-define-prefix apt-install-transient ()
+  "Transient menu for apt package manager."
+  ["APT Package Manager"
+   ["Arguments"
+    ("-n" "No recommends" "--no-install-recommends")]
+   ["Run"
+    ("r" "Install" apt-install)]])
+
+;;;###autoload (autoload 'apt "apt" nil t)
+(transient-define-prefix apt ()
+  "Transient menu for apt package manager."
+  ["APT Package Manager"
+   ["Basic Commands"
+    ("i" "Install" apt-install-transient)
+    ("r" "Remove" apt-remove)
+    ("u" "Update" apt-update)
+    ("U" "Upgrade" apt-upgrade)]])
+
+
+
+
+(provide 'freemacs-apt)
