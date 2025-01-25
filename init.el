@@ -54,7 +54,6 @@
   (require 'freemacs-benchmark-init)
   (require 'freemacs-no-littering)
   (require 'freemacs-whicher)
-  (require 'freemacs-apt)
   (require 'freemacs-aggressive-indent)
   (require 'freemacs-cwm)
   (require 'freemacs-autohotkey)
@@ -118,3 +117,5 @@
   (setq gc-cons-threshold 800000))
 
 ;;; init.el ends here
+
+(require 'freemacs-trapt)
