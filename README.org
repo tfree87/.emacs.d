@@ -12,6 +12,7 @@
 #+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+options: timestamp:t title:t toc:t todo:t |:t
 
+*UPDATE: This respository will no longer be maintained. My emacs configuration will be included in my .dotfiles repo as future configurations will be managed from the GUIX package manager rather than through the use of straight.el*
 
 This repository contains the configuration for my personal Emacs setup. Feel free to try it out for yourself or take any bits that you find useful.
 
